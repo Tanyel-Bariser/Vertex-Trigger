@@ -15,6 +15,7 @@ public class VertexTrigger extends Game {
 	@Override
 	public void create () {
 		// Initialise assets
+		// Initialise audio manager
 		// Open main menu screen
 	}
 	
