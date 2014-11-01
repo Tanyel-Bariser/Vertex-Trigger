@@ -11,12 +11,15 @@ public class Bullet implements Poolable {
 
 	/**
 	 * Initialises the physical properties of the bullet's physical body
+	 * Sets the bullet's existence time
+	 * Creates the bullet's sprite
 	 */
 	public Bullet() {
 		// Initialise physical properties, i.e. circle shape, very bouncy, etc.
 		// Set position out of camera's/user's view
 		// Create physical body
 		// Set identifier label as "Bullet"
+		// Create bullet sprite
 		// Set bullet existence time to 5 seconds from being shot
 	}
 	
