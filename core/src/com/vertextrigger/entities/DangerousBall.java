@@ -46,6 +46,8 @@ public class DangerousBall {
 				// If dangerous ball has reached this next coordinate
 						// If another coordinate exists
 								// Set next coordinate to this new coordinate
+						// If another coordinate does not exist
+								// Set next coordinate as the initial coordinate
 		// Set dangerous ball's sprite position & angle to match
 		// the new position of dangerous ball's physical body
 		// Return sprite after it's position/angle has been updated
