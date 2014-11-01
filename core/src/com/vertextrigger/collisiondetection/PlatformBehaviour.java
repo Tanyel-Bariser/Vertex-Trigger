@@ -78,7 +78,7 @@ public class PlatformBehaviour {
 		// Allow player the ability to jump
 		// Slow down player's running speed
 		// Remove effect of gravity on the player while in contact
-		// Apply force in a direction towards the platform to maintain contact
+		// Apply force to player in a direction towards platform to maintain contact
 	}
 
 	/**
