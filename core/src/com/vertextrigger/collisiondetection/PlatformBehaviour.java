@@ -1,5 +1,5 @@
 package com.vertextrigger.collisiondetection;
 
-public class ContactBehaviour {
+public class PlatformBehaviour {
 
 }
