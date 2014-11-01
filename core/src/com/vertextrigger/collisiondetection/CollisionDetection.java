@@ -66,11 +66,17 @@ public class CollisionDetection implements ContactListener {
 				// Set players movements to that of conveyor belt platform behaviour
 	}
 
+	/**
+	 * This method is called once when two game objects
+	 * are no longer in contact with each other.
+	 */
 	@Override
 	public void endContact(Contact contact) {
 		// If player's feet is not in contact with platform
+				// FIRST WAIT FOR 0.2 SECONDS
 				// Deny player the ability to jump
 				// Restore player's angle to zero
 				// Restore player's movements to normal
+				// Stop moving direction changing platforms
 	}
 }
