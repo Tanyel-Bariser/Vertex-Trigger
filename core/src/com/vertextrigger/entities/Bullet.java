@@ -1,5 +1,6 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 /**
@@ -33,6 +34,24 @@ public class Bullet implements Poolable {
 				// Shoot bullet towards the left direction
 		// If shooting right
 				// Shoot bullet towards the right direction
+	}
+	
+	/**
+	 * Updates the bullet sprite so that its position matches
+	 * that of the bullet's physical body, therefore should
+	 * be called once per frame for accurate rendering
+	 * 
+	 * @return sprite of this bullet
+	 */
+	public Sprite updateBulletSprite() {
+		// Get x & y coordinates of the bullets physical body
+		// Get the angle of the bullets physical body
+		// Set the position of the bullet sprite to match the bullet's
+		// physical body position
+		// Set the angle of the bullet sprite to match the bullet's
+		// physical body angle
+		// Return bullet's sprite after it's position/angle has been updated
+		return null;
 	}
 	
 	/**
