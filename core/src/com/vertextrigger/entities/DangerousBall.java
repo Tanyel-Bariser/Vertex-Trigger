@@ -1,8 +1,9 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.Coordinates;
+import com.vertextrigger.Coordinate;
 
 /**
  * DangerousBall is an game object that will kill the player if touched and
@@ -15,10 +16,11 @@ public class DangerousBall {
 	 * Sets Dangerous Ball's sprite, could be fire ball or spiked ball, etc.
 	 * Sets the path of the dangerous ball to traverse
 	 * 
+	 * @param world the dangerous ball will reside in
 	 * @param sprite for the image of the dangerous ball
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
-	public DangerousBall(Sprite sprite, Array<Coordinates> path) {
+	public DangerousBall(World world, Sprite sprite, Array<Coordinate> path) {
 		// Initialise physical properties, i.e. circle shape, kinematic body, etc.
 		// Set the path for the dangerous ball to follow in a loop
 		// Set position of dangerous ball based on first x & y coordinate of its path

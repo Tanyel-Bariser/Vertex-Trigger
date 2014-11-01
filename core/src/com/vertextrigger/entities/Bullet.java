@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 /**
@@ -13,8 +14,10 @@ public class Bullet implements Poolable {
 	 * Initialises the physical properties of the bullet's physical body
 	 * Sets the bullet's existence time
 	 * Creates the bullet's sprite
+	 * 
+	 * @param world the bullet will reside in
 	 */
-	public Bullet() {
+	public Bullet(World world) {
 		// Initialise physical properties, i.e. circle shape, very bouncy, etc.
 		// Set position out of camera's/user's view
 		// Create physical body
