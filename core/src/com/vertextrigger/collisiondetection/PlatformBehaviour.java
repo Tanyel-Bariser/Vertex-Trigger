@@ -36,6 +36,8 @@ public class PlatformBehaviour {
 	 * @param platform that falls when stood on
 	 */
 	public void onFallingPlatform(Body platform) {
+		// Set player's angle to that of the platform
+		// Allow player the ability to jump
 		// Wait for 1 second then cause platform position to gradually
 		// change once per frame in the direction it is falling
 	}
@@ -46,6 +48,8 @@ public class PlatformBehaviour {
 	 * @param platform that crumbles when stood on
 	 */
 	public void onCrumblingPlatform(Body platform) {
+		// Set player's angle to that of the platform
+		// Allow player the ability to jump
 		// Wait for 2 seconds then play platform crumbling
 		// animation then remove platform from the level
 	}
@@ -58,6 +62,8 @@ public class PlatformBehaviour {
 	 * @param platform that changes direction each time it's jumped on
 	 */
 	public void onDirectionChangingPlatform(Body platform) {
+		// Set player's angle to that of the platform
+		// Allow player the ability to jump
 		// Change direction to another direction other than the direction
 		// it was last moving in, either up, down, left or right, randomly
 		// Start moving the platform again, now in the new direction
@@ -68,8 +74,11 @@ public class PlatformBehaviour {
 	 * to stick to the platform, regardless of gravity, even upside down
 	 */
 	public void onStickyPlatform() {
+		// Set player's angle to that of the platform
+		// Allow player the ability to jump
 		// Slow down player's running speed
-		// Keep player's feet in contact with platform regardless of gravity
+		// Remove effect of gravity on the player while in contact
+		// Apply force in a direction towards the platform to maintain contact
 	}
 
 	/**
@@ -77,6 +86,8 @@ public class PlatformBehaviour {
 	 * which can push or pull the player in a particular direction  
 	 */
 	public void onConveyorBeltPlatform() {
+		// Set player's angle to that of the platform
+		// Allow player the ability to jump
 		// Apply additional force to player in direction platform dictates
 	}
 }
