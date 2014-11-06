@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
@@ -9,8 +10,8 @@ import com.vertextrigger.Coordinate;
  * Enemies can will kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
-public class Enemy implements Entity {
-	private Path path;
+public abstract class Enemy implements Entity {
+	protected Path path;
 	
 	/**
 	 * Creates enemy's physical body & its physical properties
@@ -20,21 +21,43 @@ public class Enemy implements Entity {
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
 	public Enemy(World world, Array<Coordinate> coordinates) {
-		// Create & set sprite factory
-		// Create & set animation factory
-		// Initialise physical properties, i.e. polygon shape, dynamic body, etc.
-		// Set the path's coordinates for the enemy to follow in a loop
+		// Create & set enemy sprites & animations
 		// Create physical body
-		// Set identifier label as "Enemy"
-		// Set sprite
+		// Set the coordinates of the predefined path
+		// for the enemy to follow in a loop
 	}
 	
 	/**
-	 * Initialise sprites & animation objects
+	 * Create enemy's physical body & physical properties.
+	 * 
+	 * @param position of enemy in game world
+	 * @param width of enemy
+	 * @param height of enemy
+	 * @return physical body of enemy
 	 */
-	private void spriteAnimationSetup() {
-		// Create & set all sprites & animations the enemy will need
-	}
+	abstract Body createEnemy(World world, Coordinate position, float width, float height);
+	
+	/**
+	 * Create & set all sprites & animations the enemy will need
+	 */
+	abstract void spriteAnimationSetup();
+	
+	/**
+	 * Chooses appropriate enemy sprite based on animation.
+	 * 
+	 * @return updated enemy's sprite
+	 */
+	/* PSEUDOCODE FOR THIS ABSTRACT METHOD */
+	// Add delta to current animation key frame time
+	// If enemy is rising/jumping
+			// Set enemy sprite based on jumping animation key frame
+	// If enemy is falling
+			// Set enemy sprite based on falling animation key frame
+	// If enemy is moving left
+			// Set enemy sprite based on running animation key frame
+	// Flip enemy sprite so that if he's moving left the sprite
+	// is facing left and vice versa if he is moving right
+	abstract Sprite updateSprite(float delta);
 	
 	/**
 	 * Moves the enemy further along its predefined
@@ -50,17 +73,7 @@ public class Enemy implements Entity {
 	@Override
 	public Sprite update(float delta) {
 		// Move enemy further along it's predefined path based on delta
-		
-		// Add delta to current animation key frame time
-		// If enemy is rising/jumping
-				// Set enemy sprite based on jumping animation key frame
-		// If enemy is falling
-				// Set enemy sprite based on falling animation key frame
-		// If enemy is moving left
-				// Set enemy sprite based on running animation key frame
-		// Flip enemy sprite so that if he's moving left the sprite
-		// is facing left and vice versa if he is moving right
-
+		// Update enemy sprite based on animation
 		// Set enemy's sprite position & angle to match
 		// the new position of enemy's physical body
 		// Return enemy sprite after it's position/angle has been updated
