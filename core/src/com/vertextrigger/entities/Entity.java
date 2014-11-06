@@ -3,10 +3,13 @@ package com.vertextrigger.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
+ * All Entities have a physical body & an associated sprite that need updating
+ * once per frame.
+ * 
  * Ensures all dynamic/kinematic game objects have an update method to update 
  * their physical position's & return their updated sprite for rendering.
  */
-public interface Updatable {
+public interface Entity {
 
 	/**
 	 * Updates an entity's physical position & returns

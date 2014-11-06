@@ -9,7 +9,8 @@ import com.vertextrigger.Coordinate;
  * DangerousBall is an game object that will kill the player if touched and
  * follows a predefined path, such as, traversing the edges of a platform
  */
-public class DangerousBall implements Updatable {
+public class DangerousBall implements Entity {
+	private Path path;
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body
@@ -20,12 +21,9 @@ public class DangerousBall implements Updatable {
 	 * @param sprite for the image of the dangerous ball
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
-	public DangerousBall(World world, Sprite sprite, Array<Coordinate> path) {
+	public DangerousBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
 		// Initialise physical properties, i.e. circle shape, kinematic body, etc.
-		// Set the path for the dangerous ball to follow in a loop
-		// Set position of dangerous ball based on first x & y coordinate of its path
-		// If path has a second coordinate
-				// Set next coordinate to move to as the second coordinate in path
+		// Set the path's coordinates for the dangerous ball to follow in a loop
 		// Create physical body
 		// Set identifier label as "DangerousBall"
 		// Set sprite
@@ -42,14 +40,7 @@ public class DangerousBall implements Updatable {
 	 */
 	@Override
 	public Sprite update(float delta) {
-		// If there is a next coordinate to move to
-				// Move dangerous ball toward next coordinate
-				// at a distance dependent on delta
-				// If dangerous ball has reached this next coordinate
-						// If another coordinate exists
-								// Set next coordinate to this new coordinate
-						// If another coordinate does not exist
-								// Set next coordinate as the initial coordinate
+		// Move dangerous ball along it's predefined path based on delta
 		// Set dangerous ball's sprite position & angle to match
 		// the new position of dangerous ball's physical body
 		// Return sprite after it's position/angle has been updated

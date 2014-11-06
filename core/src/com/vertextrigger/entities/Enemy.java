@@ -9,8 +9,9 @@ import com.vertextrigger.Coordinate;
  * Enemies can will kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
-public class Enemy implements Updatable {
-
+public class Enemy implements Entity {
+	private Path path;
+	
 	/**
 	 * Creates enemy's physical body & its physical properties
 	 * Creates sprite & animation factories
@@ -18,14 +19,11 @@ public class Enemy implements Updatable {
 	 * @param world the enemy will reside in
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
-	public Enemy(World world, Array<Coordinate> path) {
+	public Enemy(World world, Array<Coordinate> coordinates) {
 		// Create & set sprite factory
 		// Create & set animation factory
 		// Initialise physical properties, i.e. polygon shape, dynamic body, etc.
-		// Set the path for the enemy to follow in a loop
-		// Set position of enemy based on first x & y coordinate of its path
-		// If path has a second coordinate
-				// Set next coordinate to move to as the second coordinate in path
+		// Set the path's coordinates for the enemy to follow in a loop
 		// Create physical body
 		// Set identifier label as "Enemy"
 		// Set sprite

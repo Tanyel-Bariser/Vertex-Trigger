@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  * Bullets are shot from the player's position horizontally.
  * Bullets are freed 5 seconds after being shot.
  */
-public class Bullet implements Poolable, Updatable {
+public class Bullet implements Poolable, Entity {
 
 	/**
 	 * Initialises the physical properties of the bullet's physical body

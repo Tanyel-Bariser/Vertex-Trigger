@@ -8,7 +8,7 @@ import com.vertextrigger.Coordinate;
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
-public class Player implements Updatable {
+public class Player implements Entity {
 
 	/**
 	 * Creates player's physical body & its physical properties
