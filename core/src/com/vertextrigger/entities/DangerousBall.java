@@ -9,7 +9,7 @@ import com.vertextrigger.Coordinate;
  * DangerousBall is an game object that will kill the player if touched and
  * follows a predefined path, such as, traversing the edges of a platform
  */
-public class DangerousBall {
+public class DangerousBall implements Updatable {
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body
@@ -34,12 +34,14 @@ public class DangerousBall {
 	/**
 	 * Moves the dangerous ball further along its predefined
 	 * path with the distance moved dependent on the delta.
-	 * Delta is needed to frame rate independent movement
+	 * Delta is needed for frame rate independent movement.
+	 * Returns sprite after it's position has been updated.
 	 * 
 	 * @param delta time passed between previous & current frame
-	 * @return
+	 * @return updated sprite of this dangerous ball
 	 */
-	public Sprite updatePath(float delta) {
+	@Override
+	public Sprite update(float delta) {
 		// If there is a next coordinate to move to
 				// Move dangerous ball toward next coordinate
 				// at a distance dependent on delta

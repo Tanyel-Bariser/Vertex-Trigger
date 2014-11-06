@@ -8,7 +8,7 @@ import com.vertextrigger.Coordinate;
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
-public class Player {
+public class Player implements Updatable {
 
 	/**
 	 * Creates player's physical body & its physical properties
@@ -63,13 +63,19 @@ public class Player {
 		// Thrust player upwards
 	}
 	
-	
-	public void move(float delta) {
+	/**
+	 * Moves physical body of player left or right.
+	 * Chooses appropriate player sprite based on animation.
+	 * Returns the updated player's sprite for rendering.
+	 * 
+	 * @param delta time passed between previous & current frame
+	 * @return updated player sprite
+	 */
+	@Override
+	public Sprite update(float delta) {
 		// Move player either left or right, according to the force variable,
-		// to an amount dependent on delta 
-	}
-	
-	public Sprite updateSprite(float delta) {
+		// to an amount dependent on delta
+		
 		// Add delta to current animation key frame time
 		// If player is rising/jumping
 				// Set player sprite based on jumping animation key frame
@@ -79,7 +85,10 @@ public class Player {
 				// Set player sprite based on running animation key frame
 		// Flip player sprite so that if he's moving left the sprite
 		// is facing left and vice versa if he is moving right
-		// Return updated sprite
+		
+		// Set player's sprite position & angle to match
+		// the new position of player's physical body
+		// Return player sprite after it's position/angle has been updated
 		return null;
 	}
 }

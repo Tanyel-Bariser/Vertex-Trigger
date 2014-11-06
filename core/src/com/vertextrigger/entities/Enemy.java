@@ -9,7 +9,7 @@ import com.vertextrigger.Coordinate;
  * Enemies can will kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
-public class Enemy {
+public class Enemy implements Updatable {
 
 	/**
 	 * Creates enemy's physical body & its physical properties
@@ -32,36 +32,27 @@ public class Enemy {
 	}
 	
 	/**
-	 * Moves the enemy further along its predefined
-	 * path with the distance moved dependent on the delta.
-	 * Delta is needed to frame rate independent movement
-	 * 
-	 * @param delta time passed between previous & current frame
-	 * @return updated enemy sprite
-	 */
-	public Sprite updatePath(float delta) {
-		// If there is a next coordinate to move to
-				// Move enemy toward next coordinate
-				// at a distance dependent on delta
-				// If enemy has reached this next coordinate
-						// If another coordinate exists
-								// Set next coordinate to this new coordinate
-						// If another coordinate does not exist
-								// Set next coordinate as the initial coordinate
-		// Set enemy's sprite position & angle to match
-		// the new position of enemy's physical body
-		// Return enemy sprite after it's position/angle has been updated
-		return null;
-	}
-	
-	/**
 	 * Initialise sprites & animation objects
 	 */
 	private void spriteAnimationSetup() {
 		// Create & set all sprites & animations the enemy will need
 	}
 	
-	public Sprite updateSprite(float delta) {
+	/**
+	 * Moves the enemy further along its predefined
+	 * path with the distance moved dependent on the delta.
+	 * Delta is needed to frame rate independent movement.
+	 * 
+	 * Chooses appropriate enemy sprite based on animation.
+	 * Returns the updated enemy's sprite for rendering.
+	 * 
+	 * @param delta time passed between previous & current frame
+	 * @return updated enemy sprite
+	 */
+	@Override
+	public Sprite update(float delta) {
+		// Move enemy further along it's predefined path based on delta
+		
 		// Add delta to current animation key frame time
 		// If enemy is rising/jumping
 				// Set enemy sprite based on jumping animation key frame
@@ -71,7 +62,10 @@ public class Enemy {
 				// Set enemy sprite based on running animation key frame
 		// Flip enemy sprite so that if he's moving left the sprite
 		// is facing left and vice versa if he is moving right
-		// Return updated sprite
+
+		// Set enemy's sprite position & angle to match
+		// the new position of enemy's physical body
+		// Return enemy sprite after it's position/angle has been updated
 		return null;
 	}
 }
