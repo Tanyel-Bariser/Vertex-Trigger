@@ -19,7 +19,7 @@ public class Path {
 	 * @param path
 	 */
 	public Path(Body entity, Array<Coordinate> coordinates) {
-		// Set entity
+		// Set entity's physical body
 		// Set entity's predefined path's coordinates
 		// Set position of entity based on first x & y coordinate of it's path
 		// If path has a second coordinate

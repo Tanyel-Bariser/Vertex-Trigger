@@ -7,10 +7,11 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
 
 /**
- * Enemies can will kill the player if touched & follows a predefined path
+ * Enemies can kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
 public abstract class Enemy implements Entity {
+	// Predefined path for enemy's physical body to follow
 	protected Path path;
 	
 	/**
@@ -35,12 +36,12 @@ public abstract class Enemy implements Entity {
 	 * @param height of enemy
 	 * @return physical body of enemy
 	 */
-	abstract Body createEnemy(World world, Coordinate position, float width, float height);
+	protected abstract Body createEnemy(World world, Coordinate position, float width, float height);
 	
 	/**
 	 * Create & set all sprites & animations the enemy will need
 	 */
-	abstract void spriteAnimationSetup();
+	protected abstract void spriteAnimationSetup();
 	
 	/**
 	 * Chooses appropriate enemy sprite based on animation.
@@ -57,7 +58,7 @@ public abstract class Enemy implements Entity {
 			// Set enemy sprite based on running animation key frame
 	// Flip enemy sprite so that if he's moving left the sprite
 	// is facing left and vice versa if he is moving right
-	abstract Sprite updateSprite(float delta);
+	protected abstract Sprite updateSprite(float delta);
 	
 	/**
 	 * Moves the enemy further along its predefined

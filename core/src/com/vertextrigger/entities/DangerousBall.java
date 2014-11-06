@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
@@ -9,8 +10,9 @@ import com.vertextrigger.Coordinate;
  * DangerousBall is an game object that will kill the player if touched and
  * follows a predefined path, such as, traversing the edges of a platform
  */
-public class DangerousBall implements Entity {
-	private Path path;
+public abstract class DangerousBall implements Entity {
+	// Predefined path for dangerous ball's physical body to follow
+	protected Path path;
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body
@@ -22,12 +24,25 @@ public class DangerousBall implements Entity {
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
 	public DangerousBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
-		// Initialise physical properties, i.e. circle shape, kinematic body, etc.
-		// Set the path's coordinates for the dangerous ball to follow in a loop
+		// Create & set sprite for dangerous ball
 		// Create physical body
-		// Set identifier label as "DangerousBall"
-		// Set sprite
+		// Set the coordinates of the predefined path
+		// for the enemy to follow in a loop
 	}
+	
+	/**
+	 * Create dangerous ball's physical body & physical properties.
+	 * 
+	 * @param position of dangerous ball in game world
+	 * @param radius of dangerous ball
+	 * @return physical body of dangerous ball
+	 */
+	protected abstract Body createDangerousBall(World world, Coordinate position, float radius);
+	
+	/**
+	 * Create & set sprite for dangerous ball
+	 */
+	protected abstract void spriteSetup();
 	
 	/**
 	 * Moves the dangerous ball further along its predefined

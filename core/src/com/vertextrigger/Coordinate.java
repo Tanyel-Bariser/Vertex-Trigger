@@ -5,8 +5,8 @@ package com.vertextrigger;
  * for representing a position in the game world
  */
 public class Coordinate {
-	public final float x;
-	public final float y;
+	public final float x; // x-axis coordinate
+	public final float y; // y-axis coordinate
 
 	/**
 	 * Sets an x-axis & y-axis coordinate to represent
