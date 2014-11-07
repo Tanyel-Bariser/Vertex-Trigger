@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class PlatformBehaviour {
 
 	/**
-	 * @param player object whose attributes are manipulated in
+	 * @param player physical body whose movement is manipulated in
 	 * 				 accordance with the platform he's standing on   
 	 */
 	public PlatformBehaviour(Body player) {
@@ -19,9 +19,11 @@ public class PlatformBehaviour {
 
 	/**
 	 * Causes player's movements to be consistent
-	 * with moving on slippery surface
+	 * with moving on a slippery surface
+	 * 
+	 * @param player physical body
 	 */
-	public void onSlipperyPlatform() {
+	public void onSlipperyPlatform(Body player) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Cause player to slide & delay in stopping &

@@ -50,10 +50,38 @@ public class Player implements Entity {
 	}
 	
 	/**
+	 * Usually caused by the platform the player is standing on. 
+	 * For example, a conveyor belt platform can increase/decrease force, 
+	 * i.e. by a positive or negative parameter respectively, dependent on
+	 * which direction the conveyor belt platform is moving.  
+	 * 
+	 * @param force amount to increase player's directional force by
+	 */
+	public void alterForce(float force) {
+		// Alter directional (left or right movement)
+		// force by a specific amount 
+	}
+	
+	/**
 	 * Sets angle of player
 	 */
 	public void setAngle(float angle) {
 		// Set player's new angle
+	}
+	
+	/**
+	 * @param canJump if true player can jump, otherwise he can't
+	 */
+	public void setJumpAbility(boolean canJump) {
+		// Set whether or not the player can jump
+	}
+	
+	/**
+	 * @return whether or not the player is allowed to jump
+	 */
+	private boolean getJumpAbility() {
+		// Return whether or not the player is allowed to jump
+		return false;
 	}
 	
 	/**
