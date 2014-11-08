@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class SpriteFactory {
 
 	/**
-	 * Creates factory class & initialises storage
-	 * of sprites that can be accessed by name
+	 * Initialises storage of sprites that can be accessed by name
 	 */
-	public SpriteFactory() {
+	public static void initialiseSpriteFactory() {
 		// Create a sprite storage
 	}
 

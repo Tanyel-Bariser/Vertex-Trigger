@@ -76,7 +76,7 @@ public class CollisionDetection implements ContactListener {
 				// FIRST WAIT FOR 0.2 SECONDS
 				// Deny player the ability to jump
 				// Restore player's angle to zero
-				// Restore player's movements to normal
+				// Restore player's movements to normal, i.e. set player's xForce to zero
 				// Stop moving direction changing platforms
 	}
 }

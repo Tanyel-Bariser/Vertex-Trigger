@@ -17,11 +17,10 @@ public class Player implements Entity {
 	 * @param world the player will reside in
 	 * @param startingPosition of the player in a particular level
 	 */
-	public Player(World world, Coordinate startingPosition) {
-		// Create & set sprite factory
-		// Create & set animation factory
+	public Player(World world, Coordinate initialPosition) {
+		// Set sprites & animations
 		// Initialise physical properties, i.e. polygon shape, dynamic body, etc.
-		// Set starting position
+		// Set initial position of player in the level
 		// Create physical body
 		// Set identifier label as "Player"
 		// Create & set sprites & animations
@@ -36,30 +35,46 @@ public class Player implements Entity {
 	
 	/**
 	 * Setter for the player's directional movement, left or right.
-	 * Negative force moves the player left
-	 * Positive force moves the player right
+	 * Negative movement moves the player left
+	 * Positive movement moves the player right
 	 * 
-	 * @param force that moves player either left or right
+	 * @param movement of player either left or right
 	 */
-	public void setForce(float force) {
-		// Set player's new directional force
-		// If force is negative
-				// Set player facing left
-		// If force is positive
-				// Set player facing right
+	public void setMovement(float movement) {
+		// Set player's new directional force in x-axis
 	}
 	
 	/**
-	 * Usually caused by the platform the player is standing on. 
-	 * For example, a conveyor belt platform can increase/decrease force, 
-	 * i.e. by a positive or negative parameter respectively, dependent on
+	 * Negative movement means the player is moving left
+	 * Positive movement means the player is moving right
+	 * 
+	 * @return the speed & direction the player is moving horizontally
+	 */
+	private float getMovement() {
+		// Return the magnitude of the player's
+		// movement in either left or right direction
+		return 0;
+	}
+	
+	/**
+	 * Additional force imposed on the player usually caused by the
+	 * platform the player is standing on. 
+	 * For example, a conveyor belt platform can push the player left or right, 
+	 * i.e. by a negative or positive parameter respectively, dependent on
 	 * which direction the conveyor belt platform is moving.  
 	 * 
-	 * @param force amount to increase player's directional force by
+	 * @param xForce amount to push or pull the player left or right
 	 */
-	public void alterForce(float force) {
+	public void setXForce(float xForce) {
 		// Alter directional (left or right movement)
 		// force by a specific amount 
+	}
+	
+	/**
+	 * @param downForce additional force on player's y-axis
+	 */
+	public void setDownForce(float downForce) {
+		// Set additional vertical force to be put on player 
 	}
 	
 	/**
@@ -92,6 +107,24 @@ public class Player implements Entity {
 	}
 	
 	/**
+	 * If onSticky is true, then player is on a sticky
+	 * platform & therefore moves at a slower speed.
+	 * 
+	 * @param onSticky
+	 */
+	public void setOnSticky(boolean onSticky) {
+		// Set whether or not the player is on a sticky platform
+	}
+	
+	/**
+	 * @return true if player is on a sticky platform, else false
+	 */
+	private boolean getOnSticky() {
+		// Return whether or not the player is on a skicky platform
+		return false;
+	}
+	
+	/**
 	 * Moves physical body of player left or right.
 	 * Chooses appropriate player sprite based on animation.
 	 * Returns the updated player's sprite for rendering.
@@ -101,7 +134,8 @@ public class Player implements Entity {
 	 */
 	@Override
 	public Sprite update(float delta) {
-		// Move player either left or right, according to the force variable,
+		// If player is on a sticky platform move at half the directional speed
+		// Move player either left or right, according to the movement variable,
 		// to an amount dependent on delta
 		
 		// Add delta to current animation key frame time
@@ -109,10 +143,11 @@ public class Player implements Entity {
 				// Set player sprite based on jumping animation key frame
 		// If player is falling
 				// Set player sprite based on falling animation key frame
-		// If player is moving left
+		// If player is running, i.e. movement is not zero
 				// Set player sprite based on running animation key frame
-		// Flip player sprite so that if he's moving left the sprite
-		// is facing left and vice versa if he is moving right
+		
+		// Flip player sprite so that if he's moving left, i.e. movement + xForce is negative,
+		// the sprite is facing left and vice versa if he is moving right
 		
 		// Set player's sprite position & angle to match
 		// the new position of player's physical body

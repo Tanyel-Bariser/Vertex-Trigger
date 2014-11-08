@@ -16,6 +16,8 @@ public class VertexTrigger extends Game {
 	public void create () {
 		// Initialise assets
 		// Initialise audio manager
+		// Initialise sprite factory
+		// Initialise animation factory
 		// Open main menu screen
 	}
 	

@@ -8,28 +8,21 @@ import com.badlogic.gdx.physics.box2d.Body;
  * the platforms themselves when they're stood on
  */
 public class PlatformBehaviour {
-
-	/**
-	 * @param player physical body whose movement is manipulated in
-	 * 				 accordance with the platform he's standing on   
-	 */
-	public PlatformBehaviour(Body player) {
-		// Set player's physical body
-	}
-
+	
 	/**
 	 * Causes player's movements to be consistent
 	 * with moving on a slippery surface
 	 * 
 	 * @param player physical body
+	 * @param platform the player is standing on
 	 */
-	public void onSlipperyPlatform(Body player) {
+	public static void onSlipperyPlatform(Body player, Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Cause player to slide & delay in stopping &
 		// changing direction due to momentum
 		// Push player in direction of, and magnitude of,
-		// platform angle (if platform is slanted)
+		// platform angle (if platform is slanted), i.e. set player's xForce to platform angle * 15
 	}
 
 	/**
@@ -37,7 +30,7 @@ public class PlatformBehaviour {
 	 * 
 	 * @param platform that falls when stood on
 	 */
-	public void onFallingPlatform(Body platform) {
+	public static void onFallingPlatform(Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Wait for 1 second then cause platform position to gradually
@@ -49,7 +42,7 @@ public class PlatformBehaviour {
 	 * 
 	 * @param platform that crumbles when stood on
 	 */
-	public void onCrumblingPlatform(Body platform) {
+	public static void onCrumblingPlatform(Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Wait for 2 seconds then play platform crumbling
@@ -63,7 +56,7 @@ public class PlatformBehaviour {
 	 * 
 	 * @param platform that changes direction each time it's jumped on
 	 */
-	public void onDirectionChangingPlatform(Body platform) {
+	public static void onDirectionChangingPlatform(Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Change direction to another direction other than the direction
@@ -74,8 +67,11 @@ public class PlatformBehaviour {
 	/**
 	 * Sticky platforms cause the player to move more slowly and his feet
 	 * to stick to the platform, regardless of gravity, even upside down
+	 * 
+	 * @param player physical body
+	 * @param platform the player is standing on
 	 */
-	public void onStickyPlatform() {
+	public static void onStickyPlatform(Body player, Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Slow down player's running speed
@@ -85,9 +81,12 @@ public class PlatformBehaviour {
 
 	/**
 	 * Conveyor belt platforms, can also be platforms near a magnet or fan,
-	 * which can push or pull the player in a particular direction  
+	 * which can push or pull the player in a particular direction
+	 * 
+	 * @param player physical body  
+	 * @param platform the player is standing on
 	 */
-	public void onConveyorBeltPlatform() {
+	public static void onConveyorBeltPlatform(Body player, Body platform) {
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
 		// Apply additional force to player in direction platform dictates

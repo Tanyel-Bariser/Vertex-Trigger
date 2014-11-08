@@ -24,7 +24,7 @@ public abstract class DangerousBall implements Entity {
 	 * @param path is a series of x & y coordinates for the dangerous ball to follow
 	 */
 	public DangerousBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
-		// Create & set sprite for dangerous ball
+		// Set sprite for dangerous ball
 		// Create physical body
 		// Set the coordinates of the predefined path
 		// for the enemy to follow in a loop
