@@ -19,7 +19,7 @@ public abstract class Enemy implements Entity {
 	 * Creates sprite & animation factories
 	 * 
 	 * @param world the enemy will reside in
-	 * @param path is a series of x & y coordinates for the dangerous ball to follow
+	 * @param coordinates is the path, series of x & y coordinates, the enemy follows
 	 */
 	public Enemy(World world, Array<Coordinate> coordinates) {
 		// Set enemy sprites & animations
@@ -31,12 +31,11 @@ public abstract class Enemy implements Entity {
 	/**
 	 * Create enemy's physical body & physical properties.
 	 * 
+	 * @param world the enemy will reside in
 	 * @param position of enemy in game world
-	 * @param width of enemy
-	 * @param height of enemy
 	 * @return physical body of enemy
 	 */
-	protected abstract Body createEnemy(World world, Coordinate position, float width, float height);
+	protected abstract Body createEnemy(World world, Coordinate position);
 	
 	/**
 	 * Create & set all sprites & animations the enemy will need

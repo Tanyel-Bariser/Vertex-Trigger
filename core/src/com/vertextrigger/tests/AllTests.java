@@ -6,12 +6,12 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ AnimationFactoryTest.class, AssetsTest.class,
-		AudioManagerTest.class, BulletPoolTest.class, ButtonFactoryTest.class,
-		CollisionDetectionTest.class, ContactBehaviourTest.class,
+		AudioManagerTest.class, BulletPoolTest.class, BulletTest.class,
+		ButtonFactoryTest.class, CollisionDetectionTest.class,
 		ControllerTest.class, DangerousBallTest.class, EnemyFactoryTest.class,
-		EnemyTest.class, GroundWallFactoryTest.class, LevelOneScreenTest.class,
-		MainScreenTest.class, PlatformFactoryTest.class, PlayerTest.class,
-		SpriteFactoryTest.class, VertexTriggerTest.class })
+		EnemyTest.class, EntityTest.class, GroundWallFactoryTest.class,
+		LevelOneScreenTest.class, MainScreenTest.class, PathTest.class,
+		PlatformBehaviourTest.class, PlatformFactoryTest.class,
+		PlayerTest.class, SpriteFactoryTest.class, VertexTriggerTest.class })
 public class AllTests {
-
 }

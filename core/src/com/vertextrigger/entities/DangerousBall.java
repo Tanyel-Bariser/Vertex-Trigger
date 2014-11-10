@@ -21,7 +21,7 @@ public abstract class DangerousBall implements Entity {
 	 * 
 	 * @param world the dangerous ball will reside in
 	 * @param sprite for the image of the dangerous ball
-	 * @param path is a series of x & y coordinates for the dangerous ball to follow
+	 * @param coordinates is the path, series of x & y coordinates, the dangerous ball follows
 	 */
 	public DangerousBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
 		// Set sprite for dangerous ball
@@ -33,11 +33,11 @@ public abstract class DangerousBall implements Entity {
 	/**
 	 * Create dangerous ball's physical body & physical properties.
 	 * 
+	 * @param world the dangerous ball will reside in
 	 * @param position of dangerous ball in game world
-	 * @param radius of dangerous ball
 	 * @return physical body of dangerous ball
 	 */
-	protected abstract Body createDangerousBall(World world, Coordinate position, float radius);
+	protected abstract Body createDangerousBall(World world, Coordinate position);
 	
 	/**
 	 * Create & set sprite for dangerous ball
