@@ -6,9 +6,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.Coordinate;
 
 /**
- * Platform that does something after a certain amount of time,
- * such as disappears/reappears, counts down then explodes
- * or spikes go in & out of the platform, etc.
+ * Platform that does something after a certain amount of time, such as
+ * disappears/reappears, counts down then explodes, spikes go in & out
+ * of the platform or platform rotates every 4 seconds etc.
  */
 public abstract class TimedPlatform implements Entity {
 
