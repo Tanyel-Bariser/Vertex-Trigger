@@ -27,11 +27,11 @@ public abstract class MovingPlatform implements Entity{
 		}
 		
 		/**
-		 * Create dangerous ball's physical body & physical properties.
+		 * Create moving platform's physical body & physical properties.
 		 * 
 		 * @param world the moving platform will reside in
-		 * @param position of dangerous ball in game world
-		 * @return physical body of dangerous ball
+		 * @param position of moving platform in game world
+		 * @return physical body of moving platform
 		 */
 		protected abstract Body createPlatformBody(World world, Coordinate position);
 		
