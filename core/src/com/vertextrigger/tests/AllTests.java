@@ -9,9 +9,12 @@ import org.junit.runners.Suite.SuiteClasses;
 		AudioManagerTest.class, BulletPoolTest.class, BulletTest.class,
 		ButtonFactoryTest.class, CollisionDetectionTest.class,
 		ControllerTest.class, DangerousBallTest.class, EnemyFactoryTest.class,
-		EnemyTest.class, EntityTest.class, GroundWallFactoryTest.class,
-		LevelOneScreenTest.class, MainScreenTest.class, PathTest.class,
-		PlatformBehaviourTest.class, StaticPlatformFactoryTest.class,
-		PlayerTest.class, SpriteFactoryTest.class, VertexTriggerTest.class })
+		EnemyTest.class, EntityTest.class, ExplodingPlatformTest.class,
+		GroundWallFactoryTest.class, LevelOneScreenTest.class,
+		MainScreenTest.class, MovingPlatformTest.class, PathTest.class,
+		PlatformBehaviourTest.class, PlayerTest.class,
+		ReappearingPlatformTest.class, SpriteFactoryTest.class,
+		StaticPlatformFactoryTest.class, TimedPlatformTest.class,
+		VertexTriggerTest.class })
 public class AllTests {
 }

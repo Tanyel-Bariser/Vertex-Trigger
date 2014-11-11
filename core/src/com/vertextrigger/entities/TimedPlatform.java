@@ -21,7 +21,7 @@ public abstract class TimedPlatform implements Entity {
 	 * @param sprite platform's image
 	 * @param time before the platform's action is required
 	 */
-	public TimedPlatform(World world, Sprite sprite, float time) {
+	public TimedPlatform(World world, Sprite sprite, Coordinate position, float time) {
 		// Set sprite & animation for platform
 		// Set time for timed platform
 		// Create physical platform body
