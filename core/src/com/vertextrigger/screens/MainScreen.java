@@ -1,6 +1,7 @@
 package com.vertextrigger.screens;
 
 import com.badlogic.gdx.Screen;
+import com.vertextrigger.VertexTrigger;
 
 /**
  * The first screen the user sees, with the option of selecting the level they
@@ -8,6 +9,15 @@ import com.badlogic.gdx.Screen;
  * previously completed levels.
  */
 public class MainScreen implements Screen {
+	
+	/**
+	 * Sets main game class for smooth screen transitions
+	 * 
+	 * @param vertexTrigger main game class
+	 */
+	public MainScreen(VertexTrigger vertexTrigger) {
+		// Set main game class
+	}
 
 	/**
 	 * Render method is invoked repeatedly once per frame, approximately 60
@@ -36,7 +46,7 @@ public class MainScreen implements Screen {
 	@Override
 	public void show() {
 		// Create "Stage" to handle buttons & distribute input events
-		// Set this stage as this screen's input processor
+		// Set stage as this screen's input processor
 		// Create a sprite batch for later rendering all sprite in one batch
 		// Initialise all sprites & fonts needed for this screen
 		// Create label buttons to allow user to select the level to play
@@ -76,5 +86,6 @@ public class MainScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
+		// Dispose assets being used in this screen
 	}
 }

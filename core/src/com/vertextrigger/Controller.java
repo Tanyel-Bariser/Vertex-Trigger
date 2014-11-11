@@ -1,18 +1,20 @@
 package com.vertextrigger;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Manages the creation & use of the buttons that control the player & the game
  */
-public class Controller implements InputProcessor{
+public class Controller implements InputProcessor {
+	private Screen level;
+	private Stage stage;
 
 	/**
-	 * Create all virtual buttons for Android version & set self as input handler
+	 * Create all virtual buttons for Android version
 	 */
-	public Controller() {
-		// Create a "Stage" to handle buttons & distribute input events
-		// Set the stage and this controller class as the current input processors
+	public Controller(Screen level, Stage stage) {
 		// If user is playing Android version of the game
 				// Create Left directional button
 				// Create Right directional button
@@ -51,6 +53,17 @@ public class Controller implements InputProcessor{
 		// Create virtual button with a standard pause image
 		// Create & set a listener to notice when the virtual button is
 		// touched & that causes the game to pause when it's touched
+		// Add button to the stage
+	}
+	
+	/**
+	 * Creates a virtual button for Android version
+	 * which unpauses the game play when touched
+	 */
+	private void resumeButtonSetup() {
+		// Create virtual resume game play button
+		// Create & set a listener to notice when the virtual button is
+		// touched & that causes the game play to be resumed
 		// Add button to the stage
 	}
 
