@@ -13,10 +13,10 @@ import org.junit.runners.Suite.SuiteClasses;
 		EntityTest.class, ExplodingPlatformTest.class, FireBallTest.class,
 		GroundWallFactoryTest.class, LevelOneScreenTest.class,
 		MainScreenTest.class, MovingPlatformTest.class, PathTest.class,
-		PlatformBehaviourTest.class, PlayerTest.class,
-		ReappearingPlatformTest.class, RotatingPlatformTest.class,
-		SpikedBallTest.class, SpriteFactoryTest.class,
-		StaticPlatformFactoryTest.class, TimedPlatformTest.class,
+		PlatformBehaviourTest.class, PlatformFactoryTest.class,
+		PlayerTest.class, ReappearingPlatformTest.class,
+		RotatingPlatformTest.class, SpikedBallTest.class,
+		SpriteFactoryTest.class, TimedPlatformTest.class,
 		VertexTriggerTest.class })
 public class AllTests {
 }

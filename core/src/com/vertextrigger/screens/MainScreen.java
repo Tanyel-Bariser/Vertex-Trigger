@@ -10,11 +10,16 @@ import com.badlogic.gdx.Screen;
 public class MainScreen implements Screen {
 
 	/**
-	 * Render method is invoked repeatedly once per frame,
-	 * approximately 60 frames per second, during the game
+	 * Render method is invoked repeatedly once per frame, approximately 60
+	 * frames per second, during the game
 	 */
 	@Override
 	public void render(float delta) {
+		// Set the colour to clear the screen to
+		// Clear the screen to the selected colour
+		// Play main screen music
+		// Draw all sprites to the screen in one batch
+		// Draw the label buttons from the stage to the screen
 	}
 
 	/**
@@ -30,6 +35,19 @@ public class MainScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		// Create "Stage" to handle buttons & distribute input events
+		// Set this stage as this screen's input processor
+		// Create a sprite batch for later rendering all sprite in one batch
+		// Initialise all sprites & fonts needed for this screen
+		// Create label buttons to allow user to select the level to play
+	}
+
+	/**
+	 * Creates a list of labels so users can select the level they want to play
+	 */
+	private void levelSelectionSetup() {
+		// Create clickable/touchable labels that transition to the appropriate
+		// level screen, i.e. Level One, Level Two, etc.
 	}
 
 	/**

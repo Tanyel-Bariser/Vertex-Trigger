@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  *
  */
-public class StaticPlatformFactory {
+public class PlatformFactory {
 
 	/**
 	 * @param world
