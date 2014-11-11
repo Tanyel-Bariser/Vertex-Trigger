@@ -21,7 +21,7 @@ public class Bullet implements Poolable, Entity {
 		// Initialise physical properties, i.e. circle shape, very bouncy, etc.
 		// Set position out of camera's/user's view
 		// Create physical body
-		// Set identifier label as "Bullet"
+		// Set identifier label as "Bullet" (for fixture not body)
 		// Set bullet sprite
 		// Set bullet existence time to 5 seconds from being shot
 	}

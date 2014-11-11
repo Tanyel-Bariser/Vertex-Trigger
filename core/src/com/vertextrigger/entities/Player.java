@@ -22,7 +22,7 @@ public class Player implements Entity {
 		// Initialise physical properties, i.e. polygon shape, dynamic body, etc.
 		// Set initial position of player in the level
 		// Create physical body
-		// Set identifier label as "Player"
+		// Set identifier label as "Player" (for fixture not body)
 		// Create & set sprites & animations
 	}
 	

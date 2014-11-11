@@ -21,7 +21,7 @@ public abstract class MovingPlatform implements Entity{
 		 */
 		public MovingPlatform(World world, Sprite sprite, Array<Coordinate> coordinates) {
 			// Set sprite for platform
-			// Create physical body
+			// Create physical platform body
 			// Set the coordinates of the predefined path
 			// for the enemy to follow in a loop
 		}

@@ -53,7 +53,7 @@ public class SpriteFactory {
 	 * @param height of player sprite
 	 * @return player sprite
 	 */
-	public Sprite getPlayer(String name, float width, float height) {
+	public Sprite getPlayerSprite(String name, float width, float height) {
 		// Get a specific player sprite from assets by its name
 		// Set player sprite size
 		// Set player origin as middle of sprite
@@ -67,7 +67,7 @@ public class SpriteFactory {
 	 * @param height of enemy sprite
 	 * @return enemy sprite
 	 */
-	public Sprite getEnemy(String name, float width, float height) {
+	public Sprite getEnemySprite(String name, float width, float height) {
 		// Get a specific enemy sprite from assets by its name
 		// Set enemy sprite size
 		// Set enemy origin as middle of sprite
@@ -80,11 +80,24 @@ public class SpriteFactory {
 	 * @param radius of dangerous ball sprite
 	 * @return dangerous ball sprite
 	 */
-	public Sprite getDangerousBall(String name, float radius) {
+	public Sprite getDangerousBallSprite(String name, float radius) {
 		// Get a specific dangerous ball sprite from assets by its name
 		// Set dangerous ball sprite size
 		// Set dangerous ball origin as middle of sprite
 		// Return dangerous ball sprite
+		return null;
+	}
+	
+	/**
+	 * @param name of platform sprite in texture atlas
+	 * @param width of platform sprite
+	 * @param height of platform sprite
+	 * @return platform sprite
+	 */
+	public Sprite getPlatformSprite(String name, float width, float height) {
+		// Get a specific platform sprite from assets by its name
+		// Set platform sprite size
+		// Return platform sprite
 		return null;
 	}
 }

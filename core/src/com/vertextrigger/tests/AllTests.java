@@ -11,7 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		ControllerTest.class, DangerousBallTest.class, EnemyFactoryTest.class,
 		EnemyTest.class, EntityTest.class, GroundWallFactoryTest.class,
 		LevelOneScreenTest.class, MainScreenTest.class, PathTest.class,
-		PlatformBehaviourTest.class, PlatformFactoryTest.class,
+		PlatformBehaviourTest.class, StaticPlatformFactoryTest.class,
 		PlayerTest.class, SpriteFactoryTest.class, VertexTriggerTest.class })
 public class AllTests {
 }
