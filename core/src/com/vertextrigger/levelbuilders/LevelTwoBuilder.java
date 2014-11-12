@@ -6,41 +6,60 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 public class LevelTwoBuilder implements LevelBuilder {
-
+	
+	public LevelTwoBuilder() {
+		// Play level two music
+	}
+	
+	/**
+	 * @param world for all game objects in this level to reside in
+	 */
 	@Override
-	public Entity createPlayer(World world) {
+	public void setWorld(World world) {
+		// Set game world for this level
+	}
+	
+	@Override
+	public Entity createPlayer() {
 		return null;
 	}
 
 	@Override
-	public Array<Entity> createEnemies(World world) {
+	public Array<Entity> createEnemies() {
 		return null;
 	}
 
 	@Override
-	public Array<Entity> createDanerousBalls(World world) {
+	public Array<Entity> createDanerousBalls() {
 		return null;
 	}
 
 	@Override
-	public Array<Entity> createMovingPlatforms(World world) {
+	public Array<Entity> createMovingPlatforms() {
 		return null;
 	}
 
 	@Override
-	public Array<Entity> createTimedPlatforms(World world) {
+	public Array<Entity> createTimedPlatforms() {
 		return null;
 	}
 
 	@Override
-	public Array<Sprite> createStaticPlatforms(World world) {
+	public Array<Sprite> createStaticPlatforms() {
 		return null;
 	}
 
 	@Override
-	public void createGroundWalls(World world) {
+	public Array<Sprite> createGroundWalls() {
+		return null;
 	}
 
+	/**
+	 * Resets the level layout when player has died & repositions
+	 * the player back to the initial position of the level
+	 * 
+	 * DO NOT RECREATE GAME OBJECTS, ONLY REPOSITION THEM AS IT'S FASTER
+	 */
 	@Override
 	public void resetLevelLayout() {	
 	}

@@ -54,7 +54,6 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		// Play Level One music
 		// Create a "Stage" to handle buttons & distribute input events
 		// Create Controller to create & manage all virtual game play buttons
 		// for the level
@@ -66,19 +65,20 @@ public class GameScreen implements Screen {
 		// Create the collision detector to recognise contacts between game objects
 		// Set the collision detector to the game world so it can detect game 
 		// objects that reside within the game world
+		
 		// Create the ground, walls, ceiling, etc. for the level & add all of it's
 		// sprites to the container of sprites for later rendering
-		// Create all of the platforms & add the sprites to the sprite container
-		// Create all of the enemies & dangerous balls & add these sprites to the
-		// sprite container for later rendering
-		// Create the main player & add his sprite to the sprite container
+		// Create the static platforms & add these sprites to the sprite container
+		// Create all of the moving & timed platforms & add these entities to a
+		// separate container
+		// Create all of the enemies & dangerous balls & add these entities to the
+		// entity container
+		// Create the main player & add his entity to the entity container
 	}
 	
 	/**
 	 * Resets the level layout when player has died & repositions
 	 * the player back to the initial position of the level
-	 * 
-	 * DO NOT RECREATE GAME OBJECTS, ONLY REPOSITION THEM AS IT'S FASTER
 	 */
 	public void resetLevel() {
 		
