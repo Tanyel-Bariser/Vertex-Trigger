@@ -1,7 +1,6 @@
 package com.vertextrigger.factories;
 
-import com.vertextrigger.entities.FireBall;
-import com.vertextrigger.entities.SpikedBall;
+import com.badlogic.ashley.core.Entity;
 
 public class DangerousBallFactory {
 
@@ -9,7 +8,7 @@ public class DangerousBallFactory {
 	 * 
 	 * @return
 	 */
-	public static FireBall createFireBall() {
+	public static Entity createFireBall() {
 		
 		return null;
 	}
@@ -18,7 +17,7 @@ public class DangerousBallFactory {
 	 * 
 	 * @return
 	 */
-	public static SpikedBall createSpikedBall() {
+	public static Entity createSpikedBall() {
 		
 		return null;
 	}

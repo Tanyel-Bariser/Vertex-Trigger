@@ -2,7 +2,7 @@ package com.vertextrigger.screens;
 
 import com.badlogic.gdx.Screen;
 import com.vertextrigger.VertexTrigger;
-import com.vertextrigger.factories.LevelBuilder;
+import com.vertextrigger.levelbuilders.LevelBuilder;
 
 /**
  * 

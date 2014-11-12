@@ -1,12 +1,12 @@
 package com.vertextrigger.factories;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
  *
  */
-public class PlatformFactory {
+public class StaticPlatformFactory {
 
 	/**
 	 * @param world
@@ -17,7 +17,7 @@ public class PlatformFactory {
 	 * @param bodyHeight
 	 * @return
 	 */
-	public static Body createStickyPlatform(World world, String name,
+	public static Sprite createStickyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
 		
@@ -34,7 +34,7 @@ public class PlatformFactory {
 	 * @param bodyHeight
 	 * @return
 	 */
-	public static Body createSlipperyPlatform(World world, String name,
+	public static Sprite createSlipperyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
 		
@@ -51,24 +51,7 @@ public class PlatformFactory {
 	 * @param bodyHeight
 	 * @return
 	 */
-	public static Body createBouncyPlatform(World world, String name,
-			float spriteWidth, float spriteHeight, float bodyWidth,
-			float bodyHeight) {
-		
-		return null;
-	}
-	
-
-	/**
-	 * @param world
-	 * @param name
-	 * @param spriteWidth
-	 * @param spriteHeight
-	 * @param bodyWidth
-	 * @param bodyHeight
-	 * @return
-	 */
-	public static Body createConveyorBeltPlatform(World world, String name,
+	public static Sprite createBouncyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
 		
