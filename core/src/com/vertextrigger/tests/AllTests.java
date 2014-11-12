@@ -11,7 +11,7 @@ import org.junit.runners.Suite.SuiteClasses;
 		ControllerTest.class, DangerousBallFactoryTest.class,
 		DangerousBallTest.class, EnemyFactoryTest.class, EnemyTest.class,
 		EntityTest.class, ExplodingPlatformTest.class, FireBallTest.class,
-		GroundWallFactoryTest.class, LevelOneScreenTest.class,
+		GroundWallFactoryTest.class, GameScreenTest.class,
 		MainScreenTest.class, MovingPlatformTest.class, PathTest.class,
 		PlatformBehaviourTest.class, PlatformFactoryTest.class,
 		PlayerTest.class, ReappearingPlatformTest.class,

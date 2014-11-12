@@ -23,11 +23,13 @@ public class CollisionDetection implements ContactListener {
 				// Play player killed sound effect
 				// Notify player to move to the
 				// initial position of the level
+				// Reset whole layout of the level
 		// If player is in contact with a killing edge of
 		// the ground/wall of the level, i.e. bottom less pit
 				// Play player killed sound effect
 				// Notify player to move to the
 				// initial position of the level
+				// Reset whole layout of the level
 		// If player is in contact with a portal
 				// Change position of player & the direction, but not magnitude,
 				// of movement to be perpendicular to the other portal

@@ -2,18 +2,21 @@ package com.vertextrigger.screens;
 
 import com.badlogic.gdx.Screen;
 import com.vertextrigger.VertexTrigger;
+import com.vertextrigger.factories.LevelBuilder;
 
 /**
  * 
  */
-public class LevelOneScreen implements Screen {
+public class GameScreen implements Screen {
+	private VertexTrigger vertexTrigger;
+	private LevelBuilder levelBuilder;
 	
 	/**
 	 * Sets main game class for smooth screen transitions
 	 * 
 	 * @param vertexTrigger main game class
 	 */
-	public LevelOneScreen(VertexTrigger vertexTrigger) {
+	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
 		// Set main game class
 	}
 
@@ -74,6 +77,8 @@ public class LevelOneScreen implements Screen {
 	/**
 	 * Resets the level layout when player has died & repositions
 	 * the player back to the initial position of the level
+	 * 
+	 * DO NOT RECREATE GAME OBJECTS, ONLY REPOSITION THEM AS IT'S FASTER
 	 */
 	public void resetLevel() {
 		

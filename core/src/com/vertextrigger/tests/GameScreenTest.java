@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class LevelOneScreenTest {
+public class GameScreenTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
