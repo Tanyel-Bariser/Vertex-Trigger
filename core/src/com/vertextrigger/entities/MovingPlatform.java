@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
 
-public abstract class MovingPlatform implements Entity{
+public abstract class MovingPlatform implements Entity {
 		// Predefined path for platform to move
 		protected Path path;
 
@@ -28,6 +28,7 @@ public abstract class MovingPlatform implements Entity{
 		
 		/**
 		 * Create moving platform's physical body & physical properties.
+		 * Each platform type can set a specific identifier label to it's fixture
 		 * 
 		 * @param world the moving platform will reside in
 		 * @param position of moving platform in game world
@@ -36,9 +37,9 @@ public abstract class MovingPlatform implements Entity{
 		protected abstract Body createPlatformBody(World world, Coordinate position);
 		
 		/**
-		 * Create & set sprite for moving platform
+		 * Create & set sprite & animation for moving platform
 		 */
-		protected abstract void spriteSetup();
+		protected abstract void spriteAnimationSetup();
 		
 		/**
 		 * Moves the platform further along its predefined

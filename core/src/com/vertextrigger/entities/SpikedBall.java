@@ -17,17 +17,8 @@ public class SpikedBall extends DangerousBall {
 	 * @param sprite
 	 * @param coordinates
 	 */
-	public SpikedBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
-		super(world, sprite, coordinates);
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	protected Body createDangerousBall(World world, Coordinate position) {
-		return null;
+	public SpikedBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius) {
+		super(world, sprite, coordinates, radius);
 	}
 
 	/**

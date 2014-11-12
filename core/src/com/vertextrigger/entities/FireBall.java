@@ -17,16 +17,8 @@ public class FireBall extends DangerousBall {
 	 * @param sprite
 	 * @param coordinates
 	 */
-	public FireBall(World world, Sprite sprite, Array<Coordinate> coordinates) {
-		super(world, sprite, coordinates);
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	protected Body createDangerousBall(World world, Coordinate position) {
-		return null;
+	public FireBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius) {
+		super(world, sprite, coordinates, radius);
 	}
 
 	/**

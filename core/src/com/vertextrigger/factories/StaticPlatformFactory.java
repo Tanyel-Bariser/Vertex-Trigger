@@ -20,7 +20,7 @@ public class StaticPlatformFactory {
 	public static Sprite createStickyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
-		
+		// Set identifier label of fixture to "StickyPlatform"
 		return null;
 	}
 	
@@ -37,7 +37,7 @@ public class StaticPlatformFactory {
 	public static Sprite createSlipperyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
-		
+		// Set identifier label of fixture to "SlipperyPlatform"
 		return null;
 	}
 	
@@ -54,7 +54,7 @@ public class StaticPlatformFactory {
 	public static Sprite createBouncyPlatform(World world, String name,
 			float spriteWidth, float spriteHeight, float bodyWidth,
 			float bodyHeight) {
-		
+		// Set identifier label of fixture to "BouncyPlatform"
 		return null;
 	}
 }
