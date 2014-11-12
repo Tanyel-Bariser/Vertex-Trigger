@@ -27,6 +27,13 @@ public class Player implements Entity {
 	}
 	
 	/**
+	 * Reset player position to the initial position of the level he's in
+	 */
+	public void playerDied() {
+		// Set player position to the initial position of the level
+	}
+	
+	/**
 	 * Initialise sprites & animation objects
 	 */
 	private void spriteAnimationSetup() {

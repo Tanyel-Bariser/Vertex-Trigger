@@ -29,13 +29,13 @@ public class LevelOneScreen implements Screen {
 				// Adjust gravity of game world based on delta
 				// Update game world based on time step
 				// For each entity in the entity container
-						// Update each entity & store their updated sprites
-						// in the sprite container for later rendering
+						// Update each entity & store their updated
+						// sprite in the entity sprite container
 				// Update camera position to follow the player
-				// Remove sprites that are not in the view of the camera from
-				// the container of sprites to be rendered
-		// Draw all sprites in one batch to the screen
-		// Draw all button/label images
+				// Add only those sprites that are in the view of the camera 
+				// projection into a separate container of sprites to be rendered
+		// Draw all sprites in one batch to the user's screen
+		// Draw all button/label images to the user's screen
 	}
 
 	/**
@@ -69,6 +69,14 @@ public class LevelOneScreen implements Screen {
 		// Create all of the enemies & dangerous balls & add these sprites to the
 		// sprite container for later rendering
 		// Create the main player & add his sprite to the sprite container
+	}
+	
+	/**
+	 * Resets the level layout when player has died & repositions
+	 * the player back to the initial position of the level
+	 */
+	public void resetLevel() {
+		
 	}
 
 	/**
