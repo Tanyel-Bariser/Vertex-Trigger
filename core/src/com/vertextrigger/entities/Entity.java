@@ -19,4 +19,10 @@ public interface Entity {
 	 * @return updated sprite position for rendering of current frame
 	 */
 	Sprite update(float delta);
+
+    /** Gets an entity's current angle of movement */
+    // float getAngle()
+
+    /** Gets an entity's current direction and magnitude of movement */
+    // float getMovement()
 }
