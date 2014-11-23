@@ -5,9 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * 
+ */
 public class LevelThreeBuilder implements LevelBuilder {
+	private World world;
 	
 	public LevelThreeBuilder() {
+		// Load assets required for level three,
+		// while unloading unneeded assets
 		// Play level three music
 	}
 	

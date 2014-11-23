@@ -9,6 +9,7 @@ import com.vertextrigger.Coordinate;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
+	private World world;
 
 	/**
 	 * Creates player's physical body & its physical properties
@@ -24,6 +25,22 @@ public class Player implements Entity {
 		// Create physical body
 		// Set identifier label as "Player" (for fixture not body)
 		// Create & set sprites & animations
+		// Initialise a bullet pool from which to obtain new bullets
+	}
+	
+	/**
+	 * Bullets are shot from the position of the player's gun
+	 * in the direction the player is facing
+	 */
+	public void shoot() {
+		// Create a new bullet from the bullet pool
+		// Set the x-axis & y-axis position of bullet based on
+		// the position of the player's gun
+		// If the player is facing left
+				// Shoot bullet towards the left direction
+		// If the player is facing right
+				// Shoot bullet towards the right direction
+		// Add the bullet to the Game Screen's entity container
 	}
 	
 	/**
@@ -57,7 +74,7 @@ public class Player implements Entity {
 	 * 
 	 * @return the speed & direction the player is moving horizontally
 	 */
-	private float getMovement() {
+	private float getDirection() {
 		// Return the magnitude of the player's
 		// movement in either left or right direction
 		return 0;
@@ -110,7 +127,8 @@ public class Player implements Entity {
 	 * Makes player jump
 	 */
 	public void jump() {
-		// Thrust player upwards
+		// If player is allowed to jump
+				// Make the player jump
 	}
 	
 	/**
@@ -141,6 +159,10 @@ public class Player implements Entity {
 	 */
 	@Override
 	public Sprite update(float delta) {
+		// For each bullet in the bullet pool
+				// If the bullet's existence time has run out
+						// Free the bullet from the pool to be reused later
+		
 		// If player is on a sticky platform move at half the directional speed
 		// Move player either left or right, according to the movement variable,
 		// to an amount dependent on delta

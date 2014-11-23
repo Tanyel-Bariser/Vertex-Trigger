@@ -9,8 +9,11 @@ import com.badlogic.gdx.utils.Array;
  * 
  */
 public class LevelOneBuilder implements LevelBuilder {
+	private World world;
 	
 	public LevelOneBuilder() {
+		// Load assets required for level one,
+		// while unloading unneeded assets
 		// Play level one music
 	}
 	

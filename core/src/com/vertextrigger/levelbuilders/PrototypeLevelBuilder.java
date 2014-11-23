@@ -6,15 +6,15 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * 
+ * A prototype level to allow manual testing of player controls & game objects
  */
-public class LevelTwoBuilder implements LevelBuilder {
+public class PrototypeLevelBuilder  implements LevelBuilder {
 	private World world;
 	
-	public LevelTwoBuilder() {
-		// Load assets required for level two,
+	public PrototypeLevelBuilder() {
+		// Load assets required for level one,
 		// while unloading unneeded assets
-		// Play level two music
+		// Play level one music
 	}
 	
 	/**

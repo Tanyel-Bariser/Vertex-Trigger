@@ -2,6 +2,7 @@ package com.vertextrigger.screens;
 
 import com.badlogic.gdx.Screen;
 import com.vertextrigger.VertexTrigger;
+import com.vertextrigger.entities.Entity;
 import com.vertextrigger.levelbuilders.LevelBuilder;
 
 /**
@@ -18,6 +19,8 @@ public class GameScreen implements Screen {
 	 */
 	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
 		// Set main game class
+		// Set the specific level builder to set up & build the specific level,
+		// i.e. level 1, level 2 or level 3, etc.
 	}
 
 	/**
@@ -74,6 +77,13 @@ public class GameScreen implements Screen {
 		// Create all of the enemies & dangerous balls & add these entities to the
 		// entity container
 		// Create the main player & add his entity to the entity container
+	}
+	
+	/**
+	 * @param entity is added to the entity container/data structure
+	 */
+	public void addEntity(Entity entity) {
+		// Added an entity to the entity container
 	}
 	
 	/**

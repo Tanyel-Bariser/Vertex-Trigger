@@ -16,9 +16,11 @@ public class FireBall extends DangerousBall {
 	 * @param world
 	 * @param sprite
 	 * @param coordinates
+	 * @param radius
+	 * @param speed
 	 */
-	public FireBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius) {
-		super(world, sprite, coordinates, radius);
+	public FireBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius, float speed) {
+		super(world, sprite, coordinates, radius, speed);
 	}
 
 	/**

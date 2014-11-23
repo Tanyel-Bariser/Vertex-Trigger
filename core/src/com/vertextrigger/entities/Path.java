@@ -32,7 +32,7 @@ public class Path {
 	 * 
 	 * @param delta time passed between previous & current frame
 	 */
-	public void moveAlongPath(float delta) {
+	void moveAlongPath(float delta) {
 		// If there is a next coordinate to move to
 				// Move entity toward next coordinate
 				// at a distance dependent on delta

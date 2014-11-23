@@ -27,19 +27,13 @@ public class Bullet implements Poolable, Entity {
 	}
 	
 	/**
-	 * Bullets are shot from the position of the player's gun
-	 * towards the specified direction
+	 * Allows player to set the position of the bullet to that of his gun
 	 * 
-	 * @param xPostion of player's gun
-	 * @param yPosition of player's gun
-	 * @param shootLeft if true shoots bullet left, else shoots right
+	 * @param x axis position of bullet
+	 * @param y axis position of bullet
 	 */
-	public void shootBullet(float xPostion, float yPosition, boolean shootLeft) {
-		// Set x & y coordinate position of bullet
-		// If shooting left
-				// Shoot bullet towards the left direction
-		// If shooting right
-				// Shoot bullet towards the right direction
+	void setPosition(float x, float y) {
+		// Set the x-axis & y-axis position of the bullet
 	}
 	
 	/**
@@ -69,9 +63,9 @@ public class Bullet implements Poolable, Entity {
 	 * @param delta the amount of time passed
 	 * @return whether or not bullet should be freed
 	 */
-	public boolean bulletTimeRanOut(float delta) {
+	boolean bulletTimeRanOut(float delta) {
 		// Reduce bullet existence time by the delta
-		// If bullet time has run out, i.e. below zero
+		// If bullet time has run out, i.e. below or equal to zero seconds
 				// Return true so bullet can be freed from BulletPool
 		// If bullet time has not run out, i.e. above zero
 				// Return false so bullet stays active
