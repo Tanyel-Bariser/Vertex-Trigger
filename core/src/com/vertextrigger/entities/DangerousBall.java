@@ -14,6 +14,7 @@ public abstract class DangerousBall implements Entity {
 	// Predefined path for dangerous ball's physical body to follow
 	protected Path path;
 	protected Body body;
+	protected Sprite sprite;
 	protected float speed;
 
 	/**
@@ -28,7 +29,7 @@ public abstract class DangerousBall implements Entity {
 		// Set sprite for dangerous ball
 		spriteSetup();
 		// Create physical body at initial position based on first coordinate
-		createBody(coordinates.first());
+		createBody(world, coordinates.first());
 		// Set the coordinates of the predefined path
 		// for the dangerous ball to follow in a loop
 		path = new Path(body, coordinates);
@@ -42,7 +43,7 @@ public abstract class DangerousBall implements Entity {
 	/**
 	 * Defers creation of body & physical properties to subclasses
 	 */
-	protected abstract void createBody(Coordinate coordinates);
+	protected abstract void createBody(World world, Coordinate coordinates);
 	
 	/**
 	 * Moves the dangerous ball further along its predefined

@@ -9,22 +9,32 @@ import com.vertextrigger.Coordinate;
  * Platform rotates 90 degrees once every 4 seconds
  */
 public class RotatingPlatform extends TimedPlatform {
+	private final float TIME_BETWEEN_ROTATION = 2f;
 
-	public RotatingPlatform(World world, Sprite sprite, Coordinate position,
-			float time) {
-		super(world, sprite, position, time);
+	public RotatingPlatform(World world, Coordinate position) {
+		super(world, position);
+		// Set the amount of time to pass between each time the platform rotates
+		time = TIME_BETWEEN_ROTATION;
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	protected void setupSpriteAnimation() {
+	}
+
+	/**
+	 * 
+	 */
 	@Override
 	protected Body createPlatformBody(World world, Coordinate position) {
 		return null;
 	}
 
-	@Override
-	protected void spriteSetup() {
-		
-	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public Sprite update(float delta) {
 		return null;

@@ -29,7 +29,7 @@ public class FireBall extends DangerousBall {
 	 * 
 	 */
 	@Override
-	protected void createBody(Coordinate coordinate) {
+	protected void createBody(World world, Coordinate coordinate) {
 		// Set radius of fire ball
 		// Set the speed the fire ball moves at
 	}

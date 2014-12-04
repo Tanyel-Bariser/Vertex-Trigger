@@ -1,5 +1,6 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,21 +12,28 @@ import com.vertextrigger.Coordinate;
  * of the platform or platform rotates every 4 seconds etc.
  */
 public abstract class TimedPlatform implements Entity {
+	protected float time;
+	protected Sprite sprite;
+	protected Animation animation;
 
 	/**
 	 * Initialises the physical properties of the platform's physical body
 	 * Sets platforms's sprite & animation
-	 * Sets time for timed platform
 	 * 
-	 * @param world the moving platform will reside in
-	 * @param sprite platform's image
+	 * @param world the timed platform will reside in
 	 * @param time before the platform's action is required
 	 */
-	public TimedPlatform(World world, Sprite sprite, Coordinate position, float time) {
+	public TimedPlatform(World world, Coordinate position) {
 		// Set sprite & animation for platform
-		// Set time for timed platform
+		setupSpriteAnimation();
 		// Create physical platform body
 	}
+	
+
+	/**
+	 * Create & set sprite & animation for moving platform
+	 */
+	protected abstract void setupSpriteAnimation();
 	
 	/**
 	 * Create timed platform's physical body & physical properties.
@@ -35,11 +43,6 @@ public abstract class TimedPlatform implements Entity {
 	 * @return physical body of platform 
 	 */
 	protected abstract Body createPlatformBody(World world, Coordinate position);
-	
-	/**
-	 * Create & set sprite & animation for moving platform
-	 */
-	protected abstract void spriteSetup();
 	
 	/**
 	 * Once enough time has passed, the timed platform performs

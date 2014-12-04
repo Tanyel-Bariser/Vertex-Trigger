@@ -6,20 +6,33 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.Coordinate;
 
 public class ReappearingPlatform extends TimedPlatform {
+	private final float SECONDS_BETWEEN_DISAPPEAR_REAPPEAR = 3f;
 
-	public ReappearingPlatform(World world, Sprite sprite, Coordinate position, float time) {
-		super(world, sprite, position, time);
+	public ReappearingPlatform(World world, Coordinate position) {
+		super(world, position);
+		// Set the amount of time to pass between
+		// the platform disappearing/reappearing
+		time = SECONDS_BETWEEN_DISAPPEAR_REAPPEAR;
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	protected void setupSpriteAnimation() {
+	}
+	
+	/**
+	 * 
+	 */
 	@Override
 	protected Body createPlatformBody(World world, Coordinate position) {
 		return null;
 	}
 
-	@Override
-	protected void spriteSetup() {
-	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public Sprite update(float delta) {
 		return null;

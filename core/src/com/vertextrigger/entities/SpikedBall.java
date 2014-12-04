@@ -29,7 +29,7 @@ public class SpikedBall extends DangerousBall {
 	 * 
 	 */
 	@Override
-	protected void createBody(Coordinate coordinates) {
+	protected void createBody(World world, Coordinate coordinates) {
 		// Set radius of spiked ball
 		// Set the speed the spiked ball moves at
 	}
