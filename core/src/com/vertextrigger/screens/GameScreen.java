@@ -1,6 +1,10 @@
 package com.vertextrigger.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.VertexTrigger;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.levelbuilders.LevelBuilder;
@@ -11,6 +15,11 @@ import com.vertextrigger.levelbuilders.LevelBuilder;
 public class GameScreen implements Screen {
 	private VertexTrigger vertexTrigger;
 	private LevelBuilder levelBuilder;
+	private World world;
+	private Array<Entity> entities;
+	private Array<Sprite> entitySprites;
+	private Array<Sprite> sprites;
+	private final float GRAVITY = -9.81f;
 	
 	/**
 	 * Sets main game class for smooth screen transitions
@@ -32,14 +41,22 @@ public class GameScreen implements Screen {
 		// Set the colour to clear the screen to
 		// Clear the screen to the selected colour
 		// If the game state is "running", i.e. not paused
-				// Adjust gravity of game world based on delta
-				// Update game world based on time step
-				// For each entity in the entity container
-						// Update each entity & store their updated
-						// sprite in the entity sprite container
-				// Update camera position to follow the player
-				// Add only those sprites that are in the view of the camera 
-				// projection into a separate container of sprites to be rendered
+			// Adjust gravity of game world based on delta
+			// Update game world based on time step
+			
+			// Empty the entity sprite container
+			entitySprites.clear();
+			// For each entity in the entity container
+			for (Entity entity : entities) {
+				// Update each entity
+				Sprite sprite = entity.update(delta);
+				// Store their updated sprite in the entity sprite container
+				entitySprites.add(sprite);
+			}
+		
+			// Update camera position to follow the player
+			// Add only those sprites that are in the view of the camera 
+			// projection into a separate container of sprites to be rendered
 		// Draw all sprites in one batch to the user's screen
 		// Draw all button/label images to the user's screen
 	}
@@ -64,19 +81,25 @@ public class GameScreen implements Screen {
 		// Create a sprite batch for later rendering all sprite in one batch
 		// Create camera to be able to project a portion of the game world to
 		// the user's screen
-		// Create the game world with a gravity of 9.81 m/s2
+		
+		// Create the game world with a gravity of -9.81 m/s2 on the Y-axis &
+		// for performance set true to not simulating inactive bodies
+		world = new World(new Vector2(0, GRAVITY), true);
+		
 		// Create the collision detector to recognise contacts between game objects
 		// Set the collision detector to the game world so it can detect game 
 		// objects that reside within the game world
 		
-		// Create the ground, walls, ceiling, etc. for the level & add all of it's
-		// sprites to the container of sprites for later rendering
-		// Create the static platforms & add these sprites to the sprite container
-		// Create all of the moving & timed platforms & add these entities to a
-		// separate container
-		// Create all of the enemies & dangerous balls & add these entities to the
-		// entity container
-		// Create the main player & add his entity to the entity container
+		// Create the static platforms, portals, ground, walls, ceiling, etc. for the
+		// level & add all of their corresponding sprites to the container of
+		// sprites for later rendering
+		sprites = levelBuilder.buildLevelLayout(world);
+		
+		// Create all dynamic/kinematic game objects for this level, i.e. the
+		// player, enemies, dangerous balls, moving platforms, etc. & add these
+		// entities into a container so they each can be updated once per frame
+		// during gameplay
+		entities = levelBuilder.buildEntities(world);
 	}
 	
 	/**
@@ -84,14 +107,16 @@ public class GameScreen implements Screen {
 	 */
 	public void addEntity(Entity entity) {
 		// Added an entity to the entity container
+		entities.add(entity);
 	}
 	
 	/**
 	 * Resets the level layout when player has died & repositions
 	 * the player back to the initial position of the level
+	 * Does not recreate game objects, it only resets their initial positions
 	 */
 	public void resetLevel() {
-		
+		levelBuilder.resetLevelLayout();
 	}
 
 	/**

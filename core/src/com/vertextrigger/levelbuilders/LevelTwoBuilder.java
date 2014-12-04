@@ -1,72 +1,47 @@
 package com.vertextrigger.levelbuilders;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 
 /**
  * 
  */
-public class LevelTwoBuilder implements LevelBuilder {
-	private World world;
+public class LevelTwoBuilder extends LevelBuilder {
 	
 	public LevelTwoBuilder() {
 		// Load assets required for level two,
 		// while unloading unneeded assets
 		// Play level two music
 	}
-	
-	/**
-	 * @param world for all game objects in this level to reside in
-	 */
+
 	@Override
-	public void setWorld(World world) {
-		// Set game world for this level
-	}
-	
-	@Override
-	public Entity createPlayer() {
-		return null;
+	protected void createPlayer(World world) {
 	}
 
 	@Override
-	public Array<Entity> createEnemies() {
-		return null;
+	protected void createEnemies(World world) {
 	}
 
 	@Override
-	public Array<Entity> createDanerousBalls() {
-		return null;
+	protected void createDangerousBalls(World world) {
 	}
 
 	@Override
-	public Array<Entity> createMovingPlatforms() {
-		return null;
+	protected void createMovingPlatforms(World world) {
 	}
 
 	@Override
-	public Array<Entity> createTimedPlatforms() {
-		return null;
+	protected void createTimedPlatforms(World world) {
 	}
 
 	@Override
-	public Array<Sprite> createStaticPlatforms() {
-		return null;
+	protected void createStaticPlatforms(World world) {
 	}
 
 	@Override
-	public Array<Sprite> createGroundWalls() {
-		return null;
+	protected void createGroundWalls(World world) {
 	}
 
-	/**
-	 * Resets the level layout when player has died & repositions
-	 * the player back to the initial position of the level
-	 * 
-	 * DO NOT RECREATE GAME OBJECTS, ONLY REPOSITION THEM AS IT'S FASTER
-	 */
 	@Override
-	public void resetLevelLayout() {	
+	public void resetLevelLayout() {
 	}
 }
