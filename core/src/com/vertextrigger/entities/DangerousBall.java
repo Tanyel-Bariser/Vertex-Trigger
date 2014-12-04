@@ -13,6 +13,7 @@ import com.vertextrigger.Coordinate;
 public abstract class DangerousBall implements Entity {
 	// Predefined path for dangerous ball's physical body to follow
 	protected Path path;
+	protected Body body;
 	protected float speed;
 
 	/**
@@ -21,23 +22,27 @@ public abstract class DangerousBall implements Entity {
 	 * Sets the path of the dangerous ball to traverse
 	 * 
 	 * @param world the dangerous ball will reside in
-	 * @param sprite for the image of the dangerous ball
 	 * @param coordinates is the path, series of x & y coordinates, the dangerous ball follows
 	 */
-	public DangerousBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius, float speed) {
+	public DangerousBall(World world, Array<Coordinate> coordinates) {
 		// Set sprite for dangerous ball
-		// Create physical body
-		// Set initial position based on first coordinate
-		// Set radius of dangerous ball
-		// Set the speed the dangerous ball moves at
+		spriteSetup();
+		// Create physical body at initial position based on first coordinate
+		createBody(coordinates.first());
 		// Set the coordinates of the predefined path
-		// for the enemy to follow in a loop
+		// for the dangerous ball to follow in a loop
+		path = new Path(body, coordinates);
 	}
 	
 	/**
-	 * Create & set sprite for dangerous ball
+	 * Defers sprite setup to subclasses
 	 */
 	protected abstract void spriteSetup();
+	
+	/**
+	 * Defers creation of body & physical properties to subclasses
+	 */
+	protected abstract void createBody(Coordinate coordinates);
 	
 	/**
 	 * Moves the dangerous ball further along its predefined

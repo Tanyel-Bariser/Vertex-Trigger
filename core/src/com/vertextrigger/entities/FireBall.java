@@ -1,7 +1,5 @@
 package com.vertextrigger.entities;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
@@ -14,13 +12,10 @@ public class FireBall extends DangerousBall {
 	/**
 	 * 
 	 * @param world
-	 * @param sprite
 	 * @param coordinates
-	 * @param radius
-	 * @param speed
 	 */
-	public FireBall(World world, Sprite sprite, Array<Coordinate> coordinates, float radius, float speed) {
-		super(world, sprite, coordinates, radius, speed);
+	public FireBall(World world, Array<Coordinate> coordinates) {
+		super(world, coordinates);
 	}
 
 	/**
@@ -28,6 +23,14 @@ public class FireBall extends DangerousBall {
 	 */
 	@Override
 	protected void spriteSetup() {
-		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void createBody(Coordinate coordinate) {
+		// Set radius of fire ball
+		// Set the speed the fire ball moves at
 	}
 }
