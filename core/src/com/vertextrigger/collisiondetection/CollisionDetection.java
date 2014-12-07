@@ -11,6 +11,7 @@ import java.util.HashSet;
 
 public class CollisionDetection implements ContactListener {
 
+    // the index will be in sync with the portal number assigned in the Portal constructor
     private static ArrayList<Portal> portals;
 
     public static void addPortal(Portal portal) {
