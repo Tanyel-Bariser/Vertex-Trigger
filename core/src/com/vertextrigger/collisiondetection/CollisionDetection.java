@@ -4,8 +4,18 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.vertextrigger.entities.Portal;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CollisionDetection implements ContactListener {
+
+    private static ArrayList<Portal> portals;
+
+    public static void addPortal(Portal portal) {
+        portals.add(portal);
+    }
 
 	/**
 	 * This method is called once when two game objects
@@ -13,6 +23,18 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void beginContact(Contact contact) {
+        String fixture1 = (String) contact.getFixtureA().getUserData();
+        String fixture2 = (String) contact.getFixtureB().getUserData();
+
+        if (fixture1.substring(0, 5).equals("PORTAL")) {
+            Portal entryPortal = portals.get(Integer.parseInt(fixture1.substring(6)));
+            Portal exitPortal = entryPortal.getPairedPortal();
+        }
+        else if (fixture2.substring(0, 5).equals("PORTAL")) {
+            Portal entryPortal = portals.get(Integer.parseInt(fixture1.substring(6)));
+            Portal exitPortal = entryPortal.getPairedPortal();
+        }
+
 		// If player is in contact with an item
 				// Play rewarding pick up sound effect
 				// Notify player that he has an item
