@@ -3,28 +3,59 @@ package com.vertextrigger.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.vertextrigger.Assets;
 import com.vertextrigger.Coordinate;
+import com.vertextrigger.collisiondetection.CollisionDetection;
 
 public class Portal {
 
-    private boolean facingLeft;
-    private Coordinate coordinate;
-    private World world;
+    public static enum Orientation {UP, RIGHT, DOWN, LEFT}
+    private static int portalCounter;
+    public static String IDENTIFIER = "PORTAL-";
 
+    private Body body;
+    private Coordinate coordinate;
+    private Fixture fixture;
+
+    private Orientation orientation;
     private Portal pairedPortal;
+
+    public Portal getPairedPortal() {
+        return this.pairedPortal;
+    }
+
+    public Fixture getFixture() {
+        return this.fixture;
+    }
+
+    public Body getBody() {
+        return this.body;
+    }
 
     /**
      * Initialises a single portal in the world and at a specific coordinate.
      *
      * @param world the portal will be in
      * @param coordinate the x & y coordinate at which the portal is located
+     * @param orientation the direction the portal faces
      */
-    private Portal(World world, Coordinate coordinate, boolean facingLeft) {
-        this.world = world;
+    private Portal(World world, Coordinate coordinate, Orientation orientation) {
         this.coordinate = coordinate;
-        this.facingLeft = facingLeft;
+        this.orientation = orientation;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;      // a portal has no need for movement
+        bodyDef.position.set(coordinate.x, coordinate.y);
+        body = world.createBody(bodyDef);
+
+        fixture = body.createFixture(
+                new CircleShape(), 0.0f
+        );
+        // the first portal pair will therefore be PORTAL-0 and PORTAL-1
+        fixture.setUserData(IDENTIFIER + (portalCounter++));
     }
 
     /**
@@ -32,15 +63,20 @@ public class Portal {
      *
      * @param world the world the portal pair will be in
      * @param coordinates an array of coordinates for the individual portals
-     * @param leftFacing an array of booleans specifying direction the individual portals will face
+     * @param orientations an array of booleans specifying direction the individual portals will face
      * @return an array of Sprite objects for the calling code to use for rendering
      */
-    public static Sprite[] createPortalPair(World world, Coordinate[] coordinates, Boolean[] leftFacing) {
-        Portal portal1 = new Portal(world, coordinates[0], leftFacing[0]);
-        Portal portal2 = new Portal(world, coordinates[1], leftFacing[1]);
+    public static Sprite[] createPortalPair(World world, Coordinate[] coordinates, Orientation[] orientations) {
+        // Construct portal objects and pair them with each other
+        Portal portal1 = new Portal(world, coordinates[0], orientations[0]);
+        Portal portal2 = new Portal(world, coordinates[1], orientations[1]);
         portal1.pairedPortal = portal2;
         portal2.pairedPortal = portal1;
 
+        CollisionDetection.addPortal(portal1);
+        CollisionDetection.addPortal(portal2);
+
+        // Create portal sprites and return them in an array to the caller
         Sprite[] sprites = new Sprite[2];
         sprites[0] = null;      // TODO find portal sprite
         sprites[1] = null;
@@ -49,71 +85,102 @@ public class Portal {
 
     /**
      * Places the body at the location of the exit portal at an appropriate angle and linear velocity.
-     * Calculates new linear velocity and new angle for the body depending on if the portals face the same direction
-     * If the two portals' directions differ then we must flip the angle and linear velocity x-axis of the body on exit
+     * Calculates new linear velocity and new angle for the body depending on orientation of the portals
      *
      * @param entryPortal the portal through which the player entered the portal pair
      * @param body the body (player/enemy/bullet/etc) which has entered the portal pair
      */
     public void traverse(Portal entryPortal, Body body) {
+        Portal exitPortal = entryPortal.pairedPortal;       // derive the exit portal from the entry portal
         Vector2 currentVelocity = body.getLinearVelocity();
         float currentAngle = body.getAngle();
-        Vector2 newVelocity;
-        float newAngle;
 
-        if (exitSameDirection(entryPortal)) {   // the simple case
-            newVelocity = currentVelocity;
-            newAngle = body.getAngle();
-        }
-        else {                                  // the complex case: we need to do some work!
-            newVelocity = getOppositeVelocity(currentVelocity);
-            newAngle = getOppositeAngle(currentAngle);
-        }
+        int clockwiseRotations = getClockwiseRotations(entryPortal, exitPortal);
+        float newAngle = getNewAngle(currentAngle, clockwiseRotations);
+        Vector2 newVelocity = getNewLinearVelocity(currentVelocity, clockwiseRotations);
 
-        Portal exitPortal = entryPortal.pairedPortal;
         body.setTransform(exitPortal.coordinate.x, exitPortal.coordinate.y, newAngle);   // set body to the position of the exit portal with updated angle
         body.setLinearVelocity(newVelocity);                                             // set body's updated linear velocity
     }
 
     /**
-     * Utility method to check whether both portals in a pair face the same direction.
-     * If so the player does not need to be rotated nor have his linear velocity changed, only his position.
-     * If not then we must calculate a new angle the player is facing and a new linear velocity.
+     * Utility method to calculate new angle the player must face after exiting the portal pair
      *
-     * @param entryPortal the first portal of a linked pair
-     * @return true if both portals face left OR both portals face right, otherwise false
+     * @param currentAngle the current angle at which the player is facing
+     * @param clockwiseRotations the offset of the portal direction in number of clockwise rotations of 90 degrees
+     * @return the new angle the player is facing in
      */
-    private boolean exitSameDirection(Portal entryPortal) {
-        return (entryPortal.facingLeft == entryPortal.pairedPortal.facingLeft);
+    private float getNewAngle(float currentAngle, int clockwiseRotations) {
+        float changeInRadians = (float) (Math.PI / 2) * clockwiseRotations;
+        return currentAngle + changeInRadians;
     }
 
     /**
-     * Gets the opposite angle in radians. Equivalent to a 180 degree flip.
-     * Used for when the player must exit from an opposite-facing portal and his angle must be reversed.
+     * Utility method to calculate new linear velocity the player must travel at after exiting the portal pair
      *
-     * @param currentAngle the angle at which the player has entered the first portal
-     * @return the flipped angle at which the player will exit the second portal
+     * @param currentVelocity the current x-axis and y-axis velocity at which the player is travelling
+     * @param clockwiseRotations the offset of the portal direction in number of clockwise rotations of 90 degrees
+     * @return the new linear velocity the player is travelling in
      */
-    private float getOppositeAngle(float currentAngle) {
-        // 360 degrees is equivalent to 2π and 180 degrees to π
-        if (currentAngle >= Math.PI) {
-            return currentAngle -= Math.PI;
+    private Vector2 getNewLinearVelocity(Vector2 currentVelocity, int clockwiseRotations) {
+        float currentX = currentVelocity.x;
+        float currentY = currentVelocity.y;
+        float newX, newY;
+
+        switch (clockwiseRotations) {
+            case 0:
+                newX = currentX;
+                newY = currentY * -1;
+                break;
+            case 1:
+                newX = currentX * -1;
+                newY = currentY * -1;
+                break;
+            case 2:
+                newX = currentX * -1;
+                newY = currentY;
+                break;
+            case 3:
+                newX = currentX;
+                newY = currentY;
+                break;
+            default:
+                // TODO handle this error
+                newX = 0.0f;
+                newY = 0.0f;
+                break;
+        }
+        return new Vector2(newX, newY);
+    }
+
+    /**
+     * Method to get the angular offset of the exit portal from the entry portal
+     *
+     * @param entry portal through which the player entered the portal pair
+     * @param exit portal through which the player will exit the portal pair
+     * @return an integer in the range 0-3 representing the offset in amount of clockwise turns of 90 degrees
+     */
+    private int getClockwiseRotations(Portal entry, Portal exit) {
+        // enums map to an array of integers with [UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3]
+        // a difference of 1 in the integer value represents 1 rotation of 90 degrees
+        // i.e. RIGHT is 1 and LEFT is 3, the difference is 2 and therefore 180 degrees (two 90 degree rotations)
+        int rotations = entry.orientation.ordinal() - exit.orientation.ordinal();
+
+        // a positive value of rotations indicates anticlockwise rotation and a negative difference clockwise
+        // e.g. UP to LEFT == (0 - 3) == -3  == 3 * 90 degrees clockwise == 270 degrees clockwise
+        if (rotations > 0) {
+            // rotations is positive so we subtract 4 rotations to get the clockwise rotations
+            // i.e. if rotations is 3 then it means 270 degrees anticlockwise. we subtract 4 to make it -1 which is 90 degrees clockwise
+            // finally we remove the sign and return 1 to indicate 1 clockwise rotation of 90 degrees
+            return Math.abs(rotations - 4);
+        }
+        else if (rotations < 0) {
+            // rotations is negative so we just remove the sign and return it
+            // i.e. if rotations is -3 then it means 270 degrees clockwise so we remove the sign to indicate 3 rotations of 90 degrees
+            return Math.abs(rotations);
         }
         else {
-            return currentAngle += Math.PI;
+            return 0;   // rotations is 0 so we simply return 0 to indicate 0 rotations of 90 degrees
         }
-    }
-
-    /**
-     * Gets the opposite linear velocity, i.e. an entry velocity of (-20, 30) will become (20, 30).
-     * We keep the current y-axis velocity but give the x-axis velocity the opposite sign, reversing it.
-     *
-     * @param currentVelocity the linear velocity at which the player has entered the first portal
-     * @return the flipped linear velocity at which the player will exit the second portal
-     */
-    private Vector2 getOppositeVelocity(Vector2 currentVelocity) {
-        // multiplying the float by -1 makes a positive number negative and vice-versa
-        // i.e. -2.1f becomes 2.1f and 41.96f becomes -41.96f
-        return new Vector2(currentVelocity.x *= -1, currentVelocity.y);
     }
 }
