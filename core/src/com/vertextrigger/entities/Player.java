@@ -1,6 +1,11 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.Coordinate;
 
@@ -9,23 +14,57 @@ import com.vertextrigger.Coordinate;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	private World world;
+	BulletPool bulletPool;
 
 	/**
-	 * Creates player's physical body & its physical properties
-	 * Creates sprite & animation factories
+	 * Creates player's physical body & its physical properties within the game
+	 * world at the starting position of the particular level.
+	 * 
+	 * Creates sprite & animation factories.
+	 * 
+	 * Creates a pool of reusable bullets for the player to shoot.
 	 * 
 	 * @param world the player will reside in
-	 * @param startingPosition of the player in a particular level
+	 * @param initialPosition of the player in a particular level
 	 */
 	public Player(World world, Coordinate initialPosition) {
-		// Set sprites & animations
-		// Initialise physical properties, i.e. polygon shape, dynamic body, etc.
-		// Set initial position of player in the level
-		// Create physical body
-		// Set identifier label as "Player" (for fixture not body)
-		// Create & set sprites & animations
-		// Initialise a bullet pool from which to obtain new bullets
+		// Set player's body as being of dynamic type
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+		
+		// Set initial position of player in the specific level
+		bodyDef.position.set(initialPosition.x, initialPosition.y);
+		
+		// Create player's physical body shape as a rectangle
+		PolygonShape shape = new PolygonShape();
+		float width = 0.5f, height = 1.5f;
+		shape.setAsBox(width, height);
+
+		// Create player's physical body within the game world
+		Body body = world.createBody(bodyDef);
+		
+		// Create fixture for player to bind his shape & his density to his body
+		float density = 3f;
+		Fixture fixture = body.createFixture(shape, density);
+		
+		// Set fixture label as "Player" to be identifiable by collision detector
+		fixture.setUserData("Player");
+
+		// Free shape resource from memory
+		shape.dispose();
+		
+		// Create animations and set player sprite
+		spriteAnimationSetup();
+		
+		// Create a pool of reusable bullets
+		bulletPool = new BulletPool();		
+	}
+	
+	/**
+	 * Initialise sprites & animation objects
+	 */
+	private void spriteAnimationSetup() {
+		// Create & set all sprites & animations the player will need
 	}
 	
 	/**
@@ -48,13 +87,6 @@ public class Player implements Entity {
 	 */
 	public void playerDied() {
 		// Set player position to the initial position of the level
-	}
-	
-	/**
-	 * Initialise sprites & animation objects
-	 */
-	private void spriteAnimationSetup() {
-		// Create & set all sprites & animations the player will need
 	}
 	
 	/**

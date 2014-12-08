@@ -1,12 +1,25 @@
 package com.vertextrigger.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.vertextrigger.Coordinate;
+import com.vertextrigger.entities.Player;
 
 public class PlayerTest {
 
@@ -27,8 +40,14 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testPlayerPositionInitialisation() {
+		World mockWorld = mock(World.class);
+		when(mockWorld.createBody((BodyDef) anyObject())).thenReturn((Body) anyObject());
+		Coordinate initialPosition = new Coordinate(-5, 2);
+		Player player = new Player(mockWorld, initialPosition);
+		ArgumentCaptor<BodyDef> arg = ArgumentCaptor.forClass(BodyDef.class);
+		verify(mockWorld, atLeastOnce()).createBody(arg.capture());
+		BodyDef bodyDef = arg.getValue();
+		assertEquals(new Vector2(initialPosition.x, initialPosition.y), bodyDef.position);
 	}
-
 }
