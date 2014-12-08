@@ -73,6 +73,7 @@ public class Portal {
         portal1.pairedPortal = portal2;
         portal2.pairedPortal = portal1;
 
+        // register portals with the collision detector
         CollisionDetection.addPortal(portal1);
         CollisionDetection.addPortal(portal2);
 
@@ -95,6 +96,7 @@ public class Portal {
         Vector2 currentVelocity = body.getLinearVelocity();
         float currentAngle = body.getAngle();
 
+        // use the rotational offset of the portals to calculate updated player angle and velocity
         int clockwiseRotations = getClockwiseRotations(entryPortal, exitPortal);
         float newAngle = getNewAngle(currentAngle, clockwiseRotations);
         Vector2 newVelocity = getNewLinearVelocity(currentVelocity, clockwiseRotations);
@@ -111,6 +113,7 @@ public class Portal {
      * @return the new angle the player is facing in
      */
     private float getNewAngle(float currentAngle, int clockwiseRotations) {
+        // π radians is 190 degrees and so (π / 2) radians is 90
         float changeInRadians = (float) (Math.PI / 2) * clockwiseRotations;
         return currentAngle + changeInRadians;
     }
