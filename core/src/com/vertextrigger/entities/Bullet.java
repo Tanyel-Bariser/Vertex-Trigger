@@ -1,6 +1,8 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
@@ -9,6 +11,7 @@ import com.badlogic.gdx.utils.Pool.Poolable;
  * Bullets are freed 5 seconds after being shot.
  */
 public class Bullet implements Poolable, Entity {
+	private Body body;
 
 	/**
 	 * Initialises the physical properties of the bullet's physical body
@@ -21,19 +24,48 @@ public class Bullet implements Poolable, Entity {
 		// Initialise physical properties, i.e. circle shape, very bouncy, etc.
 		// Set position out of camera's/user's view
 		// Create physical body
+		
+		// Set as a bullet for continuous collision detection
+		body.setBullet(true);
+		
+		
 		// Set identifier label as "Bullet" (for fixture not body)
 		// Set bullet sprite
 		// Set bullet existence time to 5 seconds from being shot
 	}
 	
 	/**
+	 * Shoots bullet from player's gun
+	 * 
+	 * @param gunPointingLeft if true shoot left else shoots right
+	 */
+	void shoot(boolean gunPointingLeft) {
+		// Set the vertical y-axis force to apply to the bullet to zero
+		float impulseX, impulseY = 0;
+		// If the player is facing/pointing gun towards the left direction
+		if (gunPointingLeft) {
+			// Set the horizontal x-axis force to apply to the bullet in the left direction
+			impulseX = -500;
+		// If the player is facing/pointing gun towards the right direction
+		} else {
+			// Set the horizontal x-axis force to apply to the bullet in the right direction
+			impulseX = 500;
+		}
+		// Wake body if sleeping to continue simulation
+		boolean wake = true;
+		// Shoot the bullet
+		body.applyLinearImpulse(new Vector2(impulseX, impulseY), body.getPosition(), wake);
+	}
+	
+	/**
 	 * Allows player to set the position of the bullet to that of his gun
 	 * 
-	 * @param x axis position of bullet
-	 * @param y axis position of bullet
+	 * @param position to set bullet
 	 */
-	void setPosition(float x, float y) {
-		// Set the x-axis & y-axis position of the bullet
+	void setPosition(Vector2 position) {
+		// Set position of the bullet
+		float angle = 0;
+		body.setTransform(position, angle);
 	}
 	
 	/**

@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.screens.GameScreen;
 
 public abstract class LevelBuilder {
 	protected World world;
 	protected Array<Entity> entities;
 	protected Array<Sprite> sprites;
+	protected GameScreen gameScreen;
 	
 	protected LevelBuilder() {
 		entities = new Array<Entity>();
@@ -20,8 +22,9 @@ public abstract class LevelBuilder {
 	 * Then adds player to the entities container
 	 * 
 	 * @param world for the player to reside in
+	 * @param gameScreen responsible for rendering the game
 	 */
-	protected abstract void createPlayer(World world);
+	protected abstract void createPlayer(World world, GameScreen gameScreen);
 
 	/**
 	 * Create all enemies needed for the particular game level at the
@@ -93,7 +96,7 @@ public abstract class LevelBuilder {
 	 */
 	public Array<Entity> buildEntities(World world) {
 		// Create player then add to the entities container
-		createPlayer(world);
+		createPlayer(world, gameScreen);
 		// Create enemies then add them to the entities container
 		createEnemies(world);
 		// Create dangerous ball(s) then add them to the entities container
@@ -114,5 +117,9 @@ public abstract class LevelBuilder {
 		createStaticPlatforms(world);
 		createGroundWalls(world);
 		return sprites;
+	}
+
+	public void setGameScreen(GameScreen gameScreen) {
+		this.gameScreen = gameScreen;
 	}
 }

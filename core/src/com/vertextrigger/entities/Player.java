@@ -7,14 +7,20 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.Coordinate;
+import com.vertextrigger.factories.AnimationFactory;
+import com.vertextrigger.factories.SpriteFactory;
+import com.vertextrigger.screens.GameScreen;
 
 /**
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	BulletPool bulletPool;
+	private Body body;
+	private BulletPool bulletPool;
+	private GameScreen gameScreen;
 
 	/**
 	 * Creates player's physical body & its physical properties within the game
@@ -27,7 +33,7 @@ public class Player implements Entity {
 	 * @param world the player will reside in
 	 * @param initialPosition of the player in a particular level
 	 */
-	public Player(World world, Coordinate initialPosition) {
+	public Player(World world, Coordinate initialPosition, GameScreen gameScreen) {
 		// Set player's body as being of dynamic type
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -41,7 +47,7 @@ public class Player implements Entity {
 		shape.setAsBox(width, height);
 
 		// Create player's physical body within the game world
-		Body body = world.createBody(bodyDef);
+		body = world.createBody(bodyDef);
 		
 		// Create fixture for player to bind his shape & his density to his body
 		float density = 3f;
@@ -65,6 +71,9 @@ public class Player implements Entity {
 	 */
 	private void spriteAnimationSetup() {
 		// Create & set all sprites & animations the player will need
+		SpriteFactory spriteFactory = new SpriteFactory();
+		AnimationFactory animationFactory = new AnimationFactory();
+		
 	}
 	
 	/**
@@ -72,14 +81,19 @@ public class Player implements Entity {
 	 * in the direction the player is facing
 	 */
 	public void shoot() {
-		// Create a new bullet from the bullet pool
-		// Set the x-axis & y-axis position of bullet based on
-		// the position of the player's gun
-		// If the player is facing left
-				// Shoot bullet towards the left direction
-		// If the player is facing right
-				// Shoot bullet towards the right direction
-		// Add the bullet to the Game Screen's entity container
+		// Create container for bullets currently being shot
+		Array<Bullet> bullets = new Array<Bullet>();
+		// Get a bullet from the bullet pool
+		Bullet bullet = bulletPool.obtain();
+		// Set position of bullet based on the position of the player's gun position
+		bullet.setPosition(body.getPosition());
+		// Find out the direction the player is facing/pointing gun left/right
+		boolean gunPointingLeft = 0 > getDirection();
+		// Shoot the bullet in that direction
+		bullet.shoot(gunPointingLeft);
+		// Add the bullet to the Player's & the Game Screen's containers
+		gameScreen.addEntity(bullet);
+		bullets.add(bullet);
 	}
 	
 	/**

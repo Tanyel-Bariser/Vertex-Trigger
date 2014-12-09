@@ -1,6 +1,7 @@
 package com.vertextrigger.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -42,7 +43,7 @@ public class PlayerTest {
 	@Test
 	public void testPlayerPositionInitialisation() {
 		World mockWorld = mock(World.class);
-		when(mockWorld.createBody((BodyDef) anyObject())).thenReturn((Body) anyObject());
+		when(mockWorld.createBody(any(BodyDef.class))).thenReturn(any(Body.class));
 		Coordinate initialPosition = new Coordinate(-5, 2);
 		Player player = new Player(mockWorld, initialPosition);
 		ArgumentCaptor<BodyDef> arg = ArgumentCaptor.forClass(BodyDef.class);

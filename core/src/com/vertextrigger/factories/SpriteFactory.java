@@ -10,7 +10,7 @@ public class SpriteFactory {
 	/**
 	 * Initialises storage of sprites that can be accessed by name
 	 */
-	public static void initialiseSpriteFactory() {
+	public SpriteFactory() {
 		// Create a sprite storage
 	}
 

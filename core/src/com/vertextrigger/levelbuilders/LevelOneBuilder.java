@@ -1,6 +1,7 @@
 package com.vertextrigger.levelbuilders;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.vertextrigger.screens.GameScreen;
 
 /**
  * 
@@ -14,7 +15,7 @@ public class LevelOneBuilder extends LevelBuilder {
 	}
 
 	@Override
-	protected void createPlayer(World world) {
+	protected void createPlayer(World world, GameScreen gameScreen) {
 	}
 
 	@Override

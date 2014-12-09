@@ -95,6 +95,9 @@ public class GameScreen implements Screen {
 		// sprites for later rendering
 		sprites = levelBuilder.buildLevelLayout(world);
 		
+		// Give level builder a reference to this screen
+		levelBuilder.setGameScreen(this);
+		
 		// Create all dynamic/kinematic game objects for this level, i.e. the
 		// player, enemies, dangerous balls, moving platforms, etc. & add these
 		// entities into a container so they each can be updated once per frame
