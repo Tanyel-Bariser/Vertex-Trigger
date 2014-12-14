@@ -1,0 +1,717 @@
+
+atlas_metal.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+slice27
+  rotate: false
+  xy: 1, 145
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: 27
+slice18
+  rotate: false
+  xy: 1, 73
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: 18
+metalHalf
+  rotate: false
+  xy: 74, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice17
+  rotate: false
+  xy: 1, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 17
+slice19
+  rotate: false
+  xy: 74, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 19
+slice13
+  rotate: false
+  xy: 146, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 13
+slice23
+  rotate: false
+  xy: 73, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 23
+slice30
+  rotate: false
+  xy: 146, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 30
+slice22
+  rotate: false
+  xy: 218, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 22
+slice02
+  rotate: false
+  xy: 145, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+metalHalfMid
+  rotate: false
+  xy: 218, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice12
+  rotate: false
+  xy: 290, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 12
+slice07
+  rotate: false
+  xy: 217, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 7
+metalHalfRight
+  rotate: false
+  xy: 290, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice26
+  rotate: false
+  xy: 362, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 26
+slice20
+  rotate: false
+  xy: 289, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 20
+slice06
+  rotate: false
+  xy: 362, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 6
+slice05
+  rotate: false
+  xy: 434, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 5
+slice01
+  rotate: false
+  xy: 361, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+slice04
+  rotate: false
+  xy: 434, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 4
+metalHalfLeft
+  rotate: false
+  xy: 506, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice21
+  rotate: false
+  xy: 433, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 21
+slice14
+  rotate: false
+  xy: 506, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 14
+slice24
+  rotate: false
+  xy: 578, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 24
+slice28
+  rotate: false
+  xy: 505, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 28
+slice25
+  rotate: false
+  xy: 578, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 25
+slice03
+  rotate: false
+  xy: 578, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3
+slice31
+  rotate: false
+  xy: 650, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 31
+slice16
+  rotate: false
+  xy: 577, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 16
+slice29
+  rotate: false
+  xy: 650, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 29
+slice15
+  rotate: false
+  xy: 722, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 15
+
+atlas_metal2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+extra scenery and objects/laserPurpleDot
+  rotate: false
+  xy: 1, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalHalf
+  rotate: false
+  xy: 1, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamDiagonalLeft
+  rotate: false
+  xy: 73, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalPlatformWire
+  rotate: false
+  xy: 1, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalFenceAlt
+  rotate: false
+  xy: 73, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamBolts
+  rotate: false
+  xy: 145, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metal
+  rotate: false
+  xy: 1, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/raygunBig
+  rotate: false
+  xy: 73, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/wireRight
+  rotate: false
+  xy: 145, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamNarrow
+  rotate: false
+  xy: 217, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/wireLeft
+  rotate: false
+  xy: 1, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserUp
+  rotate: false
+  xy: 73, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalHalfMid
+  rotate: false
+  xy: 145, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalLeft
+  rotate: false
+  xy: 217, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserRight
+  rotate: false
+  xy: 289, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCliffRight
+  rotate: false
+  xy: 1, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalHalfRight
+  rotate: false
+  xy: 73, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalPlatform
+  rotate: false
+  xy: 145, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserRedVertical
+  rotate: false
+  xy: 217, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchRedOff
+  rotate: false
+  xy: 289, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserUpShoot
+  rotate: false
+  xy: 361, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/raygun
+  rotate: false
+  xy: 1, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserPurple
+  rotate: false
+  xy: 73, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchGreenOn
+  rotate: false
+  xy: 145, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCliffLeft
+  rotate: false
+  xy: 217, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/tile
+  rotate: false
+  xy: 289, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 20
+extra scenery and objects/metalCenterWarning
+  rotate: false
+  xy: 361, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalHalfLeft
+  rotate: false
+  xy: 433, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCenterSticker
+  rotate: false
+  xy: 73, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/raygunPurple
+  rotate: false
+  xy: 145, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/wireBottomLeft
+  rotate: false
+  xy: 217, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchGreenOff
+  rotate: false
+  xy: 289, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserGreenHorizontal
+  rotate: false
+  xy: 361, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalFence
+  rotate: false
+  xy: 433, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalRight
+  rotate: false
+  xy: 505, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamDiagonalRight
+  rotate: false
+  xy: 145, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserDownShoot
+  rotate: false
+  xy: 217, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalRounded
+  rotate: false
+  xy: 289, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserBlueHorizontal
+  rotate: false
+  xy: 361, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserBlueBurst
+  rotate: false
+  xy: 433, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/wireHook
+  rotate: false
+  xy: 505, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beam
+  rotate: false
+  xy: 577, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserYellowHorizontal
+  rotate: false
+  xy: 217, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchYellowOn
+  rotate: false
+  xy: 289, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserYellowVertical
+  rotate: false
+  xy: 361, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserRedHorizontal
+  rotate: false
+  xy: 433, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserLeftShoot
+  rotate: false
+  xy: 505, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserGreenBurst
+  rotate: false
+  xy: 577, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamHoles
+  rotate: false
+  xy: 649, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/wireBottomRight
+  rotate: false
+  xy: 289, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserYellowBurst
+  rotate: false
+  xy: 361, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchBlueOff
+  rotate: false
+  xy: 433, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserRedBurst
+  rotate: false
+  xy: 505, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCenter
+  rotate: false
+  xy: 577, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamBoltsHoles
+  rotate: false
+  xy: 649, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserDown
+  rotate: false
+  xy: 721, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/beamBoltsNarrow
+  rotate: false
+  xy: 361, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserRightShoot
+  rotate: false
+  xy: 433, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchYellowOff
+  rotate: false
+  xy: 505, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchBlueOn
+  rotate: false
+  xy: 577, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserSwitchRedOn
+  rotate: false
+  xy: 649, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCliffLeftAlt
+  rotate: false
+  xy: 721, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/raygunPurpleBig
+  rotate: false
+  xy: 793, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalMid
+  rotate: false
+  xy: 433, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserGreenVertical
+  rotate: false
+  xy: 505, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalPlatformWireAlt
+  rotate: false
+  xy: 577, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/metalCliffRightAlt
+  rotate: false
+  xy: 649, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserBlueVertical
+  rotate: false
+  xy: 721, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/laserLeft
+  rotate: false
+  xy: 793, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+extra scenery and objects/tile
+  rotate: false
+  xy: 865, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 21

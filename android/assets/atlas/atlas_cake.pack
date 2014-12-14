@@ -1,0 +1,285 @@
+
+atlas_cake.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+slice27
+  rotate: false
+  xy: 1, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 27
+slice35
+  rotate: false
+  xy: 1, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 35
+slice17
+  rotate: false
+  xy: 73, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 17
+slice18
+  rotate: false
+  xy: 1, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 18
+slice39
+  rotate: false
+  xy: 73, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 39
+slice19
+  rotate: false
+  xy: 145, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 19
+slice32
+  rotate: false
+  xy: 73, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 32
+slice37
+  rotate: false
+  xy: 145, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 37
+slice23
+  rotate: false
+  xy: 217, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 23
+slice30
+  rotate: false
+  xy: 145, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 30
+slice22
+  rotate: false
+  xy: 217, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 22
+slice02
+  rotate: false
+  xy: 289, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+cakeHalfAltMid
+  rotate: false
+  xy: 217, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice07
+  rotate: false
+  xy: 289, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 7
+slice36
+  rotate: false
+  xy: 361, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 36
+slice26
+  rotate: false
+  xy: 289, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 26
+slice20
+  rotate: false
+  xy: 361, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 20
+slice40
+  rotate: false
+  xy: 433, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 40
+slice06
+  rotate: false
+  xy: 361, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 6
+cakeHalfAltRight
+  rotate: false
+  xy: 433, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice05
+  rotate: false
+  xy: 505, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 5
+slice38
+  rotate: false
+  xy: 433, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 38
+cakeHalfRight
+  rotate: false
+  xy: 505, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice01
+  rotate: false
+  xy: 577, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+cakeHalfAlt
+  rotate: false
+  xy: 505, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice04
+  rotate: false
+  xy: 577, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 4
+slice21
+  rotate: false
+  xy: 649, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 21
+cakeHalfAltLeft
+  rotate: false
+  xy: 577, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+cakeHalfLeft
+  rotate: false
+  xy: 649, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice24
+  rotate: false
+  xy: 721, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 24
+cakeHalfMid
+  rotate: false
+  xy: 649, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice28
+  rotate: false
+  xy: 721, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 28
+slice33
+  rotate: false
+  xy: 793, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 33
+slice25
+  rotate: false
+  xy: 721, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 25
+slice34
+  rotate: false
+  xy: 793, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 34
+slice31
+  rotate: false
+  xy: 865, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 31
+cakeHalf
+  rotate: false
+  xy: 793, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice16
+  rotate: false
+  xy: 865, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 16
+slice29
+  rotate: false
+  xy: 937, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 29
+slice03
+  rotate: false
+  xy: 865, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3

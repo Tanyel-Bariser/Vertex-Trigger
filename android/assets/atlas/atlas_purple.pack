@@ -1,0 +1,397 @@
+
+atlas_purple.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+slice27
+  rotate: false
+  xy: 1, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 27
+slice35
+  rotate: false
+  xy: 1, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 35
+slice17
+  rotate: false
+  xy: 73, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 17
+slice18
+  rotate: false
+  xy: 1, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 18
+stone
+  rotate: false
+  xy: 73, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice19
+  rotate: false
+  xy: 145, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 19
+strip_purple
+  rotate: false
+  xy: 1, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 4
+stoneRight
+  rotate: false
+  xy: 73, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice32
+  rotate: false
+  xy: 145, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 32
+slice13
+  rotate: false
+  xy: 217, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 13
+slice23
+  rotate: false
+  xy: 1, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 23
+slice30
+  rotate: false
+  xy: 73, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 30
+slice22
+  rotate: false
+  xy: 145, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 22
+slice02
+  rotate: false
+  xy: 217, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+slice12
+  rotate: false
+  xy: 289, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 12
+slice07
+  rotate: false
+  xy: 1, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 7
+slice36
+  rotate: false
+  xy: 73, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 36
+slice26
+  rotate: false
+  xy: 145, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 26
+slice20
+  rotate: false
+  xy: 217, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 20
+stoneCliffRightAlt
+  rotate: false
+  xy: 289, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneHalfLeft
+  rotate: false
+  xy: 361, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneLeft
+  rotate: false
+  xy: 1, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+rockHillRight
+  rotate: false
+  xy: 73, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice06
+  rotate: false
+  xy: 145, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 6
+slice05
+  rotate: false
+  xy: 217, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 5
+stoneHalf
+  rotate: false
+  xy: 289, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneCliffRight
+  rotate: false
+  xy: 361, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+strip_purple
+  rotate: false
+  xy: 433, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+slice01
+  rotate: false
+  xy: 73, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+slice04
+  rotate: false
+  xy: 145, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 4
+stoneMid
+  rotate: false
+  xy: 217, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+rockHillLeft
+  rotate: false
+  xy: 289, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneCliffLeftAlt
+  rotate: false
+  xy: 361, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice21
+  rotate: false
+  xy: 433, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 21
+slice14
+  rotate: false
+  xy: 505, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 14
+slice24
+  rotate: false
+  xy: 145, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 24
+stoneHalfRight
+  rotate: false
+  xy: 217, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+strip_purple
+  rotate: false
+  xy: 289, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+slice28
+  rotate: false
+  xy: 361, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 28
+stoneHillLeft2
+  rotate: false
+  xy: 433, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneCliffLeft
+  rotate: false
+  xy: 505, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice33
+  rotate: false
+  xy: 577, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 33
+stoneCenter
+  rotate: false
+  xy: 577, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneHalfMid
+  rotate: false
+  xy: 217, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice25
+  rotate: false
+  xy: 289, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 25
+slice34
+  rotate: false
+  xy: 361, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 34
+slice31
+  rotate: false
+  xy: 433, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 31
+slice16
+  rotate: false
+  xy: 505, 289
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 16
+slice29
+  rotate: false
+  xy: 577, 361
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 29
+slice03
+  rotate: false
+  xy: 649, 433
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3
+stoneCenter_rounded
+  rotate: false
+  xy: 289, 1
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice15
+  rotate: false
+  xy: 361, 73
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 15
+strip_purple
+  rotate: false
+  xy: 433, 145
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3
+stoneHillRight2
+  rotate: false
+  xy: 505, 217
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneLedgeLeft
+  rotate: false
+  xy: 577, 335
+  size: 5, 24
+  orig: 5, 24
+  offset: 0, 0
+  index: -1
+stoneLedgeRight
+  rotate: false
+  xy: 649, 407
+  size: 5, 24
+  orig: 5, 24
+  offset: 0, 0
+  index: -1
