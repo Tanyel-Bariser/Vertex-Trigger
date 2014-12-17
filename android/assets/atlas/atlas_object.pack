@@ -1,0 +1,782 @@
+
+atlas_object.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+cloud3
+  rotate: false
+  xy: 1, 933
+  size: 129, 71
+  orig: 129, 71
+  offset: 0, 0
+  index: -1
+cloud2
+  rotate: false
+  xy: 1, 860
+  size: 129, 71
+  orig: 129, 71
+  offset: 0, 0
+  index: -1
+cloud1
+  rotate: false
+  xy: 132, 933
+  size: 128, 71
+  orig: 128, 71
+  offset: 0, 0
+  index: -1
+hill_large
+  rotate: false
+  xy: 1, 712
+  size: 48, 146
+  orig: 48, 146
+  offset: 0, 0
+  index: -1
+hill_largeAlt
+  rotate: false
+  xy: 1, 564
+  size: 48, 146
+  orig: 48, 146
+  offset: 0, 0
+  index: -1
+hill_small
+  rotate: false
+  xy: 51, 752
+  size: 48, 106
+  orig: 48, 106
+  offset: 0, 0
+  index: -1
+hill_smallAlt
+  rotate: false
+  xy: 1, 456
+  size: 48, 106
+  orig: 48, 106
+  offset: 0, 0
+  index: -1
+door_openTop
+  rotate: false
+  xy: 132, 861
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fenceBroken
+  rotate: false
+  xy: 262, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+ropeHorizontal
+  rotate: false
+  xy: 334, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagGreen
+  rotate: false
+  xy: 406, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+plant
+  rotate: false
+  xy: 478, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+ropeVertical
+  rotate: false
+  xy: 550, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+gemBlue
+  rotate: false
+  xy: 622, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxItemAlt
+  rotate: false
+  xy: 694, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+bridgeLogs
+  rotate: false
+  xy: 766, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxCoinAlt_disabled
+  rotate: false
+  xy: 838, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+lock_green
+  rotate: false
+  xy: 910, 934
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidWaterTop
+  rotate: false
+  xy: 204, 861
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagRed
+  rotate: false
+  xy: 276, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+ladder_mid
+  rotate: false
+  xy: 348, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signRight
+  rotate: false
+  xy: 420, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonGreen
+  rotate: false
+  xy: 492, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+window
+  rotate: false
+  xy: 564, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+cactus
+  rotate: false
+  xy: 636, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+chain
+  rotate: false
+  xy: 708, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+ladder_top
+  rotate: false
+  xy: 780, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonYellow_pressed
+  rotate: false
+  xy: 852, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxExplosive
+  rotate: false
+  xy: 924, 862
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+rock
+  rotate: false
+  xy: 51, 680
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagGreenHanging
+  rotate: false
+  xy: 51, 608
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signLeft
+  rotate: false
+  xy: 51, 536
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxCoin
+  rotate: false
+  xy: 51, 464
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+coinBronze
+  rotate: false
+  xy: 1, 384
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+brickWall
+  rotate: false
+  xy: 1, 312
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+tochLit2
+  rotate: false
+  xy: 1, 240
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+plantPurple
+  rotate: false
+  xy: 1, 168
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+mushroomBrown
+  rotate: false
+  xy: 1, 96
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+keyYellow
+  rotate: false
+  xy: 1, 24
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+bush
+  rotate: false
+  xy: 73, 392
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagRedHanging
+  rotate: false
+  xy: 73, 320
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+switchLeft
+  rotate: false
+  xy: 73, 248
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+switchMid
+  rotate: false
+  xy: 73, 176
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidWater
+  rotate: false
+  xy: 73, 104
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+bomb
+  rotate: false
+  xy: 73, 32
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+lock_blue
+  rotate: false
+  xy: 101, 788
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxCoin_disabled
+  rotate: false
+  xy: 173, 789
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagBlue
+  rotate: false
+  xy: 245, 789
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+lock_yellow
+  rotate: false
+  xy: 317, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonRed_pressed
+  rotate: false
+  xy: 389, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagRed2
+  rotate: false
+  xy: 461, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+door_closedTop
+  rotate: false
+  xy: 533, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+sign
+  rotate: false
+  xy: 605, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagGreen2
+  rotate: false
+  xy: 677, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidWaterTop_mid
+  rotate: false
+  xy: 749, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+springboardUp
+  rotate: false
+  xy: 821, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneWall
+  rotate: false
+  xy: 893, 790
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+mushroomRed
+  rotate: false
+  xy: 123, 716
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+tochLit
+  rotate: false
+  xy: 123, 644
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxItem
+  rotate: false
+  xy: 123, 572
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxEmpty
+  rotate: false
+  xy: 123, 500
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signExit
+  rotate: false
+  xy: 195, 717
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowhill
+  rotate: false
+  xy: 195, 645
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+gemYellow
+  rotate: false
+  xy: 195, 573
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+bombFlash
+  rotate: false
+  xy: 195, 501
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxItem_disabled
+  rotate: false
+  xy: 267, 717
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonBlue_pressed
+  rotate: false
+  xy: 267, 645
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonGreen_pressed
+  rotate: false
+  xy: 267, 573
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+bridge
+  rotate: false
+  xy: 267, 501
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagYellow
+  rotate: false
+  xy: 339, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxExplosiveAlt
+  rotate: false
+  xy: 339, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxCoinAlt
+  rotate: false
+  xy: 411, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+box
+  rotate: false
+  xy: 339, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagYellow2
+  rotate: false
+  xy: 411, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+gemRed
+  rotate: false
+  xy: 483, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonBlue
+  rotate: false
+  xy: 339, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fence
+  rotate: false
+  xy: 411, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+springboardDown
+  rotate: false
+  xy: 483, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+lock_red
+  rotate: false
+  xy: 555, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+door_openMid
+  rotate: false
+  xy: 411, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidLavaTop
+  rotate: false
+  xy: 483, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+keyBlue
+  rotate: false
+  xy: 555, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidLava
+  rotate: false
+  xy: 627, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+gemGreen
+  rotate: false
+  xy: 483, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 555, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+fireball
+  rotate: false
+  xy: 627, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+liquidLavaTop_mid
+  rotate: false
+  xy: 699, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+door_closedMid
+  rotate: false
+  xy: 555, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+coinGold
+  rotate: false
+  xy: 627, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonYellow
+  rotate: false
+  xy: 699, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxWarning
+  rotate: false
+  xy: 771, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxAlt
+  rotate: false
+  xy: 627, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+keyGreen
+  rotate: false
+  xy: 699, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+ropeAttached
+  rotate: false
+  xy: 771, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagBlueHanging
+  rotate: false
+  xy: 843, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+keyRed
+  rotate: false
+  xy: 699, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxItemAlt_disabled
+  rotate: false
+  xy: 771, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+boxExplosive_disabled
+  rotate: false
+  xy: 843, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+coinSilver
+  rotate: false
+  xy: 771, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+torch
+  rotate: false
+  xy: 843, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagBlue2
+  rotate: false
+  xy: 843, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+flagYellowHanging
+  rotate: false
+  xy: 915, 718
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+switchRight
+  rotate: false
+  xy: 915, 646
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+weight
+  rotate: false
+  xy: 915, 574
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+spikes
+  rotate: false
+  xy: 915, 502
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+buttonRed
+  rotate: false
+  xy: 145, 428
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+weightChained
+  rotate: false
+  xy: 145, 356
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+particleBrick2b
+  rotate: false
+  xy: 982, 983
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+particleBrick1b
+  rotate: false
+  xy: 1, 1
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+particleBrick1a
+  rotate: false
+  xy: 101, 772
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+particleBrick2a
+  rotate: false
+  xy: 965, 846
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
