@@ -50,10 +50,13 @@ public class Assets {
 	 * Loads assets for MainScreen
 	 */
 	public static void loadMainScreenAssets() {
-		// For each main menu asset
-				// Load asset to be stored in asset manager
-		// For each asset not in main menu
-				// Unload asset from asset manager
+		// for each main menu asset we load the asset to be stored in asset manager
+		// for each asset not in main menu we unload asset from the asset manager
+        dispose();
+
+        for (AssetDescriptor<?> asset : menuScreenAssets) {
+            assetManager.load(asset);
+        }
 	}
 
     /**
@@ -65,16 +68,13 @@ public class Assets {
 		// for each level asset we load the assets to be stored in asset manager
 		// for each asset not in level we unload the assets from the asset manager
         // the for loop iterates through levelAssets, a list of sets of level assets
+        dispose();
 
-        for (int i = 1; i <= levelAssets.size(); i++) {
+        level = --level;   // subtract one from level to align with the 0-indexed arraylist collection
+        for (int i = 0; i <= levelAssets.size(); i++) {
             if (i == level) {
                 for (AssetDescriptor<?> asset : levelAssets.get(i)) {
                     assetManager.load(asset);
-                }
-            }
-            else {
-                for (AssetDescriptor<?> asset : levelAssets.get(i)) {
-                    assetManager.unload(asset.fileName);
                 }
             }
         }
@@ -84,6 +84,8 @@ public class Assets {
      * Loads assets for the Heads-Up Display and the Controls for each level
      */
     private static void loadHudAndControls() {
+        // for each hud and control asset we load the assets to be stored in asset manager
+        // we do not dispose of other assets as the hud/controls go on top of a level
         for (AssetDescriptor<?> asset : hudAndControlAssets) {
             assetManager.load(asset);
         }
@@ -93,7 +95,7 @@ public class Assets {
 	 * Dispose of assets once they're no longer needed
 	 */
 	public static void dispose() {
-		// Release all assets and asset manager itself
+		// release all assets and asset manager itself
         assetManager.dispose();
 	}
 }
