@@ -3,7 +3,7 @@ package com.vertextrigger.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.vertextrigger.VertexTrigger;
+import com.vertextrigger.main.VertexTrigger;
 
 public class HtmlLauncher extends GwtApplication {
 
