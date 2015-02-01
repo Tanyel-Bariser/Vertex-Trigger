@@ -1,5 +1,7 @@
 package com.vertextrigger.entities;
 
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -66,6 +68,7 @@ class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public Sprite update(float delta) {
+		updateRemainingExistenceTime(delta);
 		// Get x & y coordinates of the bullets physical body
 		// Get the angle of the bullets physical body
 		// Set the position of the bullet sprite to match the bullet's
@@ -74,31 +77,25 @@ class Bullet implements Poolable, Entity {
 		// physical body angle
 		// Return bullet's sprite after it's position/angle has been updated
 		return null;
+	}	
+
+	private void updateRemainingExistenceTime(float delta) {
+		existenceTime -= delta;
 	}
 	
 	/**
-	 * Bullets exist for 5 seconds & the amount of time the bullet has
-	 * left if updated each time this method is called.
-	 * 
-	 * @param delta the amount of time passed
 	 * @return whether or not bullet should be freed
 	 */
-	boolean isBulletExistenceTimeOut(float delta) {
-		// Reduce bullet existence time by the delta
-		// If bullet time has run out, i.e. below or equal to zero seconds
-				// Return true so bullet can be freed from BulletPool
-		// If bullet time has not run out, i.e. above zero
-				// Return false so bullet stays active
-		return false;
+	boolean isExistenceTimeExpired() {
+		return existenceTime < 0;
 	}
 
 	/**
-	 * Resets a bullet for reuse after it is freed
-	 * (5 seconds after being shot)
+	 * Invoked automatically by libGDX when BulletPool.free(Bullet) is called
 	 */
 	@Override
 	public void reset() {
-		// Reset position of bullet to out of camera's/user's view
-		// Reset bullet existence time back to 5 seconds
+		body.setTransform(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, 0);
+		existenceTime = TOTAL_EXISTENCE_TIME;
 	}
 }
