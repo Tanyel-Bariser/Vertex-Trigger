@@ -8,7 +8,6 @@ public class PlayerBodyFactory {
 	private static BodyDef playerBodyDef;
 	private static Body playerBody;
 	private static PolygonShape playerShape;
-	static String PLAYER_USER_DATA = "Player";
 	static float PLAYER_DENSITY = 3f;
 
 	public static Body getPlayerBody(World world, Vector2 initialPosition) {
@@ -39,6 +38,6 @@ public class PlayerBodyFactory {
 	private static void buildPlayerFixture() {
 		Fixture playerFixture = playerBody.createFixture(playerShape, PLAYER_DENSITY);
 		playerShape.dispose();
-		playerFixture.setUserData(PLAYER_USER_DATA);
+		playerFixture.setUserData(UserData.PLAYER);
 	}
 }

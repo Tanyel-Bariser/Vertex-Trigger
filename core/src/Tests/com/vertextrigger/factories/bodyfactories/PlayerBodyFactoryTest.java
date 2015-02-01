@@ -60,6 +60,6 @@ public class PlayerBodyFactoryTest {
 	
 	@Test
 	public void whenPlayerFixtureIsCreatedThenUserDataShouldBeInitialised() {
-		assertEquals(PlayerBodyFactory.PLAYER_USER_DATA, playerFixture.getUserData());
+		assertEquals(UserData.PLAYER, playerFixture.getUserData());
 	}
 }
