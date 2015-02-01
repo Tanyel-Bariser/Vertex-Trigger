@@ -63,7 +63,7 @@ public class Player implements Entity {
 		spriteAnimationSetup();
 		
 		// Create a pool of reusable bullets
-		bulletPool = new BulletPool();		
+		bulletPool = new BulletPool(world);		
 	}
 	
 	/**

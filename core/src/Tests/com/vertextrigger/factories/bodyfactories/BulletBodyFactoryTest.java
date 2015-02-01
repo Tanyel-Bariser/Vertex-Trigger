@@ -7,11 +7,12 @@ import org.junit.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.vertextrigger.util.UserData;
 
 public class BulletBodyFactoryTest {
 	private World world;
-	private Body bulletBody;
-	private Fixture bulletFixture;
+	private Body body;
+	private Fixture fixture;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -26,53 +27,53 @@ public class BulletBodyFactoryTest {
 	}
 	
 	private void buildBullet() {
-		bulletBody = BulletBodyFactory.getBulletBody(world);
-		bulletFixture = bulletBody.getFixtureList().first();
+		body = BulletBodyFactory.getBulletBody(world);
+		fixture = body.getFixtureList().first();
 	}
 
 	@Test
 	public void whenBulletBodyIsCreateThenShouldBeDynamicType() {
-		assertEquals(BodyType.DynamicBody, bulletBody.getType());
+		assertEquals(BodyType.DynamicBody, body.getType());
 	}
 	
 	@Test
 	public void whenBulletBodyIsCreatedThenShouldBeSetInitialPositionOutsideCameraView() {
-		assertEquals(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, bulletBody.getPosition());
+		assertEquals(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, body.getPosition());
 	}
 	
 	@Test
 	public void whenBulletBodyIsCreatedThenShouldBeSetAsBullet() {
-		assertTrue(bulletBody.isBullet());
+		assertTrue(body.isBullet());
 	}
 	
 	@Test
 	public void whenBulletBodyIsCreatedThenShapeShapeBeCircle() {
-		assertEquals(Shape.Type.Circle, bulletFixture.getType());
+		assertEquals(Shape.Type.Circle, fixture.getType());
 	}
 	
 	@Test
 	public void whenBulletShapeIsCreatedThenRadiusShouldBeSet() {
-		Shape bulletShape = bulletFixture.getShape();
-		assertEquals((int) BulletBodyFactory.BULLET_RADIUS, (int) bulletShape.getRadius());
+		Shape bulletShape = fixture.getShape();
+		assertEquals((int) BulletBodyFactory.RADIUS, (int) bulletShape.getRadius());
 	}
 	
 	@Test
-	public void whenBulletFixtureDefIsCreatedThenDensityShouldBeSet() {
-		assertEquals((int) BulletBodyFactory.BULLET_DENSITY, (int) bulletFixture.getDensity());
+	public void whenBulletFixtureDefinitionIsCreatedThenDensityShouldBeSet() {
+		assertEquals((int) BulletBodyFactory.DENSITY, (int) fixture.getDensity());
 	}
 	
 	@Test
-	public void whenBulletFixtureDefIsCreatedThenFrictionShouldBeSet() {
-		assertEquals((int) BulletBodyFactory.BULLET_FRICTION, (int) bulletFixture.getFriction());
+	public void whenBulletFixtureDefinitionIsCreatedThenFrictionShouldBeSet() {
+		assertEquals((int) BulletBodyFactory.FRICTION, (int) fixture.getFriction());
 	}
 	
 	@Test
-	public void whenBulletFixtureDefIsCreatedThenRestitutionShouldBeSet() {
-		assertEquals((int) BulletBodyFactory.BULLET_IS_VERY_BOUNCY, (int) bulletFixture.getRestitution());
+	public void whenBulletFixtureDefinitionIsCreatedThenRestitutionShouldBeSet() {
+		assertEquals((int) BulletBodyFactory.BOUNCY, (int) fixture.getRestitution());
 	}
 	
 	@Test
 	public void whenBulletFixtureIsCreatedThenUserDataShouldBeSet() {
-		assertEquals(UserData.BULLET, bulletFixture.getUserData());
+		assertEquals(UserData.BULLET, fixture.getUserData());
 	}
 }

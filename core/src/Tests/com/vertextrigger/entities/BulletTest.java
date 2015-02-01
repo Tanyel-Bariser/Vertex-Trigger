@@ -1,34 +1,36 @@
 package com.vertextrigger.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import com.badlogic.gdx.physics.box2d.Body;
+
+@RunWith(MockitoJUnitRunner.class)
 public class BulletTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	@Mock Body body;
+	Bullet bullet;
 
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		bullet = new Bullet(body);
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void whenShootBulletThenExistenceTimeShouldBeInitialised() {
+		bullet.shoot(false);
+		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.existenceTime);
 	}
-
+	
+	@Test
+	public void whenShootBulletThenShouldApplyLinearImpulse() {
+		bullet.shoot(true);
+		verify(body).applyLinearImpulse(null, body.getPosition(), true);
+	}
+	
+	
 }

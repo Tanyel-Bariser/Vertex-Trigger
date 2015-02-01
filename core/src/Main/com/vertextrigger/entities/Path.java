@@ -29,7 +29,7 @@ public class Path {
 	
 	/**
 	 * Moves body along it's predefined path by a distance
-	 * dependent on delta for frame independent movement.
+	 * dependent on delta for frame rate independent movement.
 	 * 
 	 * @param delta time passed between previous & current frame
 	 */

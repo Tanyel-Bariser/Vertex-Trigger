@@ -1,5 +1,6 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;
 
 /**
@@ -7,7 +8,12 @@ import com.badlogic.gdx.utils.Pool;
  * 
  * Useful inherited methods include obtain() and free(Bullet)
  */
-public class BulletPool extends Pool<Bullet> {
+class BulletPool extends Pool<Bullet> {
+	private final World world;
+	
+	BulletPool(World world) {
+		this.world = world;
+	}
 
 	/**
 	 * Creates new bullet object if there are no more currently left 
@@ -15,7 +21,6 @@ public class BulletPool extends Pool<Bullet> {
 	 */
 	@Override
 	protected Bullet newObject() {
-		// Create & return a new Bullet
-		return null;
+		return new Bullet(world);
 	}
 }

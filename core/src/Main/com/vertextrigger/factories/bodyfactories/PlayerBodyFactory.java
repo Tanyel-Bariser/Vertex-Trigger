@@ -3,41 +3,42 @@ package com.vertextrigger.factories.bodyfactories;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.vertextrigger.util.UserData;
 
 public class PlayerBodyFactory {
-	private static BodyDef playerBodyDef;
-	private static Body playerBody;
-	private static PolygonShape playerShape;
-	static float PLAYER_DENSITY = 3f;
+	private static BodyDef bodyDefinition;
+	private static Body body;
+	private static PolygonShape shape;
+	static final float DENSITY = 3f;
 
 	public static Body getPlayerBody(World world, Vector2 initialPosition) {
-		buildPlayerBodyDef(initialPosition);
+		buildPlayerBodyDefinition(initialPosition);
 		buildPlayerBody(world);
 		buildPlayerShape();
 		buildPlayerFixture();
-		return playerBody;
+		return body;
 	}
 	
-	private static void buildPlayerBodyDef(Vector2 initialPosition) {
-		playerBodyDef = new BodyDef();
-		playerBodyDef.type = BodyType.DynamicBody;
-		playerBodyDef.position.set(initialPosition);
+	private static void buildPlayerBodyDefinition(Vector2 initialPosition) {
+		bodyDefinition = new BodyDef();
+		bodyDefinition.type = BodyType.DynamicBody;
+		bodyDefinition.position.set(initialPosition);
 	}
 	
 	private static void buildPlayerBody(World world) {
-		playerBody = world.createBody(playerBodyDef);
+		body = world.createBody(bodyDefinition);
 	}
 	
 	private static void buildPlayerShape() {
-		playerShape = new PolygonShape();
+		shape = new PolygonShape();
 		float playerWidth = 0.5f;
 		float playerHeight = 1.5f;
-		playerShape.setAsBox(playerWidth, playerHeight);
+		shape.setAsBox(playerWidth, playerHeight);
 	}
 	
 	private static void buildPlayerFixture() {
-		Fixture playerFixture = playerBody.createFixture(playerShape, PLAYER_DENSITY);
-		playerShape.dispose();
-		playerFixture.setUserData(UserData.PLAYER);
+		Fixture fixture = body.createFixture(shape, DENSITY);
+		shape.dispose();
+		fixture.setUserData(UserData.PLAYER);
 	}
 }
