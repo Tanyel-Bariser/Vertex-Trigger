@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="src" path="/core"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.4.1/eca2621f18b162c03992bd3ecc226e8a477dc6f9/gdx-backend-android-1.4.1.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.4.1/ed5d76e7b283896e10c7e622305338c263739b07/gdx-backend-android-1.4.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/9e6453d244896698694a7f3059f15ae509044101/gdx-box2d-1.4.1.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/fcf9d6a8c426f99e8755996fc1f96ab00a447219/gdx-box2d-1.4.1-sources.jar"/>
