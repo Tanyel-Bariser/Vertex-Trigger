@@ -1,7 +1,5 @@
 package com.vertextrigger.entities;
 
-import static org.mockito.Mockito.verify;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -40,11 +38,12 @@ class Bullet implements Poolable, Entity {
 		else shoot(right);
 	}
 	
-	private void shoot(float horizontalShotDirection) {
+	private void shoot(float horizontalVelocity) {
+		// Initialise bullet existence time when bullet is first shot
 		existenceTime = TOTAL_EXISTENCE_TIME;
-		Vector2 directionOfShot = new Vector2(horizontalShotDirection, 0);
+		Vector2 velocity = new Vector2(horizontalVelocity, 0);
 		boolean wakeToContinueSimulation = true;
-		body.applyLinearImpulse(directionOfShot, body.getPosition(),
+		body.applyLinearImpulse(velocity, body.getPosition(),
 				wakeToContinueSimulation);
 	}
 	

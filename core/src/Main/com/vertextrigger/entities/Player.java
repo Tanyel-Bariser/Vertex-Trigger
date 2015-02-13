@@ -1,17 +1,13 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.factories.AnimationFactory;
 import com.vertextrigger.factories.SpriteFactory;
+import com.vertextrigger.factories.bodyfactories.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
-import com.vertextrigger.util.Coordinate;
 
 /**
  * Main character of the game
@@ -19,12 +15,18 @@ import com.vertextrigger.util.Coordinate;
  */
 public class Player implements Entity {
 	private Body body;
+	private Vector2 initialPosition;
 	private BulletPool bulletPool;
 	private GameScreen gameScreen;
+	private Array<Bullet> bullets;
+	private final float MOVE_LEFT = -50f;
+	private final float MOVE_RIGHT = 50f;
+	private final float JUMP_POWER = 200;
+	private boolean canJump;
 
 	/**
-	 * Creates player's physical body & its physical properties within the game
-	 * world at the starting position of the particular level.
+	 * Creates player's physical body within the game world
+	 * at the starting position of the particular level.
 	 * 
 	 * Creates sprite & animation factories.
 	 * 
@@ -33,37 +35,17 @@ public class Player implements Entity {
 	 * @param world the player will reside in
 	 * @param initialPosition of the player in a particular level
 	 */
-	public Player(World world, Coordinate initialPosition, GameScreen gameScreen) {
-		// Set player's body as being of dynamic type
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		
-		// Set initial position of player in the specific level
-		bodyDef.position.set(initialPosition.x, initialPosition.y);
-		
-		// Create player's physical body shape as a rectangle
-		PolygonShape shape = new PolygonShape();
-		float width = 0.5f, height = 1.5f;
-		shape.setAsBox(width, height);
+	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
+		this.initialPosition = initialPosition;
+		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
 
-		// Create player's physical body within the game world
-		body = world.createBody(bodyDef);
-		
-		// Create fixture for player to bind his shape & his density to his body
-		float density = 3f;
-		Fixture fixture = body.createFixture(shape, density);
-		
-		// Set fixture label as "Player" to be identifiable by collision detector
-		fixture.setUserData("Player");
-
-		// Free shape resource from memory
-		shape.dispose();
-		
 		// Create animations and set player sprite
 		spriteAnimationSetup();
 		
 		// Create a pool of reusable bullets
-		bulletPool = new BulletPool(world);		
+		bulletPool = new BulletPool(world);
+		
+		bullets = new Array<Bullet>();
 	}
 	
 	/**
@@ -77,41 +59,27 @@ public class Player implements Entity {
 	}
 	
 	/**
+	 * Reset player position to the initial position of the level he's in
+	 */
+	public void playerDied() {
+		float angle = 0;
+		body.setTransform(initialPosition, angle);
+	}
+	
+	/**
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
 	public void shoot() {
-		// Create container for bullets currently being shot
-		Array<Bullet> bullets = new Array<Bullet>();
-		// Get a bullet from the bullet pool
 		Bullet bullet = bulletPool.obtain();
-		// Set position of bullet based on the position of the player's gun position
+		//Set bullet position to gun position
 		bullet.setPosition(body.getPosition());
-		// Find out the direction the player is facing/pointing gun left/right
+
 		boolean gunPointingLeft = 0 > getDirection();
-		// Shoot the bullet in that direction
 		bullet.shoot(gunPointingLeft);
-		// Add the bullet to the Player's & the Game Screen's containers
+
 		gameScreen.addEntity(bullet);
 		bullets.add(bullet);
-	}
-	
-	/**
-	 * Reset player position to the initial position of the level he's in
-	 */
-	public void playerDied() {
-		// Set player position to the initial position of the level
-	}
-	
-	/**
-	 * Setter for the player's directional movement, left or right.
-	 * Negative movement moves the player left
-	 * Positive movement moves the player right
-	 * 
-	 * @param movement of player either left or right
-	 */
-	public void setMovement(float movement) {
-		// Set player's new directional force in x-axis
 	}
 	
 	/**
@@ -121,60 +89,74 @@ public class Player implements Entity {
 	 * @return the speed & direction the player is moving horizontally
 	 */
 	private float getDirection() {
-		// Return the magnitude of the player's
-		// movement in either left or right direction
-		return 0;
+		return body.getLinearVelocity().x;
 	}
 	
 	/**
-	 * Additional force imposed on the player usually caused by the
-	 * platform the player is standing on. 
-	 * For example, a conveyor belt platform can push the player left or right, 
-	 * i.e. by a negative or positive parameter respectively, dependent on
-	 * which direction the conveyor belt platform is moving.  
+	 * Main player controls
+	 */
+	public void moveLeft() {		
+		movePlayer(MOVE_LEFT);
+	}
+
+	/**
+	 * Main player controls
+	 */
+	public void moveRight() {
+		movePlayer(MOVE_RIGHT);
+	}
+	
+	/**
+	 * Negative movement moves the player left
+	 * Positive movement moves the player right
 	 * 
-	 * @param xForce amount to push or pull the player left or right
+	 * @param horizontalMovement of player
 	 */
-	public void setXForce(float xForce) {
-		// Alter directional (left or right movement)
-		// force by a specific amount 
+	private void movePlayer(float horizontalMovement) {
+		float noVerticalChange = 0;
+		boolean wakeForSimulation = true;
+		body.applyForceToCenter(horizontalMovement, noVerticalChange,
+				wakeForSimulation);
 	}
 	
 	/**
-	 * @param downForce additional force on player's y-axis
+	 * Allows application of additional horizontal force on player,
+	 * for example, if standing on a push/pull, i.e. conveyor belt, platform
+	 * 
+	 * @param horizontalForce
 	 */
-	public void setDownForce(float downForce) {
-		// Set additional vertical force to be put on player 
+	public void additionalExternalHorizontalForce(float horizontalForce) {
+		float totalHorizontalForce = body.getLinearVelocity().x + horizontalForce;
+		float noVerticalChange = 0;
+		boolean wakeForSimulation = true;
+		body.applyForceToCenter(totalHorizontalForce, noVerticalChange,
+				wakeForSimulation);
 	}
 	
 	/**
 	 * Sets angle of player
 	 */
 	public void setAngle(float angle) {
-		// Set player's new angle
+		body.setTransform(body.getPosition(), angle);
 	}
 	
 	/**
 	 * @param canJump if true player can jump, otherwise he can't
 	 */
 	public void setJumpAbility(boolean canJump) {
-		// Set whether or not the player can jump
-	}
-	
-	/**
-	 * @return whether or not the player is allowed to jump
-	 */
-	private boolean getJumpAbility() {
-		// Return whether or not the player is allowed to jump
-		return false;
+		this.canJump = canJump; 
 	}
 	
 	/**
 	 * Makes player jump
 	 */
 	public void jump() {
-		// If player is allowed to jump
-				// Make the player jump
+		if (canJump) {
+			Vector2 jump = new Vector2(0, JUMP_POWER);
+			boolean wakeForSimulation = true;
+			body.applyLinearImpulse(jump, body.getPosition(),
+					wakeForSimulation);
+		}
 	}
 	
 	/**
