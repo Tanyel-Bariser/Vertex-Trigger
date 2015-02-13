@@ -14,15 +14,16 @@ import com.vertextrigger.screens.GameScreen;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	private Body body;
-	private Vector2 initialPosition;
-	private BulletPool bulletPool;
-	private GameScreen gameScreen;
-	private Array<Bullet> bullets;
-	private final float MOVE_LEFT = -50f;
-	private final float MOVE_RIGHT = 50f;
+	private final Body body;
+	private final Vector2 initialPosition;
+	private final BulletPool bulletPool;
+	private final GameScreen gameScreen;
+	private final float MOVEMENT_SPEED = 50f; 
+	private float movement;
 	private final float JUMP_POWER = 200;
 	private boolean canJump;
+	private float additionalHorizontalForce = 0;
+	private float onSticky = 1;
 
 	/**
 	 * Creates player's physical body within the game world
@@ -37,6 +38,7 @@ public class Player implements Entity {
 	 */
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
 		this.initialPosition = initialPosition;
+		this.gameScreen = gameScreen;
 		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
 
 		// Create animations and set player sprite
@@ -44,8 +46,6 @@ public class Player implements Entity {
 		
 		// Create a pool of reusable bullets
 		bulletPool = new BulletPool(world);
-		
-		bullets = new Array<Bullet>();
 	}
 	
 	/**
@@ -54,16 +54,14 @@ public class Player implements Entity {
 	private void spriteAnimationSetup() {
 		// Create & set all sprites & animations the player will need
 		SpriteFactory spriteFactory = new SpriteFactory();
-		AnimationFactory animationFactory = new AnimationFactory();
-		
+		AnimationFactory animationFactory = new AnimationFactory();		
 	}
 	
 	/**
 	 * Reset player position to the initial position of the level he's in
 	 */
 	public void playerDied() {
-		float angle = 0;
-		body.setTransform(initialPosition, angle);
+		body.setTransform(initialPosition, 0);
 	}
 	
 	/**
@@ -72,65 +70,13 @@ public class Player implements Entity {
 	 */
 	public void shoot() {
 		Bullet bullet = bulletPool.obtain();
-		//Set bullet position to gun position
+		//TODO Set bullet position to exact position of gun
 		bullet.setPosition(body.getPosition());
 
-		boolean gunPointingLeft = 0 > getDirection();
+		boolean gunPointingLeft = 0 > body.getLinearVelocity().x;
 		bullet.shoot(gunPointingLeft);
 
 		gameScreen.addEntity(bullet);
-		bullets.add(bullet);
-	}
-	
-	/**
-	 * Negative movement means the player is moving left
-	 * Positive movement means the player is moving right
-	 * 
-	 * @return the speed & direction the player is moving horizontally
-	 */
-	private float getDirection() {
-		return body.getLinearVelocity().x;
-	}
-	
-	/**
-	 * Main player controls
-	 */
-	public void moveLeft() {		
-		movePlayer(MOVE_LEFT);
-	}
-
-	/**
-	 * Main player controls
-	 */
-	public void moveRight() {
-		movePlayer(MOVE_RIGHT);
-	}
-	
-	/**
-	 * Negative movement moves the player left
-	 * Positive movement moves the player right
-	 * 
-	 * @param horizontalMovement of player
-	 */
-	private void movePlayer(float horizontalMovement) {
-		float noVerticalChange = 0;
-		boolean wakeForSimulation = true;
-		body.applyForceToCenter(horizontalMovement, noVerticalChange,
-				wakeForSimulation);
-	}
-	
-	/**
-	 * Allows application of additional horizontal force on player,
-	 * for example, if standing on a push/pull, i.e. conveyor belt, platform
-	 * 
-	 * @param horizontalForce
-	 */
-	public void additionalExternalHorizontalForce(float horizontalForce) {
-		float totalHorizontalForce = body.getLinearVelocity().x + horizontalForce;
-		float noVerticalChange = 0;
-		boolean wakeForSimulation = true;
-		body.applyForceToCenter(totalHorizontalForce, noVerticalChange,
-				wakeForSimulation);
 	}
 	
 	/**
@@ -160,24 +106,6 @@ public class Player implements Entity {
 	}
 	
 	/**
-	 * If onSticky is true, then player is on a sticky
-	 * platform & therefore moves at a slower speed.
-	 * 
-	 * @param onSticky
-	 */
-	public void setOnSticky(boolean onSticky) {
-		// Set whether or not the player is on a sticky platform
-	}
-	
-	/**
-	 * @return true if player is on a sticky platform, else false
-	 */
-	private boolean getOnSticky() {
-		// Return whether or not the player is on a skicky platform
-		return false;
-	}
-	
-	/**
 	 * Moves physical body of player left or right.
 	 * Chooses appropriate player sprite based on animation.
 	 * Returns the updated player's sprite for rendering.
@@ -191,9 +119,7 @@ public class Player implements Entity {
 				// If the bullet's existence time has run out
 						// Free the bullet from the pool to be reused later
 		
-		// If player is on a sticky platform move at half the directional speed
-		// Move player either left or right, according to the movement variable,
-		// to an amount dependent on delta
+		movePlayer(delta);
 		
 		// Add delta to current animation key frame time
 		// If player is rising/jumping
@@ -206,9 +132,51 @@ public class Player implements Entity {
 		// Flip player sprite so that if he's moving left, i.e. movement + xForce is negative,
 		// the sprite is facing left and vice versa if he is moving right
 		
-		// Set player's sprite position & angle to match
-		// the new position of player's physical body
+		// Set player's sprite position & angle to match the new position of player's physical body
 		// Return player sprite after it's position/angle has been updated
 		return null;
+	}
+	
+	private void movePlayer(float delta) {
+		float horizontalMovement = (movement + additionalHorizontalForce)
+				* onSticky;
+		body.setLinearVelocity(horizontalMovement * delta,
+				body.getLinearVelocity().y * delta);
+	}
+	
+	public void moveLeft() {		
+		movement = -MOVEMENT_SPEED;
+	}
+
+	public void moveRight() {
+		movement = MOVEMENT_SPEED;
+	}
+
+	public void stopMoving() {
+		movement = 0;
+	}
+	
+	/**
+	 * Allows application of additional horizontal force on player,
+	 * for example, if standing on a push/pull, i.e. conveyor belt, platform
+	 * 
+	 * @param horizontalForce
+	 */
+	public void additionalExternalHorizontalForce(float horizontalForce) {
+		additionalHorizontalForce = horizontalForce;
+	}
+	
+	/**
+	 * Halves normal player horizontal speed
+	 */
+	public void setOnStickyPlatform() {
+		onSticky  = 0.5f;
+	}
+	
+	/**
+	 * Restores normal player horizontal speed
+	 */
+	public void setOffStickyPlatform() {
+		onSticky = 1;
 	}
 }

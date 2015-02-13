@@ -42,9 +42,9 @@ class Bullet implements Poolable, Entity {
 		// Initialise bullet existence time when bullet is first shot
 		existenceTime = TOTAL_EXISTENCE_TIME;
 		Vector2 velocity = new Vector2(horizontalVelocity, 0);
-		boolean wakeToContinueSimulation = true;
+		boolean wakeForSimulation = true;
 		body.applyLinearImpulse(velocity, body.getPosition(),
-				wakeToContinueSimulation);
+				wakeForSimulation);
 	}
 	
 	/**
@@ -53,8 +53,7 @@ class Bullet implements Poolable, Entity {
 	 * @param position to set bullet
 	 */
 	void setPosition(Vector2 position) {
-		float angle = 0;
-		body.setTransform(position, angle);
+		body.setTransform(position, 0);
 	}
 	
 	/**
