@@ -17,7 +17,7 @@ public class BulletBodyFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		buildWorld();
-		buildBullet();
+		buildBulletBody();
 	}
 	
 	private void buildWorld() {
@@ -26,7 +26,7 @@ public class BulletBodyFactoryTest {
 		world = new World(gravity, doNotSimulateInactiveBodies);
 	}
 	
-	private void buildBullet() {
+	private void buildBulletBody() {
 		body = BulletBodyFactory.getBulletBody(world);
 		fixture = body.getFixtureList().first();
 	}
@@ -75,5 +75,13 @@ public class BulletBodyFactoryTest {
 	@Test
 	public void whenBulletFixtureIsCreatedThenUserDataShouldBeSet() {
 		assertEquals(UserData.BULLET, fixture.getUserData());
+	}
+	
+	@Test
+	public void whenChangePositionOfOneBulletBodyShouldNotAffectOtherBulletBodyPositions() {
+		Body otherBody = BulletBodyFactory.getBulletBody(world);
+		Vector2 position = new Vector2(10, 10);
+		otherBody.setTransform(position, 0);
+		assertEquals(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, body.getPosition());
 	}
 }

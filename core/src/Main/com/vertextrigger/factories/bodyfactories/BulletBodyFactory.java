@@ -6,15 +6,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.UserData;
 
 public class BulletBodyFactory {
-	private static BodyDef bodyDefinition;
-	private static Body body;
-	private static FixtureDef fixtureDefinition;
-	private static Shape shape;
 	public final static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(-50, -50);
 	static final float RADIUS = 0.2f;
 	static final float DENSITY = 3f;
 	static final float FRICTION = 1f;
 	static final float BOUNCY = 1f;
+	private static BodyDef bodyDefinition;
+	private static Body body;
+	private static FixtureDef fixtureDefinition;
+	private static Shape shape;
 	
 	public static Body getBulletBody(World world) {
 		buildBulletBodyDefinition();
