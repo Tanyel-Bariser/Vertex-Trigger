@@ -25,26 +25,15 @@ public class Player implements Entity {
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
 
-	/**
-	 * Creates player's physical body within the game world
-	 * at the starting position of the particular level.
-	 * 
-	 * Creates sprite & animation factories.
-	 * 
-	 * Creates a pool of reusable bullets for the player to shoot.
-	 * 
-	 * @param world the player will reside in
-	 * @param initialPosition of the player in a particular level
-	 */
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
+		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition));
+	}
+	
+	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body) {
 		this.initialPosition = initialPosition;
 		this.gameScreen = gameScreen;
-		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
-
-		// Create animations and set player sprite
+		this.body = body;		
 		spriteAnimationSetup();
-		
-		// Create a pool of reusable bullets
 		bulletPool = new BulletPool(world);
 	}
 	
@@ -60,8 +49,15 @@ public class Player implements Entity {
 	/**
 	 * Reset player position to the initial position of the level he's in
 	 */
-	public void playerDied() {
+	public void died() {
 		body.setTransform(initialPosition, 0);
+	}
+	
+	/**
+	 * Sets angle of player
+	 */
+	public void setAngle(float angle) {
+		body.setTransform(body.getPosition(), angle);
 	}
 	
 	/**
@@ -77,15 +73,7 @@ public class Player implements Entity {
 		bullet.shoot(gunPointingLeft);
 
 		gameScreen.addEntity(bullet);
-	}
-	
-	/**
-	 * Sets angle of player
-	 */
-	public void setAngle(float angle) {
-		body.setTransform(body.getPosition(), angle);
-	}
-	
+	}	
 	/**
 	 * @param canJump if true player can jump, otherwise he can't
 	 */

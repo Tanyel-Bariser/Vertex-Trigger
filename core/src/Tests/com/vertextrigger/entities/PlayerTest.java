@@ -11,18 +11,23 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Player;
+import com.vertextrigger.factories.bodyfactories.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerTest {
 	Player player;
 	World world;
+	Body body;
+	Vector2 initialPosition;
 	@Mock GameScreen gameScreen;
 
 	@Before
 	public void setUp() throws Exception {
 		buildWorld();
-		player = new Player(world, new Vector2(), gameScreen);
+		initialPosition = new Vector2(-5, 8);
+		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
+		player = new Player(world, initialPosition, gameScreen, body);
 	}
 	
 	private void buildWorld() {
@@ -32,7 +37,17 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void test() {
-		
+	public void givenPlayerNotInInitialPositionWhenPlayerDiedThenResetsToInitialPosition() {
+		setPlayerPositionToNonInitialPosition();
+		player.died();
+		assertEquals(initialPosition, body.getPosition());
 	}
+	
+	private void setPlayerPositionToNonInitialPosition() {
+		Vector2 anotherPosition = new Vector2(4, 2);
+		body.setTransform(anotherPosition, 0);
+		assertNotEquals(initialPosition, body.getPosition());
+	}
+	
+	
 }
