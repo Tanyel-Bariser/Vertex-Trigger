@@ -6,10 +6,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.UserData;
 
 public class PlayerBodyFactory {
+	static final float DENSITY = 3f;
 	private static BodyDef bodyDefinition;
 	private static Body body;
 	private static PolygonShape shape;
-	static final float DENSITY = 3f;
 
 	public static Body getPlayerBody(World world, Vector2 initialPosition) {
 		buildPlayerBodyDefinition(initialPosition);

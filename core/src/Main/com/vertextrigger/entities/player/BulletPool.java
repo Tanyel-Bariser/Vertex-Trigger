@@ -1,4 +1,4 @@
-package com.vertextrigger.entities;
+package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;

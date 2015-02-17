@@ -1,4 +1,4 @@
-package com.vertextrigger.entities;
+package com.vertextrigger.entities.player;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.factories.bodyfactories.BulletBodyFactory;
 
 @RunWith(MockitoJUnitRunner.class)

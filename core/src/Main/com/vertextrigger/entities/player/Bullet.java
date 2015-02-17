@@ -1,9 +1,10 @@
-package com.vertextrigger.entities;
+package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
+import com.vertextrigger.entities.Entity;
 import com.vertextrigger.factories.bodyfactories.BulletBodyFactory;
 
 /**
@@ -11,10 +12,10 @@ import com.vertextrigger.factories.bodyfactories.BulletBodyFactory;
  * Bullets are freed 5 seconds after being shot.
  */
 class Bullet implements Poolable, Entity {
+	static final float TOTAL_EXISTENCE_TIME = 5f;
+	private static final float SHOT_POWER = 500;
 	private final Body body;
 	float existenceTime;
-	private static final float SHOT_POWER = 500;
-	static final float TOTAL_EXISTENCE_TIME = 5f;
 
 	/**
 	 * Creates bullet's physical body

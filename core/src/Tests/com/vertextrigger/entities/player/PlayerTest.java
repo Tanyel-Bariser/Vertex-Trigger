@@ -1,4 +1,4 @@
-package com.vertextrigger.entities;
+package com.vertextrigger.entities.player;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -10,7 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.Player;
 import com.vertextrigger.factories.bodyfactories.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
 
