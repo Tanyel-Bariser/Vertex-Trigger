@@ -13,9 +13,9 @@ import com.vertextrigger.factories.bodyfactories.BulletBodyFactory;
  */
 class Bullet implements Poolable, Entity {
 	static final float TOTAL_EXISTENCE_TIME = 5f;
-	private static final float SHOT_POWER = 500;
+	static final float SHOT_POWER = 500;
 	private final Body body;
-	float existenceTime;
+	private float existenceTime;
 
 	/**
 	 * Creates bullet's physical body
@@ -30,6 +30,10 @@ class Bullet implements Poolable, Entity {
 	
 	Bullet(Body body) {
 		this.body = body;
+	}
+	
+	float getExistenceTime() {
+		return existenceTime;
 	}
 	
 	float getXPosition() {

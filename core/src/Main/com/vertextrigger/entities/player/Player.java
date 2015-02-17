@@ -13,11 +13,11 @@ import com.vertextrigger.screens.GameScreen;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
+	static final float JUMP_POWER = 200;
+	private static final float MOVEMENT_SPEED = 50f;
 	private final Body body;
 	private final Gun gun;
 	private final Vector2 initialPosition;
-	private final float MOVEMENT_SPEED = 50f;
-	private final float JUMP_POWER = 200;
 	private boolean canJump = false;
 	private float movement = 0;
 	private float additionalHorizontalForce = 0;

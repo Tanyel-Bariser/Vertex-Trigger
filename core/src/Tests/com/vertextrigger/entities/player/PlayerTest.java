@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
@@ -48,5 +49,37 @@ public class PlayerTest {
 		assertNotEquals(initialPosition, body.getPosition());
 	}
 	
+	@Test
+	public void whenSetPlayerAngleWith5ThenPlayerAngleShouldBe5() {
+		player.setAngle(5);
+		assertEquals((int) 5, (int) body.getAngle());
+	}
 	
+	@Test
+	public void whenSetPlayerAngleThenPositionShouldNotChange() {
+		Vector2 expected = body.getPosition();
+		player.setAngle(3);
+		Vector2 actual = body.getPosition();
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void whenPlayerJumpThenShouldApplyUpwardImpulseByJUMP_POWER() {
+		Body body = mock(Body.class);
+		player = new Player(world, initialPosition, gameScreen, body);
+		player.setJumpAbility(true);
+		player.jump();
+		ArgumentCaptor<Vector2> jump = ArgumentCaptor.forClass(Vector2.class);
+		verify(body).applyLinearImpulse(jump.capture(), any(Vector2.class), eq(true));
+		assertEquals(new Vector2(0, Player.JUMP_POWER), jump.getValue());
+	}
+	
+	@Test
+	public void givenPlayerCannotJumpThenShouldNotApplyUpwardImpulse() {
+		Body body = mock(Body.class);
+		player = new Player(world, initialPosition, gameScreen, body);
+		player.setJumpAbility(false);
+		player.jump();
+		verify(body, never()).applyLinearImpulse(any(Vector2.class), any(Vector2.class), eq(true));
+	}
 }
