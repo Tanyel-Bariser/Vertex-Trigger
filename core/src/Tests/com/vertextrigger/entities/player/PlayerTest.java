@@ -82,4 +82,18 @@ public class PlayerTest {
 		player.jump();
 		verify(body, never()).applyLinearImpulse(any(Vector2.class), any(Vector2.class), eq(true));
 	}
+	
+	@Test
+	public void givenPlayerMovingRightWhenUpdatedThenShouldMovePlayerRightAtMOVEMENT_SPEEDByDelta() {
+		Body body = mock(Body.class);
+		float verticalSpeed = 12f;
+		when(body.getLinearVelocity()).thenReturn(new Vector2(0, verticalSpeed));
+		player = new Player(world, initialPosition, gameScreen, body);
+		
+		player.moveRight();
+		
+		float delta = 0.1f;
+		player.update(delta);
+		verify(body).setLinearVelocity(Player.MOVEMENT_SPEED * delta, verticalSpeed * delta);
+	}
 }

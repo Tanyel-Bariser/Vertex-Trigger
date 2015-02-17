@@ -14,7 +14,7 @@ import com.vertextrigger.screens.GameScreen;
  */
 public class Player implements Entity {
 	static final float JUMP_POWER = 200;
-	private static final float MOVEMENT_SPEED = 50f;
+	static final float MOVEMENT_SPEED = 50f;
 	private final Body body;
 	private final Gun gun;
 	private final Vector2 initialPosition;
@@ -117,9 +117,9 @@ public class Player implements Entity {
 	}
 	
 	private void movePlayer(float delta) {
-		float horizontalMovement = (movement + additionalHorizontalForce)
+		float totalHorizontalMovement = (movement + additionalHorizontalForce)
 				* onSticky;
-		body.setLinearVelocity(horizontalMovement * delta,
+		body.setLinearVelocity(totalHorizontalMovement * delta,
 				body.getLinearVelocity().y * delta);
 	}
 	
