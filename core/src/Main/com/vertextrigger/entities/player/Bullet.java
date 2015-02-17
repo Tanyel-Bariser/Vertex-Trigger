@@ -32,6 +32,10 @@ class Bullet implements Poolable, Entity {
 		this.body = body;
 	}
 	
+	float getXPosition() {
+		return body.getPosition().x;
+	}
+	
 	void shoot(boolean shootLeft) {
 		float left = -SHOT_POWER;
 		float right = SHOT_POWER;

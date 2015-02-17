@@ -3,10 +3,8 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.AnimationFactory;
-import com.vertextrigger.factories.SpriteFactory;
+import com.vertextrigger.factories.*;
 import com.vertextrigger.factories.bodyfactories.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
 
@@ -18,11 +16,10 @@ public class Player implements Entity {
 	private final Body body;
 	private final Gun gun;
 	private final Vector2 initialPosition;
-	private final GameScreen gameScreen;
 	private final float MOVEMENT_SPEED = 50f;
 	private final float JUMP_POWER = 200;
-	private boolean canJump;
-	private float movement;
+	private boolean canJump = false;
+	private float movement = 0;
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
 
@@ -32,7 +29,6 @@ public class Player implements Entity {
 	
 	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body) {
 		this.initialPosition = initialPosition;
-		this.gameScreen = gameScreen;
 		this.body = body;
 		gun = new Gun(world, body, gameScreen);
 		spriteAnimationSetup();
