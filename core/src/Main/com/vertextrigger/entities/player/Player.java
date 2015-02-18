@@ -94,10 +94,7 @@ public class Player implements Entity {
 	 */
 	@Override
 	public Sprite update(float delta) {
-		// For each bullet in the bullet pool
-				// If the bullet's existence time has run out
-						// Free the bullet from the pool to be reused later
-		
+		gun.freeExpiredBullets();
 		movePlayer(delta);
 		
 		// Add delta to current animation key frame time

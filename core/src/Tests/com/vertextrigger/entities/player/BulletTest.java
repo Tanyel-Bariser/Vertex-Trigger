@@ -28,7 +28,7 @@ public class BulletTest {
 
 	@Test
 	public void whenShootBulletThenExistenceTimeShouldBeInitialised() {
-		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getExistenceTime());
+		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getRemainingTime());
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class BulletTest {
 		int delta = 3;
 		bullet.update(delta);
 		int expected = (int) Bullet.TOTAL_EXISTENCE_TIME - delta;
-		assertEquals(expected, (int) bullet.getExistenceTime());
+		assertEquals(expected, (int) bullet.getRemainingTime());
 	}
 	
 	@Test
@@ -81,6 +81,6 @@ public class BulletTest {
 	public void whenBulletIsFreedThenExistenceTimeShouldBeReset() {
 		bullet.update(6);
 		bullet.reset();
-		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getExistenceTime());
+		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getRemainingTime());
 	}
 }

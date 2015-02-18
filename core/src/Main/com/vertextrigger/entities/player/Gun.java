@@ -28,7 +28,7 @@ public class Gun {
 	 */
 	public void shoot() {
 		Bullet bullet = bulletPool.obtain();
-		//TODO Set bullet position to exact position of gun
+		//TODO Set bullet position to exact height of gun
 		bullet.setPosition(player.getPosition());
 
 		boolean gunPointingLeft = 0 > player.getLinearVelocity().x;
@@ -36,5 +36,14 @@ public class Gun {
 
 		bullets.add(bullet);
 		gameScreen.addEntity(bullet);
+	}
+
+	public void freeExpiredBullets() {
+		for(Bullet bullet : bullets) {
+			if(bullet.isExistenceTimeExpired()) {
+				bulletPool.free(bullet);
+				bullets.removeValue(bullet, true);
+			}
+		}
 	}
 }

@@ -15,7 +15,7 @@ class Bullet implements Poolable, Entity {
 	static final float TOTAL_EXISTENCE_TIME = 5f;
 	static final float SHOT_POWER = 500;
 	private final Body body;
-	private float existenceTime;
+	private float existenceTime = -1;
 
 	/**
 	 * Creates bullet's physical body
@@ -32,12 +32,12 @@ class Bullet implements Poolable, Entity {
 		this.body = body;
 	}
 	
-	float getExistenceTime() {
+	float getRemainingTime() {
 		return existenceTime;
 	}
 	
-	float getXPosition() {
-		return body.getPosition().x;
+	Vector2 getPosition() {
+		return body.getPosition();
 	}
 	
 	void shoot(boolean shootLeft) {
@@ -98,7 +98,7 @@ class Bullet implements Poolable, Entity {
 	}
 
 	/**
-	 * Invoked automatically by libGDX when BulletPool.free(Bullet) is called
+	 * Invoked automatically when BulletPool.free(Bullet) is called
 	 */
 	@Override
 	public void reset() {
