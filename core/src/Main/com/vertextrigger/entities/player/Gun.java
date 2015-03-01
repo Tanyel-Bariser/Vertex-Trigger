@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.screens.GameScreen;
 
-public class Gun {
+final class Gun {
 	private final Body player;
 	private final GameScreen gameScreen;
 	private final BulletPool bulletPool;
@@ -26,7 +26,7 @@ public class Gun {
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
-	public void shoot() {
+	void shoot() {
 		Bullet bullet = bulletPool.obtain();
 		//TODO Set bullet position to exact height of gun
 		bullet.setPosition(player.getPosition());
@@ -38,7 +38,7 @@ public class Gun {
 		gameScreen.addEntity(bullet);
 	}
 
-	public void freeExpiredBullets() {
+	void freeExpiredBullets() {
 		for(Bullet bullet : bullets) {
 			if(bullet.isExistenceTimeExpired()) {
 				bulletPool.free(bullet);

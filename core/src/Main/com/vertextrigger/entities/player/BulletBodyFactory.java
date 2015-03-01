@@ -1,11 +1,11 @@
-package com.vertextrigger.factories.bodyfactories;
+package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.UserData;
 
-public class BulletBodyFactory {
+final class BulletBodyFactory {
 	public final static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(-50, -50);
 	static final float RADIUS = 0.2f;
 	static final float DENSITY = 3f;
@@ -16,7 +16,7 @@ public class BulletBodyFactory {
 	private static FixtureDef fixtureDefinition;
 	private static Shape shape;
 	
-	public static Body getBulletBody(World world) {
+	static Body getBulletBody(World world) {
 		buildBulletBodyDefinition();
 		buildBulletBody(world);
 		buildBulletShape();

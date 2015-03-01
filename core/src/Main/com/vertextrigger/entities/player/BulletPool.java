@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pool;
  * 
  * Useful inherited methods include obtain() and free(Bullet)
  */
-class BulletPool extends Pool<Bullet> {
+final class BulletPool extends Pool<Bullet> {
 	private final World world;
 	
 	BulletPool(World world) {

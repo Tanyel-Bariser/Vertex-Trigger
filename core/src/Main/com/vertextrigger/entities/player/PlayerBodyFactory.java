@@ -1,17 +1,17 @@
-package com.vertextrigger.factories.bodyfactories;
+package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.UserData;
 
-public class PlayerBodyFactory {
+final class PlayerBodyFactory {
 	static final float DENSITY = 3f;
 	private static BodyDef bodyDefinition;
 	private static Body body;
 	private static PolygonShape shape;
 
-	public static Body getPlayerBody(World world, Vector2 initialPosition) {
+	static Body getPlayerBody(World world, Vector2 initialPosition) {
 		buildPlayerBodyDefinition(initialPosition);
 		buildPlayerBody(world);
 		buildPlayerShape();

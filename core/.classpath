@@ -3,7 +3,7 @@
 	<classpathentry excluding="Main/|Tests/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/Main"/>
 	<classpathentry kind="src" path="src/Tests"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.4.1/df470d263438048af74860ca51fc497c16a0c76a/gdx-1.4.1.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.4.1/a36f5d3e6a3b0fa3c625f8ce88216daf99435bce/gdx-1.4.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/9e6453d244896698694a7f3059f15ae509044101/gdx-box2d-1.4.1.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/fcf9d6a8c426f99e8755996fc1f96ab00a447219/gdx-box2d-1.4.1-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.4.1/70b356b52bac1cb0fd19b530e0e1ddac5776ab21/gdx-controllers-1.4.1.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-controllers/1.4.1/9599f11e7184d234160c8a9b86473aba47612c45/gdx-controllers-1.4.1-sources.jar"/>

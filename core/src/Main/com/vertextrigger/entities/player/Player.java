@@ -4,18 +4,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.*;
-import com.vertextrigger.factories.bodyfactories.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
 
 /**
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
-public class Player implements Entity {
+public final class Player implements Entity {
 	static final float JUMP_POWER = 200;
 	static final float MOVEMENT_SPEED = 50f;
 	private final Body body;
+	private final PlayerAnimator animator;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -31,16 +30,7 @@ public class Player implements Entity {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		gun = new Gun(world, body, gameScreen);
-		spriteAnimationSetup();
-	}
-	
-	/**
-	 * Initialise sprites & animation objects
-	 */
-	private void spriteAnimationSetup() {
-		// Create & set all sprites & animations the player will need
-		SpriteFactory spriteFactory = new SpriteFactory();
-		AnimationFactory animationFactory = new AnimationFactory();		
+		animator = new PlayerAnimator(body);
 	}
 	
 	/**
@@ -96,21 +86,7 @@ public class Player implements Entity {
 	public Sprite update(float delta) {
 		gun.freeExpiredBullets();
 		movePlayer(delta);
-		
-		// Add delta to current animation key frame time
-		// If player is rising/jumping
-				// Set player sprite based on jumping animation key frame
-		// If player is falling
-				// Set player sprite based on falling animation key frame
-		// If player is running, i.e. movement is not zero
-				// Set player sprite based on running animation key frame
-		
-		// Flip player sprite so that if he's moving left, i.e. movement + xForce is negative,
-		// the sprite is facing left and vice versa if he is moving right
-		
-		// Set player's sprite position & angle to match the new position of player's physical body
-		// Return player sprite after it's position/angle has been updated
-		return null;
+		return animator.getUpdatedSprite(delta);
 	}
 	
 	private void movePlayer(float delta) {

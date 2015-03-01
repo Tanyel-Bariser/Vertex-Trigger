@@ -5,13 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.bodyfactories.BulletBodyFactory;
 
 /**
  * Bullets are shot from the player's position horizontally.
  * Bullets are freed 5 seconds after being shot.
  */
-class Bullet implements Poolable, Entity {
+final class Bullet implements Poolable, Entity {
 	static final float TOTAL_EXISTENCE_TIME = 5f;
 	static final float SHOT_POWER = 500;
 	private final Body body;

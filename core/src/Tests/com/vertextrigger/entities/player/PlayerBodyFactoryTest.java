@@ -1,4 +1,4 @@
-package com.vertextrigger.factories.bodyfactories;
+package com.vertextrigger.entities.player;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import org.junit.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.vertextrigger.entities.player.PlayerBodyFactory;
 import com.vertextrigger.util.UserData;
 
 public class PlayerBodyFactoryTest {
