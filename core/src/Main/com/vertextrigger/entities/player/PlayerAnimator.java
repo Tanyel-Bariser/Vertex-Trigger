@@ -9,6 +9,8 @@ final class PlayerAnimator {
 	private final Body player;
 	private final Animation runAnimation;
 	private final Animation deathAnimation;
+	private Sprite sprite;
+	private boolean movingLeft;
 	
 	PlayerAnimator(Body body) {
 		this(body, new AnimationFactory());
@@ -26,14 +28,35 @@ final class PlayerAnimator {
 				// Set player sprite based on jumping animation key frame
 		// If player is falling
 				// Set player sprite based on falling animation key frame
-		// If player is running, i.e. movement is not zero
+		// If player is running, user is pressing directional button AND player is in contact with floor
 				// Set player sprite based on running animation key frame
-		
-		// Flip player sprite so that if he's moving left, i.e. movement + xForce is negative,
-		// the sprite is facing left and vice versa if he is moving right
+		sprite = (Sprite) runAnimation.getKeyFrame(delta);
+		faceSpriteCorrectDirection();
 		
 		// Set player's sprite position & angle to match the new position of player's physical body
 		// Return player sprite after it's position/angle has been updated
-		return null;
+		return sprite;
+	}
+	
+	private void faceSpriteCorrectDirection() {
+		setMovingLeft();
+		boolean spriteFacingLeft = sprite.isFlipX();
+		boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
+		boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;
+		boolean alreadyFacingCorrectDirection = correctlyFacingLeft || correctlyFacingRight;
+		if (!alreadyFacingCorrectDirection) {
+			sprite.flip(true, false);
+		}
+	}
+	
+	private void setMovingLeft() {
+		float movement = player.getLinearVelocity().x;
+		float leftMovementThreshold = -0.3f;
+		float rightMovementThreshold = 0.3f;
+		if (movement < leftMovementThreshold) {
+			movingLeft = true;
+		} else if (movement > rightMovementThreshold) {
+			movingLeft = false;
+		}
 	}
 }
