@@ -1,70 +1,63 @@
 package com.vertextrigger.util;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.*;
 
 /**
  * Loads & stores assets, i.e. textures, bitmapfonts, sound effects, music, etc.
  */
 public class Assets {
-    final public static int LEVEL_ONE = 1;
-    final public static int LEVEL_TWO = 2;
-    // etc
+	private final AssetManager assetManager;
 
-    private static AssetManager assetManager;
-    private static Map<Integer, AssetDescriptor<TextureAtlas>> levelTextures;
-    private static List<AssetDescriptor<?>> music, sfx, hud, mainScreen, font;
-
-	/**
-	 * Initialise AssetManager before using this class, to be used for the rest of the game
-	 * Initialise containers of assets to be loaded or unloaded for each screen/level
-	 */
-	public static void initialiseAssetManager() {
-		// Create asset manager only if one does not already exist
-        if (assetManager == null) {
-            assetManager = new AssetManager();
-        }
-
-        levelTextures = new HashMap<>();
-        //levelTextures.add(AssetFilenames.LEVEL_ONE_ATLAS);
-        //levelTextures.add(AssetFilenames.LEVEL_TWO_ATLAS);
-
+	public Assets() {
+		assetManager = new AssetManager();
 	}
 
 	/**
-	 * Loads assets for MainScreen
+	 * Ensure required assets are loaded before using asset manager
 	 */
-	public static void loadMainScreenAssets() {
-		// for each main menu asset we load the asset to be stored in asset manager
-		// for each asset not in main menu we unload asset from the asset manager
-        for (AssetDescriptor<?> mainScreenAsset : mainScreen) {
-            assetManager.load(mainScreenAsset);
-        }
+	public AssetManager getAssetManager() {
+		return assetManager;
 	}
 
-    /**
-     * Loads assets for a particular level
-     *
-     * @param level the number of the level assets we wish to load
-     */
-	public static void loadLevelAssets(int level) {
-		// unload currently loaded assets
-        assetManager.clear();
-
-        assetManager.load(levelTextures.get(level));
+	public void loadMainScreen() {
+		assetManager.clear();
+		assetManager.load(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class);
+		assetManager.load(BACKGROUND.MAIN_SCREEN.getPath(), Texture.class);
+		assetManager.load(MUSIC.MAIN_SCREEN.getPath(), TextureAtlas.class);
+		assetManager.load(FONT.REGULAR.getPath(), BitmapFont.class);
 	}
-
+	
+	public void loadLevelOne() {
+		loadLevelAssets(ATLASES.LEVEL_ONE, BACKGROUND.LEVEL_ONE, MUSIC.LEVEL_ONE);
+	}
+	
+	private void loadLevelAssets(ATLASES atlas, BACKGROUND background, MUSIC music) {
+		assetManager.clear();
+		loadCoreLevelAssets();
+		assetManager.load(atlas.getPath(), TextureAtlas.class);
+		assetManager.load(background.getPath(), Texture.class);
+		assetManager.load(music.getPath(), TextureAtlas.class);
+	}
+	
+	private void loadCoreLevelAssets() {
+		assetManager.load(ATLASES.CORE.getPath(), TextureAtlas.class);
+		for (SOUND_FX soundFx : SOUND_FX.values()) {
+			assetManager.load(soundFx.getPath(), Sound.class);
+		}
+		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
+	}
+	
+	public void loadLevelTwo() {
+		loadLevelAssets(ATLASES.LEVEL_TWO, BACKGROUND.LEVEL_TWO, MUSIC.LEVEL_TWO);
+	}
+	
 	/**
-	 * Dispose of assets once they're no longer needed
+	 * Dispose of assets once they're no longer needed and asset manager itself
 	 */
-	public static void dispose() {
-		// release all assets and asset manager itself
-        assetManager.dispose();
+	public void dispose() {
+		assetManager.dispose();
 	}
 }
