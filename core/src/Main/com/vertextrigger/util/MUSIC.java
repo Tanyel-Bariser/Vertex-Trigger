@@ -1,11 +1,13 @@
 package com.vertextrigger.util;
 
 enum MUSIC {
-	MAIN_SCREEN("music/main_screen.ogg"),
+    CREDITS("music/credits.ogg"),
+    GAME_OVER("music/game_over.ogg"),
 	LEVEL_ONE("music/level_one.ogg"),
-	LEVEL_TWO("music/level_one.ogg");
-	
-	private final String path;
+	LEVEL_TWO("music/level_one.ogg"),
+    MAIN_SCREEN("music/main_screen.ogg");
+
+    private final String path;
 	
 	private MUSIC(String path) {
 		this.path = path;

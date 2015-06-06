@@ -1,14 +1,14 @@
 package com.vertextrigger.util;
 
 enum SOUND_FX {
-	JUMP("sound/jump.ogg"),
-	DIE("sound/die.ogg"),
-	SHOOT("sound/shoot.ogg"),
-	ENEMY("sound/enemy.ogg"),
-	GAMEOVER("sound/game_over.ogg"),
-	BUTTON("sound/button.ogg"),
-	DOOR("sound/door.ogg");
-	
+    BUTTON("sound/button.wav"),
+    DIE("sound/die.wav"),
+    DOOR("sound/door.wav"),                     // TODO find door asset
+    ENEMY("sound/enemy.wav"),
+    JUMP("sound/jump.wav"),
+    PORTAL("sound/portal.wav"),
+    SHOOT("sound/shoot.wav");
+
 	private final String path;
 	
 	private SOUND_FX(String path) {
