@@ -6,12 +6,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * Encapsulates the creation of sprites
  */
 public class SpriteFactory {
-
+	
 	/**
 	 * Initialises storage of sprites that can be accessed by name
 	 */
 	public SpriteFactory() {
 		// Create a sprite storage
+	}
+	
+	public static Sprite getBulletSprite() {
+		return null;
 	}
 
 	/**

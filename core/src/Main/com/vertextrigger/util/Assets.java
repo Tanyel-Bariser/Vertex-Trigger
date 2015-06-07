@@ -1,6 +1,7 @@
 package com.vertextrigger.util;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -14,6 +15,10 @@ public class Assets {
 	public Assets() {
 		assetManager = new AssetManager();
 	}
+	
+	Assets(AssetManager assetManager) {
+		this.assetManager = assetManager;
+	}
 
 	/**
 	 * Ensure required assets are loaded before using asset manager
@@ -26,8 +31,9 @@ public class Assets {
 		assetManager.clear();
 		assetManager.load(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class);
 		assetManager.load(BACKGROUND.MAIN_SCREEN.getPath(), Texture.class);
-		assetManager.load(MUSIC.MAIN_SCREEN.getPath(), TextureAtlas.class);
+		assetManager.load(MUSIC.MAIN_SCREEN.getPath(), Music.class);
 		assetManager.load(FONT.REGULAR.getPath(), BitmapFont.class);
+		assetManager.finishLoading();
 	}
 	
 	public void loadLevelOne() {
@@ -40,6 +46,7 @@ public class Assets {
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
 		assetManager.load(background.getPath(), Texture.class);
 		assetManager.load(music.getPath(), TextureAtlas.class);
+		assetManager.finishLoading();
 	}
 	
 	private void loadCoreLevelAssets() {

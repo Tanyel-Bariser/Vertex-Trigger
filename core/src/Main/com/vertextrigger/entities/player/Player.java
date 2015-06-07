@@ -23,20 +23,23 @@ public final class Player implements Entity {
 	private float onSticky = 1;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition));
+		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition), new PlayerAnimator());
 	}
 	
-	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body) {
+	/**
+	 * Dependency injection for unit testing
+	 */
+	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body, PlayerAnimator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		gun = new Gun(world, body, gameScreen);
-		animator = new PlayerAnimator(body);
+		this.animator = animator;
 	}
 	
 	/**
 	 * Reset player position to the initial position of the level he's in
 	 */
-	public void died() {
+	public void diedResetPosition() {
 		body.setTransform(initialPosition, 0);
 	}
 	
@@ -86,7 +89,15 @@ public final class Player implements Entity {
 	public Sprite update(float delta) {
 		gun.freeExpiredBullets();
 		movePlayer(delta);
+		setAnimationType();
+		animator.setHorizontalMovement(body.getLinearVelocity().x);
+		animator.setPosition(body.getPosition().x, body.getPosition().y);
+		animator.setAngle(body.getAngle());
 		return animator.getUpdatedSprite(delta);
+	}
+	
+	private void setAnimationType() {
+		animator.setAnimationRising();
 	}
 	
 	private void movePlayer(float delta) {

@@ -1,10 +1,12 @@
 package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.factories.SpriteFactory;
 
 /**
  * Bullets are shot from the player's position horizontally.
@@ -15,7 +17,8 @@ final class Bullet implements Poolable, Entity {
 	static final float SHOT_POWER = 500;
 	private final Body body;
 	private float existenceTime = -1;
-
+	final private Sprite sprite;
+	
 	/**
 	 * Creates bullet's physical body
 	 * Creates the bullet's sprite
@@ -24,11 +27,12 @@ final class Bullet implements Poolable, Entity {
 	 */
 	Bullet(World world) {
 		body = BulletBodyFactory.getBulletBody(world);
-		// Set bullet sprite
+		sprite = SpriteFactory.getBulletSprite();
 	}
 	
-	Bullet(Body body) {
+	Bullet(Body body, Sprite sprite) {
 		this.body = body;
+		this.sprite = sprite;
 	}
 	
 	float getRemainingTime() {
@@ -75,14 +79,11 @@ final class Bullet implements Poolable, Entity {
 	@Override
 	public Sprite update(float delta) {
 		updateRemainingExistenceTime(delta);
-		// Get x & y coordinates of the bullets physical body
-		// Get the angle of the bullets physical body
-		// Set the position of the bullet sprite to match the bullet's
-		// physical body position
-		// Set the angle of the bullet sprite to match the bullet's
-		// physical body angle
-		// Return bullet's sprite after it's position/angle has been updated
-		return null;
+		Vector2 currentPosition = this.getPosition();
+		float currentAngle = body.getAngle() * MathUtils.radiansToDegrees;
+		sprite.setPosition(currentPosition.x, currentPosition.y);
+		sprite.setRotation(currentAngle);
+		return sprite;
 	}	
 
 	private void updateRemainingExistenceTime(float delta) {

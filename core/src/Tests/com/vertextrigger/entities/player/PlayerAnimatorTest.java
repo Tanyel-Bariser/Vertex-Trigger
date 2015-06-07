@@ -12,31 +12,39 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.factories.AnimationFactory;
+import com.vertextrigger.factories.PlayerAnimationFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerAnimatorTest {
 	PlayerAnimator animator;
 	@Mock Body player;
-	@Mock AnimationFactory factory;
-	@Mock Animation runAnimation;
-	Vector2 movingLeft;
-	Vector2 movingRight;
+	@Mock PlayerAnimationFactory factory;
+	@Mock Animation animation;
+	float movingLeft;
+	float movingRight;
 	@Mock Sprite sprite;
 
 	@Before
 	public void setUp() throws Exception {
-		when(factory.getPlayerRun()).thenReturn(runAnimation);
-		when(runAnimation.getKeyFrame(anyFloat())).thenReturn(sprite);
-		animator = new PlayerAnimator(player, factory);
-		movingLeft = new Vector2(-10, 0);
-		movingRight = new Vector2(10, 0);
+		setUpAnimationFactory();
+		when(animation.getKeyFrame(anyFloat())).thenReturn(sprite);
+		animator = new PlayerAnimator(factory);
+		movingLeft = -10;
+		movingRight = 10;
+	}
+	
+	private void setUpAnimationFactory() {
+		when(factory.getRun()).thenReturn(animation);
+		when(factory.getStanding()).thenReturn(animation);
+		when(factory.getRise()).thenReturn(animation);
+		when(factory.getFall()).thenReturn(animation);
+		when(factory.getDeath()).thenReturn(animation);
 	}
 
 	@Test
 	public void givenSpriteFacingRightWhenPlayerMovingLeftThenSpriteShouldFlipLeft() {
 		when(sprite.isFlipX()).thenReturn(false);
-		when(player.getLinearVelocity()).thenReturn(movingLeft);
+		animator.setHorizontalMovement(movingLeft);
 		animator.getUpdatedSprite(0);
 		verify(sprite).flip(true, false);
 	}
@@ -44,8 +52,14 @@ public class PlayerAnimatorTest {
 	@Test
 	public void givenSpriteFacingLeftWhenPlayerIsMovingLeftThenSpriteShouldNotFlipRight() {
 		when(sprite.isFlipX()).thenReturn(true);
-		when(player.getLinearVelocity()).thenReturn(movingLeft);
+		animator.setHorizontalMovement(movingLeft);
 		animator.getUpdatedSprite(0);
 		verify(sprite, never()).flip(true, false);
 	}
+	
+	@Test
+	public void whenPlayerUpdatedDeltaIsAddedToFrame() {
+		
+		animator.getUpdatedSprite(3f);
+	}	
 }

@@ -1,36 +1,74 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.factories.AnimationFactory;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.vertextrigger.factories.PlayerAnimationFactory;
 
-final class PlayerAnimator {
-	private final Body player;
+class PlayerAnimator {
 	private final Animation runAnimation;
+	private final Animation standAnimation;
+	private final Animation shootAnimation;
+	private final Animation risingAnimation;
+	private final Animation fallingAnimation;
 	private final Animation deathAnimation;
+	private Animation currentAnimation;
 	private Sprite sprite;
 	private boolean movingLeft;
+	private float x, y;
+	private float angle;
 	
-	PlayerAnimator(Body body) {
-		this(body, new AnimationFactory());
+	PlayerAnimator() {
+		this(new PlayerAnimationFactory());
 	}
-
-	PlayerAnimator(Body body, AnimationFactory factory) {
-		player = body;
-		runAnimation = factory.getPlayerRun();
-		deathAnimation = factory.getPlayerDeath();
+	
+	PlayerAnimator(PlayerAnimationFactory factory) {
+		runAnimation = factory.getRun();
+		standAnimation = factory.getStanding();
+		shootAnimation = factory.getShoot();
+		risingAnimation = factory.getRise();
+		fallingAnimation = factory.getFall();
+		deathAnimation = factory.getDeath();
+		currentAnimation = standAnimation;
+	}
+		
+	void setAnimationRunning() {
+		currentAnimation = runAnimation;
+	}
+	void setAnimationStanding() {
+		currentAnimation = standAnimation;
+	}
+	void setAnimationShooting() {
+		currentAnimation = shootAnimation;
+	}
+	void setAnimationRising() {
+		currentAnimation = risingAnimation;
+	}
+	void setAnimationFalling() {
+		currentAnimation = fallingAnimation;
+	}
+	void setAnimationDying() {
+		currentAnimation = deathAnimation;
+	}
+	void setHorizontalMovement(float horizontalMovement) {
+		float leftMovementThreshold = -0.3f;
+		float rightMovementThreshold = 0.3f;
+		if (horizontalMovement < leftMovementThreshold) {
+			movingLeft = true;
+		} else if (horizontalMovement > rightMovementThreshold) {
+			movingLeft = false;
+		}
+	}
+	void setPosition(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+	void setAngle(float angle) {
+		this.angle = angle;
 	}
 	
 	Sprite getUpdatedSprite(float delta) {
+		
 		// Add delta to current animation key frame time
-		// If player is rising/jumping
-				// Set player sprite based on jumping animation key frame
-		// If player is falling
-				// Set player sprite based on falling animation key frame
-		// If player is running, user is pressing directional button AND player is in contact with floor
-				// Set player sprite based on running animation key frame
-		sprite = (Sprite) runAnimation.getKeyFrame(delta);
+		sprite = (Sprite) currentAnimation.getKeyFrame(delta);
 		faceSpriteCorrectDirection();
 		
 		// Set player's sprite position & angle to match the new position of player's physical body
@@ -39,24 +77,12 @@ final class PlayerAnimator {
 	}
 	
 	private void faceSpriteCorrectDirection() {
-		setMovingLeft();
 		boolean spriteFacingLeft = sprite.isFlipX();
 		boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
 		boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;
 		boolean alreadyFacingCorrectDirection = correctlyFacingLeft || correctlyFacingRight;
 		if (!alreadyFacingCorrectDirection) {
 			sprite.flip(true, false);
-		}
-	}
-	
-	private void setMovingLeft() {
-		float movement = player.getLinearVelocity().x;
-		float leftMovementThreshold = -0.3f;
-		float rightMovementThreshold = 0.3f;
-		if (movement < leftMovementThreshold) {
-			movingLeft = true;
-		} else if (movement > rightMovementThreshold) {
-			movingLeft = false;
 		}
 	}
 }
