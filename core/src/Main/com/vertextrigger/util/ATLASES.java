@@ -2,7 +2,7 @@ package com.vertextrigger.util;
 
 enum ATLASES {
 	CORE("atlas/core.png"),
-	MAIN_SCREEN("altas/main_screen.png"),
+	MAIN_SCREEN("atlas/main_screen.png"),
 	LEVEL_ONE("atlas/level_one.png"),
 	LEVEL_TWO("atlas/level_two.png");
 	
