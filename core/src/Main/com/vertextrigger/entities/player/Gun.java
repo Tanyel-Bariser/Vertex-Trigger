@@ -1,22 +1,20 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.screens.GameScreen;
 
-final class Gun {
-	private final Body player;
+class Gun {
 	private final GameScreen gameScreen;
 	private final BulletPool bulletPool;
 	private final Array<Bullet> bullets;
 
-	Gun(World world, Body player, GameScreen gameScreen) {
-		this(player, gameScreen, new BulletPool(world), new Array<Bullet>());
+	Gun(World world, GameScreen gameScreen) {
+		this(gameScreen, new BulletPool(world), new Array<Bullet>());
 	}
 	
-	Gun(Body player, GameScreen gameScreen, BulletPool pool, Array<Bullet> bullets) {
-		this.player = player;
+	Gun(GameScreen gameScreen, BulletPool pool, Array<Bullet> bullets) {
 		this.gameScreen = gameScreen;
 		this.bulletPool = pool;
 		this.bullets = bullets;
@@ -26,12 +24,12 @@ final class Gun {
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
-	void shoot() {
+	void shoot(Vector2 position, float horizontalDirection) {
 		Bullet bullet = bulletPool.obtain();
 		//TODO Set bullet position to exact height of gun
-		bullet.setPosition(player.getPosition());
+		bullet.setPosition(position);
 
-		boolean gunPointingLeft = 0 > player.getLinearVelocity().x;
+		boolean gunPointingLeft = 0 > horizontalDirection;
 		bullet.shoot(gunPointingLeft);
 
 		bullets.add(bullet);

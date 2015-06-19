@@ -7,7 +7,7 @@ import org.junit.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.util.UserData;
+import com.vertextrigger.util.ContactBody;
 
 public class BulletBodyFactoryTest {
 	private World world;
@@ -74,7 +74,7 @@ public class BulletBodyFactoryTest {
 	
 	@Test
 	public void whenBulletFixtureIsCreatedThenUserDataShouldBeSet() {
-		assertEquals(UserData.BULLET, fixture.getUserData());
+		assertEquals(ContactBody.BULLET, fixture.getUserData());
 	}
 	
 	@Test

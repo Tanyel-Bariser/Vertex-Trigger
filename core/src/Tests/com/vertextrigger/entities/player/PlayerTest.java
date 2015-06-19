@@ -24,14 +24,16 @@ public class PlayerTest {
 	@Mock GameScreen gameScreen;
 	@Mock PlayerAnimator animator;
 	@Mock Sprite sprite;
+	@Mock Gun gun;
 
 	@Before
 	public void setUp() throws Exception {
 		buildWorld();
 		initialPosition = new Vector2(-5, 8);
 		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
-		player = new Player(world, initialPosition, gameScreen, body, animator);
-		when(animator.getUpdatedSprite(anyFloat())).thenReturn(sprite);
+		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
+		when(animator.getUpdatedSprite(anyFloat(), anyFloat(), 
+				(Vector2) anyObject())).thenReturn(sprite);
 		when(sprite.isFlipX()).thenReturn(true);
 	}
 	
@@ -71,7 +73,7 @@ public class PlayerTest {
 	@Test
 	public void whenPlayerJumpThenShouldApplyUpwardImpulseByJUMP_POWER() {
 		Body body = mock(Body.class);
-		player = new Player(world, initialPosition, gameScreen, body, new PlayerAnimator());
+		player = new Player(world, initialPosition, gameScreen, body, gun, new PlayerAnimator());
 		player.setJumpAbility(true);
 		player.jump();
 		ArgumentCaptor<Vector2> jump = ArgumentCaptor.forClass(Vector2.class);
@@ -82,7 +84,7 @@ public class PlayerTest {
 	@Test
 	public void givenPlayerCannotJumpThenShouldNotApplyUpwardImpulse() {
 		Body body = mock(Body.class);
-		player = new Player(world, initialPosition, gameScreen, body, new PlayerAnimator());
+		player = new Player(world, initialPosition, gameScreen, body, gun, new PlayerAnimator());
 		player.setJumpAbility(false);
 		player.jump();
 		verify(body, never()).applyLinearImpulse(any(Vector2.class), any(Vector2.class), eq(true));
@@ -94,7 +96,7 @@ public class PlayerTest {
 		when(body.getPosition()).thenReturn(new Vector2(0,0));
 		float verticalSpeed = 12f;
 		when(body.getLinearVelocity()).thenReturn(new Vector2(0, verticalSpeed));
-		player = new Player(world, initialPosition, gameScreen, body, animator);
+		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		
 		player.moveRight();
 		
@@ -106,9 +108,8 @@ public class PlayerTest {
 	@Test
 	public void playerAnimatorIsSetUpCorrectlyDuringUpdate() {
 		player.update(1);
-		verify(animator).setHorizontalMovement(body.getLinearVelocity().x);
-		verify(animator).setPosition(body.getPosition().x, body.getPosition().y);
-		verify(animator).setAngle(body.getAngle());
+		verify(gun).freeExpiredBullets();
+		verify(animator).setHorizontalMovement(anyFloat());
 	}
 	
 	@Test

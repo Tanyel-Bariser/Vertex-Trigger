@@ -1,6 +1,7 @@
 package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.factories.PlayerAnimationFactory;
 
 class PlayerAnimator {
@@ -11,10 +12,7 @@ class PlayerAnimator {
 	private final Animation fallingAnimation;
 	private final Animation deathAnimation;
 	private Animation currentAnimation;
-	private Sprite sprite;
 	private boolean movingLeft;
-	private float x, y;
-	private float angle;
 	
 	PlayerAnimator() {
 		this(new PlayerAnimationFactory());
@@ -57,26 +55,20 @@ class PlayerAnimator {
 			movingLeft = false;
 		}
 	}
-	void setPosition(float x, float y) {
-		this.x = x;
-		this.y = y;
-	}
-	void setAngle(float angle) {
-		this.angle = angle;
+	
+	boolean isMovingLeft() {
+		return movingLeft;
 	}
 	
-	Sprite getUpdatedSprite(float delta) {
-		
-		// Add delta to current animation key frame time
-		sprite = (Sprite) currentAnimation.getKeyFrame(delta);
-		faceSpriteCorrectDirection();
-		
-		// Set player's sprite position & angle to match the new position of player's physical body
-		// Return player sprite after it's position/angle has been updated
+	Sprite getUpdatedSprite(float delta, float newAngle, Vector2 newPosition) {
+		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(delta);
+		sprite.setRotation(newAngle);
+		sprite.setPosition(newPosition.x, newPosition.y);
+		faceSpriteCorrectDirection(sprite);		
 		return sprite;
 	}
 	
-	private void faceSpriteCorrectDirection() {
+	private void faceSpriteCorrectDirection(Sprite sprite) {
 		boolean spriteFacingLeft = sprite.isFlipX();
 		boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
 		boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;

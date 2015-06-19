@@ -3,7 +3,7 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.util.UserData;
+import com.vertextrigger.util.ContactBody;
 
 final class PlayerBodyFactory {
 	static final float DENSITY = 3f;
@@ -39,6 +39,6 @@ final class PlayerBodyFactory {
 	private static void buildPlayerFixture() {
 		Fixture fixture = body.createFixture(shape, DENSITY);
 		shape.dispose();
-		fixture.setUserData(UserData.PLAYER);
+		fixture.setUserData(ContactBody.PLAYER);
 	}
 }

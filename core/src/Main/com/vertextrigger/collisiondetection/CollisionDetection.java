@@ -1,15 +1,18 @@
 package com.vertextrigger.collisiondetection;
 
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Portal;
+import com.vertextrigger.util.ContactBody;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class CollisionDetection implements ContactListener {
+	private Body playerBody;	
+	
+	public CollisionDetection(Body playerBody) {
+		this.playerBody = playerBody;
+	}
 
     // the index will be in sync with the portal number assigned in the Portal constructor
     private static ArrayList<Portal> portals;
@@ -24,17 +27,8 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void beginContact(Contact contact) {
-        String fixture1 = (String) contact.getFixtureA().getUserData();
-        String fixture2 = (String) contact.getFixtureB().getUserData();
-
-        if (fixture1.substring(0, 5).equals("PORTAL")) {
-            Portal entryPortal = portals.get(Integer.parseInt(fixture1.substring(6)));
-            Portal exitPortal = entryPortal.getPairedPortal();
-        }
-        else if (fixture2.substring(0, 5).equals("PORTAL")) {
-            Portal entryPortal = portals.get(Integer.parseInt(fixture1.substring(6)));
-            Portal exitPortal = entryPortal.getPairedPortal();
-        }
+        ContactBody fixture1 = (ContactBody) contact.getFixtureA().getUserData();
+        ContactBody fixture2 = (ContactBody) contact.getFixtureB().getUserData();
 
 		// If player is in contact with an item
 				// Play rewarding pick up sound effect
@@ -66,12 +60,61 @@ public class CollisionDetection implements ContactListener {
 	public void preSolve(Contact contact, Manifold oldManifold) {
 	}
 
+	boolean isPlayerContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.PLAYER) || 
+		  	   contactBodies[1] == (ContactBody.PLAYER);
+	}
+
+	boolean isGroundContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.GROUND) || 
+			   contactBodies[1] == (ContactBody.GROUND);
+	}
+
+	boolean isBulletContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.BULLET) || 
+		  	   contactBodies[1] == (ContactBody.BULLET);
+	}
+	
+	boolean isPlayerFeetContact(Contact contact, boolean isPlayerContact) {
+		return isPlayerContact &&
+			   contact.getWorldManifold().getPoints()[0].y < playerBody.getPosition().y;
+	}
+	
+	private ContactBody[] getContactBodies(Fixture[] fixtures) {
+		return new ContactBody[]{(ContactBody) fixtures[0].getUserData(), 
+			(ContactBody) fixtures[1].getUserData()};
+	}
+	
+	private Fixture[] getFixtures(Contact contact) {
+		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
+	}
+	
+	private Vector2 getPosition(Fixture fixture) {
+		return fixture.getBody().getPosition();
+	}
+	
+	private float getAngle(Fixture fixture) {
+		return fixture.getBody().getAngle();
+	}
+	
 	/**
 	 * This method is called continuously during
 	 * contact of two or more game objects.
 	 */
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+        Fixture[] fixtures = getFixtures(contact);
+        ContactBody[] contactBodies = getContactBodies(fixtures);
+        boolean isPlayerContact = isPlayerContact(contactBodies);
+        boolean isGroundContact = isGroundContact(contactBodies);
+        boolean isBulletContact = isBulletContact(contactBodies);
+        boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
+        if (isPlayerFeetContact) {
+        	if (isGroundContact) {
+        		Fixture groundFixture = fixtures[1];
+        		playerBody.setTransform(getPosition(groundFixture), getAngle(groundFixture));
+        		
+        	}
 		// If player's feet is in contact with a "normal" platform
 				// Set player's angle to that of the platform
 				// Allow player the ability to jump
@@ -89,6 +132,7 @@ public class CollisionDetection implements ContactListener {
 				// of gravity, until the player jumps
 		// If player's feet is in contact with conveyor belt/magnet/fan style platform
 				// Set players movements to that of conveyor belt platform behaviour
+        }
 	}
 
 	/**

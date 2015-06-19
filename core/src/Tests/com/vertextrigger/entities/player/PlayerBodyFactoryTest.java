@@ -7,7 +7,7 @@ import org.junit.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.util.UserData;
+import com.vertextrigger.util.ContactBody;
 
 public class PlayerBodyFactoryTest {
 	private World world;
@@ -61,6 +61,6 @@ public class PlayerBodyFactoryTest {
 	
 	@Test
 	public void whenPlayerFixtureIsCreatedThenUserDataShouldBeInitialised() {
-		assertEquals(UserData.PLAYER, fixture.getUserData());
+		assertEquals(ContactBody.PLAYER, fixture.getUserData());
 	}
 }

@@ -14,6 +14,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AssetsTest {
@@ -153,4 +155,10 @@ public class AssetsTest {
 		assets.loadLevelTwo();
 		verify(manager).load(MUSIC.LEVEL_TWO.getPath(), Music.class);
 	}
+
+//	@Test
+//	public void getLeftButtonReturnsLeftButtonDrawable() {
+//		Drawable left = assets.getLeftButton();
+//		assertNotNull(left);
+//	}
 }

@@ -23,14 +23,17 @@ public class PlayerAnimatorTest {
 	float movingLeft;
 	float movingRight;
 	@Mock Sprite sprite;
+	float angle = 3f;
+	float delta = 6.41f;
+	Vector2 position = new Vector2(2,2);
 
 	@Before
 	public void setUp() throws Exception {
 		setUpAnimationFactory();
 		when(animation.getKeyFrame(anyFloat())).thenReturn(sprite);
 		animator = new PlayerAnimator(factory);
-		movingLeft = -10;
-		movingRight = 10;
+		movingLeft = -0.31f;
+		movingRight = .31f;
 	}
 	
 	private void setUpAnimationFactory() {
@@ -45,7 +48,7 @@ public class PlayerAnimatorTest {
 	public void givenSpriteFacingRightWhenPlayerMovingLeftThenSpriteShouldFlipLeft() {
 		when(sprite.isFlipX()).thenReturn(false);
 		animator.setHorizontalMovement(movingLeft);
-		animator.getUpdatedSprite(0);
+		animator.getUpdatedSprite(delta, angle, position);
 		verify(sprite).flip(true, false);
 	}
 
@@ -53,13 +56,48 @@ public class PlayerAnimatorTest {
 	public void givenSpriteFacingLeftWhenPlayerIsMovingLeftThenSpriteShouldNotFlipRight() {
 		when(sprite.isFlipX()).thenReturn(true);
 		animator.setHorizontalMovement(movingLeft);
-		animator.getUpdatedSprite(0);
+		animator.getUpdatedSprite(delta, angle, position);
 		verify(sprite, never()).flip(true, false);
 	}
 	
 	@Test
 	public void whenPlayerUpdatedDeltaIsAddedToFrame() {
-		
-		animator.getUpdatedSprite(3f);
-	}	
+		animator.getUpdatedSprite(delta, angle, position);
+		verify(animation).getKeyFrame(delta);
+	}
+	
+	@Test
+	public void whenPlayerUpdatedSpriteAngleShouldBeSetToAnimatorAngle() {
+		animator.getUpdatedSprite(delta, angle, position);
+		verify(sprite).setRotation(angle);
+	}
+	
+	@Test
+	public void whenPlayerUpdatedSpritePositionShouldBeSetToAnimatorPosition() {
+		animator.getUpdatedSprite(delta, angle, position);
+		verify(sprite).setPosition(position.x, position.y);
+	}
+	
+	@Test
+	public void whenPlayerIsMovingMoreThanThresholdThenPlayerShouldMoveRight() {
+		animator.setHorizontalMovement(movingRight);
+		assertEquals(false, animator.isMovingLeft());
+	}
+	
+	@Test
+	public void whenPlayerIsMovingLessThanThresholdThenPlayerShouldMoveLeft() {
+		animator.setHorizontalMovement(movingLeft);
+		assertEquals(true, animator.isMovingLeft());
+	}
+	
+	@Test
+	public void whenPlayerIsNotMovingOutsideThresholdThenPlayerShouldNotChangeDirection() {
+		boolean playerDirectionStaysSame = animator.isMovingLeft();
+		animator.setHorizontalMovement(0f);
+		assertEquals(playerDirectionStaysSame, animator.isMovingLeft());
+		animator.setHorizontalMovement(0.3f);
+		assertEquals(playerDirectionStaysSame, animator.isMovingLeft());
+		animator.setHorizontalMovement(-0.3f);
+		assertEquals(playerDirectionStaysSame, animator.isMovingLeft());
+	}
 }

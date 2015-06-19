@@ -10,7 +10,7 @@ import com.vertextrigger.screens.GameScreen;
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
-public final class Player implements Entity {
+public class Player implements Entity {
 	static final float JUMP_POWER = 200;
 	static final float MOVEMENT_SPEED = 50f;
 	private final Body body;
@@ -23,17 +23,21 @@ public final class Player implements Entity {
 	private float onSticky = 1;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition), new PlayerAnimator());
+		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition), new Gun(world, gameScreen), new PlayerAnimator());
 	}
 	
 	/**
 	 * Dependency injection for unit testing
 	 */
-	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body, PlayerAnimator animator) {
+	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body, Gun gun, PlayerAnimator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
-		gun = new Gun(world, body, gameScreen);
+		this.gun = gun;
 		this.animator = animator;
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 	
 	/**
@@ -55,7 +59,7 @@ public final class Player implements Entity {
 	 * in the direction the player is facing
 	 */
 	public void shoot() {
-		gun.shoot();
+		gun.shoot(body.getPosition(), body.getLinearVelocity().x);
 	}
 	
 	/**
@@ -91,9 +95,7 @@ public final class Player implements Entity {
 		movePlayer(delta);
 		setAnimationType();
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
-		animator.setPosition(body.getPosition().x, body.getPosition().y);
-		animator.setAngle(body.getAngle());
-		return animator.getUpdatedSprite(delta);
+		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
 	}
 	
 	private void setAnimationType() {

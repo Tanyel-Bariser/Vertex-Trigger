@@ -2,24 +2,36 @@ package com.vertextrigger.util;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+@RunWith(MockitoJUnitRunner.class)
 public class ControllerTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+	
+	Controller controllerDesktop, controllerAndroid;
+	@Mock Screen screen;
+	@Mock Stage stage;
 
 	@Before
 	public void setUp() throws Exception {
+		controllerDesktop = new Controller(screen, stage) {
+			@Override
+			void setDeviceType() {
+				isAndroidDevice = false;
+			}
+		};
+		
+		controllerAndroid = new Controller(screen, stage) {
+			@Override
+			void setDeviceType() {
+				isAndroidDevice = true;
+			}
+		};
 	}
 
 	@After
@@ -27,8 +39,13 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void whenLaunchedOnDesktopRunningOnAndroidIsFalse() {
+		assertFalse(controllerDesktop.isAndroidDevice());
+	}
+
+	@Test
+	public void whenLaunchedOnAndroidRunningOnAndroidIsTrue() {
+		assertTrue(controllerAndroid.isAndroidDevice());
 	}
 
 }
