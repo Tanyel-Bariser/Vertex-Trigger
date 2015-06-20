@@ -1,0 +1,236 @@
+
+core.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+death3
+  rotate: false
+  xy: 1, 410
+  size: 94, 94
+  orig: 94, 94
+  offset: 0, 0
+  index: -1
+death4
+  rotate: false
+  xy: 1, 314
+  size: 94, 94
+  orig: 94, 94
+  offset: 0, 0
+  index: -1
+death2
+  rotate: false
+  xy: 97, 410
+  size: 84, 94
+  orig: 84, 94
+  offset: 0, 0
+  index: -1
+death1
+  rotate: false
+  xy: 1, 218
+  size: 84, 94
+  orig: 84, 94
+  offset: 0, 0
+  index: -1
+shoot8
+  rotate: false
+  xy: 97, 314
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+jump2
+  rotate: false
+  xy: 183, 410
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk5
+  rotate: false
+  xy: 1, 122
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk1
+  rotate: false
+  xy: 87, 218
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run5
+  rotate: false
+  xy: 179, 314
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot5
+  rotate: false
+  xy: 265, 410
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot6
+  rotate: false
+  xy: 1, 26
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk4
+  rotate: false
+  xy: 83, 122
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk2
+  rotate: false
+  xy: 169, 218
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+jump1
+  rotate: false
+  xy: 261, 314
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run2
+  rotate: false
+  xy: 347, 410
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot3
+  rotate: false
+  xy: 83, 26
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+jump3
+  rotate: false
+  xy: 165, 122
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot1
+  rotate: false
+  xy: 251, 218
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk6
+  rotate: false
+  xy: 343, 314
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot2
+  rotate: false
+  xy: 429, 410
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot4
+  rotate: false
+  xy: 165, 26
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run1
+  rotate: false
+  xy: 247, 122
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run4
+  rotate: false
+  xy: 333, 218
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+walk3
+  rotate: false
+  xy: 425, 314
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+shoot7
+  rotate: false
+  xy: 511, 410
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run6
+  rotate: false
+  xy: 247, 26
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+run3
+  rotate: false
+  xy: 329, 122
+  size: 80, 94
+  orig: 80, 94
+  offset: 0, 0
+  index: -1
+Left
+  rotate: false
+  xy: 415, 232
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Jump
+  rotate: false
+  xy: 507, 328
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Right
+  rotate: false
+  xy: 593, 424
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Shoot
+  rotate: false
+  xy: 329, 40
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+Pause
+  rotate: false
+  xy: 675, 456
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+Bullet
+  rotate: false
+  xy: 1, 1
+  size: 25, 23
+  orig: 25, 23
+  offset: 0, 0
+  index: -1
