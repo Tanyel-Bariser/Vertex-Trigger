@@ -1,0 +1,369 @@
+
+atlas_stone.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+slice27
+  rotate: false
+  xy: 1, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 27
+castleRight
+  rotate: false
+  xy: 1, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice04
+  rotate: false
+  xy: 1, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 4
+slice35
+  rotate: false
+  xy: 73, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 35
+slice17
+  rotate: false
+  xy: 1, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 17
+castleHillLeft2
+  rotate: false
+  xy: 1, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice18
+  rotate: false
+  xy: 73, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 18
+castleHillRight2
+  rotate: false
+  xy: 73, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+castleHalfRight
+  rotate: false
+  xy: 145, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice19
+  rotate: false
+  xy: 73, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 19
+slice32
+  rotate: false
+  xy: 145, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 32
+slice13
+  rotate: false
+  xy: 217, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 13
+slice23
+  rotate: false
+  xy: 145, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 23
+slice30
+  rotate: false
+  xy: 217, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 30
+slice22
+  rotate: false
+  xy: 289, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 22
+slice02
+  rotate: false
+  xy: 217, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 2
+castleHalfLeft
+  rotate: false
+  xy: 289, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice12
+  rotate: false
+  xy: 361, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 12
+slice07
+  rotate: false
+  xy: 289, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 7
+castleHillLeft
+  rotate: false
+  xy: 289, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice36
+  rotate: false
+  xy: 361, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 36
+slice26
+  rotate: false
+  xy: 433, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 26
+slice20
+  rotate: false
+  xy: 361, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 20
+castle
+  rotate: false
+  xy: 433, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice06
+  rotate: false
+  xy: 505, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 6
+castleHillRight
+  rotate: false
+  xy: 505, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice05
+  rotate: false
+  xy: 433, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 5
+castleLeft
+  rotate: false
+  xy: 505, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+castleMid
+  rotate: false
+  xy: 577, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice03
+  rotate: false
+  xy: 577, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 3
+castleCliffRightAlt
+  rotate: false
+  xy: 505, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+castleCliffLeftAlt
+  rotate: false
+  xy: 577, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice01
+  rotate: false
+  xy: 649, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 1
+castleCenter
+  rotate: false
+  xy: 577, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice33
+  rotate: false
+  xy: 577, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 33
+castleCliffRight
+  rotate: false
+  xy: 649, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice21
+  rotate: false
+  xy: 721, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 21
+slice14
+  rotate: false
+  xy: 649, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 14
+slice24
+  rotate: false
+  xy: 721, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 24
+slice28
+  rotate: false
+  xy: 793, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 28
+castleCenter_rounded
+  rotate: false
+  xy: 721, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice16
+  rotate: false
+  xy: 721, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 16
+castleCliffLeft
+  rotate: false
+  xy: 793, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice25
+  rotate: false
+  xy: 865, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 25
+slice34
+  rotate: false
+  xy: 793, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 34
+slice31
+  rotate: false
+  xy: 865, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 31
+castleHalfMid
+  rotate: false
+  xy: 937, 169
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+slice29
+  rotate: false
+  xy: 865, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 29
+slice15
+  rotate: false
+  xy: 937, 97
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: 15
+castleHalf
+  rotate: false
+  xy: 937, 25
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+castleLedgeLeft
+  rotate: false
+  xy: 1, 1
+  size: 5, 22
+  orig: 5, 22
+  offset: 0, 0
+  index: -1
+castleLedgeRight
+  rotate: false
+  xy: 1009, 217
+  size: 5, 22
+  orig: 5, 22
+  offset: 0, 0
+  index: -1
