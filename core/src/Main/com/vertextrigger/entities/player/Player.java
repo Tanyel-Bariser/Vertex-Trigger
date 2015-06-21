@@ -62,11 +62,12 @@ public class Player implements Entity {
 		gun.shoot(body.getPosition(), body.getLinearVelocity().x);
 	}
 	
-	/**
-	 * @param canJump if true player can jump, otherwise he can't
-	 */
-	public void setJumpAbility(boolean canJump) {
-		this.canJump = canJump; 
+	public void setCanJump() {
+		canJump = true; 
+	}
+	
+	public void setCannotJump() {
+		canJump = false;
 	}
 	
 	/**

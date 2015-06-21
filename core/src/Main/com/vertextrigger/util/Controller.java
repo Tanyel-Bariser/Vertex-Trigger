@@ -4,9 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.main.VertexTrigger;
 
@@ -30,10 +28,14 @@ public class Controller implements InputProcessor {
 		return isAndroidDevice;
 	}
 
+	public Controller(Player player, Screen level) {
+		this(player, level, new Stage());
+	}
+	
 	/**
 	 * Create all virtual buttons for Android version
 	 */
-	public Controller(Player player, Screen level, Stage stage) {
+	Controller(Player player, Screen level, Stage stage) {
 		this.level = level; 
 		this.stage = stage;
 		this.player = player;

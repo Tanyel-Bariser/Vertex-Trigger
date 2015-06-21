@@ -10,11 +10,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.util.ContactBody;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollisionDetectionTest {
 	private CollisionDetection collision;
+	@Mock Player player;
 	@Mock Body body;
 	@Mock Contact contact;
 	@Mock Fixture fixA, fixB;
@@ -23,11 +25,20 @@ public class CollisionDetectionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		collision = new CollisionDetection(body);
+		when(player.getBody()).thenReturn(body);
+		collision = new CollisionDetection(player);
 		when(contact.getFixtureA()).thenReturn(fixA);
 		when(contact.getFixtureB()).thenReturn(fixB);
 		when(contact.getWorldManifold()).thenReturn(worldManifold);
 		when(worldManifold.getPoints()).thenReturn(new Vector2[] {vector,vector});
+	}
+	
+	@Test
+	public void whenContactWithGroundFixAGroundContactIsTrue() {
+		when(fixA.getUserData()).thenReturn(ContactBody.GROUND);
+		collision.postSolve(contact, null);
+		ContactBody[] contactBodies = setUpContactBodies(contact);
+		assertTrue(collision.isGroundContact(contactBodies));
 	}
 	
 	private ContactBody[] setUpContactBodies(Contact contact) {
@@ -36,16 +47,25 @@ public class CollisionDetectionTest {
 	}
 
 	@Test
-	public void whenContactWithPlatformPlatformContactIsTrue() {
-		when(fixA.getUserData()).thenReturn(ContactBody.GROUND);
+	public void whenContactWithGroundFixtureBGroundContactIsTrue() {
+		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
 		collision.postSolve(contact, null);
 		ContactBody[] contactBodies = setUpContactBodies(contact);
 		assertTrue(collision.isGroundContact(contactBodies));
 	}
 	
 	@Test
-	public void whenContactWithPlayerPlayerContactIsTrue() {
+	public void whenContactWithPlayerFixtureAPlayerContactIsTrue() {
 		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
+		when(body.getPosition()).thenReturn(vector);
+		collision.postSolve(contact, null);
+		ContactBody[] contactBodies = setUpContactBodies(contact);
+		assertTrue(collision.isPlayerContact(contactBodies));
+	}
+
+	@Test
+	public void whenContactWithPlayerFixtureBPlayerContactIsTrue() {
+		when(fixB.getUserData()).thenReturn(ContactBody.PLAYER);
 		when(body.getPosition()).thenReturn(vector);
 		collision.postSolve(contact, null);
 		ContactBody[] contactBodies = setUpContactBodies(contact);
@@ -53,8 +73,16 @@ public class CollisionDetectionTest {
 	}
 	
 	@Test
-	public void whenContactWithBulletBulletContactIsTrue() {
+	public void whenContactWithBulletFixtureABulletContactIsTrue() {
 		when(fixA.getUserData()).thenReturn(ContactBody.BULLET);
+		collision.postSolve(contact, null);
+		ContactBody[] contactBodies = setUpContactBodies(contact);
+		assertTrue(collision.isBulletContact(contactBodies));
+	}
+
+	@Test
+	public void whenContactWithBulletFixtureBBulletContactIsTrue() {
+		when(fixB.getUserData()).thenReturn(ContactBody.BULLET);
 		collision.postSolve(contact, null);
 		ContactBody[] contactBodies = setUpContactBodies(contact);
 		assertTrue(collision.isBulletContact(contactBodies));
@@ -106,5 +134,16 @@ public class CollisionDetectionTest {
 		
 		collision.postSolve(contact, null);
 		verify(body).setTransform(platformPosition, platformAngle);
+	}
+	
+	@Test
+	public void whenPlayerFeetInContactWithGroundPlayerCanJump() {
+		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
+		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
+		when(body.getPosition()).thenReturn(new Vector2(0,1));
+		when(fixB.getBody()).thenReturn(body);
+		
+		collision.postSolve(contact, null);
+		verify(player).setCanJump();
 	}
 }

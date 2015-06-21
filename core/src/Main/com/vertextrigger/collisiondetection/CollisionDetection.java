@@ -3,15 +3,18 @@ package com.vertextrigger.collisiondetection;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Portal;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.util.ContactBody;
 
 import java.util.ArrayList;
 
 public class CollisionDetection implements ContactListener {
-	private Body playerBody;	
+	private final Player player; 
+	private final Body playerBody;	
 	
-	public CollisionDetection(Body playerBody) {
-		this.playerBody = playerBody;
+	public CollisionDetection(Player player) {
+		this.player = player;
+		this.playerBody = player.getBody();
 	}
 
     // the index will be in sync with the portal number assigned in the Portal constructor
@@ -59,6 +62,53 @@ public class CollisionDetection implements ContactListener {
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
 	}
+	
+	/**
+	 * This method is called continuously during
+	 * contact of two or more game objects.
+	 */
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+        Fixture[] fixtures = getFixtures(contact);
+        ContactBody[] contactBodies = getContactBodies(fixtures);
+        boolean isPlayerContact = isPlayerContact(contactBodies);
+        boolean isGroundContact = isGroundContact(contactBodies);
+        boolean isBulletContact = isBulletContact(contactBodies);
+        boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
+        if (isPlayerFeetContact) {
+        	if (isGroundContact) {
+        		Fixture groundFixture = fixtures[1];//Ground is always second fixture
+        		playerBody.setTransform(getPosition(groundFixture), getAngle(groundFixture));
+        		player.setCanJump();
+        	}
+		// If player's feet is in contact with a "normal" platform
+				// Set player's angle to that of the platform
+				// Allow player the ability to jump
+		// If player's feet is in contact with a slippery platform
+				// Set player's movements to that of slippery platform behaviour
+		// If player's feet is in contact with falling platform
+				// Cause platform to fall
+		// If player's feet is in contact with crumbling platform
+				// Cause platform to crumble
+		// If player's feet is in contact with moving platform that
+		// changes direction each time it's jumped on
+				// Cause platform to change direction
+		// If player's feet is in contact with sticky platform
+				// Keep player's feet in contact with platform regardless
+				// of gravity, until the player jumps
+		// If player's feet is in contact with conveyor belt/magnet/fan style platform
+				// Set players movements to that of conveyor belt platform behaviour
+        }
+	}
+	
+	private Fixture[] getFixtures(Contact contact) {
+		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
+	}
+
+	private ContactBody[] getContactBodies(Fixture[] fixtures) {
+		return new ContactBody[]{(ContactBody) fixtures[0].getUserData(), 
+			(ContactBody) fixtures[1].getUserData()};
+	}
 
 	boolean isPlayerContact(ContactBody[] contactBodies) {
 		return contactBodies[0] == (ContactBody.PLAYER) || 
@@ -80,59 +130,12 @@ public class CollisionDetection implements ContactListener {
 			   contact.getWorldManifold().getPoints()[0].y < playerBody.getPosition().y;
 	}
 	
-	private ContactBody[] getContactBodies(Fixture[] fixtures) {
-		return new ContactBody[]{(ContactBody) fixtures[0].getUserData(), 
-			(ContactBody) fixtures[1].getUserData()};
-	}
-	
-	private Fixture[] getFixtures(Contact contact) {
-		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
-	}
-	
 	private Vector2 getPosition(Fixture fixture) {
 		return fixture.getBody().getPosition();
 	}
 	
 	private float getAngle(Fixture fixture) {
 		return fixture.getBody().getAngle();
-	}
-	
-	/**
-	 * This method is called continuously during
-	 * contact of two or more game objects.
-	 */
-	@Override
-	public void postSolve(Contact contact, ContactImpulse impulse) {
-        Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);
-        boolean isPlayerContact = isPlayerContact(contactBodies);
-        boolean isGroundContact = isGroundContact(contactBodies);
-        boolean isBulletContact = isBulletContact(contactBodies);
-        boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
-        if (isPlayerFeetContact) {
-        	if (isGroundContact) {
-        		Fixture groundFixture = fixtures[1];
-        		playerBody.setTransform(getPosition(groundFixture), getAngle(groundFixture));
-        		
-        	}
-		// If player's feet is in contact with a "normal" platform
-				// Set player's angle to that of the platform
-				// Allow player the ability to jump
-		// If player's feet is in contact with a slippery platform
-				// Set player's movements to that of slippery platform behaviour
-		// If player's feet is in contact with falling platform
-				// Cause platform to fall
-		// If player's feet is in contact with crumbling platform
-				// Cause platform to crumble
-		// If player's feet is in contact with moving platform that
-		// changes direction each time it's jumped on
-				// Cause platform to change direction
-		// If player's feet is in contact with sticky platform
-				// Keep player's feet in contact with platform regardless
-				// of gravity, until the player jumps
-		// If player's feet is in contact with conveyor belt/magnet/fan style platform
-				// Set players movements to that of conveyor belt platform behaviour
-        }
 	}
 
 	/**

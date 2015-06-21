@@ -1,20 +1,24 @@
 package com.vertextrigger.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.levelbuilders.LevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.util.Controller;
+import com.vertextrigger.util.State;
 
-/**
- * 
- */
 public class GameScreen implements Screen {
-	private VertexTrigger vertexTrigger;
-	private LevelBuilder levelBuilder;
+	private final VertexTrigger vertexTrigger;
+	private final LevelBuilder levelBuilder;
+	private State state = State.RUNNING;
 	private World world;
 	private Array<Entity> entities;
 	private Array<Sprite> entitySprites;
@@ -27,9 +31,8 @@ public class GameScreen implements Screen {
 	 * @param vertexTrigger main game class
 	 */
 	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
-		// Set main game class
-		// Set the specific level builder to set up & build the specific level,
-		// i.e. level 1, level 2 or level 3, etc.
+		this.vertexTrigger = vertexTrigger;
+		this.levelBuilder = levelBuilder;
 	}
 
 	/**
@@ -38,9 +41,11 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void render(float delta) {
-		// Set the colour to clear the screen to
-		// Clear the screen to the selected colour
-		// If the game state is "running", i.e. not paused
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if (state == State.RUNNING){
+			float gravity = GRAVITY * delta * delta;
+			world.setGravity(new Vector2(0, gravity));
 			// Adjust gravity of game world based on delta
 			// Update game world based on time step
 			
@@ -57,6 +62,7 @@ public class GameScreen implements Screen {
 			// Update camera position to follow the player
 			// Add only those sprites that are in the view of the camera 
 			// projection into a separate container of sprites to be rendered
+		}
 		// Draw all sprites in one batch to the user's screen
 		// Draw all button/label images to the user's screen
 	}
@@ -74,10 +80,10 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		// Create a "Stage" to handle buttons & distribute input events
-		// Create Controller to create & manage all virtual game play buttons
-		// for the level
-		// Set the stage & controller class as the current input processors
+		Vector2 initialPosition = levelBuilder.getInitialPosition();
+		Player player = new Player(world, initialPosition, this);
+		Gdx.input.setInputProcessor(new Controller(player, this));
+		
 		// Create a sprite batch for later rendering all sprite in one batch
 		// Create camera to be able to project a portion of the game world to
 		// the user's screen
@@ -137,7 +143,7 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void pause() {
-		// Set game to paused
+		state = State.PAUSED;
 	}
 
 	/**
@@ -145,7 +151,7 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void resume() {
-		// Set game to running
+		state = State.RUNNING;
 	}
 
 	/**

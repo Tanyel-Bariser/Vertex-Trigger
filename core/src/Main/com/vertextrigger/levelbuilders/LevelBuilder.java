@@ -1,6 +1,7 @@
 package com.vertextrigger.levelbuilders;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
@@ -122,4 +123,9 @@ public abstract class LevelBuilder {
 	public void setGameScreen(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
 	}
+
+	/**
+	 * @return position player starts the level at
+	 */
+	public abstract Vector2 getInitialPosition();
 }

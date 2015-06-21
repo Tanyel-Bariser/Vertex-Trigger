@@ -2,33 +2,27 @@ package com.vertextrigger.screens;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import com.vertextrigger.levelbuilders.LevelBuilder;
+import com.vertextrigger.main.VertexTrigger;
+
+@RunWith(MockitoJUnitRunner.class)
 public class GameScreenTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	GameScreen screen;
+	@Mock VertexTrigger vertexTrigger;
+	@Mock LevelBuilder levelBuilder;
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		screen = new GameScreen(vertexTrigger, levelBuilder);
 	}
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		
 	}
-
 }

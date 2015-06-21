@@ -79,7 +79,7 @@ public class Assets {
 	}
 	
 	/**
-	 * Make sure the level assets have been loaded, i.e. invoked method loadLevelOne().
+	 * Make sure the level assets have been loaded, i.e. invoked method loadLevelXXX().
 	 */
 	public Drawable getLeftButton() {
 		return coreSkin.getDrawable("Left");
