@@ -1,10 +1,10 @@
 package com.vertextrigger.util;
 
 enum ATLASES {
-	CORE("atlas/core.png"),
-	MAIN_SCREEN("atlas/main_screen.png"),
-	LEVEL_ONE("atlas/level_one.png"),
-	LEVEL_TWO("atlas/level_two.png");
+	CORE("atlas/core.pack"),
+	MAIN_SCREEN("atlas/main_screen.pack"),
+	LEVEL_ONE("atlas/level_one.pack"),
+	LEVEL_TWO("atlas/level_two.pack");
 	
 	private final String path;
 	

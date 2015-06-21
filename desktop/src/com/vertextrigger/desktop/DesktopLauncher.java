@@ -7,6 +7,7 @@ import com.vertextrigger.main.VertexTrigger;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new VertexTrigger(), config);
+		VertexTrigger vt = new VertexTrigger();
+		new LwjglApplication(vt, config);
 	}
 }

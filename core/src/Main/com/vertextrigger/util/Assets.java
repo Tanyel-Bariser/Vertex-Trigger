@@ -35,11 +35,12 @@ public class Assets {
 	public void loadMainScreen() {
 		assetManager.clear();
 		assetManager.load(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class);
-		mainScreenSkin = new Skin(assetManager.get(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class));
 		assetManager.load(BACKGROUND.MAIN_SCREEN.getPath(), Texture.class);
 		assetManager.load(MUSIC.MAIN_SCREEN.getPath(), Music.class);
 		assetManager.load(FONT.REGULAR.getPath(), BitmapFont.class);
 		assetManager.finishLoading();
+
+		mainScreenSkin = new Skin(assetManager.get(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class));
 	}
 	
 	public void loadLevelOne() {
@@ -50,19 +51,20 @@ public class Assets {
 		assetManager.clear();
 		loadCoreLevelAssets();
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
-		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 		assetManager.load(background.getPath(), Texture.class);
 		assetManager.load(music.getPath(), Music.class);
 		assetManager.finishLoading();
+
+		coreSkin = new Skin(assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class));
+		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 	}
 	
 	private void loadCoreLevelAssets() {
 		assetManager.load(ATLASES.CORE.getPath(), TextureAtlas.class);
-		coreSkin = new Skin(assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class));
 		for (SOUND_FX soundFx : SOUND_FX.values()) {
 			assetManager.load(soundFx.getPath(), Sound.class);
 		}
-		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
+//		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
 	}
 	
 	public void loadLevelTwo() {
@@ -76,7 +78,26 @@ public class Assets {
 		assetManager.dispose();
 	}
 	
+	/**
+	 * Make sure the level assets have been loaded, i.e. invoked method loadLevelOne().
+	 */
 	public Drawable getLeftButton() {
-		return coreSkin.getDrawable("left");
+		return coreSkin.getDrawable("Left");
+	}
+
+	public Drawable getRightButton() {
+		return coreSkin.getDrawable("Right");
+	}
+	
+	public Drawable getShootButton() {
+		return coreSkin.getDrawable("Shoot");
+	}
+	
+	public Drawable getJumpButton() {
+		return coreSkin.getDrawable("Jump");
+	}
+	
+	public Drawable getPauseButton() {
+		return coreSkin.getDrawable("Pause");
 	}
 }

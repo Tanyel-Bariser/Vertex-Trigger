@@ -21,7 +21,10 @@ public class VertexTrigger extends ApplicationAdapter {//Game {
 		@Override
 		public void create () {
 			batch = new SpriteBatch();
-			img = new Texture("background/bg_castle.png");
+			img = new Texture("background/level_one.png");
+			
+
+			ASSETS.loadLevelOne();
 		}
 	
 		@Override

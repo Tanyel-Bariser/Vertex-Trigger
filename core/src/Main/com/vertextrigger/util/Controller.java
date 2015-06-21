@@ -4,14 +4,19 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.main.VertexTrigger;
 
 /**
  * Manages the creation & use of the buttons that control the player & the game
  */
 public class Controller implements InputProcessor {
-	private Screen level;
-	private Stage stage;
+	private final Screen level;
+	private final Stage stage;
+	private final Player player;
 	protected boolean isAndroidDevice; 
 	
 	/**
@@ -28,82 +33,129 @@ public class Controller implements InputProcessor {
 	/**
 	 * Create all virtual buttons for Android version
 	 */
-	public Controller(Screen level, Stage stage) {
+	public Controller(Player player, Screen level, Stage stage) {
+		this.level = level; 
+		this.stage = stage;
+		this.player = player;
+		
 		setDeviceType();
 		if (isAndroidDevice) {
-			createLeftButton();
-			createRightButton();
-			createPauseButton();
-			createShootButton();
-			createJumpButton();			
+			createLeftButton(new ImageButton(getLeftButton()));
+			createRightButton(new ImageButton(getRightButton()));
+			createPauseButton(new ImageButton(getPauseButton()));
+			createShootButton(new ImageButton(getShootButton()));
+			createJumpButton(new ImageButton(getJumpButton()));			
 		}
+	}
+	
+	Drawable getRightButton() {
+		return VertexTrigger.ASSETS.getRightButton();
+	}
+
+	Drawable getLeftButton() {
+		return VertexTrigger.ASSETS.getLeftButton();
+	}
+	
+	Drawable getPauseButton() {
+		return VertexTrigger.ASSETS.getPauseButton();
+	}
+	
+	Drawable getShootButton() {
+		return VertexTrigger.ASSETS.getShootButton();
+	}
+	
+	Drawable getJumpButton() {
+		return VertexTrigger.ASSETS.getJumpButton();
 	}
 	
 	/**
 	 * Creates a virtual button for Android version
 	 * which moves the player left when touched
 	 */
-	private void createLeftButton() {
-		ImageButton left = new ImageButton(VertexTrigger.ASSETS.getLeftButton());
-		// Create virtual button with left arrow image
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the player to move left when it's touched
-		// Add button to the stage
+	void createLeftButton(ImageButton left) {
+		left.addListener(getLeftClickListener());
+		stage.addActor(left);
+	}
+	
+	ClickListener getLeftClickListener() {
+		return new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				player.moveLeft();
+			}
+		};
 	}
 	
 	/**
 	 * Creates a virtual button for Android version
 	 * which moves the player right when touched
 	 */
-	private void createRightButton() {
-		// Create virtual button with right arrow image
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the player to move right when it's touched
-		// Add button to the stage
+	void createRightButton(ImageButton right) {
+		right.addListener(getRightClickListener());
+		stage.addActor(right);
 	}
 	
+	ClickListener getRightClickListener() {
+		return new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				player.moveRight();
+			}
+		};
+	}
+
 	/**
 	 * Creates a virtual button for Android version
 	 * which pauses the game when touched
 	 */
-	private void createPauseButton() {
-		// Create virtual button with a standard pause image
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the game to pause when it's touched
-		// Add button to the stage
+	void createPauseButton(ImageButton pause) {
+		pause.addListener(getPauseClickListener());
+		stage.addActor(pause);
 	}
 	
-	/**
-	 * Creates a virtual button for Android version
-	 * which unpauses the game play when touched
-	 */
-	private void createResumeButton() {
-		// Create virtual resume game play button
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the game play to be resumed
-		// Add button to the stage
+	ClickListener getPauseClickListener() {
+		return new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				level.pause();
+			}
+		};
 	}
 
 	/**
 	 * Creates a virtual button for Android version
 	 * which cause the player to shoot his gun when touched
 	 */
-	private void createShootButton() {
-		// Create virtual button with a shoot gun image
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the player to shoot his gun when it's touched
-		// Add button to the stage
+	void createShootButton(ImageButton shoot) {
+		shoot.addListener(getShootClickListener());
+		stage.addActor(shoot);
+	}
+	
+	ClickListener getShootClickListener() {
+		return new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				player.shoot();
+			}
+		};
 	}
 		
 	/**
 	 * Creates a virtual button for Android version
 	 * which makes the player jump when touched
 	 */
-	private void createJumpButton() {
-		// Create virtual button with up arrow image
-		// Create & set a listener to notice when the virtual button is
-		// touched & that causes the player to jump when it's touched
-		// Add button to the stage
+	void createJumpButton(ImageButton jump) {
+		jump.addListener(getJumpClickListener());
+		stage.addActor(jump);
+	}
+	
+	ClickListener getJumpClickListener() {
+		return new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				player.jump();
+			}
+		};
 	}
 	
 	/**
@@ -111,14 +163,25 @@ public class Controller implements InputProcessor {
 	 */
 	@Override
 	public boolean keyDown(int keycode) {
-		// If the left key is pressed
-				// Move player left
-		// If the right key is pressed
-				// Move player right
-		// If the space bar is pressed
-				// If player is on a platform
-						// Make player jump
-		return false;
+		switch (keycode) {
+			case Input.Keys.LEFT:
+				player.moveLeft();
+				break;
+			case Input.Keys.RIGHT:
+				player.moveRight();
+				break;
+			case Input.Keys.P:
+				level.pause();
+				break;
+			case Input.Keys.SPACE:
+				player.shoot();
+				break;
+			case Input.Keys.UP:
+				player.jump();
+				break;
+			default: return false;
+		}
+		return true;
 	}
 
 	/**
@@ -126,22 +189,18 @@ public class Controller implements InputProcessor {
 	 */
 	@Override
 	public boolean keyUp(int keycode) {
-		// If left or right keys are no longer being pressed
-				// Stop moving player left or right
+		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.RIGHT) {
+			player.stopMoving();
+			return true;
+		}
 		return false;
 	}
 
-	/**
-	 * Only for Android version
-	 */
+	//UNUSED METHODS FROM INTERFACE
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
-	
-	
-	
-	//UNUSED METHODS FROM INTERFACE
 	@Override
 	public boolean keyTyped(char character) {
 		return false;
