@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.collisiondetection.CollisionDetection;
-import com.vertextrigger.util.Coordinate;
 
 public class Portal {
 
@@ -17,7 +16,7 @@ public class Portal {
     public static String IDENTIFIER = "PORTAL-";
 
     private Body body;
-    private Coordinate coordinate;
+    private Vector2 coordinate;
     private Fixture fixture;
 
     private Orientation orientation;
@@ -42,7 +41,7 @@ public class Portal {
      * @param coordinate the x & y coordinate at which the portal is located
      * @param orientation the direction the portal faces
      */
-    private Portal(World world, Coordinate coordinate, Orientation orientation) {
+    private Portal(World world, Vector2 coordinate, Orientation orientation) {
         this.coordinate = coordinate;
         this.orientation = orientation;
 
@@ -66,7 +65,7 @@ public class Portal {
      * @param orientations an array of booleans specifying direction the individual portals will face
      * @return an array of Sprite objects for the calling code to use for rendering
      */
-    public static Sprite[] createPortalPair(World world, Coordinate[] coordinates, Orientation[] orientations) {
+    public static Sprite[] createPortalPair(World world, Vector2[] coordinates, Orientation[] orientations) {
         // Construct portal objects and pair them with each other
         Portal portal1 = new Portal(world, coordinates[0], orientations[0]);
         Portal portal2 = new Portal(world, coordinates[1], orientations[1]);

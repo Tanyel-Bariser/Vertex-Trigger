@@ -1,10 +1,10 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.util.Coordinate;
 
 public abstract class MovingPlatform implements Entity {
 		// Predefined path for platform to move
@@ -19,7 +19,7 @@ public abstract class MovingPlatform implements Entity {
 		 * @param sprite platform's image
 		 * @param coordinates is the path, series of x & y coordinates, the platform moves
 		 */
-		public MovingPlatform(World world, Sprite sprite, Array<Coordinate> coordinates) {
+		public MovingPlatform(World world, Sprite sprite, Array<Vector2> coordinates) {
 			// Set sprite for platform
 			// Create physical platform body
 			// Set the coordinates of the predefined path
@@ -34,7 +34,7 @@ public abstract class MovingPlatform implements Entity {
 		 * @param position of moving platform in game world
 		 * @return physical body of moving platform
 		 */
-		protected abstract Body createPlatformBody(World world, Coordinate position);
+		protected abstract Body createPlatformBody(World world, Vector2 position);
 		
 		/**
 		 * Create & set sprite & animation for moving platform

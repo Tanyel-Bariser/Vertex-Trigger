@@ -1,8 +1,8 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.util.Coordinate;
 
 /**
  * Stores the predefined path of an entity's body & moves the body along
@@ -19,7 +19,7 @@ public class Path {
 	 * @param entity
 	 * @param path
 	 */
-	public Path(Body body, Array<Coordinate> coordinates) {
+	public Path(Body body, Array<Vector2> coordinates) {
 		// Set entity's physical body
 		// Set entity's predefined path's coordinates
 		// Set position of body based on first x & y coordinate of it's path

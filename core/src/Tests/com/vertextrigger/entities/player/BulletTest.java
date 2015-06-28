@@ -21,10 +21,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.factories.SpriteFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BulletTest {
 	@Mock Body body;
+	@Mock SpriteFactory factory;
 	@Mock Sprite sprite;
 	Bullet bullet;
 	Vector2 position = new Vector2(2,3);
@@ -35,7 +37,8 @@ public class BulletTest {
 	public void setUp() throws Exception {
 		when(body.getPosition()).thenReturn(position);
 		when(body.getAngle()).thenReturn(angle);
-		bullet = new Bullet(body, sprite);
+		when(factory.getBullet()).thenReturn(sprite);
+		bullet = new Bullet(body, factory);
 		boolean shootLeft = true;
 		bullet.shoot(shootLeft);
 	}
@@ -55,7 +58,7 @@ public class BulletTest {
 	@Test
 	public void whenShootBulletRightThenShouldApplyLinearImpulseHorizontallyAtPositiveSHOT_POWER() {
 		Body body = mock(Body.class);
-		bullet = new Bullet(body, null);
+		bullet = new Bullet(body, factory);
 		boolean shootRight = false;
 		bullet.shoot(shootRight);
 		ArgumentCaptor<Vector2> velocity = ArgumentCaptor.forClass(Vector2.class);

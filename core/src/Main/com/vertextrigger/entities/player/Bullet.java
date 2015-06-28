@@ -12,12 +12,12 @@ import com.vertextrigger.factories.SpriteFactory;
  * Bullets are shot from the player's position horizontally.
  * Bullets are freed 5 seconds after being shot.
  */
-final class Bullet implements Poolable, Entity {
+class Bullet implements Poolable, Entity {
 	static final float TOTAL_EXISTENCE_TIME = 5f;
 	static final float SHOT_POWER = 500;
 	private final Body body;
 	private float existenceTime = -1;
-	final private Sprite sprite;
+	private final Sprite sprite;
 	
 	/**
 	 * Creates bullet's physical body
@@ -25,14 +25,14 @@ final class Bullet implements Poolable, Entity {
 	 * 
 	 * @param world the bullet will reside in
 	 */
-	Bullet(World world) {
+	Bullet(World world, SpriteFactory factory) {
 		body = BulletBodyFactory.getBulletBody(world);
-		sprite = SpriteFactory.getBulletSprite();
+		sprite = factory.getBullet();
 	}
 	
-	Bullet(Body body, Sprite sprite) {
+	Bullet(Body body, SpriteFactory factory) {
 		this.body = body;
-		this.sprite = sprite;
+		sprite = factory.getBullet();
 	}
 	
 	float getRemainingTime() {
@@ -79,7 +79,7 @@ final class Bullet implements Poolable, Entity {
 	@Override
 	public Sprite update(float delta) {
 		updateRemainingExistenceTime(delta);
-		Vector2 currentPosition = this.getPosition();
+		Vector2 currentPosition = getPosition();
 		float currentAngle = body.getAngle() * MathUtils.radiansToDegrees;
 		sprite.setPosition(currentPosition.x, currentPosition.y);
 		sprite.setRotation(currentAngle);

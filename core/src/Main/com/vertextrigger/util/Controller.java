@@ -16,22 +16,7 @@ public class Controller implements InputProcessor {
 	private final Stage stage;
 	private final Player player;
 	protected boolean isAndroidDevice; 
-	
-	/**
-	 * Overriden by unit tests to set the device type for testing either Android or desktop
-	 */
-	void setDeviceType() {
-		isAndroidDevice = Gdx.app.getType() == ApplicationType.Android;
-	}
-	
-	boolean isAndroidDevice() { 
-		return isAndroidDevice;
-	}
 
-	public Controller(Player player, Screen level) {
-		this(player, level, new Stage());
-	}
-	
 	/**
 	 * Create all virtual buttons for Android version
 	 */
@@ -48,6 +33,21 @@ public class Controller implements InputProcessor {
 			createShootButton(new ImageButton(getShootButton()));
 			createJumpButton(new ImageButton(getJumpButton()));			
 		}
+	}
+
+	public Controller(Player player, Screen level) {
+		this(player, level, new Stage());
+	}
+	
+	/**
+	 * Overriden by unit tests to set the device type for testing either Android or desktop
+	 */
+	void setDeviceType() {
+		isAndroidDevice = Gdx.app.getType() == ApplicationType.Android;
+	}
+	
+	boolean isAndroidDevice() { 
+		return isAndroidDevice;
 	}
 	
 	Drawable getRightButton() {

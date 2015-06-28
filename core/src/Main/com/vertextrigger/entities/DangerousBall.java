@@ -1,10 +1,10 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.util.Coordinate;
 
 /**
  * DangerousBall is an game object that will kill the player if touched and
@@ -25,7 +25,7 @@ public abstract class DangerousBall implements Entity {
 	 * @param world the dangerous ball will reside in
 	 * @param coordinates is the path, series of x & y coordinates, the dangerous ball follows
 	 */
-	public DangerousBall(World world, Array<Coordinate> coordinates) {
+	public DangerousBall(World world, Array<Vector2> coordinates) {
 		// Set sprite for dangerous ball
 		spriteSetup();
 		// Create physical body at initial position based on first coordinate
@@ -43,7 +43,7 @@ public abstract class DangerousBall implements Entity {
 	/**
 	 * Defers creation of body & physical properties to subclasses
 	 */
-	protected abstract void createBody(World world, Coordinate coordinates);
+	protected abstract void createBody(World world, Vector2 coordinates);
 	
 	/**
 	 * Moves the dangerous ball further along its predefined

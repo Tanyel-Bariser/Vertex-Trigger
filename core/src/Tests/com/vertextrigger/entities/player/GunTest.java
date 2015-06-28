@@ -8,25 +8,33 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.factories.SpriteFactory;
 import com.vertextrigger.screens.GameScreen;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GunTest {
 	Gun gun;
 	World world;
+	BulletPool pool;
 	@Mock Array<Bullet> bullets;
 	@Mock Body player;
 	@Mock GameScreen gameScreen;
-	@Mock BulletPool pool;
+	@Mock BulletPool mockPool;
 	@Mock Bullet bullet;
+	@Mock SpriteFactory factory;
+	@Mock Sprite sprite;
 
 	@Before
 	public void setUp() throws Exception {
 		buildWorld();
-		gun = new Gun(player, gameScreen, pool, bullets);
+		gun = new Gun(gameScreen, mockPool, bullets);
+		when(bullet.getPosition()).thenReturn(new Vector2(0,0));
+		when(factory.getBullet()).thenReturn(sprite);
+		pool = new BulletPool(world, factory);
 	}
 	
 	private void buildWorld() {
@@ -37,22 +45,22 @@ public class GunTest {
 
 	@Test
 	public void givenPlayerFacingLeftWhenGunShootThenBulletShouldBeShotLeft() {
-		when(pool.obtain()).thenReturn(bullet);
+		when(mockPool.obtain()).thenReturn(bullet);
 		Vector2 playerFacingLeft = new Vector2(-1f, 0);
 		when(player.getLinearVelocity()).thenReturn(playerFacingLeft);
 		when(player.getPosition()).thenReturn(new Vector2());
-		gun.shoot();
+		gun.shoot(player.getPosition(), player.getLinearVelocity().x);
 		boolean shootLeft = true;
 		verify(bullet).shoot(shootLeft);
 	}
 
 	@Test
 	public void givenPlayerFacingRightWhenGunShootThenBulletShouldBeShotRight() {
-		when(pool.obtain()).thenReturn(bullet);
+		when(mockPool.obtain()).thenReturn(bullet);
 		Vector2 playerFacingRight = new Vector2(1f, 0);
 		when(player.getLinearVelocity()).thenReturn(playerFacingRight);
 		when(player.getPosition()).thenReturn(new Vector2());
-		gun.shoot();
+		gun.shoot(player.getPosition(), player.getLinearVelocity().x);
 		boolean shootLeft = false;
 		verify(bullet).shoot(shootLeft);
 	}
@@ -60,10 +68,9 @@ public class GunTest {
 
 	@Test
 	public void givenExpiredBulletWhenPromptedShouldReset() {
-		BulletPool pool = new BulletPool(world);
 		Array<Bullet> bullets = new Array<Bullet>();
 		bullets.add(bullet);
-		gun = new Gun(player, gameScreen, pool, bullets);
+		gun = new Gun(gameScreen, pool, bullets);
 		
 		when(bullet.isExistenceTimeExpired()).thenReturn(true);
 		
@@ -74,10 +81,9 @@ public class GunTest {
 	
 	@Test
 	public void givenUnexpiredBulletWhenPromptedShouldNotReset() {
-		BulletPool pool = new BulletPool(world);
 		Array<Bullet> bullets = new Array<Bullet>();
 		bullets.add(bullet);
-		gun = new Gun(player, gameScreen, pool, bullets);
+		gun = new Gun(gameScreen, pool, bullets);
 		
 		when(bullet.isExistenceTimeExpired()).thenReturn(false);
 		
@@ -89,13 +95,12 @@ public class GunTest {
 	@Test
 	public void givenExpiredBulletWhenPromptedShouldRemoveBulletFromGun() {
 		//Setup without Bullet Mocking
-		BulletPool pool = new BulletPool(world);
 		Array<Bullet> bullets = new Array<Bullet>();
 		Bullet bullet1 = pool.newObject();
 		bullets.add(bullet1);
 		Bullet bullet2 = pool.newObject();
 		bullets.add(bullet2);
-		gun = new Gun(player, gameScreen, pool, bullets);
+		gun = new Gun(gameScreen, pool, bullets);
 		
 		//Initialise Bullet and expire existence time
 		bullet1.shoot(true);
@@ -113,13 +118,12 @@ public class GunTest {
 	@Test
 	public void givenExpiredBulletWhenPromptedShouldResetRemainingTime() {
 		//Setup without Bullet Mocking
-		BulletPool pool = new BulletPool(world);
 		Array<Bullet> bullets = new Array<Bullet>();
 		Bullet bullet1 = pool.newObject();
 		bullets.add(bullet1);
 		Bullet bullet2 = pool.newObject();
 		bullets.add(bullet2);
-		gun = new Gun(player, gameScreen, pool, bullets);
+		gun = new Gun(gameScreen, pool, bullets);
 		
 		//Initialise Bullet and expire existence time
 		bullet1.shoot(true);

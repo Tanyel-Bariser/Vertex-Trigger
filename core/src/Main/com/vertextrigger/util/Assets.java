@@ -55,7 +55,8 @@ public class Assets {
 		assetManager.load(music.getPath(), Music.class);
 		assetManager.finishLoading();
 
-		coreSkin = new Skin(assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class));
+		TextureAtlas coreAtlas = assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class); 
+		coreSkin = new Skin(coreAtlas);
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 	}
 	
@@ -64,7 +65,7 @@ public class Assets {
 		for (SOUND_FX soundFx : SOUND_FX.values()) {
 			assetManager.load(soundFx.getPath(), Sound.class);
 		}
-//		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
+		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
 	}
 	
 	public void loadLevelTwo() {
@@ -99,5 +100,17 @@ public class Assets {
 	
 	public Drawable getPauseButton() {
 		return coreSkin.getDrawable("Pause");
+	}
+
+	public Skin getCoreSkin() {
+		return coreSkin;
+	}
+
+	public Skin getMainScreenSkin() {
+		return mainScreenSkin;
+	}
+
+	public Skin getLevelSkin() {
+		return levelSkin;
 	}
 }

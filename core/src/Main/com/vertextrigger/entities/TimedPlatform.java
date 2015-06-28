@@ -2,10 +2,10 @@ package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.vertextrigger.util.Coordinate;
-
+	
 /**
  * Platform that does something after a certain amount of time, such as
  * disappears/reappears, counts down then explodes, spikes go in & out
@@ -23,7 +23,7 @@ public abstract class TimedPlatform implements Entity {
 	 * @param world the timed platform will reside in
 	 * @param time before the platform's action is required
 	 */
-	public TimedPlatform(World world, Coordinate position) {
+	public TimedPlatform(World world, Vector2 position) {
 		// Set sprite & animation for platform
 		setupSpriteAnimation();
 		// Create physical platform body
@@ -42,7 +42,7 @@ public abstract class TimedPlatform implements Entity {
 	 * @param position of platform in game world
 	 * @return physical body of platform 
 	 */
-	protected abstract Body createPlatformBody(World world, Coordinate position);
+	protected abstract Body createPlatformBody(World world, Vector2 position);
 	
 	/**
 	 * Once enough time has passed, the timed platform performs

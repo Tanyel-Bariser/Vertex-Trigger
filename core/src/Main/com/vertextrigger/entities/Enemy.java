@@ -1,10 +1,10 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.util.Coordinate;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path
@@ -21,7 +21,7 @@ public abstract class Enemy implements Entity {
 	 * @param world the enemy will reside in
 	 * @param coordinates is the path, series of x & y coordinates, the enemy follows
 	 */
-	public Enemy(World world, Array<Coordinate> coordinates) {
+	public Enemy(World world, Array<Vector2> coordinates) {
 		// Set enemy sprites & animations
 		// Create physical body
 		// Set the coordinates of the predefined path
@@ -35,7 +35,7 @@ public abstract class Enemy implements Entity {
 	 * @param position of enemy in game world
 	 * @return physical body of enemy
 	 */
-	protected abstract Body createEnemy(World world, Coordinate position);
+	protected abstract Body createEnemy(World world, Vector2 position);
 	
 	/**
 	 * Create & set all sprites & animations the enemy will need

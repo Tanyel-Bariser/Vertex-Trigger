@@ -1,8 +1,8 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.util.Coordinate;
 
 /**
  * 
@@ -14,7 +14,7 @@ public class FireBall extends DangerousBall {
 	 * @param world
 	 * @param coordinates
 	 */
-	public FireBall(World world, Array<Coordinate> coordinates) {
+	public FireBall(World world, Array<Vector2> coordinates) {
 		super(world, coordinates);
 	}
 
@@ -29,7 +29,7 @@ public class FireBall extends DangerousBall {
 	 * 
 	 */
 	@Override
-	protected void createBody(World world, Coordinate coordinate) {
+	protected void createBody(World world, Vector2 coordinate) {
 		// Set radius of fire ball
 		// Set the speed the fire ball moves at
 	}

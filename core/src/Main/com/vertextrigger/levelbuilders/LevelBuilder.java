@@ -17,15 +17,6 @@ public abstract class LevelBuilder {
 		entities = new Array<Entity>();
 		sprites = new Array<Sprite>();
 	}
-	
-	/**
-	 * Create player at the initial position of the particular game level
-	 * Then adds player to the entities container
-	 * 
-	 * @param world for the player to reside in
-	 * @param gameScreen responsible for rendering the game
-	 */
-	protected abstract void createPlayer(World world, GameScreen gameScreen);
 
 	/**
 	 * Create all enemies needed for the particular game level at the
@@ -96,8 +87,6 @@ public abstract class LevelBuilder {
 	 * @return all entities required for this level
 	 */
 	public Array<Entity> buildEntities(World world) {
-		// Create player then add to the entities container
-		createPlayer(world, gameScreen);
 		// Create enemies then add them to the entities container
 		createEnemies(world);
 		// Create dangerous ball(s) then add them to the entities container
@@ -119,7 +108,7 @@ public abstract class LevelBuilder {
 		createGroundWalls(world);
 		return sprites;
 	}
-
+	
 	public void setGameScreen(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
 	}

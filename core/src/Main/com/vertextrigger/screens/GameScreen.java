@@ -1,28 +1,35 @@
 package com.vertextrigger.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.levelbuilders.LevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
-import com.vertextrigger.util.Controller;
-import com.vertextrigger.util.State;
+import com.vertextrigger.util.*;
 
 public class GameScreen implements Screen {
 	private final VertexTrigger vertexTrigger;
 	private final LevelBuilder levelBuilder;
+	private final World world;
+	private final OrthographicCamera camera;
+	private final Player player;
+	private final SpriteBatch batch;
+	private final Stage stage;
+	private final float approxFPS = 60.0f;
+	private final float TIMESTEP = 1.0f / approxFPS;
+	private final int VELOCITYITERATIONS = 8; // Box2d manual recommends 8 & 3
+	private final int POSITIONITERATIONS = 3; // for these iterations values
 	private State state = State.RUNNING;
-	private World world;
 	private Array<Entity> entities;
 	private Array<Sprite> entitySprites;
-	private Array<Sprite> sprites;
+	private Array<Sprite> backgroundSprites;
 	private final float GRAVITY = -9.81f;
 	
 	/**
@@ -33,6 +40,31 @@ public class GameScreen implements Screen {
 	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
 		this.vertexTrigger = vertexTrigger;
 		this.levelBuilder = levelBuilder;
+		world = new World(new Vector2(0, GRAVITY), true);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
+		player = new Player(world, initialPosition, this);
+		batch = new SpriteBatch();
+		stage = new Stage();
+		entities.add(player);
+		world.setContactListener(new CollisionDetection(player));
+		Gdx.input.setInputProcessor(new Controller(player, this));
+	}
+	
+	/**
+	 * Show method is invoked once when the level one screen is first created &
+	 * is used to set up the screen of the first level
+	 */
+	@Override
+	public void show() {
+		//delegate setting up to constructor
+	}
+	
+	private Vector2 setUpLevelAndReturnInitialPosition() {
+		levelBuilder.setGameScreen(this);
+		entities = levelBuilder.buildEntities(world);
+		backgroundSprites = levelBuilder.buildLevelLayout(world);
+		return levelBuilder.getInitialPosition();
 	}
 
 	/**
@@ -41,30 +73,76 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void render(float delta) {
+		clearScreen();
+		if (state == State.RUNNING){
+			updateWorld(delta);
+			updateEntities(delta);
+			updateCamera();
+		}
+		drawToScreen(delta, getVisibleSprites());
+	}
+	
+	private void clearScreen() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if (state == State.RUNNING){
-			float gravity = GRAVITY * delta * delta;
-			world.setGravity(new Vector2(0, gravity));
-			// Adjust gravity of game world based on delta
-			// Update game world based on time step
-			
-			// Empty the entity sprite container
-			entitySprites.clear();
-			// For each entity in the entity container
-			for (Entity entity : entities) {
-				// Update each entity
-				Sprite sprite = entity.update(delta);
-				// Store their updated sprite in the entity sprite container
-				entitySprites.add(sprite);
-			}
-		
-			// Update camera position to follow the player
-			// Add only those sprites that are in the view of the camera 
-			// projection into a separate container of sprites to be rendered
+	}
+	
+	private void updateWorld(float delta) {
+		float gravity = GRAVITY * delta * delta;
+		world.setGravity(new Vector2(0, gravity));
+		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+	}
+	
+	private void updateEntities(float delta) {
+		entitySprites.clear();
+		for (Entity entity : entities) {
+			Sprite sprite = entity.update(delta);
+			entitySprites.add(sprite);
 		}
-		// Draw all sprites in one batch to the user's screen
-		// Draw all button/label images to the user's screen
+	}
+	
+	private Array<Sprite> getVisibleSprites() {
+		Array<Sprite> sprites = new Array<Sprite>();
+		for (Sprite sprite : entitySprites) {
+			if (isInScreen(sprite)) {
+				sprites.add(sprite);
+			}
+		}
+		return sprites;
+	}
+	
+	private boolean isInScreen(Sprite sprite) {
+		float topEdge = camera.position.y + camera.viewportHeight / 2;
+		float bottomEdge = camera.position.y - camera.viewportHeight / 2;
+		float leftEdge = camera.position.x - camera.viewportWidth / 2;
+		float rightEdge = camera.position.x + camera.viewportWidth / 2;
+		int errorMargin = 4;
+		
+		boolean belowTop = sprite.getY() < topEdge + errorMargin;
+		boolean aboveBottom = sprite.getY() > bottomEdge - errorMargin;
+		boolean inRight = sprite.getX() > rightEdge + errorMargin;
+		boolean inLeft = sprite.getX() > leftEdge - errorMargin;
+		return belowTop && aboveBottom && inRight && inLeft;
+	}
+	
+	private void updateCamera() {
+		float playerPos = player.getBody().getPosition().y;
+		camera.position.y = playerPos;
+		camera.update();
+	}
+	
+	private void drawToScreen(float delta, Array<Sprite> visibleEntitySprite) {
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+		for (Sprite sprite : visibleEntitySprite) {
+			sprite.draw(batch);
+		}
+		for (Sprite sprite: backgroundSprites) {
+			sprite.draw(batch);
+		}
+		batch.end();
+		stage.act(delta);
+		stage.draw();
 	}
 
 	/**
@@ -72,43 +150,6 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void resize(int width, int height) {
-	}
-
-	/**
-	 * Show method is invoked once when the level one screen is first created &
-	 * is used to set up the screen of the first level
-	 */
-	@Override
-	public void show() {
-		Vector2 initialPosition = levelBuilder.getInitialPosition();
-		Player player = new Player(world, initialPosition, this);
-		Gdx.input.setInputProcessor(new Controller(player, this));
-		
-		// Create a sprite batch for later rendering all sprite in one batch
-		// Create camera to be able to project a portion of the game world to
-		// the user's screen
-		
-		// Create the game world with a gravity of -9.81 m/s2 on the Y-axis &
-		// for performance set true to not simulating inactive bodies
-		world = new World(new Vector2(0, GRAVITY), true);
-		
-		// Create the collision detector to recognise contacts between game objects
-		// Set the collision detector to the game world so it can detect game 
-		// objects that reside within the game world
-		
-		// Create the static platforms, portals, ground, walls, ceiling, etc. for the
-		// level & add all of their corresponding sprites to the container of
-		// sprites for later rendering
-		sprites = levelBuilder.buildLevelLayout(world);
-		
-		// Give level builder a reference to this screen
-		levelBuilder.setGameScreen(this);
-		
-		// Create all dynamic/kinematic game objects for this level, i.e. the
-		// player, enemies, dangerous balls, moving platforms, etc. & add these
-		// entities into a container so they each can be updated once per frame
-		// during gameplay
-		entities = levelBuilder.buildEntities(world);
 	}
 	
 	/**

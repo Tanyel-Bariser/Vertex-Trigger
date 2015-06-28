@@ -3,6 +3,7 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.factories.SpriteFactory;
 import com.vertextrigger.screens.GameScreen;
 
 class Gun {
@@ -11,7 +12,7 @@ class Gun {
 	private final Array<Bullet> bullets;
 
 	Gun(World world, GameScreen gameScreen) {
-		this(gameScreen, new BulletPool(world), new Array<Bullet>());
+		this(gameScreen, new BulletPool(world, new SpriteFactory()), new Array<Bullet>());
 	}
 	
 	Gun(GameScreen gameScreen, BulletPool pool, Array<Bullet> bullets) {

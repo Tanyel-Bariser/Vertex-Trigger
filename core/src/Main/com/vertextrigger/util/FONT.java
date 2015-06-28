@@ -1,8 +1,8 @@
 package com.vertextrigger.util;
 
 enum FONT {
-    REGULAR("font/regular.ttf"),
-    THIN("font/thin.ttf");
+    REGULAR("font/regular-12.fnt"),
+    THIN("font/thin-12.fnt");
 
 	private final String path;
 	

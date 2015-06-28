@@ -74,7 +74,7 @@ public class PlayerTest {
 	public void whenPlayerJumpThenShouldApplyUpwardImpulseByJUMP_POWER() {
 		Body body = mock(Body.class);
 		player = new Player(world, initialPosition, gameScreen, body, gun, new PlayerAnimator());
-		player.setJumpAbility(true);
+		player.setCanJump();
 		player.jump();
 		ArgumentCaptor<Vector2> jump = ArgumentCaptor.forClass(Vector2.class);
 		verify(body).applyLinearImpulse(jump.capture(), any(Vector2.class), eq(true));
@@ -85,7 +85,7 @@ public class PlayerTest {
 	public void givenPlayerCannotJumpThenShouldNotApplyUpwardImpulse() {
 		Body body = mock(Body.class);
 		player = new Player(world, initialPosition, gameScreen, body, gun, new PlayerAnimator());
-		player.setJumpAbility(false);
+		player.setCannotJump();
 		player.jump();
 		verify(body, never()).applyLinearImpulse(any(Vector2.class), any(Vector2.class), eq(true));
 	}

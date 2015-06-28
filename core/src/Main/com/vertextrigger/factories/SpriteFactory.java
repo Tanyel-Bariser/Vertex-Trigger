@@ -1,52 +1,54 @@
 package com.vertextrigger.factories;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.vertextrigger.main.VertexTrigger;
 
 /**
  * Encapsulates the creation of sprites
  */
 public class SpriteFactory {
-	
+	private final Skin coreSkin;
 	/**
 	 * Initialises storage of sprites that can be accessed by name
 	 */
 	public SpriteFactory() {
-		// Create a sprite storage
+		coreSkin = VertexTrigger.ASSETS.getCoreSkin(); 
 	}
 	
-	public static Sprite getBulletSprite() {
-		return null;
+	public Sprite createBullet() {
+		return coreSkin.getSprite("Bullet");
 	}
 
 	/**
 	 * @return main menu background sprite
 	 */
-	public static Sprite getMainMenuBackground() {
-		// Get main menu background image from assets & return it
+	public Sprite createMainMenuBackground() {
+		// create main menu background image from assets & return it
 		return null;
 	}
 
 	/**
 	 * @return level one background sprite
 	 */
-	public static Sprite getLevelOneBackground() {
-		// Get level one background image from assets & return it
+	public Sprite createLevelOneBackground() {
+		// create level one background image from assets & return it
 		return null;
 	}
 
 	/**
 	 * @return level two background sprite
 	 */
-	public static Sprite getLevelTwoBackground() {
-		// Get level two background image from assets & return it
+	public Sprite createLevelTwoBackground() {
+		// create level two background image from assets & return it
 		return null;
 	}
 
 	/**
 	 * @return title sprite
 	 */
-	public Sprite getTitle() {
-		// Get title image for main screen from assets
+	public Sprite createTitle() {
+		// create title image for main screen from assets
 		// Set size & return it
 		return null;
 	}
@@ -57,8 +59,8 @@ public class SpriteFactory {
 	 * @param height of player sprite
 	 * @return player sprite
 	 */
-	public Sprite getPlayerSprite(String name, float width, float height) {
-		// Get a specific player sprite from assets by its name
+	public Sprite createPlayer(String name, float width, float height) {
+		// create a specific player sprite from assets by its name
 		// Set player sprite size
 		// Set player origin as middle of sprite
 		// Return player sprite
@@ -71,8 +73,8 @@ public class SpriteFactory {
 	 * @param height of enemy sprite
 	 * @return enemy sprite
 	 */
-	public Sprite getEnemySprite(String name, float width, float height) {
-		// Get a specific enemy sprite from assets by its name
+	public Sprite createEnemy(String name, float width, float height) {
+		// create a specific enemy sprite from assets by its name
 		// Set enemy sprite size
 		// Set enemy origin as middle of sprite
 		// Return enemy sprite
@@ -84,8 +86,8 @@ public class SpriteFactory {
 	 * @param radius of dangerous ball sprite
 	 * @return dangerous ball sprite
 	 */
-	public Sprite getDangerousBallSprite(String name, float radius) {
-		// Get a specific dangerous ball sprite from assets by its name
+	public Sprite createDangerousBall(String name, float radius) {
+		// create a specific dangerous ball sprite from assets by its name
 		// Set dangerous ball sprite size
 		// Set dangerous ball origin as middle of sprite
 		// Return dangerous ball sprite
@@ -98,8 +100,8 @@ public class SpriteFactory {
 	 * @param height of platform sprite
 	 * @return platform sprite
 	 */
-	public Sprite getPlatformSprite(String name, float width, float height) {
-		// Get a specific platform sprite from assets by its name
+	public Sprite createPlatform(String name, float width, float height) {
+		// create a specific platform sprite from assets by its name
 		// Set platform sprite size
 		// Return platform sprite
 		return null;
