@@ -12,7 +12,7 @@ import com.vertextrigger.screens.GameScreen;
  */
 public class Player implements Entity {
 	static final float JUMP_POWER = 200;
-	static final float MOVEMENT_SPEED = 50f;
+	static final float MOVEMENT_SPEED = 5000f;
 	private final Body body;
 	private final PlayerAnimator animator;
 	private final Gun gun;
