@@ -3,17 +3,21 @@ package com.vertextrigger.factories;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Encapsulates the creation of sprites
  */
 public class SpriteFactory {
 	private final Skin coreSkin;
+	private final Skin levelSkin;
+	
 	/**
 	 * Initialises storage of sprites that can be accessed by name
 	 */
 	public SpriteFactory() {
 		coreSkin = VertexTrigger.ASSETS.getCoreSkin(); 
+		levelSkin = VertexTrigger.ASSETS.getLevelSkin();
 	}
 	
 	public Sprite createBullet() {
@@ -59,12 +63,11 @@ public class SpriteFactory {
 	 * @param height of player sprite
 	 * @return player sprite
 	 */
-	public Sprite createPlayer(String name, float width, float height) {
-		// create a specific player sprite from assets by its name
-		// Set player sprite size
-		// Set player origin as middle of sprite
-		// Return player sprite
-		return null;
+	public Sprite createPlayer(String name, GameObjectSize size) {
+		Sprite player = coreSkin.getSprite("walk1");
+		player.setSize(size.getSpriteWidth(), size.getSpriteHeight());
+		player.setOrigin(size.getSpriteWidth()/2, size.getSpriteHeight()/2);
+		return player;
 	}
 
 	/**
@@ -104,6 +107,8 @@ public class SpriteFactory {
 		// create a specific platform sprite from assets by its name
 		// Set platform sprite size
 		// Return platform sprite
-		return null;
+		Sprite sprite = levelSkin.getSprite(name);
+		sprite.setSize(width, height);
+		return sprite;
 	}
 }

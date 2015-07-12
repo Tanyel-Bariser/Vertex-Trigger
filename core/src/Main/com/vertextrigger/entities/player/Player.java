@@ -100,7 +100,11 @@ public class Player implements Entity {
 	}
 	
 	private void setAnimationType() {
-		animator.setAnimationRising();
+		if (body.getLinearVelocity().y > 3) {
+			animator.setAnimationRising();
+		} else {
+			animator.setAnimationStanding();
+		}
 	}
 	
 	private void movePlayer(float delta) {

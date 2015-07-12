@@ -3,19 +3,20 @@ package com.vertextrigger.levelbuilders;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.vertextrigger.factories.PlatformFactory;
 import com.vertextrigger.factories.SpriteFactory;
+import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
  */
 public class PrototypeLevelBuilder extends LevelBuilder {
-	SpriteFactory spf;
+	SpriteFactory spriteFactory;
 	
 	public PrototypeLevelBuilder() {
-		spf = new SpriteFactory();
-		// Load assets required for level one,
-		// while unloading unneeded assets
-		// Play level one music
+		spriteFactory = new SpriteFactory();
+		VertexTrigger.ASSETS.loadLevelOne();
 	}
 
 	@Override
@@ -36,12 +37,15 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 
 	@Override
 	protected void createStaticPlatforms(World world) {
-		Sprite platform = spf.createPlatform("platform", 100f, 20f);
+		PlatformFactory factory = new PlatformFactory(world);
+		GameObjectSize size = GameObjectSize.createSmallPlatformSize();
+		Sprite platform = factory.createPlatform("slice17", size);
 		sprites.add(platform);
-	}	
+	}
 
 	@Override
 	protected void createGroundWalls(World world) {
+		
 	}
 
 	@Override
@@ -50,6 +54,6 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 
 	@Override
 	public Vector2 getInitialPosition() {
-		return null;
+		return new Vector2(0,50);
 	}
 }

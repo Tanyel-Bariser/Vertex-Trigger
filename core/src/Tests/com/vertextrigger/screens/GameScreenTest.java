@@ -18,11 +18,9 @@ public class GameScreenTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		screen = new GameScreen(vertexTrigger, levelBuilder);
 	}
 
 	@Test
 	public void test() {
-		
 	}
 }

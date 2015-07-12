@@ -63,7 +63,9 @@ class PlayerAnimator {
 	Sprite getUpdatedSprite(float delta, float newAngle, Vector2 newPosition) {
 		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(delta);
 		sprite.setRotation(newAngle);
-		sprite.setPosition(newPosition.x, newPosition.y);
+		float widthOffset = sprite.getWidth()/1.5f;
+		float heightOffset = sprite.getHeight()/2.1f;
+		sprite.setPosition(newPosition.x - widthOffset, newPosition.y - heightOffset);
 		faceSpriteCorrectDirection(sprite);		
 		return sprite;
 	}

@@ -1,12 +1,10 @@
 package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.SpriteFactory;
 
 /**
  * Bullets are shot from the player's position horizontally.
@@ -25,14 +23,14 @@ class Bullet implements Poolable, Entity {
 	 * 
 	 * @param world the bullet will reside in
 	 */
-	Bullet(World world, SpriteFactory factory) {
+	Bullet(World world, Sprite sprite) {
 		body = BulletBodyFactory.getBulletBody(world);
-		sprite = factory.getBullet();
+		this.sprite = sprite;
 	}
 	
-	Bullet(Body body, SpriteFactory factory) {
+	Bullet(Body body, Sprite sprite) {
 		this.body = body;
-		sprite = factory.getBullet();
+		this.sprite = sprite;
 	}
 	
 	float getRemainingTime() {

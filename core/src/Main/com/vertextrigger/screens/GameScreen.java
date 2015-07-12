@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -15,6 +16,7 @@ import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
 
 public class GameScreen implements Screen {
+	private final float ZOOM = 3f;
 	private final VertexTrigger vertexTrigger;
 	private final LevelBuilder levelBuilder;
 	private final World world;
@@ -31,6 +33,7 @@ public class GameScreen implements Screen {
 	private Array<Sprite> entitySprites;
 	private Array<Sprite> backgroundSprites;
 	private final float GRAVITY = -9.81f;
+	private final Box2DDebugRenderer physicsDebugger;
 	
 	/**
 	 * Sets main game class for smooth screen transitions
@@ -40,8 +43,11 @@ public class GameScreen implements Screen {
 	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
 		this.vertexTrigger = vertexTrigger;
 		this.levelBuilder = levelBuilder;
+		entities = new Array<Entity>();
+		entitySprites = new Array<Sprite>();
+		backgroundSprites = new Array<Sprite>();
 		world = new World(new Vector2(0, GRAVITY), true);
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera = new OrthographicCamera(Gdx.graphics.getWidth()/ZOOM, Gdx.graphics.getHeight()/ZOOM);
 		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
 		player = new Player(world, initialPosition, this);
 		batch = new SpriteBatch();
@@ -49,6 +55,14 @@ public class GameScreen implements Screen {
 		entities.add(player);
 		world.setContactListener(new CollisionDetection(player));
 		Gdx.input.setInputProcessor(new Controller(player, this));
+		physicsDebugger = new Box2DDebugRenderer();
+	}
+	
+	private Vector2 setUpLevelAndReturnInitialPosition() {
+		levelBuilder.setGameScreen(this);
+		entities = levelBuilder.buildEntities(world);
+		backgroundSprites = levelBuilder.buildLevelLayout(world);
+		return levelBuilder.getInitialPosition();
 	}
 	
 	/**
@@ -58,13 +72,6 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		//delegate setting up to constructor
-	}
-	
-	private Vector2 setUpLevelAndReturnInitialPosition() {
-		levelBuilder.setGameScreen(this);
-		entities = levelBuilder.buildEntities(world);
-		backgroundSprites = levelBuilder.buildLevelLayout(world);
-		return levelBuilder.getInitialPosition();
 	}
 
 	/**
@@ -80,6 +87,7 @@ public class GameScreen implements Screen {
 			updateCamera();
 		}
 		drawToScreen(delta, getVisibleSprites());
+		physicsDebugger.render(world, camera.combined);
 	}
 	
 	private void clearScreen() {
@@ -102,13 +110,13 @@ public class GameScreen implements Screen {
 	}
 	
 	private Array<Sprite> getVisibleSprites() {
-		Array<Sprite> sprites = new Array<Sprite>();
-		for (Sprite sprite : entitySprites) {
-			if (isInScreen(sprite)) {
-				sprites.add(sprite);
-			}
-		}
-		return sprites;
+//		Array<Sprite> sprites = new Array<Sprite>();
+//		for (Sprite sprite : entitySprites) {
+//			if (isInScreen(sprite)) {
+//				sprites.add(sprite);
+//			}
+//		}
+		return entitySprites;
 	}
 	
 	private boolean isInScreen(Sprite sprite) {
@@ -176,7 +184,7 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void hide() {
-		// Dispose assets being used in this screen
+		dispose();
 	}
 
 	/**

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.ContactBody;
+import com.vertextrigger.util.GameObjectSize;
 
 final class PlayerBodyFactory {
 	static final float DENSITY = 3f;
@@ -31,8 +32,8 @@ final class PlayerBodyFactory {
 	
 	private static void buildPlayerShape() {
 		shape = new PolygonShape();
-		float playerWidth = 0.5f;
-		float playerHeight = 1.5f;
+		float playerWidth = GameObjectSize.createPlayerSize().getPhysicalWidth();
+		float playerHeight = GameObjectSize.createPlayerSize().getPhysicalHeight();
 		shape.setAsBox(playerWidth, playerHeight);
 	}
 	

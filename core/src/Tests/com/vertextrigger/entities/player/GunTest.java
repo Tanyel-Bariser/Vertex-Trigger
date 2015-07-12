@@ -33,7 +33,7 @@ public class GunTest {
 		buildWorld();
 		gun = new Gun(gameScreen, mockPool, bullets);
 		when(bullet.getPosition()).thenReturn(new Vector2(0,0));
-		when(factory.getBullet()).thenReturn(sprite);
+		when(factory.createBullet()).thenReturn(sprite);
 		pool = new BulletPool(world, factory);
 	}
 	

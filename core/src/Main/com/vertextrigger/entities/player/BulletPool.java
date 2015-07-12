@@ -11,11 +11,11 @@ import com.vertextrigger.factories.SpriteFactory;
  */
 class BulletPool extends Pool<Bullet> {
 	private final World world;
-	private final SpriteFactory factory;
+	private final SpriteFactory spriteFactory;
 	
-	BulletPool(World world, SpriteFactory factory) {
+	BulletPool(World world, SpriteFactory spriteFactory) {
 		this.world = world;
-		this.factory = factory;
+		this.spriteFactory = spriteFactory;
 	}
 
 	/**
@@ -24,6 +24,6 @@ class BulletPool extends Pool<Bullet> {
 	 */
 	@Override
 	protected Bullet newObject() {
-		return new Bullet(world, factory);
+		return new Bullet(world, spriteFactory.createBullet());
 	}
 }
