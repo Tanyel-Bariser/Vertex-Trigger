@@ -21,7 +21,7 @@ public class SpriteFactory {
 	}
 	
 	public Sprite createBullet() {
-		return coreSkin.getSprite("Bullet");
+		return coreSkin.getSprite("bullet");
 	}
 
 	/**
