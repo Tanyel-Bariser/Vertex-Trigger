@@ -6,7 +6,7 @@ import com.vertextrigger.screens.GameScreen;
 import com.vertextrigger.util.Assets;
 
 /**
- * First class called by the respective port's, i.e. Android, Desktop,
+ * First class called by the respective ports, i.e. Android, Desktop,
  * HTML, bootstrapping class.
  */
 public class VertexTrigger extends Game {
