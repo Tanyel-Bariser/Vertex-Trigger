@@ -181,6 +181,8 @@ public class Controller implements InputProcessor {
 			case Input.Keys.UP:
 				player.jump();
 				break;
+			case Input.Keys.R:
+				player.spinLikeCrazy();
 			default: return false;
 		}
 		return true;

@@ -7,11 +7,11 @@ public class GameObjectSize {
 	private final float physicalWidth;
 	
 	public static GameObjectSize createPlayerSize() {
-		return new GameObjectSize(30, 40, 10, 13);
+		return new GameObjectSize(2.5f, 4, 0.5f, 1.5f);
 	}
 	
 	public static GameObjectSize createSmallPlatformSize() {
-		return new GameObjectSize(20,20,10,10);
+		return new GameObjectSize(5,5,2.5f,2.5f);
 	}
 
 	public float getSpriteWidth() {

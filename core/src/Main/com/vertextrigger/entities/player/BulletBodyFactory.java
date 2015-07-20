@@ -7,7 +7,7 @@ import com.vertextrigger.util.ContactBody;
 
 final class BulletBodyFactory {
 	public final static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(-50, -50);
-	static final float RADIUS = 0.2f;
+	static final float RADIUS = 0.1f;
 	static final float DENSITY = 3f;
 	static final float FRICTION = 1f;
 	static final float BOUNCY = 1f;
@@ -35,6 +35,7 @@ final class BulletBodyFactory {
 		body = world.createBody(bodyDefinition);
 		boolean continuousCollisionDetection = true;
 		body.setBullet(continuousCollisionDetection);
+		body.setGravityScale(0);
 	}
 	
 	private static void buildBulletShape() {

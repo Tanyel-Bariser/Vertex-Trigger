@@ -1,6 +1,7 @@
 package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.factories.PlayerAnimationFactory;
 
@@ -60,23 +61,42 @@ class PlayerAnimator {
 		return movingLeft;
 	}
 	
-	Sprite getUpdatedSprite(float delta, float newAngle, Vector2 newPosition) {
+	float currentAngle = 0;
+	Sprite getUpdatedSprite(float delta, float bodyAngle, Vector2 newPosition) {
 		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(delta);
-		sprite.setRotation(newAngle);
-		float widthOffset = sprite.getWidth()/1.5f;
-		float heightOffset = sprite.getHeight()/2.1f;
+		float newRotation = getNewRotation(bodyAngle);
+		sprite.rotate(newRotation);
+		currentAngle = sprite.getRotation();
+		float widthOffset = sprite.getWidth()/1.9f;
+		float heightOffset = sprite.getHeight()/2.5f;
 		sprite.setPosition(newPosition.x - widthOffset, newPosition.y - heightOffset);
 		faceSpriteCorrectDirection(sprite);		
 		return sprite;
 	}
 	
+	private float getNewRotation(float bodyAngle) {
+		bodyAngle = bodyAngle * MathUtils.radiansToDegrees;
+		if (currentAngle == bodyAngle) {
+			return 0;
+		} else {
+			return bodyAngle - currentAngle;
+		}
+	}
+	
 	private void faceSpriteCorrectDirection(Sprite sprite) {
-		boolean spriteFacingLeft = sprite.isFlipX();
+		boolean spriteFacingLeft = sprite.isFlipX();		
 		boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
 		boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;
 		boolean alreadyFacingCorrectDirection = correctlyFacingLeft || correctlyFacingRight;
 		if (!alreadyFacingCorrectDirection) {
 			sprite.flip(true, false);
+		}
+		
+		if (sprite.isFlipX()) {
+			Player.setFacingLeft();
+		}
+		else {
+			Player.setFacingRight();
 		}
 	}
 }

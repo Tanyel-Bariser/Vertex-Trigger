@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
@@ -16,14 +15,13 @@ import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
 
 public class GameScreen implements Screen {
-	private final float ZOOM = 3f;
+	private final float ZOOM = 30f;
 	private final VertexTrigger vertexTrigger;
 	private final LevelBuilder levelBuilder;
-	private final World world;
-	private final OrthographicCamera camera;
-	private final Player player;
-	private final SpriteBatch batch;
-	private final Stage stage;
+	private World world;
+	private OrthographicCamera camera;
+	private Player player;
+	private SpriteBatch batch;
 	private final float approxFPS = 60.0f;
 	private final float TIMESTEP = 1.0f / approxFPS;
 	private final int VELOCITYITERATIONS = 8; // Box2d manual recommends 8 & 3
@@ -32,8 +30,8 @@ public class GameScreen implements Screen {
 	private Array<Entity> entities;
 	private Array<Sprite> entitySprites;
 	private Array<Sprite> backgroundSprites;
-	private final float GRAVITY = -9.81f;
-	private final Box2DDebugRenderer physicsDebugger;
+	private final float GRAVITY = -30000f;
+	private Box2DDebugRenderer physicsDebugger;
 	
 	/**
 	 * Sets main game class for smooth screen transitions
@@ -43,19 +41,6 @@ public class GameScreen implements Screen {
 	public GameScreen(VertexTrigger vertexTrigger, LevelBuilder levelBuilder) {
 		this.vertexTrigger = vertexTrigger;
 		this.levelBuilder = levelBuilder;
-		entities = new Array<Entity>();
-		entitySprites = new Array<Sprite>();
-		backgroundSprites = new Array<Sprite>();
-		world = new World(new Vector2(0, GRAVITY), true);
-		camera = new OrthographicCamera(Gdx.graphics.getWidth()/ZOOM, Gdx.graphics.getHeight()/ZOOM);
-		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
-		player = new Player(world, initialPosition, this);
-		batch = new SpriteBatch();
-		stage = new Stage();
-		entities.add(player);
-		world.setContactListener(new CollisionDetection(player));
-		Gdx.input.setInputProcessor(new Controller(player, this));
-		physicsDebugger = new Box2DDebugRenderer();
 	}
 	
 	private Vector2 setUpLevelAndReturnInitialPosition() {
@@ -71,7 +56,19 @@ public class GameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		//delegate setting up to constructor
+
+		entities = new Array<Entity>();
+		entitySprites = new Array<Sprite>();
+		backgroundSprites = new Array<Sprite>();
+		world = new World(new Vector2(0, GRAVITY), true);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth()/ZOOM, Gdx.graphics.getHeight()/ZOOM);
+		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
+		player = new Player(world, initialPosition, this);
+		batch = new SpriteBatch();
+		entities.add(player);
+		world.setContactListener(new CollisionDetection(player));
+		Gdx.input.setInputProcessor(new Controller(player, this));
+		physicsDebugger = new Box2DDebugRenderer();
 	}
 
 	/**
@@ -96,8 +93,7 @@ public class GameScreen implements Screen {
 	}
 	
 	private void updateWorld(float delta) {
-		float gravity = GRAVITY * delta * delta;
-		world.setGravity(new Vector2(0, gravity));
+		world.setGravity(new Vector2(0, GRAVITY * delta));
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 	}
 	
@@ -134,8 +130,10 @@ public class GameScreen implements Screen {
 	}
 	
 	private void updateCamera() {
-		float playerPos = player.getBody().getPosition().y;
-		camera.position.y = playerPos;
+		float playerY = player.getBody().getPosition().y;
+		float playerX = player.getBody().getPosition().x;
+		camera.position.y = playerY;
+		camera.position.x = playerX;
 		camera.update();
 	}
 	
@@ -149,8 +147,6 @@ public class GameScreen implements Screen {
 			sprite.draw(batch);
 		}
 		batch.end();
-		stage.act(delta);
-		stage.draw();
 	}
 
 	/**

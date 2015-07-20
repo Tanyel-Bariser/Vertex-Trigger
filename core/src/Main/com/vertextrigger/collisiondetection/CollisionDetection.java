@@ -1,5 +1,6 @@
 package com.vertextrigger.collisiondetection;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Portal;
@@ -77,8 +78,6 @@ public class CollisionDetection implements ContactListener {
         boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
         if (isPlayerFeetContact) {
         	if (isGroundContact) {
-        		Fixture groundFixture = fixtures[1];//Ground is always second fixture
-        		playerBody.setTransform(getPosition(groundFixture), getAngle(groundFixture));
         		player.setCanJump();
         	}
 		// If player's feet is in contact with a "normal" platform

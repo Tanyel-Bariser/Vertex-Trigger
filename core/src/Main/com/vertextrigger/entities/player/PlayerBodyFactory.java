@@ -23,6 +23,7 @@ final class PlayerBodyFactory {
 	private static void buildPlayerBodyDefinition(Vector2 initialPosition) {
 		bodyDefinition = new BodyDef();
 		bodyDefinition.type = BodyType.DynamicBody;
+		bodyDefinition.fixedRotation = true;
 		bodyDefinition.position.set(initialPosition);
 	}
 	

@@ -25,12 +25,14 @@ class Gun {
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
-	void shoot(Vector2 position, float horizontalDirection) {
+	void shoot(Vector2 position, boolean gunPointingLeft) {
 		Bullet bullet = bulletPool.obtain();
 		//TODO Set bullet position to exact height of gun
-		bullet.setPosition(position);
-
-		boolean gunPointingLeft = 0 > horizontalDirection;
+		if (Player.isFacingLeft) {
+			bullet.setPosition(new Vector2(position.x - 0.01f, position.y));
+		} else {
+			bullet.setPosition(new Vector2(position.x + 0.01f, position.y));
+		}
 		bullet.shoot(gunPointingLeft);
 
 		bullets.add(bullet);

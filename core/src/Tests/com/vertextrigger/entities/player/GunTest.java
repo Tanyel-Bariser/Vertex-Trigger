@@ -46,10 +46,8 @@ public class GunTest {
 	@Test
 	public void givenPlayerFacingLeftWhenGunShootThenBulletShouldBeShotLeft() {
 		when(mockPool.obtain()).thenReturn(bullet);
-		Vector2 playerFacingLeft = new Vector2(-1f, 0);
-		when(player.getLinearVelocity()).thenReturn(playerFacingLeft);
 		when(player.getPosition()).thenReturn(new Vector2());
-		gun.shoot(player.getPosition(), player.getLinearVelocity().x);
+		gun.shoot(player.getPosition(), true);
 		boolean shootLeft = true;
 		verify(bullet).shoot(shootLeft);
 	}
@@ -57,10 +55,8 @@ public class GunTest {
 	@Test
 	public void givenPlayerFacingRightWhenGunShootThenBulletShouldBeShotRight() {
 		when(mockPool.obtain()).thenReturn(bullet);
-		Vector2 playerFacingRight = new Vector2(1f, 0);
-		when(player.getLinearVelocity()).thenReturn(playerFacingRight);
 		when(player.getPosition()).thenReturn(new Vector2());
-		gun.shoot(player.getPosition(), player.getLinearVelocity().x);
+		gun.shoot(player.getPosition(), false);
 		boolean shootLeft = false;
 		verify(bullet).shoot(shootLeft);
 	}

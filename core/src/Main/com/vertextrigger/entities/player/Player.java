@@ -1,5 +1,6 @@
 package com.vertextrigger.entities.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -11,8 +12,8 @@ import com.vertextrigger.screens.GameScreen;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	static final float JUMP_POWER = 200;
-	static final float MOVEMENT_SPEED = 5000f;
+	static final float JUMP_POWER = 10000f;
+	static final float MOVEMENT_SPEED = 650f;
 	private final Body body;
 	private final PlayerAnimator animator;
 	private final Gun gun;
@@ -21,6 +22,7 @@ public class Player implements Entity {
 	private float movement = 0;
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
+	static boolean isFacingLeft;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
 		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition), new Gun(world, gameScreen), new PlayerAnimator());
@@ -54,12 +56,20 @@ public class Player implements Entity {
 		body.setTransform(body.getPosition(), angle);
 	}
 	
+	public static void setFacingLeft() {
+		isFacingLeft = true;
+	}
+	
+	public static void setFacingRight() {
+		isFacingLeft = false;
+	}
+	
 	/**
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
 	public void shoot() {
-		gun.shoot(body.getPosition(), body.getLinearVelocity().x);
+		gun.shoot(body.getPosition(), isFacingLeft);
 	}
 	
 	public void setCanJump() {
@@ -70,15 +80,12 @@ public class Player implements Entity {
 		canJump = false;
 	}
 	
-	/**
-	 * Makes player jump
-	 */
 	public void jump() {
 		if (canJump) {
 			Vector2 jump = new Vector2(0, JUMP_POWER);
 			boolean wakeForSimulation = true;
-			body.applyLinearImpulse(jump, body.getPosition(),
-					wakeForSimulation);
+			body.applyLinearImpulse(0, JUMP_POWER * 60, body.getWorldCenter().x,
+					body.getWorldCenter().y, wakeForSimulation);
 		}
 	}
 	
@@ -148,5 +155,9 @@ public class Player implements Entity {
 	 */
 	public void setOffStickyPlatform() {
 		onSticky = 1;
+	}
+	
+	public void spinLikeCrazy() {
+		body.setTransform(body.getPosition().x, body.getPosition().y, body.getAngle()+2);
 	}
 }

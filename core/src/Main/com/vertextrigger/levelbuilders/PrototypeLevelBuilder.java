@@ -54,6 +54,6 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 
 	@Override
 	public Vector2 getInitialPosition() {
-		return new Vector2(0,50);
+		return new Vector2(0,10);
 	}
 }

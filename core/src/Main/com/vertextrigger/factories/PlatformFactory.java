@@ -23,7 +23,7 @@ public class PlatformFactory {
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
-		platform.createFixture(shape, 0).setUserData(ContactBody.STATIC_PLATFORM);
+		platform.createFixture(shape, 0).setUserData(ContactBody.GROUND);
 		shape.dispose();
 
 		Sprite sprite = spriteFactory.createPlatform(
@@ -32,7 +32,7 @@ public class PlatformFactory {
 		
 		sprite.setPosition(platform.getPosition().x - sprite.getWidth() / 2, platform.getPosition().y - sprite.getHeight() / 2);
 
-		platform.setUserData(ContactBody.STATIC_PLATFORM);
+		platform.setUserData(ContactBody.GROUND);
 		return sprite;
 	}
 }

@@ -20,8 +20,15 @@ public class SpriteFactory {
 		levelSkin = VertexTrigger.ASSETS.getLevelSkin();
 	}
 	
+	Sprite bullet = null;
 	public Sprite createBullet() {
-		return coreSkin.getSprite("bullet");
+		if (bullet == null) {
+			bullet = coreSkin.getSprite("bullet");
+			float radius = 0.5f;
+			bullet.setSize(radius, radius);
+			return bullet;
+		}
+		return new Sprite(bullet);
 	}
 
 	/**
@@ -66,7 +73,7 @@ public class SpriteFactory {
 	public Sprite createPlayer(String name, GameObjectSize size) {
 		Sprite player = coreSkin.getSprite("walk1");
 		player.setSize(size.getSpriteWidth(), size.getSpriteHeight());
-		player.setOrigin(size.getSpriteWidth()/2, size.getSpriteHeight()/2);
+		player.setOriginCenter();
 		return player;
 	}
 

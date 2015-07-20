@@ -78,9 +78,9 @@ class Bullet implements Poolable, Entity {
 	public Sprite update(float delta) {
 		updateRemainingExistenceTime(delta);
 		Vector2 currentPosition = getPosition();
-		float currentAngle = body.getAngle() * MathUtils.radiansToDegrees;
-		sprite.setPosition(currentPosition.x, currentPosition.y);
-		sprite.setRotation(currentAngle);
+		float widthOffset = sprite.getWidth()/1.9f;
+		float heightOffset = sprite.getHeight()/2.5f;
+		sprite.setPosition(currentPosition.x - widthOffset, currentPosition.y - heightOffset);
 		return sprite;
 	}	
 
