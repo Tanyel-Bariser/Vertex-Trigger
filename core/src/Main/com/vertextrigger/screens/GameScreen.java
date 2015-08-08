@@ -71,6 +71,7 @@ public class GameScreen implements Screen {
 		physicsDebugger = new Box2DDebugRenderer();
 	}
 
+    int jumpCount = 3;
 	/**
 	 * Render method is invoked repeatedly once per frame, approximately 60
 	 * frames per second, during the game
@@ -83,6 +84,16 @@ public class GameScreen implements Screen {
 			updateEntities(delta);
 			updateCamera();
 		}
+
+        if (player.jumpState == Player.JumpState.JUMPING && jumpCount > 0) {
+            player.jump();
+            jumpCount--;
+            if (jumpCount == 0) {
+                player.jumpState = Player.JumpState.NOT_JUMPING;
+                jumpCount = 3;
+            }
+        }
+
 		drawToScreen(delta, getVisibleSprites());
 		physicsDebugger.render(world, camera.combined);
 	}

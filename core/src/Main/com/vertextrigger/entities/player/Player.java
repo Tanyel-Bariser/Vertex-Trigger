@@ -1,6 +1,5 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -79,13 +78,18 @@ public class Player implements Entity {
 	public void setCannotJump() {
 		canJump = false;
 	}
-	
-	public void jump() {
+
+	public enum JumpState { JUMPING , NOT_JUMPING }
+
+    public JumpState jumpState = JumpState.NOT_JUMPING;
+
+    public void jump() {
 		if (canJump) {
 			Vector2 jump = new Vector2(0, JUMP_POWER);
 			boolean wakeForSimulation = true;
 			body.applyLinearImpulse(0, JUMP_POWER * 60, body.getWorldCenter().x,
 					body.getWorldCenter().y, wakeForSimulation);
+            this.jumpState = JumpState.JUMPING;
 		}
 	}
 	
