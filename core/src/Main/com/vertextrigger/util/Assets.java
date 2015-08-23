@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
  */
 public class Assets {
 	private Skin coreSkin;
+	private Skin enemySkin;
 	private Skin mainScreenSkin;
 	private Skin levelSkin;
 	private final AssetManager assetManager;
@@ -41,6 +42,10 @@ public class Assets {
 		assetManager.finishLoading();
 
 		mainScreenSkin = new Skin(assetManager.get(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class));
+	}
+	
+	public void loadPrototypeLevel() {
+		loadLevelAssets(ATLASES.PROTOTYPE, BACKGROUND.LEVEL_ONE, MUSIC.LEVEL_ONE);
 	}
 	
 	public void loadLevelOne() {

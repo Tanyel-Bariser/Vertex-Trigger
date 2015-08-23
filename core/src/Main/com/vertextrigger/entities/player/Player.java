@@ -1,8 +1,11 @@
 package com.vertextrigger.entities.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.screens.GameScreen;
 
@@ -11,8 +14,8 @@ import com.vertextrigger.screens.GameScreen;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	static final float JUMP_POWER = 10000f;
-	static final float MOVEMENT_SPEED = 650f;
+	static final float JUMP_POWER = 10f;
+	static final float MOVEMENT_SPEED = 1500;
 	private final Body body;
 	private final PlayerAnimator animator;
 	private final Gun gun;
@@ -21,6 +24,7 @@ public class Player implements Entity {
 	private float movement = 0;
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
+	private boolean keepJumping;
 	static boolean isFacingLeft;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
@@ -69,6 +73,14 @@ public class Player implements Entity {
 	 */
 	public void shoot() {
 		gun.shoot(body.getPosition(), isFacingLeft);
+		animator.setAnimationShooting();
+		isShooting = true;
+		Timer.schedule(new Task() {
+			@Override
+			public void run() {
+				isShooting = false;
+			}
+		}, 0.1f);
 	}
 	
 	public void setCanJump() {
@@ -79,17 +91,24 @@ public class Player implements Entity {
 		canJump = false;
 	}
 
-	public enum JumpState { JUMPING , NOT_JUMPING }
-
-    public JumpState jumpState = JumpState.NOT_JUMPING;
-
+	public void setKeepJumping() {
+		keepJumping = true;
+	}
+	
+	public void setStopJumping() {
+		keepJumping = false;
+	}
+	
+	public boolean isKeepJumping() {
+		return keepJumping;
+	}
+	
     public void jump() {
-		if (canJump) {
-			Vector2 jump = new Vector2(0, JUMP_POWER);
+		if (canJump || keepJumping) {
 			boolean wakeForSimulation = true;
 			body.applyLinearImpulse(0, JUMP_POWER * 60, body.getWorldCenter().x,
 					body.getWorldCenter().y, wakeForSimulation);
-            this.jumpState = JumpState.JUMPING;
+			setKeepJumping();
 		}
 	}
 	
@@ -104,15 +123,23 @@ public class Player implements Entity {
 	@Override
 	public Sprite update(float delta) {
 		gun.freeExpiredBullets();
+		gun.destroyTouchingBullets();
 		movePlayer(delta);
-		setAnimationType();
+		if (!isShooting) {
+			setAnimationType();
+		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
 	}
 	
+	boolean isShooting;
 	private void setAnimationType() {
-		if (body.getLinearVelocity().y > 3) {
+		if (body.getLinearVelocity().y > 0.1) {
 			animator.setAnimationRising();
+		} else if (body.getLinearVelocity().y < -0.1) {
+			animator.setAnimationFalling();			
+		} else if (body.getLinearVelocity().x > 10 || body.getLinearVelocity().x < -10) {
+			animator.setAnimationRunning();
 		} else {
 			animator.setAnimationStanding();
 		}

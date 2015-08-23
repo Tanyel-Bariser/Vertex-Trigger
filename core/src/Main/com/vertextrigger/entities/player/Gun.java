@@ -27,11 +27,10 @@ class Gun {
 	 */
 	void shoot(Vector2 position, boolean gunPointingLeft) {
 		Bullet bullet = bulletPool.obtain();
-		//TODO Set bullet position to exact height of gun
 		if (Player.isFacingLeft) {
-			bullet.setPosition(new Vector2(position.x - 0.01f, position.y));
+			bullet.setPosition(new Vector2(position.x - 0.01f, position.y+0.6f));
 		} else {
-			bullet.setPosition(new Vector2(position.x + 0.01f, position.y));
+			bullet.setPosition(new Vector2(position.x + 0.01f, position.y+0.6f));
 		}
 		bullet.shoot(gunPointingLeft);
 
@@ -42,6 +41,15 @@ class Gun {
 	void freeExpiredBullets() {
 		for(Bullet bullet : bullets) {
 			if(bullet.isExistenceTimeExpired()) {
+				bulletPool.free(bullet);
+				bullets.removeValue(bullet, true);
+			}
+		}
+	}
+	
+	void destroyTouchingBullets() {
+		for (Bullet bullet : bullets) {
+			if (!bullet.body.isAwake()) {
 				bulletPool.free(bullet);
 				bullets.removeValue(bullet, true);
 			}

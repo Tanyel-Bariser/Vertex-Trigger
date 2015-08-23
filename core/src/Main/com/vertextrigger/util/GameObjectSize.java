@@ -1,17 +1,17 @@
 package com.vertextrigger.util;
 
 public class GameObjectSize {
-	private final float spriteHeight;
 	private final float spriteWidth;
-	private final float physicalHeight;
+	private final float spriteHeight;
 	private final float physicalWidth;
+	private final float physicalHeight;
 	
 	public static GameObjectSize createPlayerSize() {
-		return new GameObjectSize(2.5f, 4, 0.5f, 1.5f);
+		return new GameObjectSize(2.5f, 4.5f, 0.5f, 1.5f);
 	}
 	
 	public static GameObjectSize createSmallPlatformSize() {
-		return new GameObjectSize(5,5,2.5f,2.5f);
+		return new GameObjectSize(5, 1, 2.5f, .5f);
 	}
 
 	public float getSpriteWidth() {

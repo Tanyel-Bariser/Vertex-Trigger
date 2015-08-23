@@ -26,7 +26,7 @@ class PlayerAnimator {
 		risingAnimation = factory.getRise();
 		fallingAnimation = factory.getFall();
 		deathAnimation = factory.getDeath();
-		currentAnimation = standAnimation;
+		currentAnimation = runAnimation;
 	}
 		
 	void setAnimationRunning() {
@@ -39,10 +39,10 @@ class PlayerAnimator {
 		currentAnimation = shootAnimation;
 	}
 	void setAnimationRising() {
-		currentAnimation = risingAnimation;
+		currentAnimation = new PlayerAnimationFactory().getRise();
 	}
 	void setAnimationFalling() {
-		currentAnimation = fallingAnimation;
+		currentAnimation = new PlayerAnimationFactory().getFall();
 	}
 	void setAnimationDying() {
 		currentAnimation = deathAnimation;
@@ -62,25 +62,23 @@ class PlayerAnimator {
 	}
 	
 	float currentAngle = 0;
+	float frameTime;
 	Sprite getUpdatedSprite(float delta, float bodyAngle, Vector2 newPosition) {
-		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(delta);
+		frameTime += delta;
+		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
 		float newRotation = getNewRotation(bodyAngle);
 		sprite.rotate(newRotation);
 		currentAngle = sprite.getRotation();
 		float widthOffset = sprite.getWidth()/1.9f;
-		float heightOffset = sprite.getHeight()/2.5f;
+		float heightOffset = sprite.getHeight()/2.5f + 0.2f;
 		sprite.setPosition(newPosition.x - widthOffset, newPosition.y - heightOffset);
-		faceSpriteCorrectDirection(sprite);		
+		faceSpriteCorrectDirection(sprite);
 		return sprite;
 	}
 	
 	private float getNewRotation(float bodyAngle) {
 		bodyAngle = bodyAngle * MathUtils.radiansToDegrees;
-		if (currentAngle == bodyAngle) {
-			return 0;
-		} else {
-			return bodyAngle - currentAngle;
-		}
+		return bodyAngle - currentAngle;
 	}
 	
 	private void faceSpriteCorrectDirection(Sprite sprite) {

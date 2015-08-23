@@ -43,14 +43,15 @@ public class PlayerAnimationFactory {
      */
     public Animation getRise() {
         Sprite[] jumpSprites = new Sprite[]{
-                spriteFactory.createPlayer("jump1", size),
+                spriteFactory.createPlayer("jump2", size),
+                spriteFactory.createPlayer("jump3", size)
         };
 
-        Animation jumpAnimation = new Animation(0.1f, jumpSprites);
-        jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        Animation jumpAnimation = new Animation(.5f, jumpSprites);
+        jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return jumpAnimation;
     }
-
+    
     /**
      * Creates animation for the player's fall (second half of jump) from its composite sprites
      * NORMAL plays the animation once in sequential order
@@ -60,10 +61,11 @@ public class PlayerAnimationFactory {
     public Animation getFall() {
         Sprite[] jumpSprites = new Sprite[]{
                 spriteFactory.createPlayer("jump3", size),
+                spriteFactory.createPlayer("jump2", size)
         };
 
-        Animation jumpAnimation = new Animation(0.1f, jumpSprites);
-        jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        Animation jumpAnimation = new Animation(.5f, jumpSprites);
+        jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return jumpAnimation;
     }
 
@@ -75,7 +77,7 @@ public class PlayerAnimationFactory {
      */
 	public Animation getStanding() {
         Sprite[] jumpSprites = new Sprite[]{
-                spriteFactory.createPlayer("jump2", size),
+                spriteFactory.createPlayer("shoot2", size),
         };
 
         Animation jumpAnimation = new Animation(0.1f, jumpSprites);
@@ -101,8 +103,8 @@ public class PlayerAnimationFactory {
                 spriteFactory.createPlayer("shoot8", size)
         };
 
-        Animation shootAnimation = new Animation(0.1F, shootSprites);
-        shootAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        Animation shootAnimation = new Animation(0.02F, shootSprites);
+        shootAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return shootAnimation;
     }
 

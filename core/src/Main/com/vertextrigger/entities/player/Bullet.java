@@ -10,10 +10,10 @@ import com.vertextrigger.entities.Entity;
  * Bullets are shot from the player's position horizontally.
  * Bullets are freed 5 seconds after being shot.
  */
-class Bullet implements Poolable, Entity {
+public class Bullet implements Poolable, Entity {
 	static final float TOTAL_EXISTENCE_TIME = 5f;
 	static final float SHOT_POWER = 500;
-	private final Body body;
+	 final Body body;
 	private float existenceTime = -1;
 	private final Sprite sprite;
 	
@@ -93,6 +93,10 @@ class Bullet implements Poolable, Entity {
 	 */
 	boolean isExistenceTimeExpired() {
 		return existenceTime < 0;
+	}
+		
+	public static void destroyBullet(Fixture fix) {
+		fix.getBody().setTransform(50, 50, 0);
 	}
 
 	/**

@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 	private Array<Entity> entities;
 	private Array<Sprite> entitySprites;
 	private Array<Sprite> backgroundSprites;
-	private final float GRAVITY = -30000f;
+	private final float GRAVITY = -70000f;
 	private Box2DDebugRenderer physicsDebugger;
 	
 	/**
@@ -71,7 +71,7 @@ public class GameScreen implements Screen {
 		physicsDebugger = new Box2DDebugRenderer();
 	}
 
-    int jumpCount = 3;
+    int jumpCount = 10;
 	/**
 	 * Render method is invoked repeatedly once per frame, approximately 60
 	 * frames per second, during the game
@@ -85,12 +85,12 @@ public class GameScreen implements Screen {
 			updateCamera();
 		}
 
-        if (player.jumpState == Player.JumpState.JUMPING && jumpCount > 0) {
+        if (player.isKeepJumping() && jumpCount > 0) {
             player.jump();
             jumpCount--;
             if (jumpCount == 0) {
-                player.jumpState = Player.JumpState.NOT_JUMPING;
-                jumpCount = 3;
+                player.setStopJumping();
+                jumpCount = 10;
             }
         }
 

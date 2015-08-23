@@ -11,16 +11,17 @@ import com.vertextrigger.util.GameObjectSize;
 public class SpriteFactory {
 	private final Skin coreSkin;
 	private final Skin levelSkin;
-	
+
 	/**
 	 * Initialises storage of sprites that can be accessed by name
 	 */
 	public SpriteFactory() {
-		coreSkin = VertexTrigger.ASSETS.getCoreSkin(); 
+		coreSkin = VertexTrigger.ASSETS.getCoreSkin();
 		levelSkin = VertexTrigger.ASSETS.getLevelSkin();
 	}
-	
+
 	Sprite bullet = null;
+
 	public Sprite createBullet() {
 		if (bullet == null) {
 			bullet = coreSkin.getSprite("bullet");
@@ -65,35 +66,42 @@ public class SpriteFactory {
 	}
 
 	/**
-	 * @param name of player sprite in texture atlas
-	 * @param width of player sprite
-	 * @param height of player sprite
+	 * @param name
+	 *            of player sprite in texture atlas
+	 * @param width
+	 *            of player sprite
+	 * @param height
+	 *            of player sprite
 	 * @return player sprite
 	 */
 	public Sprite createPlayer(String name, GameObjectSize size) {
-		Sprite player = coreSkin.getSprite("walk1");
+		Sprite player = coreSkin.getSprite(name);
 		player.setSize(size.getSpriteWidth(), size.getSpriteHeight());
 		player.setOriginCenter();
 		return player;
 	}
 
 	/**
-	 * @param name of enemy sprite in texture atlas
-	 * @param width of enemy sprite
-	 * @param height of enemy sprite
+	 * @param name
+	 *            of enemy sprite in texture atlas
+	 * @param width
+	 *            of enemy sprite
+	 * @param height
+	 *            of enemy sprite
 	 * @return enemy sprite
 	 */
 	public Sprite createEnemy(String name, float width, float height) {
-		// create a specific enemy sprite from assets by its name
-		// Set enemy sprite size
-		// Set enemy origin as middle of sprite
-		// Return enemy sprite
-		return null;
+		Sprite enemy = levelSkin.getSprite(name);
+		enemy.setSize(width, height);
+		enemy.setOriginCenter();
+		return enemy;
 	}
 
 	/**
-	 * @param name of dangerous ball sprite in texture atlas
-	 * @param radius of dangerous ball sprite
+	 * @param name
+	 *            of dangerous ball sprite in texture atlas
+	 * @param radius
+	 *            of dangerous ball sprite
 	 * @return dangerous ball sprite
 	 */
 	public Sprite createDangerousBall(String name, float radius) {
@@ -103,19 +111,14 @@ public class SpriteFactory {
 		// Return dangerous ball sprite
 		return null;
 	}
-	
+
 	/**
-	 * @param name of platform sprite in texture atlas
-	 * @param width of platform sprite
-	 * @param height of platform sprite
-	 * @return platform sprite
+	 * @param name
+	 *            of platform sprite in texture atlas
 	 */
 	public Sprite createPlatform(String name, float width, float height) {
-		// create a specific platform sprite from assets by its name
-		// Set platform sprite size
-		// Return platform sprite
 		Sprite sprite = levelSkin.getSprite(name);
 		sprite.setSize(width, height);
-		return sprite;
+		return new Sprite(sprite);
 	}
 }

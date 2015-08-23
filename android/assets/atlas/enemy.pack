@@ -1,0 +1,831 @@
+
+enemy.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+snakeLava
+  rotate: false
+  xy: 1, 364
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeLava_dead
+  rotate: false
+  xy: 1, 215
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeLava_hit
+  rotate: false
+  xy: 56, 364
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeSlime_hit
+  rotate: false
+  xy: 56, 364
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeSlime
+  rotate: false
+  xy: 1, 66
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeSlime_dead
+  rotate: false
+  xy: 56, 215
+  size: 53, 147
+  orig: 53, 147
+  offset: 0, 0
+  index: -1
+snakeLava_ani
+  rotate: false
+  xy: 111, 364
+  size: 52, 147
+  orig: 52, 147
+  offset: 0, 0
+  index: -1
+snakeSlime_ani
+  rotate: false
+  xy: 56, 66
+  size: 52, 147
+  orig: 52, 147
+  offset: 0, 0
+  index: -1
+pokerMad
+  rotate: false
+  xy: 111, 216
+  size: 48, 146
+  orig: 48, 146
+  offset: 0, 0
+  index: -1
+pokerSad
+  rotate: false
+  xy: 165, 365
+  size: 48, 146
+  orig: 48, 146
+  offset: 0, 0
+  index: -1
+grassBlock
+  rotate: false
+  xy: 215, 441
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: -1
+grassBlock_dead
+  rotate: false
+  xy: 215, 369
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: -1
+grassBlock_hit
+  rotate: false
+  xy: 288, 441
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: -1
+grassBlock_jump
+  rotate: false
+  xy: 288, 369
+  size: 71, 70
+  orig: 71, 70
+  offset: 0, 0
+  index: -1
+spider_walk2
+  rotate: false
+  xy: 1, 11
+  size: 77, 53
+  orig: 77, 53
+  offset: 0, 0
+  index: -1
+bat_fly
+  rotate: false
+  xy: 361, 474
+  size: 88, 37
+  orig: 88, 37
+  offset: 0, 0
+  index: -1
+spinner
+  rotate: false
+  xy: 361, 410
+  size: 63, 62
+  orig: 63, 62
+  offset: 0, 0
+  index: -1
+spider_walk1
+  rotate: false
+  xy: 451, 460
+  size: 72, 51
+  orig: 72, 51
+  offset: 0, 0
+  index: -1
+spider_dead
+  rotate: false
+  xy: 525, 460
+  size: 69, 51
+  orig: 69, 51
+  offset: 0, 0
+  index: -1
+bat
+  rotate: false
+  xy: 596, 464
+  size: 70, 47
+  orig: 70, 47
+  offset: 0, 0
+  index: -1
+bat_dead
+  rotate: false
+  xy: 668, 464
+  size: 70, 47
+  orig: 70, 47
+  offset: 0, 0
+  index: -1
+bat_hit
+  rotate: false
+  xy: 740, 464
+  size: 70, 47
+  orig: 70, 47
+  offset: 0, 0
+  index: -1
+spider
+  rotate: false
+  xy: 812, 466
+  size: 71, 45
+  orig: 71, 45
+  offset: 0, 0
+  index: -1
+spider_hit
+  rotate: false
+  xy: 885, 466
+  size: 71, 45
+  orig: 71, 45
+  offset: 0, 0
+  index: -1
+fly_fly
+  rotate: false
+  xy: 958, 472
+  size: 65, 39
+  orig: 65, 39
+  offset: 0, 0
+  index: -1
+fishDead
+  rotate: false
+  xy: 361, 366
+  size: 66, 42
+  orig: 66, 42
+  offset: 0, 0
+  index: -1
+fishSwim1
+  rotate: false
+  xy: 426, 416
+  size: 66, 42
+  orig: 66, 42
+  offset: 0, 0
+  index: -1
+flyFly1
+  rotate: false
+  xy: 494, 422
+  size: 72, 36
+  orig: 72, 36
+  offset: 0, 0
+  index: -1
+spinner_dead
+  rotate: false
+  xy: 429, 352
+  size: 63, 62
+  orig: 63, 62
+  offset: 0, 0
+  index: -1
+spinner_hit
+  rotate: false
+  xy: 494, 359
+  size: 61, 61
+  orig: 61, 61
+  offset: 0, 0
+  index: -1
+barnacle
+  rotate: false
+  xy: 80, 7
+  size: 51, 57
+  orig: 51, 57
+  offset: 0, 0
+  index: -1
+flyFly2
+  rotate: false
+  xy: 596, 431
+  size: 75, 31
+  orig: 75, 31
+  offset: 0, 0
+  index: -1
+spinnerHalf
+  rotate: false
+  xy: 673, 431
+  size: 63, 31
+  orig: 63, 31
+  offset: 0, 0
+  index: -1
+spinnerHalf_dead
+  rotate: false
+  xy: 738, 431
+  size: 63, 31
+  orig: 63, 31
+  offset: 0, 0
+  index: -1
+ghost
+  rotate: false
+  xy: 161, 289
+  size: 51, 73
+  orig: 51, 73
+  offset: 0, 0
+  index: -1
+ghost_dead
+  rotate: false
+  xy: 161, 214
+  size: 51, 73
+  orig: 51, 73
+  offset: 0, 0
+  index: -1
+ghost_hit
+  rotate: false
+  xy: 110, 139
+  size: 51, 73
+  orig: 51, 73
+  offset: 0, 0
+  index: -1
+ghost_normal
+  rotate: false
+  xy: 163, 139
+  size: 51, 73
+  orig: 51, 73
+  offset: 0, 0
+  index: -1
+spinner_spin
+  rotate: false
+  xy: 110, 76
+  size: 61, 61
+  orig: 61, 61
+  offset: 0, 0
+  index: -1
+piranha
+  rotate: false
+  xy: 173, 77
+  size: 45, 60
+  orig: 45, 60
+  offset: 0, 0
+  index: -1
+piranha_dead
+  rotate: false
+  xy: 133, 14
+  size: 45, 60
+  orig: 45, 60
+  offset: 0, 0
+  index: -1
+piranha_down
+  rotate: false
+  xy: 180, 15
+  size: 45, 60
+  orig: 45, 60
+  offset: 0, 0
+  index: -1
+slimeDead
+  rotate: false
+  xy: 180, 1
+  size: 59, 12
+  orig: 59, 12
+  offset: 0, 0
+  index: -1
+piranha_hit
+  rotate: false
+  xy: 557, 360
+  size: 45, 60
+  orig: 45, 60
+  offset: 0, 0
+  index: -1
+frog_dead
+  rotate: false
+  xy: 604, 375
+  size: 61, 54
+  orig: 61, 54
+  offset: 0, 0
+  index: -1
+frog_hit
+  rotate: false
+  xy: 667, 375
+  size: 61, 54
+  orig: 61, 54
+  offset: 0, 0
+  index: -1
+frog_leap
+  rotate: false
+  xy: 730, 375
+  size: 61, 54
+  orig: 61, 54
+  offset: 0, 0
+  index: -1
+snake
+  rotate: false
+  xy: 604, 350
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+snake_dead
+  rotate: false
+  xy: 669, 350
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+bee_fly
+  rotate: false
+  xy: 734, 331
+  size: 61, 42
+  orig: 61, 42
+  offset: 0, 0
+  index: -1
+snake_hit
+  rotate: false
+  xy: 958, 447
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+worm_hit
+  rotate: false
+  xy: 958, 447
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+fishSwim2
+  rotate: false
+  xy: 494, 314
+  size: 62, 43
+  orig: 62, 43
+  offset: 0, 0
+  index: -1
+snailShell
+  rotate: false
+  xy: 558, 328
+  size: 44, 30
+  orig: 44, 30
+  offset: 0, 0
+  index: -1
+snake_walk
+  rotate: false
+  xy: 604, 325
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+worm
+  rotate: false
+  xy: 669, 325
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+ladyBug_walk
+  rotate: false
+  xy: 734, 295
+  size: 61, 34
+  orig: 61, 34
+  offset: 0, 0
+  index: -1
+worm_dead
+  rotate: false
+  xy: 215, 344
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+barnacle_bite
+  rotate: false
+  xy: 214, 284
+  size: 51, 58
+  orig: 51, 58
+  offset: 0, 0
+  index: -1
+barnacle_dead
+  rotate: false
+  xy: 214, 225
+  size: 51, 57
+  orig: 51, 57
+  offset: 0, 0
+  index: -1
+barnacle_hit
+  rotate: false
+  xy: 216, 166
+  size: 51, 57
+  orig: 51, 57
+  offset: 0, 0
+  index: -1
+worm_walk
+  rotate: false
+  xy: 280, 344
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+fishGreen
+  rotate: false
+  xy: 267, 297
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
+fishGreen_dead
+  rotate: false
+  xy: 267, 250
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
+bee
+  rotate: false
+  xy: 269, 200
+  size: 56, 48
+  orig: 56, 48
+  offset: 0, 0
+  index: -1
+bee_dead
+  rotate: false
+  xy: 269, 150
+  size: 56, 48
+  orig: 56, 48
+  offset: 0, 0
+  index: -1
+blockerBody
+  rotate: false
+  xy: 329, 291
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+bee_hit
+  rotate: false
+  xy: 329, 241
+  size: 56, 48
+  orig: 56, 48
+  offset: 0, 0
+  index: -1
+fishPink
+  rotate: false
+  xy: 327, 194
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
+fishPink_dead
+  rotate: false
+  xy: 327, 147
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
+bat_hang
+  rotate: false
+  xy: 382, 316
+  size: 38, 48
+  orig: 38, 48
+  offset: 0, 0
+  index: -1
+snail_walk
+  rotate: false
+  xy: 422, 310
+  size: 60, 40
+  orig: 60, 40
+  offset: 0, 0
+  index: -1
+spinnerHalf_hit
+  rotate: false
+  xy: 812, 434
+  size: 61, 30
+  orig: 61, 30
+  offset: 0, 0
+  index: -1
+spinnerHalf_spin
+  rotate: false
+  xy: 875, 434
+  size: 61, 30
+  orig: 61, 30
+  offset: 0, 0
+  index: -1
+blockerMad
+  rotate: false
+  xy: 793, 378
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+blockerSad
+  rotate: false
+  xy: 846, 381
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+slimeBlock
+  rotate: false
+  xy: 797, 326
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+slimeBlock_dead
+  rotate: false
+  xy: 850, 329
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+slimeBlock_hit
+  rotate: false
+  xy: 899, 382
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+fly
+  rotate: false
+  xy: 903, 335
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+fly_dead
+  rotate: false
+  xy: 952, 400
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+fishGreen_hit
+  rotate: false
+  xy: 797, 280
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+fishPink_hit
+  rotate: false
+  xy: 797, 280
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+fly_hit
+  rotate: false
+  xy: 856, 282
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+fishGreen_swim
+  rotate: false
+  xy: 915, 289
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+fishPink_swim
+  rotate: false
+  xy: 962, 354
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+slime
+  rotate: false
+  xy: 974, 318
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slimeBlue
+  rotate: false
+  xy: 974, 282
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slimeBlue_blue
+  rotate: false
+  xy: 915, 257
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+slimeBlue_dead
+  rotate: false
+  xy: 974, 246
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slimeGreen_walk
+  rotate: false
+  xy: 856, 250
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+slimeBlue_squashed
+  rotate: false
+  xy: 915, 242
+  size: 57, 13
+  orig: 57, 13
+  offset: 0, 0
+  index: -1
+slimeBlue_hit
+  rotate: false
+  xy: 974, 210
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slimeGreen_hit
+  rotate: false
+  xy: 974, 210
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slime_hit
+  rotate: false
+  xy: 974, 210
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+snailShell_upsidedown
+  rotate: false
+  xy: 558, 296
+  size: 44, 30
+  orig: 44, 30
+  offset: 0, 0
+  index: -1
+flyDead
+  rotate: false
+  xy: 604, 290
+  size: 59, 33
+  orig: 59, 33
+  offset: 0, 0
+  index: -1
+ladyBug_fly
+  rotate: false
+  xy: 665, 281
+  size: 59, 42
+  orig: 59, 42
+  offset: 0, 0
+  index: -1
+mouse
+  rotate: false
+  xy: 726, 258
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+mouse_dead
+  rotate: false
+  xy: 787, 243
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+mouse_hit
+  rotate: false
+  xy: 848, 213
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+frog
+  rotate: false
+  xy: 909, 201
+  size: 58, 39
+  orig: 58, 39
+  offset: 0, 0
+  index: -1
+snailWalk1
+  rotate: false
+  xy: 969, 177
+  size: 54, 31
+  orig: 54, 31
+  offset: 0, 0
+  index: -1
+snail_shell
+  rotate: false
+  xy: 220, 129
+  size: 43, 35
+  orig: 43, 35
+  offset: 0, 0
+  index: -1
+snail
+  rotate: false
+  xy: 220, 87
+  size: 55, 40
+  orig: 55, 40
+  offset: 0, 0
+  index: -1
+snail_hit
+  rotate: false
+  xy: 227, 45
+  size: 55, 40
+  orig: 55, 40
+  offset: 0, 0
+  index: -1
+slimeWalk1
+  rotate: false
+  xy: 227, 15
+  size: 50, 28
+  orig: 50, 28
+  offset: 0, 0
+  index: -1
+slimeGreen_squashed
+  rotate: false
+  xy: 265, 135
+  size: 57, 13
+  orig: 57, 13
+  offset: 0, 0
+  index: -1
+mouse_walk
+  rotate: false
+  xy: 277, 98
+  size: 58, 35
+  orig: 58, 35
+  offset: 0, 0
+  index: -1
+ladyBug
+  rotate: false
+  xy: 284, 62
+  size: 58, 34
+  orig: 58, 34
+  offset: 0, 0
+  index: -1
+ladyBug_hit
+  rotate: false
+  xy: 284, 26
+  size: 58, 34
+  orig: 58, 34
+  offset: 0, 0
+  index: -1
+slimeGreen
+  rotate: false
+  xy: 337, 111
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slimeGreen_dead
+  rotate: false
+  xy: 344, 75
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slime_dead
+  rotate: false
+  xy: 344, 39
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+slime_squashed
+  rotate: false
+  xy: 279, 11
+  size: 57, 13
+  orig: 57, 13
+  offset: 0, 0
+  index: -1
+slimeWalk2
+  rotate: false
+  xy: 344, 11
+  size: 51, 26
+  orig: 51, 26
+  offset: 0, 0
+  index: -1
+slime_walk
+  rotate: false
+  xy: 484, 282
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+snailWalk2
+  rotate: false
+  xy: 543, 263
+  size: 57, 31
+  orig: 57, 31
+  offset: 0, 0
+  index: -1

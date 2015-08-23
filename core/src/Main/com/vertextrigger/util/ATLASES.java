@@ -4,7 +4,8 @@ enum ATLASES {
 	CORE("atlas/core.pack"),
 	MAIN_SCREEN("atlas/main_screen.pack"),
 	LEVEL_ONE("atlas/level_one.pack"),
-	LEVEL_TWO("atlas/level_two.pack");
+	LEVEL_TWO("atlas/level_two.pack"),
+	PROTOTYPE("atlas/prototype.pack");
 	
 	private final String path;
 	

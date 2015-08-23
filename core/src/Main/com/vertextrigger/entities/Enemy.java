@@ -22,6 +22,7 @@ public abstract class Enemy implements Entity {
 	 * @param coordinates is the path, series of x & y coordinates, the enemy follows
 	 */
 	public Enemy(World world, Array<Vector2> coordinates) {
+		
 		// Set enemy sprites & animations
 		// Create physical body
 		// Set the coordinates of the predefined path

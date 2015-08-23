@@ -1,13 +1,18 @@
 package com.vertextrigger.collisiondetection;
 
-import com.badlogic.gdx.Gdx;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.vertextrigger.entities.Portal;
+import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.util.ContactBody;
-
-import java.util.ArrayList;
 
 public class CollisionDetection implements ContactListener {
 	private final Player player; 
@@ -98,6 +103,13 @@ public class CollisionDetection implements ContactListener {
 		// If player's feet is in contact with conveyor belt/magnet/fan style platform
 				// Set players movements to that of conveyor belt platform behaviour
         }
+        if (isPlayerContact && isBulletContact) {
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.BULLET)) {
+        			fix.getBody().setAwake(false);
+        		}
+        	}
+        }
 	}
 	
 	private Fixture[] getFixtures(Contact contact) {
@@ -143,6 +155,7 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void endContact(Contact contact) {
+		player.setCannotJump();
 		// If player's feet is not in contact with platform
 				// FIRST WAIT FOR 0.2 SECONDS
 				// Deny player the ability to jump
