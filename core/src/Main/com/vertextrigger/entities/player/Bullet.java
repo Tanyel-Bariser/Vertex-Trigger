@@ -82,7 +82,7 @@ public class Bullet implements Poolable, Entity {
 		float heightOffset = sprite.getHeight()/2.5f;
 		sprite.setPosition(currentPosition.x - widthOffset, currentPosition.y - heightOffset);
 		return sprite;
-	}	
+	}
 
 	private void updateRemainingExistenceTime(float delta) {
 		existenceTime -= delta;

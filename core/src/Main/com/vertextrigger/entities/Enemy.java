@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 public abstract class Enemy implements Entity {
 	// Predefined path for enemy's physical body to follow
 	protected Path path;
+	protected Sprite sprite;
 	
 	/**
 	 * Creates enemy's physical body & its physical properties
@@ -21,27 +22,22 @@ public abstract class Enemy implements Entity {
 	 * @param world the enemy will reside in
 	 * @param coordinates is the path, series of x & y coordinates, the enemy follows
 	 */
-	public Enemy(World world, Array<Vector2> coordinates) {
-		
+	public Enemy(Array<Vector2> coordinates, Body body, Sprite sprite) {
+		this.sprite = sprite;
 		// Set enemy sprites & animations
 		// Create physical body
 		// Set the coordinates of the predefined path
 		// for the enemy to follow in a loop
 	}
-	
-	/**
-	 * Create enemy's physical body & physical properties.
-	 * 
-	 * @param world the enemy will reside in
-	 * @param position of enemy in game world
-	 * @return physical body of enemy
-	 */
-	protected abstract Body createEnemy(World world, Vector2 position);
-	
+		
 	/**
 	 * Create & set all sprites & animations the enemy will need
 	 */
 	protected abstract void spriteAnimationSetup();
+	
+	public Sprite getSprite() {
+		return sprite;
+	}
 	
 	/**
 	 * Chooses appropriate enemy sprite based on animation.

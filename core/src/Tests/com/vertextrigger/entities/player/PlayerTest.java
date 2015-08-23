@@ -13,7 +13,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.entities.BodyBuilder;
+import com.vertextrigger.entities.BodyFactory;
 import com.vertextrigger.screens.GameScreen;
+import com.vertextrigger.util.ContactBody;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerTest {
@@ -30,7 +33,8 @@ public class PlayerTest {
 	public void setUp() throws Exception {
 		buildWorld();
 		initialPosition = new Vector2(-5, 8);
-		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
+		BodyBuilder builder = new BodyBuilder(world, initialPosition, ContactBody.PLAYER);
+		body = BodyFactory.getBody(builder);
 		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		when(animator.getUpdatedSprite(anyFloat(), anyFloat(), 
 				(Vector2) anyObject())).thenReturn(sprite);
@@ -73,12 +77,13 @@ public class PlayerTest {
 	@Test
 	public void whenPlayerJumpThenShouldApplyUpwardImpulseByJUMP_POWER() {
 		Body body = mock(Body.class);
+		when(body.getWorldCenter()).thenReturn(new Vector2(0,0));
 		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		player.setCanJump();
 		player.jump();
-		ArgumentCaptor<Vector2> jump = ArgumentCaptor.forClass(Vector2.class);
-		verify(body).applyLinearImpulse(jump.capture(), any(Vector2.class), eq(true));
-		assertEquals(new Vector2(0, Player.JUMP_POWER), jump.getValue());
+		ArgumentCaptor<Float> jump = ArgumentCaptor.forClass(Float.class);
+		verify(body).applyLinearImpulse(anyFloat(), jump.capture(), anyFloat(), anyFloat(), eq(true));
+		assertEquals((float)Player.JUMP_POWER, (float)jump.getValue(), 1f);
 	}
 	
 	@Test
@@ -116,6 +121,6 @@ public class PlayerTest {
 	public void givenPlayerRisingThenShouldSetRisingAnimator() {
 		body.applyLinearImpulse(new Vector2(0, 50), body.getPosition(), true);
 		player.update(1);
-		verify(animator).setAnimationStanding();
+		verify(animator).setAnimationRising();
 	}
 }

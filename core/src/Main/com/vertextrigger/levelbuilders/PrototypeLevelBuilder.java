@@ -3,18 +3,12 @@ package com.vertextrigger.levelbuilders;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.entities.StaticPlatform;
-import com.vertextrigger.factories.PlatformFactory;
-import com.vertextrigger.factories.SpriteFactory;
+import com.vertextrigger.entities.*;
+import com.vertextrigger.factories.*;
 import com.vertextrigger.main.VertexTrigger;
-import com.vertextrigger.util.ContactBody;
-import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.util.*;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
@@ -23,13 +17,17 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 	SpriteFactory spriteFactory;
 	
 	public PrototypeLevelBuilder() {
-		spriteFactory = new SpriteFactory();
 		VertexTrigger.ASSETS.loadPrototypeLevel();
+		spriteFactory = new SpriteFactory();
 	}
 
 	@Override
 	protected void createEnemies(World world) {
-		spriteFactory.createEnemy("pokerMad", 10, 10);
+		//TODO make enemy have circle head and poly body. jumping on head should kill it
+		// TODO enemy animate death??
+		Enemy enemy = EnemyFactory.createEnemy(world);
+		sprites.add(enemy.getSprite());
+		
 	}
 
 	@Override

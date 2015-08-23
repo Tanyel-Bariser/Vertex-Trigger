@@ -1,4 +1,4 @@
-package com.vertextrigger.entities.player;
+package com.vertextrigger.entities;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,8 @@ import org.junit.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.vertextrigger.entities.BodyBuilder;
+import com.vertextrigger.entities.BodyFactory;
 import com.vertextrigger.util.ContactBody;
 
 public class PlayerBodyFactoryTest {
@@ -14,11 +16,13 @@ public class PlayerBodyFactoryTest {
 	private Vector2 initialPosition;
 	private Body body;
 	private Fixture fixture;
+	private BodyBuilder builder;
 
 	@Before
 	public void setUp() throws Exception {
 		buildWorld();
 		buildInitialPosition();
+		builder = new BodyBuilder(world, initialPosition, ContactBody.PLAYER);
 		buildPlayer();
 	}
 	
@@ -35,7 +39,7 @@ public class PlayerBodyFactoryTest {
 	}
 	
 	private void buildPlayer() {
-		body = PlayerBodyFactory.getPlayerBody(world, initialPosition);
+		body = BodyFactory.getBody(builder);
 		fixture = body.getFixtureList().first();
 	}
 
@@ -56,7 +60,7 @@ public class PlayerBodyFactoryTest {
 	
 	@Test
 	public void whenPlayerFixtureIsCreatedThenPlayerDensityShouldBeInitialised() {
-		assertEquals((int) PlayerBodyFactory.DENSITY, (int) fixture.getDensity());
+		assertEquals((int) builder.density, (int) fixture.getDensity());
 	}
 	
 	@Test

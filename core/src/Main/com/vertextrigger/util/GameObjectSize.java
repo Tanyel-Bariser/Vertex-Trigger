@@ -13,6 +13,10 @@ public class GameObjectSize {
 	public static GameObjectSize createSmallPlatformSize() {
 		return new GameObjectSize(5, 1, 2.5f, .5f);
 	}
+	
+	public static GameObjectSize createMadPokerSize() {
+		return new GameObjectSize(1.5f, 3f, 0.8f, 1.5f);
+	}
 
 	public float getSpriteWidth() {
 		return spriteWidth;

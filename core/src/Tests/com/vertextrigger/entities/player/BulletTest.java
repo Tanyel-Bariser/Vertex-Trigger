@@ -98,22 +98,10 @@ public class BulletTest {
 		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getRemainingTime());
 	}
 	
-	@Test 
-	public void whenBulletUpdatedThenBulletAngleIsGot() {
-		bullet.update(4.44f);
-		verify(body, atLeastOnce()).getAngle();
-	}
-	
 	@Test
 	public void whenBulletUpdatedThenSpritePositionShouldBeSetToBodyPosition() {
 		bullet.update(2.2f);
 		verify(sprite).setPosition(position.x, position.y);
-	}
-	
-	@Test
-	public void whenBulletUpdatedThenSpriteAngleShouldBeSetToBodyAngle() {
-		bullet.update(2.2f);
-		verify(sprite).setRotation(spriteAngle);
 	}
 	
 	@Test

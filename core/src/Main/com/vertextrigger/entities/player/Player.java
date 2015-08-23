@@ -6,15 +6,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.vertextrigger.entities.BodyBuilder;
+import com.vertextrigger.entities.BodyFactory;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.screens.GameScreen;
+import com.vertextrigger.util.ContactBody;
 
 /**
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Entity {
-	static final float JUMP_POWER = 10f;
+	static final float JUMP_POWER = 600f;
 	static final float MOVEMENT_SPEED = 1500;
 	private final Body body;
 	private final PlayerAnimator animator;
@@ -28,7 +31,7 @@ public class Player implements Entity {
 	static boolean isFacingLeft;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, PlayerBodyFactory.getPlayerBody(world, initialPosition), new Gun(world, gameScreen), new PlayerAnimator());
+		this(world, initialPosition, gameScreen, BodyFactory.getBody(new BodyBuilder(world, initialPosition, ContactBody.PLAYER)), new Gun(world, gameScreen), new PlayerAnimator());
 	}
 	
 	/**
@@ -106,7 +109,7 @@ public class Player implements Entity {
     public void jump() {
 		if (canJump || keepJumping) {
 			boolean wakeForSimulation = true;
-			body.applyLinearImpulse(0, JUMP_POWER * 60, body.getWorldCenter().x,
+			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x,
 					body.getWorldCenter().y, wakeForSimulation);
 			setKeepJumping();
 		}

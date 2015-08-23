@@ -67,15 +67,9 @@ public class PlayerAnimatorTest {
 	}
 	
 	@Test
-	public void whenPlayerUpdatedSpriteAngleShouldBeSetToAnimatorAngle() {
-		animator.getUpdatedSprite(delta, angle, position);
-		verify(sprite).setRotation(angle);
-	}
-	
-	@Test
 	public void whenPlayerUpdatedSpritePositionShouldBeSetToAnimatorPosition() {
 		animator.getUpdatedSprite(delta, angle, position);
-		verify(sprite).setPosition(position.x, position.y);
+		verify(sprite).setPosition(position.x - animator.widthOffset, position.y - animator.heightOffset);
 	}
 	
 	@Test
