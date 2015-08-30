@@ -66,25 +66,13 @@ class PlayerAnimator {
 	Sprite getUpdatedSprite(float delta, float bodyAngle, Vector2 newPosition) {
 		frameTime += delta;
 		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
-		calculateOffsets(sprite);
 		
 		float newRotation = getNewRotation(bodyAngle);
 		sprite.rotate(newRotation);
 		currentAngle = sprite.getRotation();	
-		sprite.setPosition(newPosition.x - widthOffset, newPosition.y - heightOffset);
+		sprite.setPosition(newPosition.x - sprite.getWidth()/1.9f, newPosition.y - sprite.getHeight()/2.2f);
 		faceSpriteCorrectDirection(sprite);
 		return sprite;
-	}
-	
-	float widthDivisor = 1.9f;
-	float heightDivisor = 2.5f + 0.2f;
-	float widthOffset;
-	float heightOffset;
-	private void calculateOffsets(Sprite sprite) {
-		float spriteHeight = sprite.getHeight();
-		float spriteWidth = sprite.getWidth();
-		widthOffset = spriteWidth / widthDivisor;
-		heightOffset = spriteHeight / heightDivisor;
 	}
 	
 	private float getNewRotation(float bodyAngle) {

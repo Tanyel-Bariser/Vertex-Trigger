@@ -14,7 +14,7 @@ public class GameObjectSize {
 		return new GameObjectSize(5, 1, 2.5f, .5f);
 	}
 	
-	public static GameObjectSize createMadPokerSize() {
+	public static GameObjectSize createPokerSize() {
 		return new GameObjectSize(1.5f, 3f, 0.8f, 1.5f);
 	}
 

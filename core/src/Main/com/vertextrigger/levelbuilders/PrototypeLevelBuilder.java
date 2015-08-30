@@ -25,7 +25,7 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 	protected void createEnemies(World world) {
 		//TODO make enemy have circle head and poly body. jumping on head should kill it
 		// TODO enemy animate death??
-		Enemy enemy = EnemyFactory.createEnemy(world);
+		Enemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0,0));
 		sprites.add(enemy.getSprite());
 		
 	}
@@ -50,23 +50,21 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 		float positionY = -15;
 		
 		for (int i = 0; i < 5; i++) {
-			StaticPlatform platform = factory.createPlatform("slice17", size);
-			Vector2 position = new Vector2(positionX, positionY);
-			platform.setPosition(position);
+			Vector2 p0 = new Vector2(positionX, positionY);
+			StaticPlatform platform = factory.createPlatform("slice17", size, p0);
 			platform.setRotation(0);
 			sprites.add(platform.getSprite());
 			
 			positionX += size.getPhysicalWidth() * 2;
 			positionY += 5f;
 		}
-		
-		StaticPlatform bouncePlatform = factory.createPlatform("slice17", size);
-		bouncePlatform.setPosition(new Vector2(-19, -19));
+		Vector2 p = new Vector2(-19, -19);
+		StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
 		bouncePlatform.setRotation(200);
 		sprites.add(bouncePlatform.getSprite());
 		
-		StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size);
-		bouncePlatform2.setPosition(new Vector2(-15, -15));
+		Vector2 p2 = new Vector2(-15, -15);
+		StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size, p2);
 		bouncePlatform2.setRotation(0);
 		sprites.add(bouncePlatform2.getSprite());
 	}
@@ -90,7 +88,7 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 
 		FixtureDef fixDef = new FixtureDef();
 		fixDef.shape = worldContainerShape;
-		fixDef.friction = 0f;
+		fixDef.friction = 0.9f;
 		fixDef.restitution = 0;
 
 		Body worldContainer = world.createBody(bodyDef);
@@ -105,6 +103,6 @@ public class PrototypeLevelBuilder extends LevelBuilder {
 
 	@Override
 	public Vector2 getInitialPosition() {
-		return new Vector2(0,10);
+		return new Vector2(0, 10);
 	}
 }

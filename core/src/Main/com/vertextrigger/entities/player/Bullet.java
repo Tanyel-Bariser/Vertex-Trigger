@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.factories.bodyfactory.BulletBodyFactory;
 
 /**
  * Bullets are shot from the player's position horizontally.
@@ -16,6 +17,7 @@ public class Bullet implements Poolable, Entity {
 	 final Body body;
 	private float existenceTime = -1;
 	private final Sprite sprite;
+	Vector2 INITIAL_POSITION = new Vector2(-50, -50);
 	
 	/**
 	 * Creates bullet's physical body
@@ -24,7 +26,8 @@ public class Bullet implements Poolable, Entity {
 	 * @param world the bullet will reside in
 	 */
 	Bullet(World world, Sprite sprite) {
-		body = BulletBodyFactory.getBulletBody(world);
+		BulletBodyFactory factory = new BulletBodyFactory();
+		body = factory.createBulletBody(world, INITIAL_POSITION);
 		this.sprite = sprite;
 	}
 	
@@ -104,7 +107,7 @@ public class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public void reset() {
-		body.setTransform(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, 0);
+		body.setTransform(INITIAL_POSITION, 0);
 		existenceTime = TOTAL_EXISTENCE_TIME;
 	}
 }

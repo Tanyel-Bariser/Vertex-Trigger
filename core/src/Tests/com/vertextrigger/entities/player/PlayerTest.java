@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.BodyBuilder;
-import com.vertextrigger.entities.BodyFactory;
+import com.vertextrigger.factories.bodyfactory.BodyFactory;
 import com.vertextrigger.screens.GameScreen;
 import com.vertextrigger.util.ContactBody;
 

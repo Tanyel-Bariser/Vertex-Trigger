@@ -18,8 +18,7 @@ public class StaticPlatform {
 		return this.sprite;
 	}
 	
-	public void setPosition(Vector2 position) {
-		body.setTransform(position, 0);
+	public void setPosition() {
 		sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, 
 				body.getPosition().y - sprite.getHeight() / 2);
 	}

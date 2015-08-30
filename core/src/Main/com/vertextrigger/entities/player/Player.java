@@ -1,16 +1,14 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.BodyBuilder;
-import com.vertextrigger.entities.BodyFactory;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.factories.bodyfactory.BodyFactory;
+import com.vertextrigger.factories.bodyfactory.PlayerBodyFactory;
 import com.vertextrigger.screens.GameScreen;
-import com.vertextrigger.util.ContactBody;
 
 /**
  * Main character of the game
@@ -31,7 +29,7 @@ public class Player implements Entity {
 	static boolean isFacingLeft;
 
 	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, BodyFactory.getBody(new BodyBuilder(world, initialPosition, ContactBody.PLAYER)), new Gun(world, gameScreen), new PlayerAnimator());
+		this(world, initialPosition, gameScreen, new PlayerBodyFactory().createPlayerBody(world, initialPosition), new Gun(world, gameScreen), new PlayerAnimator());
 	}
 	
 	/**
