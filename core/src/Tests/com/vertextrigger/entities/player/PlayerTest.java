@@ -6,17 +6,14 @@ import static org.mockito.Mockito.*;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.BodyBuilder;
-import com.vertextrigger.factories.bodyfactory.BodyFactory;
-import com.vertextrigger.screens.GameScreen;
-import com.vertextrigger.util.ContactBody;
+import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
+import com.vertextrigger.screen.AbstractGameScreen;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerTest {
@@ -24,7 +21,7 @@ public class PlayerTest {
 	World world;
 	Body body;
 	Vector2 initialPosition;
-	@Mock GameScreen gameScreen;
+	@Mock AbstractGameScreen gameScreen;
 	@Mock PlayerAnimator animator;
 	@Mock Sprite sprite;
 	@Mock Gun gun;
@@ -33,8 +30,7 @@ public class PlayerTest {
 	public void setUp() throws Exception {
 		buildWorld();
 		initialPosition = new Vector2(-5, 8);
-		BodyBuilder builder = new BodyBuilder(world, initialPosition, ContactBody.PLAYER);
-		body = BodyFactory.getBody(builder);
+		body = new PlayerBodyFactory().createPlayerBody(world, initialPosition);
 		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		when(animator.getUpdatedSprite(anyFloat(), anyFloat(), 
 				(Vector2) anyObject())).thenReturn(sprite);

@@ -3,19 +3,19 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.factories.SpriteFactory;
-import com.vertextrigger.screens.GameScreen;
+import com.vertextrigger.factory.SpriteFactory;
+import com.vertextrigger.screen.AbstractGameScreen;
 
-class Gun {
-	private final GameScreen gameScreen;
+public class Gun {
+	private final AbstractGameScreen gameScreen;
 	private final BulletPool bulletPool;
 	private final Array<Bullet> bullets;
 
-	Gun(World world, GameScreen gameScreen) {
+	public Gun(World world, AbstractGameScreen gameScreen) {
 		this(gameScreen, new BulletPool(world, new SpriteFactory()), new Array<Bullet>());
 	}
 	
-	Gun(GameScreen gameScreen, BulletPool pool, Array<Bullet> bullets) {
+	Gun(AbstractGameScreen gameScreen, BulletPool pool, Array<Bullet> bullets) {
 		this.gameScreen = gameScreen;
 		this.bulletPool = pool;
 		this.bullets = bullets;
@@ -40,7 +40,8 @@ class Gun {
 
 	void freeExpiredBullets() {
 		for(Bullet bullet : bullets) {
-			if(bullet.isExistenceTimeExpired()) {
+			boolean initial = bullet.isInInitialPosition();
+			if (!bullet.isVisible() && !initial) {
 				bulletPool.free(bullet);
 				bullets.removeValue(bullet, true);
 			}

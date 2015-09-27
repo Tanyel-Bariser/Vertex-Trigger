@@ -1,8 +1,7 @@
 package com.vertextrigger.main;
 
 import com.badlogic.gdx.*;
-import com.vertextrigger.levelbuilders.PrototypeLevelBuilder;
-import com.vertextrigger.screens.GameScreen;
+import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.util.Assets;
 
 /**
@@ -15,10 +14,10 @@ public class VertexTrigger extends Game {
 
 	@Override
 	public void create() {
-//		// Open main menu screen
-		setScreen(new GameScreen(this, new PrototypeLevelBuilder()));
+		// Open main menu screen
+		setScreen( GameScreenFactory.createPrototypeLevel(this) );
 	}
-
+	
 	@Override
 	public void render() {
 		super.render();

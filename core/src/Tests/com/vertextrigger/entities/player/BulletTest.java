@@ -1,26 +1,18 @@
 package com.vertextrigger.entities.player;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BulletTest {
@@ -38,11 +30,6 @@ public class BulletTest {
 		bullet = new Bullet(body, sprite);
 		boolean shootLeft = true;
 		bullet.shoot(shootLeft);
-	}
-
-	@Test
-	public void whenShootBulletThenExistenceTimeShouldBeInitialised() {
-		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getRemainingTime());
 	}
 	
 	@Test
@@ -64,38 +51,9 @@ public class BulletTest {
 	}
 	
 	@Test
-	public void whenReduceBulletExistenceTimeThenShouldUpdateBulletExistenceTime() {
-		int delta = 3;
-		bullet.update(delta);
-		int expected = (int) Bullet.TOTAL_EXISTENCE_TIME - delta;
-		assertEquals(expected, (int) bullet.getRemainingTime());
-	}
-	
-	@Test
-	public void whenBulletExistenceTimeIsAboveZeroThenShouldNotBeFreed() {
-		float delta = Bullet.TOTAL_EXISTENCE_TIME - 1;
-		bullet.update(delta);
-		assertFalse(bullet.isExistenceTimeExpired());
-	}
-	
-	@Test
-	public void whenBulletExistenceTimeIsBelowZeroThenShouldBeFreed() {
-		float delta = Bullet.TOTAL_EXISTENCE_TIME + 1;
-		bullet.update(delta);
-		assertTrue(bullet.isExistenceTimeExpired());
-	}
-	
-	@Test
 	public void whenBulletIsFreedThenShouldBeRepositionedOutOfCameraView() {
 		bullet.reset();
 		verify(body).setTransform(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, 0);
-	}
-	
-	@Test
-	public void whenBulletIsFreedThenExistenceTimeShouldBeReset() {
-		bullet.update(6);
-		bullet.reset();
-		assertEquals((int) Bullet.TOTAL_EXISTENCE_TIME, (int) bullet.getRemainingTime());
 	}
 	
 	@Test

@@ -7,10 +7,17 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.vertextrigger.collisiondetection.*;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.player.*;
-import com.vertextrigger.factories.*;
-import com.vertextrigger.levelbuilders.*;
+import com.vertextrigger.factory.*;
+import com.vertextrigger.factory.bodyfactory.BulletBodyFactoryTest;
+import com.vertextrigger.factory.bodyfactory.PlayerBodyFactoryTest;
+import com.vertextrigger.levelbuilder.*;
+import com.vertextrigger.levelbuilders.LevelOneBuilderTest;
+import com.vertextrigger.levelbuilders.LevelThreeBuilderTest;
+import com.vertextrigger.levelbuilders.LevelTwoBuilderTest;
 import com.vertextrigger.main.*;
-import com.vertextrigger.screens.*;
+import com.vertextrigger.screen.*;
+import com.vertextrigger.screens.GameScreenTest;
+import com.vertextrigger.screens.MainScreenTest;
 import com.vertextrigger.util.*;
 
 @RunWith(Suite.class)

@@ -6,9 +6,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.bodyfactory.BodyFactory;
-import com.vertextrigger.factories.bodyfactory.PlayerBodyFactory;
-import com.vertextrigger.screens.GameScreen;
+import com.vertextrigger.factory.bodyfactory.AbstractBodyFactory;
+import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
+import com.vertextrigger.screen.AbstractGameScreen;
 
 /**
  * Main character of the game
@@ -28,14 +28,15 @@ public class Player implements Entity {
 	private boolean keepJumping;
 	static boolean isFacingLeft;
 
-	public Player(World world, Vector2 initialPosition, GameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, new PlayerBodyFactory().createPlayerBody(world, initialPosition), new Gun(world, gameScreen), new PlayerAnimator());
+	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen) {
+		this(world, initialPosition, gameScreen, new PlayerBodyFactory().createPlayerBody(world, initialPosition), 
+				new Gun(world, gameScreen), new PlayerAnimator());
 	}
 	
 	/**
 	 * Dependency injection for unit testing
 	 */
-	Player(World world, Vector2 initialPosition, GameScreen gameScreen, Body body, Gun gun, PlayerAnimator animator) {
+	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen, Body body, Gun gun, PlayerAnimator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		this.gun = gun;

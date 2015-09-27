@@ -5,19 +5,17 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factories.bodyfactory.BulletBodyFactory;
+import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
 
 /**
  * Bullets are shot from the player's position horizontally.
  * Bullets are freed 5 seconds after being shot.
  */
 public class Bullet implements Poolable, Entity {
-	static final float TOTAL_EXISTENCE_TIME = 5f;
 	static final float SHOT_POWER = 500;
 	 final Body body;
-	private float existenceTime = -1;
 	private final Sprite sprite;
-	Vector2 INITIAL_POSITION = new Vector2(-50, -50);
+	private boolean isVisible = false;
 	
 	/**
 	 * Creates bullet's physical body
@@ -27,7 +25,7 @@ public class Bullet implements Poolable, Entity {
 	 */
 	Bullet(World world, Sprite sprite) {
 		BulletBodyFactory factory = new BulletBodyFactory();
-		body = factory.createBulletBody(world, INITIAL_POSITION);
+		body = factory.createBulletBody(world);
 		this.sprite = sprite;
 	}
 	
@@ -36,24 +34,32 @@ public class Bullet implements Poolable, Entity {
 		this.sprite = sprite;
 	}
 	
-	float getRemainingTime() {
-		return existenceTime;
-	}
-	
 	Vector2 getPosition() {
 		return body.getPosition();
 	}
 	
 	void shoot(boolean shootLeft) {
+		isVisible = true;
+		
 		float left = -SHOT_POWER;
 		float right = SHOT_POWER;
 		if (shootLeft) shoot(left);
 		else shoot(right);
 	}
 	
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
+	public void setNotVisible() {
+		isVisible = false;
+	}
+	
+	public boolean isVisible() {
+		return isVisible;
+	}
+	
 	private void shoot(float horizontalVelocity) {
-		// Initialise bullet existence time when bullet is first shot
-		existenceTime = TOTAL_EXISTENCE_TIME;
 		Vector2 velocity = new Vector2(horizontalVelocity, 0);
 		boolean wakeForSimulation = true;
 		body.applyLinearImpulse(velocity, body.getPosition(),
@@ -79,23 +85,11 @@ public class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public Sprite update(float delta) {
-		updateRemainingExistenceTime(delta);
 		Vector2 currentPosition = getPosition();
 		float widthOffset = sprite.getWidth()/1.9f;
 		float heightOffset = sprite.getHeight()/2.5f;
 		sprite.setPosition(currentPosition.x - widthOffset, currentPosition.y - heightOffset);
 		return sprite;
-	}
-
-	private void updateRemainingExistenceTime(float delta) {
-		existenceTime -= delta;
-	}
-	
-	/**
-	 * @return whether or not bullet should be freed
-	 */
-	boolean isExistenceTimeExpired() {
-		return existenceTime < 0;
 	}
 		
 	public static void destroyBullet(Fixture fix) {
@@ -107,7 +101,19 @@ public class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public void reset() {
-		body.setTransform(INITIAL_POSITION, 0);
-		existenceTime = TOTAL_EXISTENCE_TIME;
+		body.setTransform(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, 0);
+	}
+
+	boolean isInInitialPosition() {
+		return isInitialPositionX() && isInitialPositionY();
+	}
+	
+	private boolean isInitialPositionX() {
+		return body.getPosition().x < BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.x + 1 &&  // x to the left of -49 
+			   body.getPosition().x > BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.x - 1;  // x to right of -51
+	}
+	private boolean isInitialPositionY() {
+		return body.getPosition().y < BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y + 1 &&
+			   body.getPosition().y > BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y - 1;
 	}
 }

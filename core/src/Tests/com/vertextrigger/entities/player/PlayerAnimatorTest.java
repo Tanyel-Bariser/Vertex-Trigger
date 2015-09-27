@@ -8,11 +8,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.factories.PlayerAnimationFactory;
+import com.vertextrigger.factory.PlayerAnimationFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerAnimatorTest {
@@ -64,12 +63,6 @@ public class PlayerAnimatorTest {
 	public void whenPlayerUpdatedDeltaIsAddedToFrame() {
 		animator.getUpdatedSprite(delta, angle, position);
 		verify(animation).getKeyFrame(delta);
-	}
-	
-	@Test
-	public void whenPlayerUpdatedSpritePositionShouldBeSetToAnimatorPosition() {
-		animator.getUpdatedSprite(delta, angle, position);
-		verify(sprite).setPosition(position.x - animator.widthOffset, position.y - animator.heightOffset);
 	}
 	
 	@Test

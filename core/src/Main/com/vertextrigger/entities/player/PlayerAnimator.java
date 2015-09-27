@@ -3,9 +3,11 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.vertextrigger.factories.PlayerAnimationFactory;
+import com.vertextrigger.factory.PlayerAnimationFactory;
 
-class PlayerAnimator {
+public class PlayerAnimator {
+	static final float X_OFFSET = 1.9f;
+	static final float Y_OFFSET = 2.2f;
 	private final Animation runAnimation;
 	private final Animation standAnimation;
 	private final Animation shootAnimation;
@@ -15,7 +17,7 @@ class PlayerAnimator {
 	private Animation currentAnimation;
 	private boolean movingLeft;
 	
-	PlayerAnimator() {
+	public PlayerAnimator() {
 		this(new PlayerAnimationFactory());
 	}
 	
@@ -70,7 +72,7 @@ class PlayerAnimator {
 		float newRotation = getNewRotation(bodyAngle);
 		sprite.rotate(newRotation);
 		currentAngle = sprite.getRotation();	
-		sprite.setPosition(newPosition.x - sprite.getWidth()/1.9f, newPosition.y - sprite.getHeight()/2.2f);
+		sprite.setPosition(newPosition.x - sprite.getWidth()/X_OFFSET, newPosition.y - sprite.getHeight()/Y_OFFSET);
 		faceSpriteCorrectDirection(sprite);
 		return sprite;
 	}

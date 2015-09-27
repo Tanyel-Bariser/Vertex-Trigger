@@ -109,33 +109,22 @@ public class CollisionDetectionTest {
 		assertFalse(collision.isPlayerFeetContact(contact, isPlayerContact));
 	}
 	
-	@Test
-	public void whenPlayerFeetInContactWithGroundPlayerPositionAndAngleShouldBeSet() {
-		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
-		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
-		when(body.getPosition()).thenReturn(new Vector2(0,1));
-		when(fixB.getBody()).thenReturn(body);
-		
-		collision.postSolve(contact, null);
-		verify(body).setTransform((Vector2) anyObject(), anyFloat());
-	}
-	
-	@Test
-	public void whenPlayerFeetInContactWithGroundPlayerPositionAndAngleShouldBeSetToPlatform() {
-		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
-		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
-		when(body.getPosition()).thenReturn(new Vector2(0,1));
-		
-		Vector2 platformPosition = new Vector2(2,2);
-		float platformAngle = 2.2f;
-		when(body.getPosition()).thenReturn(platformPosition);
-		when(body.getAngle()).thenReturn(platformAngle);
-		when(fixB.getBody()).thenReturn(body);
-		
-		collision.postSolve(contact, null);
-		verify(body).setTransform(platformPosition, platformAngle);
-	}
-	
+//	@Test
+//	public void whenPlayerFeetInContactWithGroundPlayerPositionAndAngleShouldBeSetToPlatform() {
+//		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
+//		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
+//		when(body.getPosition()).thenReturn(new Vector2(0,1));
+//		
+//		Vector2 platformPosition = new Vector2(2,2);
+//		float platformAngle = 2.2f;
+//		when(body.getPosition()).thenReturn(platformPosition);
+//		when(body.getAngle()).thenReturn(platformAngle);
+//		when(fixB.getBody()).thenReturn(body);
+//		
+//		collision.postSolve(contact, null);
+//		verify(body).setTransform(platformPosition, platformAngle);
+//	}
+//	
 	@Test
 	public void whenPlayerFeetInContactWithGroundPlayerCanJump() {
 		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
