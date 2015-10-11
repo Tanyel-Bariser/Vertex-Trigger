@@ -1,10 +1,11 @@
-package com.vertextrigger.factory;
+package com.vertextrigger.factory.animationfactory;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.util.GameObjectSize;
 
-public class PlayerAnimationFactory {
+public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
     private final SpriteFactory spriteFactory;
     private final GameObjectSize size; 
@@ -22,12 +23,12 @@ public class PlayerAnimationFactory {
      */
     public Animation getRun() {
         Sprite[] runSprites = new Sprite[] {
-                spriteFactory.createPlayer("run1", size),
-                spriteFactory.createPlayer("run2", size),
-                spriteFactory.createPlayer("run3", size),
-                spriteFactory.createPlayer("run4", size),
-                spriteFactory.createPlayer("run5", size),
-                spriteFactory.createPlayer("run6", size)
+        		spriteFactory.createCoreSprite("run1", size),
+        		spriteFactory.createCoreSprite("run2", size),
+        		spriteFactory.createCoreSprite("run3", size),
+        		spriteFactory.createCoreSprite("run4", size),
+        		spriteFactory.createCoreSprite("run5", size),
+        		spriteFactory.createCoreSprite("run6", size)
         };
 
         Animation runAnimation = new Animation(0.1F, runSprites);
@@ -43,8 +44,8 @@ public class PlayerAnimationFactory {
      */
     public Animation getRise() {
         Sprite[] jumpSprites = new Sprite[]{
-                spriteFactory.createPlayer("jump2", size),
-                spriteFactory.createPlayer("jump3", size)
+        		spriteFactory.createCoreSprite("jump2", size),
+        		spriteFactory.createCoreSprite("jump3", size)
         };
 
         Animation jumpAnimation = new Animation(.5f, jumpSprites);
@@ -60,8 +61,8 @@ public class PlayerAnimationFactory {
      */
     public Animation getFall() {
         Sprite[] jumpSprites = new Sprite[]{
-                spriteFactory.createPlayer("jump3", size),
-                spriteFactory.createPlayer("jump2", size)
+        		spriteFactory.createCoreSprite("jump3", size),
+        		spriteFactory.createCoreSprite("jump2", size)
         };
 
         Animation jumpAnimation = new Animation(.5f, jumpSprites);
@@ -77,7 +78,7 @@ public class PlayerAnimationFactory {
      */
 	public Animation getStanding() {
         Sprite[] jumpSprites = new Sprite[]{
-                spriteFactory.createPlayer("shoot2", size),
+        		spriteFactory.createCoreSprite("shoot2", size),
         };
 
         Animation jumpAnimation = new Animation(0.1f, jumpSprites);
@@ -93,14 +94,14 @@ public class PlayerAnimationFactory {
      */
     public Animation getShoot() {
         Sprite[] shootSprites = new Sprite[] {
-                spriteFactory.createPlayer("shoot1", size),
-                spriteFactory.createPlayer("shoot2", size),
-                spriteFactory.createPlayer("shoot3", size),
-                spriteFactory.createPlayer("shoot4", size),
-                spriteFactory.createPlayer("shoot5", size),
-                spriteFactory.createPlayer("shoot6", size),
-                spriteFactory.createPlayer("shoot7", size),
-                spriteFactory.createPlayer("shoot8", size)
+        		spriteFactory.createCoreSprite("shoot1", size),
+        		spriteFactory.createCoreSprite("shoot2", size),
+        		spriteFactory.createCoreSprite("shoot3", size),
+        		spriteFactory.createCoreSprite("shoot4", size),
+        		spriteFactory.createCoreSprite("shoot5", size),
+        		spriteFactory.createCoreSprite("shoot6", size),
+        		spriteFactory.createCoreSprite("shoot7", size),
+        		spriteFactory.createCoreSprite("shoot8", size)
         };
 
         Animation shootAnimation = new Animation(0.02F, shootSprites);
@@ -116,10 +117,10 @@ public class PlayerAnimationFactory {
      */
     public Animation getDeath() {
         Sprite[] deathSprites = new Sprite[] {
-                spriteFactory.createPlayer("death1", size),
-                spriteFactory.createPlayer("death2", size),
-                spriteFactory.createPlayer("death3", size),
-                spriteFactory.createPlayer("death4", size),
+        		spriteFactory.createCoreSprite("death1", size),
+        		spriteFactory.createCoreSprite("death2", size),
+        		spriteFactory.createCoreSprite("death3", size),
+        		spriteFactory.createCoreSprite("death4", size),
         };
 
         Animation deathAnimation = new Animation(0.1f, deathSprites);

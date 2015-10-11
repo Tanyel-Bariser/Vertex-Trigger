@@ -27,7 +27,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		//TODO make enemy have circle head and poly body. jumping on head should kill it
 		// TODO enemy animate death??
 		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0,0));
-		sprites.add(enemy.getSprite());
+		entities.add(enemy);
 		
 	}
 

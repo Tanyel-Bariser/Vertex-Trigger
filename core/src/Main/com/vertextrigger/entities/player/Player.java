@@ -113,7 +113,8 @@ public class Player implements Entity {
 			setKeepJumping();
 		}
 	}
-	
+
+	boolean isShooting;
 	/**
 	 * Moves physical body of player left or right.
 	 * Chooses appropriate player sprite based on animation.
@@ -134,7 +135,6 @@ public class Player implements Entity {
 		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
 	}
 	
-	boolean isShooting;
 	private void setAnimationType() {
 		if (body.getLinearVelocity().y > 0.1) {
 			animator.setAnimationRising();

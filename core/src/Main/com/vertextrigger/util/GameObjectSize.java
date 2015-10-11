@@ -15,7 +15,11 @@ public class GameObjectSize {
 	}
 	
 	public static GameObjectSize createPokerSize() {
-		return new GameObjectSize(1.5f, 3f, 0.8f, 1.5f);
+		return new GameObjectSize(1.3f, 4f, 0.6f, 2f);
+	}
+	
+	public static GameObjectSize createBulletSize() {
+		return new GameObjectSize(0.5f, 0.5f, 0.5f, 0.5f);
 	}
 
 	public float getSpriteWidth() {

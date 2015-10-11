@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.factory.PlayerAnimationFactory;
+import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerAnimatorTest {

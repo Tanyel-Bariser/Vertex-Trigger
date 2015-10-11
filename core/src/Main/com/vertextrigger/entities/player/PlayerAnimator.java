@@ -3,7 +3,7 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.vertextrigger.factory.PlayerAnimationFactory;
+import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
 
 public class PlayerAnimator {
 	static final float X_OFFSET = 1.9f;
