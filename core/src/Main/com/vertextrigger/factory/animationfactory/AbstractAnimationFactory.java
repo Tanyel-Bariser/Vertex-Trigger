@@ -10,7 +10,8 @@ import com.vertextrigger.util.GameObjectSize;
 public abstract class AbstractAnimationFactory {
 	
 	public AnimationSet createAnimationSet() {
-		return new AnimationSet(getStanding(), getMoving(), getRising(), getFalling(), getShooting(), getAttack(), getDeath());
+		return new AnimationSet(getStanding(), getMoving(), getRising(),
+				getFalling(), getShooting(), getAttack(), getDeath());
 	}
 
 	protected abstract Animation getStanding();

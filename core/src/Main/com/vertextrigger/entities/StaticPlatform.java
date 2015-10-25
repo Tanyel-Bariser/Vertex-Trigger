@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.util.GameObjectSize;
 
 public class StaticPlatform {
 	private final Sprite sprite;
@@ -19,8 +20,9 @@ public class StaticPlatform {
 	}
 	
 	public void setPosition() {
-		sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2, 
-				body.getPosition().y - sprite.getHeight() / 2);
+		GameObjectSize platformSize = GameObjectSize.getSmallPlatformSize();
+		sprite.setPosition(body.getPosition().x - sprite.getWidth() / platformSize.getOffsetX(), 
+				body.getPosition().y - sprite.getHeight() / platformSize.getOffsetY());
 	}
 	
 	public void setRotation(float degrees) {

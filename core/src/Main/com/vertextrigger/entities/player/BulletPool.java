@@ -27,7 +27,7 @@ class BulletPool extends Pool<Bullet> {
 	 */
 	@Override
 	protected Bullet newObject() {
-		GameObjectSize size = GameObjectSize.createBulletSize();
+		GameObjectSize size = GameObjectSize.getBulletSize();
 		Bullet bullet = new Bullet(world, new SpriteFactory().createCoreSprite("bullet", size));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;

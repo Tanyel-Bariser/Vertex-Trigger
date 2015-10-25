@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * All Entities have a physical body & an associated sprite that need updating
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * their physical position's & return their updated sprite for rendering.
  */
 public interface Entity {
-
+	
 	/**
 	 * Updates an entity's physical position & returns
 	 * the sprite after its position has been updated.
@@ -19,4 +20,20 @@ public interface Entity {
 	 * @return updated sprite position for rendering of current frame
 	 */
 	Sprite update(float delta);
+	
+	Body getBody();
+	
+	void setFacingLeft();
+	
+	void setFacingRight();
+
+	float getOffsetX();
+
+	float getOffsetY();
+	
+	boolean isDeathAnimationFinished();
+	
+	void die();
+
+	void setDeathAnimationFinished();
 }

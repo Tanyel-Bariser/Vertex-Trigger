@@ -41,4 +41,27 @@ public class ExplodingPlatform extends TimedPlatform {
 	public Sprite update(float delta) {
 		return null;
 	}
+
+	@Override
+	public Body getBody() {
+		return null;
+	}
+
+	@Override
+	public void setFacingLeft() {
+	}
+
+	@Override
+	public void setFacingRight() {
+	}
+
+	@Override
+	public float getOffsetX() {
+		return 0;
+	}
+
+	@Override
+	public float getOffsetY() {
+		return 0;
+	}
 }

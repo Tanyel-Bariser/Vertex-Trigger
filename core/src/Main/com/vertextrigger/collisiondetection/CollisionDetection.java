@@ -2,6 +2,7 @@ package com.vertextrigger.collisiondetection;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -76,13 +77,13 @@ public class CollisionDetection implements ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
         Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);
+        ContactBody[] contactBodies = getContactBodies(fixtures);/*
         boolean isPlayerContact = isPlayerContact(contactBodies);
         boolean isGroundContact = isGroundContact(contactBodies);
         boolean isBulletContact = isBulletContact(contactBodies);
-        boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
-        if (isPlayerFeetContact) {
-        	if (isGroundContact) {
+        boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);*/
+        if (isPlayerFeetContact(contact, isPlayerContact(contactBodies))) {
+        	if (isGroundContact(contactBodies)) {
         		player.setCanJump();
         	}
 		// If player's feet is in contact with a "normal" platform
@@ -103,15 +104,27 @@ public class CollisionDetection implements ContactListener {
 		// If player's feet is in contact with conveyor belt/magnet/fan style platform
 				// Set players movements to that of conveyor belt platform behaviour
         }
-        if (isPlayerContact && isBulletContact) {
+        if (isPlayerContact(contactBodies) && isBulletContact(contactBodies)) {
         	for (Fixture fix : fixtures) {
         		if(fix.getUserData().equals(ContactBody.BULLET)) {
         			fix.getBody().setAwake(false);
         		}
         	}
         }
+        if (isEnemyContact(contactBodies) && isBulletContact(contactBodies)) {
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.ENEMY)) {
+        			fix.getBody().setUserData(ContactBody.DEAD);
+        		}
+        	}
+        }
 	}
 	
+	private boolean isEnemyContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.ENEMY) || 
+			   contactBodies[1] == (ContactBody.ENEMY);
+	}
+
 	private Fixture[] getFixtures(Contact contact) {
 		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
 	}

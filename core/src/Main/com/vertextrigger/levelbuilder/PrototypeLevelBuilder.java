@@ -46,7 +46,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createStaticPlatforms() {
 		PlatformFactory factory = new PlatformFactory(world);
-		GameObjectSize size = GameObjectSize.createSmallPlatformSize();
+		GameObjectSize size = GameObjectSize.getSmallPlatformSize();
 		float positionX = 0;
 		float positionY = -15;
 		

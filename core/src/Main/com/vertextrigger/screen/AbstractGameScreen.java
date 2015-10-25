@@ -111,12 +111,25 @@ public abstract class AbstractGameScreen implements Screen {
         }
 
 		drawToScreen(delta, getVisibleSprites());
+		removeDeadEntities();
 		physicsDebugger.render(world, camera.combined);
 	}
 	
 	private void clearScreen() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
+	
+	private void removeDeadEntities() {
+		for(Entity entity : entities) {
+			if (entity.getBody().getUserData() == ContactBody.DEAD) {
+				entity.die();
+				if (entity.isDeathAnimationFinished()) {
+					entities.removeValue(entity, true);
+					world.destroyBody(entity.getBody());
+				}
+			}
+		}
 	}
 	
 	private void updateWorld(float delta) {

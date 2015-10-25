@@ -12,118 +12,68 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
     public PlayerAnimationFactory() {
         spriteFactory = new SpriteFactory();
-        size = GameObjectSize.createPlayerSize();
+        size = GameObjectSize.getPlayerSize();
     }
 
-    /**
-     * Creates animation for the player's run from its composite sprites
-     * LOOP_NORMAL plays the animation looped in sequential order
-     *
-     * @return animation of the player's run
-     */
-    public Animation getRun() {
-        Sprite[] runSprites = new Sprite[] {
-        		spriteFactory.createCoreSprite("run1", size),
-        		spriteFactory.createCoreSprite("run2", size),
-        		spriteFactory.createCoreSprite("run3", size),
-        		spriteFactory.createCoreSprite("run4", size),
-        		spriteFactory.createCoreSprite("run5", size),
-        		spriteFactory.createCoreSprite("run6", size)
-        };
-
-        Animation runAnimation = new Animation(0.1F, runSprites);
+    @Override
+    protected Animation getMoving() {
+        Animation runAnimation = new Animation(0.1F, createSprites("run", 6));
         runAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return runAnimation;
     }
+    
+    private Sprite[] createSprites(String name, int numOfSprites) {
+    	Sprite[] sprites = new Sprite[numOfSprites];
+    	for (int i = 0; i < numOfSprites; i++) {
+    		sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+    	}
+    	return sprites;
+    }
+    
+    private Sprite[] createSpritesReverseOrder(String name, int numOfSprites) {
+    	Sprite[] sprites = new Sprite[numOfSprites];
+    	for (int i = numOfSprites - 1; i >= 0; i--) {
+    		sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+    	}
+    	return sprites;
+    }
 
-    /**
-     * Creates animation for the player's rise (first half of jump) from its composite sprites
-     * NORMAL plays the animation once in sequential order
-     *
-     * @return animation of the player's jump
-     */
-    public Animation getRise() {
-        Sprite[] jumpSprites = new Sprite[]{
-        		spriteFactory.createCoreSprite("jump2", size),
-        		spriteFactory.createCoreSprite("jump3", size)
-        };
-
-        Animation jumpAnimation = new Animation(.5f, jumpSprites);
+    @Override
+    protected Animation getRising() {
+        Animation jumpAnimation = new Animation(.5f, createSprites("jump", 2));
         jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return jumpAnimation;
     }
     
-    /**
-     * Creates animation for the player's fall (second half of jump) from its composite sprites
-     * NORMAL plays the animation once in sequential order
-     *
-     * @return animation of the player's jump
-     */
-    public Animation getFall() {
-        Sprite[] jumpSprites = new Sprite[]{
-        		spriteFactory.createCoreSprite("jump3", size),
-        		spriteFactory.createCoreSprite("jump2", size)
-        };
-
-        Animation jumpAnimation = new Animation(.5f, jumpSprites);
+    @Override
+    protected Animation getFalling() {
+        Animation jumpAnimation = new Animation(.5f, createSpritesReverseOrder("jump", 2));
         jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return jumpAnimation;
     }
 
-    /**
-     * Creates animation for the player standing still (middle of jump) from its composite sprites
-     * NORMAL plays the animation once in sequential order
-     *
-     * @return animation of the player's jump
-     */
-	public Animation getStanding() {
-        Sprite[] jumpSprites = new Sprite[]{
-        		spriteFactory.createCoreSprite("shoot2", size),
+    @Override
+	protected Animation getStanding() {
+        Sprite[] standingSprite = new Sprite[]{
+        		//shoot1 sprite is the best image for the player standing
+        		spriteFactory.createCoreSprite("shoot1", size),
         };
 
-        Animation jumpAnimation = new Animation(0.1f, jumpSprites);
+        Animation jumpAnimation = new Animation(0.1f, standingSprite);
         jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);
         return jumpAnimation;
     }
 
-    /**
-     * Creates animation for the player's gunshot from its composite sprites
-     * NORMAL plays the animation once in sequential order
-     *
-     * @return animation of the player's gunshot
-     */
-    public Animation getShoot() {
-        Sprite[] shootSprites = new Sprite[] {
-        		spriteFactory.createCoreSprite("shoot1", size),
-        		spriteFactory.createCoreSprite("shoot2", size),
-        		spriteFactory.createCoreSprite("shoot3", size),
-        		spriteFactory.createCoreSprite("shoot4", size),
-        		spriteFactory.createCoreSprite("shoot5", size),
-        		spriteFactory.createCoreSprite("shoot6", size),
-        		spriteFactory.createCoreSprite("shoot7", size),
-        		spriteFactory.createCoreSprite("shoot8", size)
-        };
-
-        Animation shootAnimation = new Animation(0.02F, shootSprites);
+    @Override
+    protected Animation getShooting() {
+        Animation shootAnimation = new Animation(0.02F, createSprites("shoot", 8));
         shootAnimation.setPlayMode(Animation.PlayMode.LOOP);
         return shootAnimation;
     }
 
-    /**
-     * Creates animation for the player's death from its composite sprites
-     * NORMAL plays the animation once in sequential order
-     *
-     * @return animation of the player's death
-     */
-    public Animation getDeath() {
-        Sprite[] deathSprites = new Sprite[] {
-        		spriteFactory.createCoreSprite("death1", size),
-        		spriteFactory.createCoreSprite("death2", size),
-        		spriteFactory.createCoreSprite("death3", size),
-        		spriteFactory.createCoreSprite("death4", size),
-        };
-
-        Animation deathAnimation = new Animation(0.1f, deathSprites);
+    @Override
+    protected Animation getDeath() {
+        Animation deathAnimation = new Animation(0.1f, createSprites("death", 4));
         deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
         return deathAnimation;
     }

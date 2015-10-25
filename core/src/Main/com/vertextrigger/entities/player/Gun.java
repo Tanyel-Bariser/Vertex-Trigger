@@ -27,7 +27,7 @@ public class Gun {
 	 */
 	void shoot(Vector2 position, boolean gunPointingLeft) {
 		Bullet bullet = bulletPool.obtain();
-		if (Player.isFacingLeft) {
+		if (gunPointingLeft) {
 			bullet.setPosition(new Vector2(position.x - 0.01f, position.y+0.6f));
 		} else {
 			bullet.setPosition(new Vector2(position.x + 0.01f, position.y+0.6f));
@@ -50,7 +50,7 @@ public class Gun {
 	
 	void destroyTouchingBullets() {
 		for (Bullet bullet : bullets) {
-			if (!bullet.body.isAwake()) {
+			if (!bullet.getBody().isAwake()) {
 				bulletPool.free(bullet);
 				bullets.removeValue(bullet, true);
 			}

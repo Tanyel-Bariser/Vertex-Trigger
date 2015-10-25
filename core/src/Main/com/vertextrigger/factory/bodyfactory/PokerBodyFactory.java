@@ -29,7 +29,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 	
 	@Override
 	protected PolygonShape createShape() {
-		GameObjectSize size = GameObjectSize.createPokerSize();
+		GameObjectSize size = GameObjectSize.getPokerSize();
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;

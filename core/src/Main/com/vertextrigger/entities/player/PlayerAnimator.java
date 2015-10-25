@@ -3,11 +3,13 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
 
 public class PlayerAnimator {
-	static final float X_OFFSET = 1.9f;
+/*	static final float X_OFFSET = 1.9f;
 	static final float Y_OFFSET = 2.2f;
+	private final AnimationSet animationSet;
 	private final Animation runAnimation;
 	private final Animation standAnimation;
 	private final Animation shootAnimation;
@@ -22,12 +24,13 @@ public class PlayerAnimator {
 	}
 	
 	PlayerAnimator(PlayerAnimationFactory factory) {
-		runAnimation = factory.getRun();
-		standAnimation = factory.getStanding();
-		shootAnimation = factory.getShoot();
-		risingAnimation = factory.getRise();
-		fallingAnimation = factory.getFall();
-		deathAnimation = factory.getDeath();
+		this.animationSet = factory.createAnimationSet();
+		runAnimation = animationSet.getMoving();
+		standAnimation = animationSet.getStanding();
+		shootAnimation = animationSet.getShooting();
+		risingAnimation = animationSet.getRising();
+		fallingAnimation = animationSet.getFalling();
+		deathAnimation = animationSet.getDeath();
 		currentAnimation = runAnimation;
 	}
 		
@@ -41,10 +44,10 @@ public class PlayerAnimator {
 		currentAnimation = shootAnimation;
 	}
 	void setAnimationRising() {
-		currentAnimation = new PlayerAnimationFactory().getRise();
+		currentAnimation = risingAnimation;
 	}
 	void setAnimationFalling() {
-		currentAnimation = new PlayerAnimationFactory().getFall();
+		currentAnimation = fallingAnimation;
 	}
 	void setAnimationDying() {
 		currentAnimation = deathAnimation;
@@ -97,5 +100,5 @@ public class PlayerAnimator {
 		else {
 			Player.setFacingRight();
 		}
-	}
+	}*/
 }

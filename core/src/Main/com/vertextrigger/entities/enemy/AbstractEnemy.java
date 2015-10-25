@@ -10,6 +10,8 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.Path;
+import com.vertextrigger.entities.player.Bullet;
+import com.vertextrigger.util.ContactBody;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path
@@ -17,24 +19,25 @@ import com.vertextrigger.entities.Path;
  */
 public abstract class AbstractEnemy implements Entity {
 	// Predefined path for enemy's physical body to follow
-	protected final Path path;
-	protected final Body body;
-	protected final AnimationSet animationSet;
-	protected Animation currentAnimation;
+	protected Path path;
+	protected Body body;
+	protected AnimationSet animationSet;
 	protected Animator animator;
 	
 	public AbstractEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet) {
 		path = null;
 		this.body = body;
 		this.animationSet = animationSet;
-		animator = new Animator(this.animationSet, body);
-		this.currentAnimation = animationSet.getStanding();
+		animator = new Animator(animationSet);
+		animator.setEntity(this);
 	}
 		
 	/**
 	 * Create & set all sprites & animations the enemy will need
 	 */
 	protected abstract void spriteAnimationSetup();
+	
+	protected abstract void playDeathAnimation();
 
 	/**
 	 * Moves the enemy further along its predefined
@@ -54,6 +57,15 @@ public abstract class AbstractEnemy implements Entity {
 		// Set enemy's sprite position & angle to match
 		// the new position of enemy's physical body
 		// Return enemy sprite after it's position/angle has been updated
+		if (getBody().getUserData() == ContactBody.DEAD) {
+			die();
+		}
+		
 		return null;
+	}
+	
+	@Override
+	public void die() {
+		playDeathAnimation();
 	}
 }

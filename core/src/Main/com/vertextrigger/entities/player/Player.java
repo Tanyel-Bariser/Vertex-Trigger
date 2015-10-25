@@ -5,10 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factory.bodyfactory.AbstractBodyFactory;
+import com.vertextrigger.entities.*;
+import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Main character of the game
@@ -18,7 +19,7 @@ public class Player implements Entity {
 	static final float JUMP_POWER = 600f;
 	static final float MOVEMENT_SPEED = 1500;
 	private final Body body;
-	private final PlayerAnimator animator;
+	private final Animator animator;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -26,21 +27,22 @@ public class Player implements Entity {
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
 	private boolean keepJumping;
-	static boolean isFacingLeft;
+	boolean isFacingLeft;
 
 	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen) {
 		this(world, initialPosition, gameScreen, new PlayerBodyFactory().createPlayerBody(world, initialPosition), 
-				new Gun(world, gameScreen), new PlayerAnimator());
+				new Gun(world, gameScreen), new Animator(new PlayerAnimationFactory().createAnimationSet()));
 	}
 	
 	/**
 	 * Dependency injection for unit testing
 	 */
-	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen, Body body, Gun gun, PlayerAnimator animator) {
+	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen, Body body, Gun gun, Animator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		this.gun = gun;
 		this.animator = animator;
+		animator.setEntity(this);
 	}
 	
 	public Body getBody() {
@@ -54,18 +56,15 @@ public class Player implements Entity {
 		body.setTransform(initialPosition, 0);
 	}
 	
-	/**
-	 * Sets angle of player
-	 */
 	public void setAngle(float angle) {
 		body.setTransform(body.getPosition(), angle);
 	}
 	
-	public static void setFacingLeft() {
+	public void setFacingLeft() {
 		isFacingLeft = true;
 	}
 	
-	public static void setFacingRight() {
+	public void setFacingRight() {
 		isFacingLeft = false;
 	}
 	
@@ -129,22 +128,10 @@ public class Player implements Entity {
 		gun.destroyTouchingBullets();
 		movePlayer(delta);
 		if (!isShooting) {
-			setAnimationType();
+			animator.setAnimationType();
 		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
-	}
-	
-	private void setAnimationType() {
-		if (body.getLinearVelocity().y > 0.1) {
-			animator.setAnimationRising();
-		} else if (body.getLinearVelocity().y < -0.1) {
-			animator.setAnimationFalling();			
-		} else if (body.getLinearVelocity().x > 10 || body.getLinearVelocity().x < -10) {
-			animator.setAnimationRunning();
-		} else {
-			animator.setAnimationStanding();
-		}
 	}
 	
 	private void movePlayer(float delta) {
@@ -192,5 +179,15 @@ public class Player implements Entity {
 	
 	public void spinLikeCrazy() {
 		body.setTransform(body.getPosition().x, body.getPosition().y, body.getAngle()+2);
+	}
+
+	@Override
+	public float getOffsetX() {
+		return GameObjectSize.getPlayerSize().getOffsetX();
+	}
+
+	@Override
+	public float getOffsetY() {
+		return GameObjectSize.getPlayerSize().getOffsetY();
 	}
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Bullets are shot from the player's position horizontally.
@@ -13,7 +14,7 @@ import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
  */
 public class Bullet implements Poolable, Entity {
 	static final float SHOT_POWER = 500;
-	 final Body body;
+	private final Body body;
 	private final Sprite sprite;
 	private boolean isVisible = false;
 	
@@ -86,9 +87,7 @@ public class Bullet implements Poolable, Entity {
 	@Override
 	public Sprite update(float delta) {
 		Vector2 currentPosition = getPosition();
-		float widthOffset = sprite.getWidth()/1.9f;
-		float heightOffset = sprite.getHeight()/2.5f;
-		sprite.setPosition(currentPosition.x - widthOffset, currentPosition.y - heightOffset);
+		sprite.setPosition(currentPosition.x - getOffsetX(), currentPosition.y - getOffsetY());
 		return sprite;
 	}
 		
@@ -115,5 +114,28 @@ public class Bullet implements Poolable, Entity {
 	private boolean isInitialPositionY() {
 		return body.getPosition().y < BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y + 1 &&
 			   body.getPosition().y > BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y - 1;
+	}
+
+	@Override
+	public Body getBody() {
+		return body;
+	}
+
+	@Override
+	public void setFacingLeft() {
+	}
+
+	@Override
+	public void setFacingRight() {
+	}
+
+	@Override
+	public float getOffsetX() {
+		return GameObjectSize.getBulletSize().getOffsetX();
+	}
+
+	@Override
+	public float getOffsetY() {
+		return GameObjectSize.getBulletSize().getOffsetY();
 	}
 }

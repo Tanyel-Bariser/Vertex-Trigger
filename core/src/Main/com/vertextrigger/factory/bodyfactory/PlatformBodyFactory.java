@@ -24,6 +24,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 		FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
 		fixtureDefinition.density = 3f;
+		fixtureDefinition.friction = 0.9f;
 		return fixtureDefinition;
 	}
 

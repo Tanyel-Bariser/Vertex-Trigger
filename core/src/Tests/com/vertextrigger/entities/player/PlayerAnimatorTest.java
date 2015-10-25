@@ -36,10 +36,10 @@ public class PlayerAnimatorTest {
 	}
 	
 	private void setUpAnimationFactory() {
-		when(factory.getRun()).thenReturn(animation);
+		when(factory.getMoving()).thenReturn(animation);
 		when(factory.getStanding()).thenReturn(animation);
-		when(factory.getRise()).thenReturn(animation);
-		when(factory.getFall()).thenReturn(animation);
+		when(factory.getRising()).thenReturn(animation);
+		when(factory.getFalling()).thenReturn(animation);
 		when(factory.getDeath()).thenReturn(animation);
 	}
 

@@ -22,7 +22,7 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 	
 	@Override
 	protected Shape createShape() {
-		GameObjectSize size = GameObjectSize.createPlayerSize();
+		GameObjectSize size = GameObjectSize.getPlayerSize();
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;
