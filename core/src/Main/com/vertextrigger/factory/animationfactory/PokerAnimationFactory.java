@@ -34,7 +34,7 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
         		spriteFactory.createLevelSprite("snakeLava_dead", size),
         };
 
-        Animation deathAnimation = new Animation(.9f, deathSprites);
+        Animation deathAnimation = new Animation(.4f, deathSprites);
         deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
         return deathAnimation;
     }

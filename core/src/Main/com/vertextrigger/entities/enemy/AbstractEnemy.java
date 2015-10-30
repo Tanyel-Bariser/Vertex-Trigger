@@ -1,23 +1,21 @@
 package com.vertextrigger.entities.enemy;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.Path;
-import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.util.ContactBody;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
-public abstract class AbstractEnemy implements Entity {
+public abstract class AbstractEnemy implements Mortal {
 	// Predefined path for enemy's physical body to follow
 	protected Path path;
 	protected Body body;
@@ -36,8 +34,6 @@ public abstract class AbstractEnemy implements Entity {
 	 * Create & set all sprites & animations the enemy will need
 	 */
 	protected abstract void spriteAnimationSetup();
-	
-	protected abstract void playDeathAnimation();
 
 	/**
 	 * Moves the enemy further along its predefined
@@ -59,13 +55,12 @@ public abstract class AbstractEnemy implements Entity {
 		// Return enemy sprite after it's position/angle has been updated
 		if (getBody().getUserData() == ContactBody.DEAD) {
 			die();
-		}
-		
+		}		
 		return null;
 	}
 	
 	@Override
-	public void die() {
-		playDeathAnimation();
+	public boolean isDead() {
+		return getBody().getUserData() == ContactBody.DEAD;
 	}
 }

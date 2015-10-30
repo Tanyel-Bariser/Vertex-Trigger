@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.vertextrigger.util.ContactBody;
 
 public class Animator {
 	private Entity entity;
@@ -14,12 +15,12 @@ public class Animator {
 	private Animation currentAnimation;
 	private AnimationSet animationSet;
 	private boolean movingLeft;
-	
+
 	public Animator(AnimationSet animationSet) {
 		this.animationSet = animationSet;
 		currentAnimation = animationSet.getStanding();
 	}
-	
+
 	public void setEntity(Entity entity) {
 		this.entity = entity;
 		body = entity.getBody();
@@ -34,41 +35,48 @@ public class Animator {
 			movingLeft = false;
 		}
 	}
-	
+
 	boolean isMovingLeft() {
 		return movingLeft;
 	}
-	
+
 	float currentAngle = 0;
 	float frameTime;
-	public Sprite getUpdatedSprite(float delta, float bodyAngle, Vector2 newPosition) {
+
+	public Sprite getUpdatedSprite(float delta, float bodyAngle,
+			Vector2 newPosition) {
 		frameTime += delta;
 		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
-		
+
 		float newRotation = getNewRotation(bodyAngle);
 		sprite.rotate(newRotation);
-		currentAngle = sprite.getRotation();	
-		sprite.setPosition(newPosition.x - sprite.getWidth()/entity.getOffsetX(), newPosition.y - sprite.getHeight()/entity.getOffsetY());
+		currentAngle = sprite.getRotation();
+		sprite.setPosition(
+				newPosition.x - sprite.getWidth() / entity.getOffsetX(),
+				newPosition.y - sprite.getHeight() / entity.getOffsetY());
 		faceSpriteCorrectDirection(sprite);
 		return sprite;
 	}
-	
+
 	public void setAnimationType() {
-		if (body.getLinearVelocity().y > 0.1) {
+		if (body.getUserData() == ContactBody.DEAD) {
+			setAnimationDeath();
+		} else if (body.getLinearVelocity().y > 0.1) {
 			setAnimationRising();
 		} else if (body.getLinearVelocity().y < -0.1) {
-			setAnimationFalling();			
-		} else if (body.getLinearVelocity().x > 10 || body.getLinearVelocity().x < -10) {
+			setAnimationFalling();
+		} else if (body.getLinearVelocity().x > 10
+				|| body.getLinearVelocity().x < -10) {
 			setAnimationMoving();
 		} else {
 			setAnimationStanding();
 		}
 	}
-	
+
 	private void setAnimationStanding() {
 		currentAnimation = animationSet.getStanding();
 	}
-	
+
 	public void setAnimationShooting() {
 		currentAnimation = animationSet.getShooting();
 	}
@@ -89,16 +97,17 @@ public class Animator {
 		bodyAngle = bodyAngle * MathUtils.radiansToDegrees;
 		return bodyAngle - currentAngle;
 	}
-	
+
 	private void faceSpriteCorrectDirection(Sprite sprite) {
-		boolean spriteFacingLeft = sprite.isFlipX();		
+		boolean spriteFacingLeft = sprite.isFlipX();
 		boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
 		boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;
-		boolean alreadyFacingCorrectDirection = correctlyFacingLeft || correctlyFacingRight;
+		boolean alreadyFacingCorrectDirection = correctlyFacingLeft
+				|| correctlyFacingRight;
 		if (!alreadyFacingCorrectDirection) {
 			sprite.flip(true, false);
 		}
-		
+
 		if (sprite.isFlipX()) {
 			entity.setFacingLeft();
 		} else {
@@ -110,18 +119,13 @@ public class Animator {
 		currentAnimation = animationSet.getDeath();
 	}
 
-	public boolean isDeathAnimationFinished() {
-		Animation death = animationSet.getDeath();
-		return death.isAnimationFinished(1f);
-	}
-
-	public void playDeathAnimation(final Entity entity) {
+	public void playDeathAnimation(final Mortal entity) {
 		setAnimationDeath();
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {
 				entity.setDeathAnimationFinished();
 			}
-		}, animationSet.getDeath().getAnimationDuration());
+		}, animationSet.getDeath().getAnimationDuration() / 2);
 	}
 }

@@ -9,32 +9,35 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
 
 public abstract class AbstractGameScreen implements Screen {
+	protected Player player;
+	protected World world;
+	protected final Vector2 GRAVITY = new Vector2(0, -70000f);
+	protected final float OLD_G = -70000f;
+	private final static Array<Bullet> bullets = new Array<>();
 	private final float ZOOM = 30f;
 	private final VertexTrigger vertexTrigger;
 	private final AbstractLevelBuilder levelBuilder;
-	protected World world;
-	private OrthographicCamera camera;
-	protected Player player;
-	private SpriteBatch batch;
+	private final OrthographicCamera camera;
+	private final SpriteBatch batch;
 	private final float approxFPS = 60.0f;
 	private final float TIMESTEP = 1.0f / approxFPS;
 	private final int VELOCITYITERATIONS = 8; // Box2d manual recommends 8 & 3
 	private final int POSITIONITERATIONS = 3; // for these iterations values
-	private State state = State.RUNNING;
+	private final Array<Mortal> mortalBeings;
+	private final Array<Sprite> entitySprites;
+	private final Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
-	private Array<Sprite> entitySprites;
 	private Array<Sprite> backgroundSprites;
-	protected final Vector2 GRAVITY = new Vector2(0, -70000f);
-	protected final float OLD_G = -70000f;
-	private Box2DDebugRenderer physicsDebugger;
-	private static Array<Bullet> bullets = new Array<>();
+	private State state = State.RUNNING;
 	
 	protected abstract void initialiseAssets();
 	protected abstract AbstractLevelBuilder createLevelBuilder();
@@ -49,15 +52,15 @@ public abstract class AbstractGameScreen implements Screen {
 		this.vertexTrigger = vertexTrigger;
 		this.levelBuilder = createLevelBuilder();
 		player = levelBuilder.getPlayer();
-		entities = new Array<Entity>();
+		mortalBeings = new Array<Mortal>();		
 		entitySprites = new Array<Sprite>();
-		backgroundSprites = new Array<Sprite>();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth()/ZOOM, Gdx.graphics.getHeight()/ZOOM);
 		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
 		batch = new SpriteBatch();
 		entities.add(player);
 		Gdx.input.setInputProcessor(new Controller(player, this));
 		physicsDebugger = new Box2DDebugRenderer();
+		addMortal(player);
 	}
 	
 	private Vector2 setUpLevelAndReturnInitialPosition() {
@@ -121,12 +124,16 @@ public abstract class AbstractGameScreen implements Screen {
 	}
 	
 	private void removeDeadEntities() {
-		for(Entity entity : entities) {
-			if (entity.getBody().getUserData() == ContactBody.DEAD) {
-				entity.die();
-				if (entity.isDeathAnimationFinished()) {
-					entities.removeValue(entity, true);
-					world.destroyBody(entity.getBody());
+		for(Mortal mortal : mortalBeings) {
+			if (mortal.isDead()) {
+				mortal.die();
+				if (mortal.isDeathAnimationFinished()) {
+					mortalBeings.removeValue(mortal, true);
+					entities.removeValue(mortal, true);
+					world.destroyBody(mortal.getBody());
+					if (mortal instanceof Player) {
+						vertexTrigger.setScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));
+					}
 				}
 			}
 		}
@@ -202,8 +209,11 @@ public abstract class AbstractGameScreen implements Screen {
 	 * @param entity is added to the entity container/data structure
 	 */
 	public void addEntity(Entity entity) {
-		// Added an entity to the entity container
 		entities.add(entity);
+	}
+	
+	public void addMortal(Mortal mortal) {
+		mortalBeings.add(mortal);
 	}
 	
 	/**

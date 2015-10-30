@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
+import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 public class Poker extends AbstractEnemy {
@@ -52,7 +53,7 @@ public class Poker extends AbstractEnemy {
 	}
 
 	@Override
-	protected void playDeathAnimation() {
+	public void die() {
 		animator.playDeathAnimation(this);
 	}
 

@@ -39,7 +39,7 @@ public class GameObjectSize {
 	
 	public static GameObjectSize getPokerSize() {
 		if (pokerSize == null) {
-			pokerSize = new GameObjectSize(1.3f, 4f, 0.6f, 2f, 2f, 2f);
+			pokerSize = new GameObjectSize(1.3f, 4.1f, 0.6f, 1.5f, 2f, 2f);
 		}
 		return pokerSize;
 	}

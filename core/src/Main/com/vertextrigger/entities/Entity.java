@@ -30,10 +30,4 @@ public interface Entity {
 	float getOffsetX();
 
 	float getOffsetY();
-	
-	boolean isDeathAnimationFinished();
-	
-	void die();
-
-	void setDeathAnimationFinished();
 }

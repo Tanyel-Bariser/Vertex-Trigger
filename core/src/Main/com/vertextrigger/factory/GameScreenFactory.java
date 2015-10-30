@@ -21,7 +21,8 @@ public class GameScreenFactory {
 			@Override
 			protected AbstractLevelBuilder createLevelBuilder() {
 				world = new World(GRAVITY, true);
-				Player player = PlayerFactory.createPlayer(world, new Vector2(0,0), this);
+				Vector2 initialPosition = new Vector2(0,0);
+				Player player = PlayerFactory.createPlayer(world, initialPosition, this);
 				world.setContactListener(new CollisionDetection(player));
 				return new PrototypeLevelBuilder(world, this)
 							.setPlayer(player);

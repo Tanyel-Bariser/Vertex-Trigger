@@ -73,7 +73,7 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
     @Override
     protected Animation getDeath() {
-        Animation deathAnimation = new Animation(0.1f, createSprites("death", 4));
+        Animation deathAnimation = new Animation(0.9f, createSprites("death", 4));
         deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
         return deathAnimation;
     }

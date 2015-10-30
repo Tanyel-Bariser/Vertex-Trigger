@@ -15,9 +15,11 @@ import com.vertextrigger.util.*;
  */
 public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	SpriteFactory spriteFactory;
+	AbstractGameScreen screen;
 	
 	public PrototypeLevelBuilder(World world, AbstractGameScreen screen) {
 		super(world, screen);
+		this.screen = screen;
 		//VertexTrigger.ASSETS.loadPrototypeLevel();
 		//spriteFactory = new SpriteFactory();
 	}
@@ -25,10 +27,9 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createEnemies() {
 		//TODO make enemy have circle head and poly body. jumping on head should kill it
-		// TODO enemy animate death??
-		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0,0));
+		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(5,0));
 		entities.add(enemy);
-		
+		screen.addMortal(enemy);		
 	}
 
 	@Override

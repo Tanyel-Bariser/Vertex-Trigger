@@ -9,13 +9,14 @@ import com.vertextrigger.entities.*;
 import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Main character of the game
  * This class manages the player's physical body & its movements & sprite animation
  */
-public class Player implements Entity {
+public class Player implements Mortal {
 	static final float JUMP_POWER = 600f;
 	static final float MOVEMENT_SPEED = 1500;
 	private final Body body;
@@ -114,6 +115,7 @@ public class Player implements Entity {
 	}
 
 	boolean isShooting;
+	private boolean isDeathAnimationFinished;
 	/**
 	 * Moves physical body of player left or right.
 	 * Chooses appropriate player sprite based on animation.
@@ -189,5 +191,26 @@ public class Player implements Entity {
 	@Override
 	public float getOffsetY() {
 		return GameObjectSize.getPlayerSize().getOffsetY();
+	}
+
+
+	@Override
+	public void die() {
+		animator.playDeathAnimation(this);
+	}
+
+	@Override
+	public void setDeathAnimationFinished() {
+		isDeathAnimationFinished = true;
+	}
+	
+	@Override
+	public boolean isDeathAnimationFinished() {
+		return isDeathAnimationFinished;
+	}
+	
+	@Override
+	public boolean isDead() {
+		return getBody().getUserData() == ContactBody.DEAD;
 	}
 }

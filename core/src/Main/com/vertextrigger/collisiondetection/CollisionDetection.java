@@ -82,9 +82,17 @@ public class CollisionDetection implements ContactListener {
         boolean isGroundContact = isGroundContact(contactBodies);
         boolean isBulletContact = isBulletContact(contactBodies);
         boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);*/
+        
         if (isPlayerFeetContact(contact, isPlayerContact(contactBodies))) {
         	if (isGroundContact(contactBodies)) {
         		player.setCanJump();
+        	}
+        	if (isEnemyHeadContact(contactBodies)) {
+        		for (Fixture fix : fixtures) {
+            		if(fix.getUserData().equals(ContactBody.ENEMY_HEAD)) {
+            			fix.getBody().setUserData(ContactBody.DEAD);
+            		}
+            	}
         	}
 		// If player's feet is in contact with a "normal" platform
 				// Set player's angle to that of the platform
@@ -103,6 +111,14 @@ public class CollisionDetection implements ContactListener {
 				// of gravity, until the player jumps
 		// If player's feet is in contact with conveyor belt/magnet/fan style platform
 				// Set players movements to that of conveyor belt platform behaviour
+        	return;
+        }
+        if (isPlayerContact(contactBodies) && isEnemyContact(contactBodies)) {
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER)) {
+        			fix.getBody().setUserData(ContactBody.DEAD);
+        		}
+        	}
         }
         if (isPlayerContact(contactBodies) && isBulletContact(contactBodies)) {
         	for (Fixture fix : fixtures) {
@@ -147,6 +163,11 @@ public class CollisionDetection implements ContactListener {
 	boolean isBulletContact(ContactBody[] contactBodies) {
 		return contactBodies[0] == (ContactBody.BULLET) || 
 		  	   contactBodies[1] == (ContactBody.BULLET);
+	}
+	
+	boolean isEnemyHeadContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.ENEMY_HEAD) || 
+		  	   contactBodies[1] == (ContactBody.ENEMY_HEAD);
 	}
 	
 	boolean isPlayerFeetContact(Contact contact, boolean isPlayerContact) {
