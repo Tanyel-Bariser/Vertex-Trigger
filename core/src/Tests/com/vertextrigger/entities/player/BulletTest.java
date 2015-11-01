@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
+import com.vertextrigger.util.GameObjectSize;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BulletTest {
@@ -59,7 +60,8 @@ public class BulletTest {
 	@Test
 	public void whenBulletUpdatedThenSpritePositionShouldBeSetToBodyPosition() {
 		bullet.update(2.2f);
-		verify(sprite).setPosition(position.x, position.y);
+		verify(sprite).setPosition(position.x - GameObjectSize.getBulletSize().getOffsetX(),
+				position.y - GameObjectSize.getBulletSize().getOffsetY());
 	}
 	
 	@Test

@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.entities.StaticPlatform;
 import com.vertextrigger.factory.animationfactory.AbstractAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
+import com.vertextrigger.portal.StaticPlatform;
 import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 

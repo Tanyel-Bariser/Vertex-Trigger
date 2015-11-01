@@ -36,7 +36,7 @@ public class Animator {
 		}
 	}
 
-	boolean isMovingLeft() {
+	public boolean isMovingLeft() {
 		return movingLeft;
 	}
 

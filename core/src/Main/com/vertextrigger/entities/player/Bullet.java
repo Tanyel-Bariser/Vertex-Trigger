@@ -18,18 +18,6 @@ public class Bullet implements Poolable, Entity {
 	private final Sprite sprite;
 	private boolean isVisible = false;
 	
-	/**
-	 * Creates bullet's physical body
-	 * Creates the bullet's sprite
-	 * 
-	 * @param world the bullet will reside in
-	 */
-	Bullet(World world, Sprite sprite) {
-		BulletBodyFactory factory = new BulletBodyFactory();
-		body = factory.createBulletBody(world);
-		this.sprite = sprite;
-	}
-	
 	Bullet(Body body, Sprite sprite) {
 		this.body = body;
 		this.sprite = sprite;

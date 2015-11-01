@@ -12,6 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.entities.Animator;
 import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -22,7 +23,7 @@ public class PlayerTest {
 	Body body;
 	Vector2 initialPosition;
 	@Mock AbstractGameScreen gameScreen;
-	@Mock PlayerAnimator animator;
+	@Mock Animator animator;
 	@Mock Sprite sprite;
 	@Mock Gun gun;
 
@@ -31,10 +32,10 @@ public class PlayerTest {
 		buildWorld();
 		initialPosition = new Vector2(-5, 8);
 		body = new PlayerBodyFactory().createPlayerBody(world, initialPosition);
-		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		when(animator.getUpdatedSprite(anyFloat(), anyFloat(), 
 				(Vector2) anyObject())).thenReturn(sprite);
 		when(sprite.isFlipX()).thenReturn(true);
+		player = new Player(initialPosition, body, gun, animator);
 	}
 	
 	private void buildWorld() {
@@ -69,23 +70,10 @@ public class PlayerTest {
 		Vector2 actual = body.getPosition();
 		assertEquals(expected, actual);
 	}
-	
-	@Test
-	public void whenPlayerJumpThenShouldApplyUpwardImpulseByJUMP_POWER() {
-		Body body = mock(Body.class);
-		when(body.getWorldCenter()).thenReturn(new Vector2(0,0));
-		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
-		player.setCanJump();
-		player.jump();
-		ArgumentCaptor<Float> jump = ArgumentCaptor.forClass(Float.class);
-		verify(body).applyLinearImpulse(anyFloat(), jump.capture(), anyFloat(), anyFloat(), eq(true));
-		assertEquals((float)Player.JUMP_POWER, (float)jump.getValue(), 1f);
-	}
-	
+		
 	@Test
 	public void givenPlayerCannotJumpThenShouldNotApplyUpwardImpulse() {
 		Body body = mock(Body.class);
-		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
 		player.setCannotJump();
 		player.jump();
 		verify(body, never()).applyLinearImpulse(any(Vector2.class), any(Vector2.class), eq(true));
@@ -96,9 +84,8 @@ public class PlayerTest {
 		Body body = mock(Body.class);
 		when(body.getPosition()).thenReturn(new Vector2(0,0));
 		float verticalSpeed = 12f;
+		Player player = new Player(initialPosition, body, gun, animator);
 		when(body.getLinearVelocity()).thenReturn(new Vector2(0, verticalSpeed));
-		player = new Player(world, initialPosition, gameScreen, body, gun, animator);
-		
 		player.moveRight();
 		
 		float delta = 0.1f;
@@ -114,9 +101,9 @@ public class PlayerTest {
 	}
 	
 	@Test
-	public void givenPlayerRisingThenShouldSetRisingAnimator() {
+	public void givenPlayerRisingThenShouldUpdateAnimationType() {
 		body.applyLinearImpulse(new Vector2(0, 50), body.getPosition(), true);
 		player.update(1);
-		verify(animator).setAnimationRising();
+		verify(animator).setAnimationType();
 	}
 }

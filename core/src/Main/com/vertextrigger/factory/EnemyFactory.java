@@ -1,17 +1,14 @@
 package com.vertextrigger.factory;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.enemy.Poker;
-import com.vertextrigger.factory.animationfactory.AbstractAnimationFactory;
 import com.vertextrigger.factory.animationfactory.PokerAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.PokerBodyFactory;
-import com.vertextrigger.util.*;
 
 public class EnemyFactory {
 	public static AbstractEnemy createPokerEnemy(World world, Vector2 initialPosition) {

@@ -2,13 +2,11 @@ package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.*;
-import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
-import com.vertextrigger.factory.bodyfactory.PlayerBodyFactory;
-import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.entities.Animator;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
@@ -29,16 +27,8 @@ public class Player implements Mortal {
 	private float onSticky = 1;
 	private boolean keepJumping;
 	boolean isFacingLeft;
-
-	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen) {
-		this(world, initialPosition, gameScreen, new PlayerBodyFactory().createPlayerBody(world, initialPosition), 
-				new Gun(world, gameScreen), new Animator(new PlayerAnimationFactory().createAnimationSet()));
-	}
 	
-	/**
-	 * Dependency injection for unit testing
-	 */
-	public Player(World world, Vector2 initialPosition, AbstractGameScreen gameScreen, Body body, Gun gun, Animator animator) {
+	public Player(Vector2 initialPosition, Body body, Gun gun, Animator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		this.gun = gun;

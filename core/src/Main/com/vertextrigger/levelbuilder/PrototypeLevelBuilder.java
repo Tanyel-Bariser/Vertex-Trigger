@@ -7,6 +7,7 @@ import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.portal.StaticPlatform;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.*;
 
@@ -27,7 +28,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createEnemies() {
 		//TODO make enemy have circle head and poly body. jumping on head should kill it
-		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(5,0));
+		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(4,0));
 		entities.add(enemy);
 		screen.addMortal(enemy);		
 	}

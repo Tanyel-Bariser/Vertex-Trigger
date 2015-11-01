@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
-import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.Path;
 import com.vertextrigger.util.ContactBody;

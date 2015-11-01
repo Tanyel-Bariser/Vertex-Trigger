@@ -10,12 +10,10 @@ import com.vertextrigger.entities.player.*;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactoryTest;
 import com.vertextrigger.factory.bodyfactory.PlayerBodyFactoryTest;
-import com.vertextrigger.levelbuilder.*;
 import com.vertextrigger.levelbuilders.LevelOneBuilderTest;
 import com.vertextrigger.levelbuilders.LevelThreeBuilderTest;
 import com.vertextrigger.levelbuilders.LevelTwoBuilderTest;
 import com.vertextrigger.main.*;
-import com.vertextrigger.screen.*;
 import com.vertextrigger.screens.GameScreenTest;
 import com.vertextrigger.screens.MainScreenTest;
 import com.vertextrigger.util.*;
@@ -23,7 +21,7 @@ import com.vertextrigger.util.*;
 @RunWith(Suite.class)
 @SuiteClasses({ CollisionDetectionTest.class, PlatformBehaviourTest.class,
 		BulletBodyFactoryTest.class, BulletTest.class, GunTest.class,
-		PlayerAnimatorTest.class, PlayerBodyFactoryTest.class,
+		AnimatorTest.class, PlayerBodyFactoryTest.class,
 		PlayerTest.class, DangerousBallTest.class, EnemyTest.class,
 		ExplodingPlatformTest.class, FireBallTest.class,
 		MovingPlatformTest.class, PathTest.class, PortalTest.class,

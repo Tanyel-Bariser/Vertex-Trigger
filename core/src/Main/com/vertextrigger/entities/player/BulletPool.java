@@ -1,9 +1,10 @@
 package com.vertextrigger.entities.player;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;
 import com.vertextrigger.factory.SpriteFactory;
-import com.vertextrigger.factory.animationfactory.AbstractAnimationFactory;
+import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
@@ -12,13 +13,11 @@ import com.vertextrigger.util.GameObjectSize;
  * 
  * Useful inherited methods include obtain() and free(Bullet)
  */
-class BulletPool extends Pool<Bullet> {
+public class BulletPool extends Pool<Bullet> {
 	private final World world;
-	private final SpriteFactory spriteFactory;
 	
-	BulletPool(World world, SpriteFactory spriteFactory) {
+	public BulletPool(World world) {
 		this.world = world;
-		this.spriteFactory = spriteFactory;
 	}
 
 	/**
@@ -28,7 +27,9 @@ class BulletPool extends Pool<Bullet> {
 	@Override
 	protected Bullet newObject() {
 		GameObjectSize size = GameObjectSize.getBulletSize();
-		Bullet bullet = new Bullet(world, new SpriteFactory().createCoreSprite("bullet", size));
+		BulletBodyFactory factory = new BulletBodyFactory();
+		Body bulletBody = factory.createBulletBody(world);
+		Bullet bullet = new Bullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", size));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}

@@ -1,4 +1,4 @@
-package com.vertextrigger.entities;
+package com.vertextrigger.portal;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;

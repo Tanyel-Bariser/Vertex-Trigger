@@ -165,6 +165,9 @@ public class Controller implements InputProcessor {
 	 */
 	@Override
 	public boolean keyDown(int keycode) {
+		if (player.isDead()) {
+			return false;
+		}
 		switch (keycode) {
 			case Input.Keys.LEFT:
 				player.moveLeft();

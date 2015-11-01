@@ -11,13 +11,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
+import com.vertextrigger.entities.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PlayerAnimatorTest {
-	PlayerAnimator animator;
+public class AnimatorTest {
+	Animator animator;
 	@Mock Body player;
-	@Mock PlayerAnimationFactory factory;
+	@Mock AnimationSet animationSet;
 	@Mock Animation animation;
 	float movingLeft;
 	float movingRight;
@@ -25,22 +25,26 @@ public class PlayerAnimatorTest {
 	float angle = 3f;
 	float delta = 6.41f;
 	Vector2 position = new Vector2(2,2);
+	@Mock Entity entity;
 
 	@Before
 	public void setUp() throws Exception {
 		setUpAnimationFactory();
 		when(animation.getKeyFrame(anyFloat())).thenReturn(sprite);
-		animator = new PlayerAnimator(factory);
+		animator = new Animator(animationSet);
+		when(entity.getOffsetX()).thenReturn(2.0f);
+		when(entity.getOffsetY()).thenReturn(2.0f);
+		animator.setEntity(entity);
 		movingLeft = -0.31f;
 		movingRight = .31f;
 	}
 	
 	private void setUpAnimationFactory() {
-		when(factory.getMoving()).thenReturn(animation);
-		when(factory.getStanding()).thenReturn(animation);
-		when(factory.getRising()).thenReturn(animation);
-		when(factory.getFalling()).thenReturn(animation);
-		when(factory.getDeath()).thenReturn(animation);
+		when(animationSet.getMoving()).thenReturn(animation);
+		when(animationSet.getStanding()).thenReturn(animation);
+		when(animationSet.getRising()).thenReturn(animation);
+		when(animationSet.getFalling()).thenReturn(animation);
+		when(animationSet.getDeath()).thenReturn(animation);
 	}
 
 	@Test
