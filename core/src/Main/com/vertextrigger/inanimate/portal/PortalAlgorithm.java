@@ -1,22 +1,22 @@
-package com.vertextrigger.portal;
+package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class PortalAlgorithm {
-	public static void setTrajectory(Body body, PortalOrientation orientation) {
+	public static void setTrajectory(Body body, PortalTeleportation orientation) {
 		setNewPosition(body, orientation.pairedPortalPosition);
 		switch(orientation) {
-			case HORIZONTAL_SAME:
+			case MOVING_OPPOSITE_HORIZONTAL_DIRECTION:
 				invertX(body);
 				break;
-			case VERTICAL_SAME:
+			case MOVING_OPPOSITE_VERTICAL_DIRECTION:
 				invertY(body);
 				break;
-			case OPPOSITE:
+			case MOVING_SAME_DIRECTION:
 				// no op
 				break;
-			case VERTICAL_HORIZONTAL:
+			case MOVING_DIFFERENT_XY_AXIS_DIRECTION:
 				swapXY(body);
 				break;			
 			default:
@@ -27,7 +27,8 @@ public class PortalAlgorithm {
 	
 	private static void setNewPosition(Body body, Vector2 exitCoordinates) {
 		// TODO may need to change angle calc later if we want things rotate on exit
-		body.setTransform(exitCoordinates, body.getAngle());
+		int doesNotRotate = 0;
+		body.setTransform(exitCoordinates, doesNotRotate);
 	}
 
 	private static void invertX(Body body) {

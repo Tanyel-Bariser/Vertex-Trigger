@@ -1,5 +1,5 @@
 package com.vertextrigger.entities.player;
-
+import static com.vertextrigger.util.GameObjectSize.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
@@ -119,11 +119,11 @@ public class Bullet implements Poolable, Entity {
 
 	@Override
 	public float getOffsetX() {
-		return GameObjectSize.getBulletSize().getOffsetX();
+		return BULLET_SIZE.getOffsetX();
 	}
 
 	@Override
 	public float getOffsetY() {
-		return GameObjectSize.getBulletSize().getOffsetY();
+		return BULLET_SIZE.getOffsetY();
 	}
 }

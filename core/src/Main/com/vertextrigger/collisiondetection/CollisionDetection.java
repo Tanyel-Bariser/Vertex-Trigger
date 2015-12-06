@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.portal.Portal;
+import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.util.ContactBody;
 
 public class CollisionDetection implements ContactListener {

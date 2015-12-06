@@ -1,4 +1,5 @@
 package com.vertextrigger.factory.animationfactory;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,7 +13,7 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
     public PlayerAnimationFactory() {
         spriteFactory = new SpriteFactory();
-        size = GameObjectSize.getPlayerSize();
+        size = PLAYER_SIZE;
     }
 
     @Override

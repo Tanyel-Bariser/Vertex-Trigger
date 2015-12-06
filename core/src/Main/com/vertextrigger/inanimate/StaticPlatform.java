@@ -1,4 +1,5 @@
-package com.vertextrigger.portal;
+package com.vertextrigger.inanimate;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
@@ -20,7 +21,7 @@ public class StaticPlatform {
 	}
 	
 	public void setPosition() {
-		GameObjectSize platformSize = GameObjectSize.getSmallPlatformSize();
+		GameObjectSize platformSize = SMALL_PLATFORM_SIZE;
 		sprite.setPosition(body.getPosition().x - sprite.getWidth() / platformSize.getOffsetX(), 
 				body.getPosition().y - sprite.getHeight() / platformSize.getOffsetY());
 	}

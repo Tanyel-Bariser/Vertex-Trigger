@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.factory.animationfactory.AbstractAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
-import com.vertextrigger.portal.StaticPlatform;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 

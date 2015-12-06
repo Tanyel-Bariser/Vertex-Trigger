@@ -10,6 +10,8 @@ import com.vertextrigger.entities.player.*;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactoryTest;
 import com.vertextrigger.factory.bodyfactory.PlayerBodyFactoryTest;
+import com.vertextrigger.factory.bodyfactory.PortalBodyFactoryTest;
+import com.vertextrigger.inanimate.portal.PortalFactoryTest;
 import com.vertextrigger.levelbuilders.LevelOneBuilderTest;
 import com.vertextrigger.levelbuilders.LevelThreeBuilderTest;
 import com.vertextrigger.levelbuilders.LevelTwoBuilderTest;
@@ -33,6 +35,7 @@ import com.vertextrigger.util.*;
 		LevelTwoBuilderTest.class, LevelThreeBuilderTest.class,
 		VertexTriggerTest.class, GameScreenTest.class, MainScreenTest.class,
 		AndroidControllerTest.class, AssetsTest.class, AudioManagerTest.class,
-		DesktopControllerTest.class })
+		DesktopControllerTest.class ,PortalFactoryTest.class, PortalBodyFactoryTest.class,
+		PortalTest.class})
 public class AllTests {
 }

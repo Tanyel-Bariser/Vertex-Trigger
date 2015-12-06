@@ -1,4 +1,5 @@
 package com.vertextrigger.factory.animationfactory;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +12,7 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 	
 	public PokerAnimationFactory() {
         spriteFactory = new SpriteFactory();
-        size = GameObjectSize.getPokerSize();
+        size = POKER_SIZE;
     }
 	
 	@Override

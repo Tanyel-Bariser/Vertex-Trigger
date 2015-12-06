@@ -3,7 +3,9 @@ package com.vertextrigger.factory.bodyfactory;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 import com.vertextrigger.util.*;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 public class PlayerBodyFactory extends AbstractBodyFactory {
 	public Body createPlayerBody(World world, Vector2 initialPosition) {
@@ -22,7 +24,7 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 	
 	@Override
 	protected Shape createShape() {
-		GameObjectSize size = GameObjectSize.getPlayerSize();
+		GameObjectSize size = PLAYER_SIZE;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;

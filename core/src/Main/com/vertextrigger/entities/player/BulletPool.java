@@ -1,5 +1,5 @@
 package com.vertextrigger.entities.player;
-
+import static com.vertextrigger.util.GameObjectSize.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Pool;
@@ -26,7 +26,7 @@ public class BulletPool extends Pool<Bullet> {
 	 */
 	@Override
 	protected Bullet newObject() {
-		GameObjectSize size = GameObjectSize.getBulletSize();
+		GameObjectSize size = BULLET_SIZE;
 		BulletBodyFactory factory = new BulletBodyFactory();
 		Body bulletBody = factory.createBulletBody(world);
 		Bullet bullet = new Bullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", size));

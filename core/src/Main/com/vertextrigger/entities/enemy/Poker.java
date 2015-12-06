@@ -1,5 +1,5 @@
 package com.vertextrigger.entities.enemy;
-
+import static com.vertextrigger.util.GameObjectSize.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -44,12 +44,12 @@ public class Poker extends AbstractEnemy {
 
 	@Override
 	public float getOffsetX() {
-		return GameObjectSize.getPokerSize().getOffsetX();
+		return POKER_SIZE.getOffsetX();
 	}
 
 	@Override
 	public float getOffsetY() {
-		return GameObjectSize.getPokerSize().getOffsetY();
+		return POKER_SIZE.getOffsetY();
 	}
 
 	@Override

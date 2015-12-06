@@ -1,5 +1,5 @@
 package com.vertextrigger.entities.player;
-
+import static com.vertextrigger.util.GameObjectSize.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -175,12 +175,12 @@ public class Player implements Mortal {
 
 	@Override
 	public float getOffsetX() {
-		return GameObjectSize.getPlayerSize().getOffsetX();
+		return GameObjectSize.PLAYER_SIZE.getOffsetX();
 	}
 
 	@Override
 	public float getOffsetY() {
-		return GameObjectSize.getPlayerSize().getOffsetY();
+		return GameObjectSize.PLAYER_SIZE.getOffsetY();
 	}
 
 

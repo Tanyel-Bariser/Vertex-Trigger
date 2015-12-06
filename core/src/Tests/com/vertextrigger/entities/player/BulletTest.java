@@ -3,6 +3,7 @@ package com.vertextrigger.entities.player;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
+import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -60,8 +61,8 @@ public class BulletTest {
 	@Test
 	public void whenBulletUpdatedThenSpritePositionShouldBeSetToBodyPosition() {
 		bullet.update(2.2f);
-		verify(sprite).setPosition(position.x - GameObjectSize.getBulletSize().getOffsetX(),
-				position.y - GameObjectSize.getBulletSize().getOffsetY());
+		verify(sprite).setPosition(position.x - BULLET_SIZE.getOffsetX(),
+				position.y - BULLET_SIZE.getOffsetY());
 	}
 	
 	@Test

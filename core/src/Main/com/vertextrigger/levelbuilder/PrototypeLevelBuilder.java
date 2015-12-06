@@ -3,13 +3,13 @@ package com.vertextrigger.levelbuilder;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.entities.*;
+
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.factory.*;
-import com.vertextrigger.main.VertexTrigger;
-import com.vertextrigger.portal.StaticPlatform;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.*;
+import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
@@ -48,7 +48,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createStaticPlatforms() {
 		PlatformFactory factory = new PlatformFactory(world);
-		GameObjectSize size = GameObjectSize.getSmallPlatformSize();
+		GameObjectSize size = SMALL_PLATFORM_SIZE;
 		float positionX = 0;
 		float positionY = -15;
 		

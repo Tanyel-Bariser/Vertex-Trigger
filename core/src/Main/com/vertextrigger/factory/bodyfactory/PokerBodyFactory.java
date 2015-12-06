@@ -9,8 +9,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 public class PokerBodyFactory extends AbstractBodyFactory {
 	
@@ -43,7 +45,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 	
 	@Override
 	protected PolygonShape createShape() {
-		GameObjectSize size = GameObjectSize.getPokerSize();
+		GameObjectSize size = POKER_SIZE;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;
