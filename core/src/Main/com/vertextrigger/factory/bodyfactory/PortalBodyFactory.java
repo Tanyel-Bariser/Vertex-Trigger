@@ -11,15 +11,13 @@ import com.vertextrigger.util.GameObjectSize;
 public class PortalBodyFactory extends AbstractBodyFactory {
 
 	public Body createPortalBody(World world, Vector2 initialPosition) {
-		return createBody(world, initialPosition, ContactBody.PORTAL, BodyType.StaticBody, createFixtureDefinition());
+		return createBody(world, initialPosition, ContactBody.PORTAL_ONE, BodyType.StaticBody, createFixtureDefinition());
 	}
 	
 	@Override
 	protected FixtureDef createFixtureDefinition() {
 		FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
-		fixtureDefinition.density = 3f;
-		fixtureDefinition.friction = 0.9f;
 		fixtureDefinition.isSensor = true;
 		return fixtureDefinition;
 	}

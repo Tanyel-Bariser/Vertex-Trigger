@@ -14,6 +14,7 @@ public abstract class AbstractBodyFactory {
 	protected Body createBody(World world, Vector2 initialPosition, ContactBody contactBody, BodyType bodyType, FixtureDef fixtureDefinition) {
 		BodyDef bodyDef = buildBodyDefinition(initialPosition, bodyType);
 		Body body = world.createBody(bodyDef);
+		body.setUserData(contactBody);
 		buildFixture(body, contactBody, fixtureDefinition);
 		return body;
 	}

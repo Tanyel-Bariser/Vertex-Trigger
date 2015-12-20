@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.util.ContactBody;
@@ -16,18 +17,13 @@ import com.vertextrigger.util.ContactBody;
 public class CollisionDetection implements ContactListener {
 	private final Player player; 
 	private final Body playerBody;	
+	private final Array<Portal> portals;
 	
-	public CollisionDetection(Player player) {
+	public CollisionDetection(Player player, Array<Portal> portals) {
 		this.player = player;
 		this.playerBody = player.getBody();
+		this.portals = portals;
 	}
-
-    // the index will be in sync with the portal number assigned in the Portal constructor
-    private static ArrayList<Portal> portals;
-
-    public static void addPortal(Portal portal) {
-        portals.add(portal);
-    }
 
 	/**
 	 * This method is called once when two game objects
@@ -80,6 +76,24 @@ public class CollisionDetection implements ContactListener {
         boolean isGroundContact = isGroundContact(contactBodies);
         boolean isBulletContact = isBulletContact(contactBodies);
         boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);*/
+       
+        
+        if (isPortalOneContact(contactBodies)) {
+        	Portal portal = portals.get(0);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
+        else if (isPortalTwoContact(contactBodies)) {
+        	Portal portal = portals.get(1);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
         
         if (isPlayerFeetContact(contact, isPlayerContact(contactBodies))) {
         	if (isGroundContact(contactBodies)) {
@@ -148,6 +162,16 @@ public class CollisionDetection implements ContactListener {
 			(ContactBody) fixtures[1].getUserData()};
 	}
 
+	boolean isPortalOneContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.PORTAL_ONE) || 
+			   contactBodies[1] == (ContactBody.PORTAL_ONE);
+	}
+	
+	boolean isPortalTwoContact(ContactBody[] contactBodies) {
+		return contactBodies[0] == (ContactBody.PORTAL_TWO) || 
+			   contactBodies[1] == (ContactBody.PORTAL_TWO);
+	}
+	
 	boolean isPlayerContact(ContactBody[] contactBodies) {
 		return contactBodies[0] == (ContactBody.PLAYER) || 
 		  	   contactBodies[1] == (ContactBody.PLAYER);

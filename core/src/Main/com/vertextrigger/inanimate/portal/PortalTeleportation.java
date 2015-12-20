@@ -1,20 +1,39 @@
 package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public enum PortalTeleportation {	
-	MOVING_OPPOSITE_VERTICAL_DIRECTION, 
-	MOVING_OPPOSITE_HORIZONTAL_DIRECTION, 
-	MOVING_SAME_DIRECTION, 
-	MOVING_DIFFERENT_XY_AXIS_DIRECTION;
+	MOVING_OPPOSITE_VERTICAL_DIRECTION {
+		@Override
+		public void setLinearVelocity(Body body) {
+			body.setLinearVelocity(body.getLinearVelocity().x, -body.getLinearVelocity().y);
+		}
+	}, 
 	
-	Vector2 pairedPortalPosition;
+	MOVING_OPPOSITE_HORIZONTAL_DIRECTION {
+		@Override
+		public void setLinearVelocity(Body body) {
+			body.setLinearVelocity(-body.getLinearVelocity().x, body.getLinearVelocity().y);
+		}
+	}, 
 	
-	Vector2 getPairPosition() {
-		return pairedPortalPosition;
+	MOVING_SAME_DIRECTION {
+		@Override
+		public void setLinearVelocity(Body body) { /* nothing */ };
+	},
+	
+	MOVING_DIFFERENT_XY_AXIS_DIRECTION {
+		@Override
+		public void setLinearVelocity(Body body) {
+			body.setLinearVelocity(body.getLinearVelocity().y, body.getLinearVelocity().x);
+		}
+	};
+	
+	public void teleport(Body body, Vector2 exitCoordinate) {
+		body.setTransform(exitCoordinate, 0);
+		setLinearVelocity(body);
 	}
 	
-	void setPairPosition(Vector2 position) {
-		pairedPortalPosition = position;
-	}
+	abstract void setLinearVelocity(Body body);
 }

@@ -41,7 +41,6 @@ public class PortalFactoryTest {
 	}
 	
 	@Test public void whenPortalPairIsCreatedTheyShouldBePaired() {
-		assertNotNull(portal.getPairedPortal());
 		assertThat(portal.getPairedPosition(), is(equalTo(PORTAL_2_POSITION)));
 	}
 	

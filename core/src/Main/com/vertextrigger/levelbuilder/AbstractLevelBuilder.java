@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.SpriteFactory;
-import com.vertextrigger.factory.entityfactory.PlayerFactory;
+import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public abstract class AbstractLevelBuilder {
@@ -16,6 +16,7 @@ public abstract class AbstractLevelBuilder {
 	protected Array<Sprite> sprites;
 	protected AbstractGameScreen gameScreen;
 	protected Player player;
+	protected Array<Portal> portals;
 	protected SpriteFactory spriteFactory;
 	
 	protected AbstractLevelBuilder(World world, AbstractGameScreen screen) {
@@ -90,6 +91,8 @@ public abstract class AbstractLevelBuilder {
 	 * @param world for the ground, ceiling & walls to be built in
 	 */
 	protected abstract void createGroundWalls();
+	
+	protected abstract void createPortals();
 
 	/**
 	 * Resets the positions of all entities when player
@@ -122,6 +125,7 @@ public abstract class AbstractLevelBuilder {
 	 * @return all entities required for this level
 	 */
 	public Array<Sprite> buildLevelLayout() {
+		createPortals();
 		createStaticPlatforms();
 		createGroundWalls();
 		return sprites;

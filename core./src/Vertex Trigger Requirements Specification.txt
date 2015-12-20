@@ -1,0 +1,105 @@
+VERTEX TRIGGER
+REQUIREMENTS SPECIFICATION
+
+
+
+AIM
+
+Develop an action platform game, called Vertex Trigger, for Android (and maybe a HTML5 port for Newgrounds.com if libGDX allows), along the lines of a NES Mega Man clone but with much smaller levels, i.e. about 3 screen sizes, similar to Super Meat Boy.
+
+
+USER EXPERIENCE / EMOTION
+
+The game should be challenging and, aside from the initial easy levels,  each level should look daunting when first seen and allow a genuine sense of accomplishment when completed. The game should also limit frustration, therefore emphasising the positive aspects of a difficult game while avoiding the negative. (High sense of accomplishment and low frustration).
+
+
+
+GAME FLAWS TO AVOID TO REDUCE FRUSTRATION
+
+
+UNFAIR LEVEL DESIGN
+
+•	Being hit from a helpless position, i.e. being attacked by something the user cannot see properly or when first entering a screen or when on a ladder, etc. or enemies coming from angles the player can't attack, i.e. too many flying enemies coming from directly above the player if he can only shoot horizontally. 
+•	Unfairly difficult kills, such as, too many "one hit kill spikes" if they are very hard to avoid, especially if the checkpoints are quite far back or having to jump over bottomless pits/spikes that force you to jump from the very edge of the platform in order to make the jump to avoid dying.
+•	Unfair falls, i.e. getting knocked back too far when hit or sliding too far when landing from a jump, both of which can cause the player to fall off floating platforms and dying.
+•	Negative surprises. The user should have a good idea of how game objects, i.e. platforms, enemies, etc. operate in the world the first time they interact with it. For example, if an enemy shoots something, they should shoot first in a direction that doesn't hit the player when the user first sees that enemy, so the user knows what that enemy does and therefore cannot think "how was I suppose to know to avoid that?" if they get killed because of it.
+
+
+BAD CONTROLS
+
+Virtual buttons causing bad controls are perhaps the biggest flaw for action platform games on mobile phones.
+•	They can be too small causing the user to miss buttons or press other buttons unintentionally.
+•	They can also be unresponsive  or too sensitive.
+•	They may get in the way of the player's view of the screen or of in-coming enemies.
+Dedicate an area on the screen, i.e. bottom third of screen in landscape view, for large buttons, which do not get in the way of the view. Perhaps just left, right, pause, shoot and jump buttons as the bare minimum and make the buttons large.
+
+
+PUNISHING FAILURE (and why small levels are important)
+
+When a user plays a difficult game that's challenging, making the user pay for each mistake is a sure way to cause frustration.
+•	Have no loading times. When a user dies and has to wait for the game to reload it causes frustration. Making each of our levels small would allow for fewer assets to have to load and therefore allows an instant restart.
+•	Small levels/near checkpoints. It's frustrating for the user to have to redo large sections of a level after they die just to get back to the same point in the game due to a checkpoint being too far back. Having very small levels or at least very frequent/near checkpoints, will reduce this frustration.
+•	No currency/stock and no grind work. Dying can be frustrating if the player has to do "grind work" by having to go around familiar sections of a level just to stock up on ammo, life, currency, continues, etc. The user shouldn't be punished with having to start the next level with limited ammo or life because they didn't do the previous level perfectly. Having unlimited ammo and perhaps one hit kill or starting each level always with full life is one solution.
+
+
+
+GAME DESIGN
+
+Having tight controls is the most important thing for our game. The game cannot be difficult because the protagonist cannot be controlled properly. The first part of development should focus on making the controls perfect before focusing on designing levels. This can only happen with trial and error during development until the controls feel perfect.
+
+
+PLAYER SHOOTING (depends on how well this plays in a prototype level)
+
+Player shoots bouncy bullets (maybe fire/metal balls) only horizontally and uses slanted platforms, that rotate, move,  etc. to shoot the bullets off of so they bounce off the platforms to hit flying enemies that would otherwise be out of range. These bullets should be high speed to create lots of bounces and some of the platforms can be bouncy to increase the speed of the bullets. This takes advantage of the physics engine and would work similar to a Snooker game where the ball bounces off the edges of the table.
+
+
+LEVEL DESIGN
+
+•	Levels should be designed with the player's ability to shoot bouncing bullets as its focus.
+•	The game should be fun immediately as many Android gamers uninstall if they're not having fun in the first several of minutes.
+•	Fast paced but involves careful planning of where to jump/dodge/shoot.
+•	No explicit tutorial, as the game should be intuitive and the game goal obvious based on graphics and game play.
+•	The game should start off quite easy, building up difficulty, initially with the goal of teaching the user how the game works, i.e. get them used to shooting off of platforms and acquiring some familiarity with the variety of platforms and enemies before increasing difficulty.
+•	The game should vary in difficulty in a rhythmic fashion, i.e. with a build up of difficulty towards a very difficult level, i.e. maybe a boss, then afterwards gets temporarily easier again. Then repeat this cycle, with difficulty gradually increasing.
+•	Ideally the level should seem daunting at first sight but very doable with practice. There should be no negative surprises for the user... every time the player dies should seem fair.
+•	Very small levels, i.e. about 3 screen sizes and takes no more than 5 to 10 seconds to get back to the point where the player died.
+•	One hit kill, with no restrictions on lives/continues or ammo, etc.
+•	Lots of variety between levels, i.e. lots of different types of floating platforms (listed below) and enemies, etc.
+
+Types of Floating Platforms for High Variation between Levels
+•	Moving, i.e. either along a complicated path or simply up towards spikes, etc.
+•	Disappearing/Reappearing
+•	Falling/Crumble when stood on
+•	Spikes coming out of them then back in
+•	Counts down then explodes then reappears
+•	Sticky so you can walk on walls or upside down
+•	Moving and changes direction each time it's jumped on
+•	Rotating, i.e. clockwise in place, so you have to jump to avoid falling off
+•	With enemies/fire balls traversing all sides off a platform so player has to time jumps
+•	Slippery/Frozen/Oily
+•	Slanted, i.e. good for shooting bouncy bullets off of
+•	Bouncy, i.e. mildly bouncy, diving board, spring, etc.
+•	Conveyor Belt or magnet or fan to push/pull player
+•	Combination of any of the above, i.e. bouncy and moving
+
+
+
+ASSETS (game art, music, sound, fonts, etc.)
+
+Level design and atmosphere will largely depend on the free open assets we can find.
+•	Art for game objects, i.e. items, platforms, protagonist, enemies, etc. should all have high contrast with backgrounds so that their positions are clear for smooth game play.
+•	Art for game objects should indicate function to aid in intuitive game play without tutorial.
+•	Protagonist and enemies should be animated, therefore art should allow for tweening.
+•	Sound effects should be available for all feedback, i.e. jump sound, item pick up sound, hit/kill sound, shoot sound, etc.
+•	All assets should be appealing and in line with the level's atmosphere.
+•	May have to develop graphic design skills or find a game artist willing to work for free.
+•	All assets should allow for commercial use within their Creative Commons License... even if we don't currently plan on charging for the game.
+
+
+
+NON FUNCTIONAL REQUIREMENTS
+
+•	Support for Android 2.2 and above, and Newgrounds.com and maybe iOS
+•	60FPS on high end devices and works on a range of aspect ratios
+•	Plays well on low end devices via frame rate independent movement and sprite culling
+•	Levels each with completed unit test, Javadoc, no magic numbers, refactored, etc. AND FUN before moving to developing the next level.

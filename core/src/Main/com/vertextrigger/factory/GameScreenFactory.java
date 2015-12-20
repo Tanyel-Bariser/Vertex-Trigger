@@ -2,9 +2,12 @@ package com.vertextrigger.factory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.entityfactory.PlayerFactory;
+import com.vertextrigger.inanimate.portal.Portal;
+import com.vertextrigger.inanimate.portal.PortalFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
 import com.vertextrigger.levelbuilder.PrototypeLevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
@@ -23,7 +26,9 @@ public class GameScreenFactory {
 				world = new World(GRAVITY, true);
 				Vector2 initialPosition = new Vector2(0,0);
 				Player player = PlayerFactory.createPlayer(world, initialPosition, this);
-				world.setContactListener(new CollisionDetection(player));
+				Array<Portal> portals = new Array<>();
+				portals.add(new PortalFactory().createPortalPair(world, new Vector2(-7,-12.5f), new Vector2(7,-7.5f)));
+				world.setContactListener(new CollisionDetection(player, portals));
 				return new PrototypeLevelBuilder(world, this)
 							.setPlayer(player);
 

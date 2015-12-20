@@ -1,6 +1,5 @@
 package com.vertextrigger.inanimate.portal;
 
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -21,7 +20,7 @@ public class PortalTest {
 	Portal pairedPortal;
 	Vector2 position;
 	Vector2 pairedPosition;
-	PortalTeleportation teleportation;
+	@Mock PortalTeleportation teleportation;
 	@Mock Body body;
 	@Mock Body pairedBody;
 	@Mock Sprite sprite;
@@ -33,11 +32,8 @@ public class PortalTest {
 		when(body.getPosition()).thenReturn(position);
 		pairedPosition = new Vector2(-9, 12);
 		when(pairedBody.getPosition()).thenReturn(pairedPosition);
-		teleportation = MOVING_DIFFERENT_XY_AXIS_DIRECTION;
-		portal = new Portal(body, sprite, position, teleportation);
-		pairedPortal = new Portal(pairedBody, pairedSprite, pairedPosition, teleportation);
-		portal.setPairedPortal(pairedPortal);
-		pairedPortal.setPairedPortal(portal);
+		portal = new Portal(body, sprite, teleportation, pairedPosition);
+		pairedPortal = new Portal(pairedBody, pairedSprite, teleportation, position);
 	}
 
 	@Test
@@ -53,12 +49,19 @@ public class PortalTest {
 		assertEquals(pairedPortal.getPosition(), portal.getPairedPosition());
 	}
 	
-	@Test public void testOtherConstructorParams() {
+	@Test
+	public void testOtherConstructorParams() {
 		assertThat(portal.getBody(), is(equalTo(body)));
 		assertThat(pairedPortal.getBody(), is(equalTo(pairedBody)));
 		assertThat(portal.getSprite(), is(equalTo(sprite)));
 		assertThat(pairedPortal.getSprite(), is(equalTo(pairedSprite)));
 		assertThat(portal.getTeleportation(), is(equalTo(teleportation)));
 		assertThat(pairedPortal.getTeleportation(), is(equalTo(teleportation)));
+	}
+	
+	@Test
+	public void shouldTeleportBody() {
+		portal.teleport(body);
+		verify(teleportation).teleport(body, portal.getPairedPosition());
 	}
 }

@@ -45,4 +45,8 @@ public class LevelTwoBuilder extends AbstractLevelBuilder {
 	public Vector2 getInitialPosition() {
 		return null;
 	}
+
+	@Override
+	protected void createPortals() {
+	}
 }

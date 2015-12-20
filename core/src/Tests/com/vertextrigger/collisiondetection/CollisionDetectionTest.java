@@ -11,11 +11,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.util.ContactBody;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollisionDetectionTest {
 	private CollisionDetection collision;
+	@Mock Portal portal;
 	@Mock Player player;
 	@Mock Body body;
 	@Mock Contact contact;
@@ -134,5 +136,15 @@ public class CollisionDetectionTest {
 		
 		collision.postSolve(contact, null);
 		verify(player).setCanJump();
+	}
+	
+	@Test public void whenAnythingTouchesPortalItWillBeTransportedToAnotherPortal() {
+		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
+		when(fixB.getUserData()).thenReturn(ContactBody.PORTAL);
+		when(body.getPosition()).thenReturn(new Vector2(0,1));
+		when(fixB.getBody()).thenReturn(body);
+		
+		collision.postSolve(contact, null);
+		verify(portal).;
 	}
 }
