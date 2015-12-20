@@ -21,10 +21,17 @@ public class PortalFactoryTest {
 
 	@Before
 	public void setUp() {
+		buildWorld();
 		factory = new PortalFactory();
 		PORTAL_1_POSITION = new Vector2(0, 1);
 		PORTAL_2_POSITION = new Vector2(10, -7);
 		portal = factory.createPortalPair(world, PORTAL_1_POSITION, PORTAL_2_POSITION);
+	}
+
+	private void buildWorld() {
+		boolean doNotSimulateInactiveBodies = true;
+		Vector2 gravity = new Vector2(0, -9.81f);
+		world = new World(gravity, doNotSimulateInactiveBodies);
 	}
 
 	@Test

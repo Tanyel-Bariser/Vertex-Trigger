@@ -15,7 +15,7 @@ public class PortalBodyFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		body = factory.createPortalBody(null, null, PORTAL_SIZE);
+		body = factory.createPortalBody(null, null);
 	}
 
 	@Test
