@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
@@ -10,8 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  * Ensures all dynamic/kinematic game objects have an update method to update 
  * their physical position's & return their updated sprite for rendering.
  */
-public interface Entity {
-	
+public interface Entity {	
 	/**
 	 * Updates an entity's physical position & returns
 	 * the sprite after its position has been updated.

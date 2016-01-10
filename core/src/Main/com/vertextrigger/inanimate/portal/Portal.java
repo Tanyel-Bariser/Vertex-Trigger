@@ -17,6 +17,9 @@ public class Portal {
 		this.pairedPortalPosition = pairedPortalPosition;
 	}
 
+    /**
+     * @param body that enters portal to be teleported to the paired portal
+     */
 	public void teleport(Body body) {
 		teleportation.teleport(body, getPairedPosition());
 	}

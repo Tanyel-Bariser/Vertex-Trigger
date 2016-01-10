@@ -1,12 +1,16 @@
 package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.*;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.inanimate.StaticPlatform;
+import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.inanimate.portal.PortalFactory;
+import com.vertextrigger.inanimate.portal.PortalTeleportation;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.*;
 
@@ -111,7 +115,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	protected void createPortals() {
-		new PortalFactory().createPortalPair(world, new Vector2(-7,-12.5f), new Vector2(7,-7.5f));
+	public Array<Portal> createPortals() {
+		return new PortalFactory().createPortalPair(world, new Vector2(-7,-12.5f), new Vector2(7,-7.5f), MOVING_SAME_DIRECTION);
 	}
 }

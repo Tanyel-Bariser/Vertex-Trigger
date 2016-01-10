@@ -31,8 +31,26 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void beginContact(Contact contact) {
-        ContactBody fixture1 = (ContactBody) contact.getFixtureA().getUserData();
-        ContactBody fixture2 = (ContactBody) contact.getFixtureB().getUserData();
+        Fixture[] fixtures = getFixtures(contact);
+        ContactBody[] contactBodies = getContactBodies(fixtures);
+        
+
+        if (isPortalOneContact(contactBodies)) {
+        	Portal portal = portals.get(0);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
+        else if (isPortalTwoContact(contactBodies)) {
+        	Portal portal = portals.get(1);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
 
 		// If player is in contact with an item
 				// Play rewarding pick up sound effect
@@ -71,29 +89,12 @@ public class CollisionDetection implements ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
         Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);/*
+        ContactBody[] contactBodies = getContactBodies(fixtures);
+        /*
         boolean isPlayerContact = isPlayerContact(contactBodies);
         boolean isGroundContact = isGroundContact(contactBodies);
         boolean isBulletContact = isBulletContact(contactBodies);
         boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);*/
-       
-        
-        if (isPortalOneContact(contactBodies)) {
-        	Portal portal = portals.get(0);
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
-        		}
-        	}
-        }
-        else if (isPortalTwoContact(contactBodies)) {
-        	Portal portal = portals.get(1);
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
-        		}
-        	}
-        }
         
         if (isPlayerFeetContact(contact, isPlayerContact(contactBodies))) {
         	if (isGroundContact(contactBodies)) {

@@ -10,8 +10,8 @@ import com.vertextrigger.util.GameObjectSize;
 
 public class PortalBodyFactory extends AbstractBodyFactory {
 
-	public Body createPortalBody(World world, Vector2 initialPosition) {
-		return createBody(world, initialPosition, ContactBody.PORTAL_ONE, BodyType.StaticBody, createFixtureDefinition());
+	public Body createPortalBody(World world, Vector2 initialPosition, ContactBody contactBody) {
+		return createBody(world, initialPosition, contactBody, BodyType.StaticBody, createFixtureDefinition());
 	}
 	
 	@Override

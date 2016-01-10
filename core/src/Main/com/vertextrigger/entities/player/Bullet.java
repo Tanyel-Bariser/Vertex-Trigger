@@ -1,5 +1,6 @@
 package com.vertextrigger.entities.player;
 import static com.vertextrigger.util.GameObjectSize.*;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
@@ -72,8 +73,21 @@ public class Bullet implements Poolable, Entity {
 	 * @param delta not used
 	 * @return updated sprite of this bullet
 	 */
+	
+	static Vector2 newPositionFromPortal;
+	public static void setNewPositionFromPortal(Vector2 newPosition) {
+		newPositionFromPortal = newPosition;
+	}
+	public static Vector2 getNewPositionFromPortal() {
+		return newPositionFromPortal;
+	}
 	@Override
 	public Sprite update(float delta) {
+		if (getNewPositionFromPortal() != null) {
+			body.setTransform(getNewPositionFromPortal(), 0);
+			setNewPositionFromPortal(null);
+		}
+		
 		Vector2 currentPosition = getPosition();
 		sprite.setPosition(currentPosition.x - getOffsetX(), currentPosition.y - getOffsetY());
 		return sprite;

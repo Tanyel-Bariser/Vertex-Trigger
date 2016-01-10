@@ -92,7 +92,7 @@ public abstract class AbstractLevelBuilder {
 	 */
 	protected abstract void createGroundWalls();
 	
-	protected abstract void createPortals();
+	public abstract Array<Portal> createPortals();
 
 	/**
 	 * Resets the positions of all entities when player
@@ -125,7 +125,6 @@ public abstract class AbstractLevelBuilder {
 	 * @return all entities required for this level
 	 */
 	public Array<Sprite> buildLevelLayout() {
-		createPortals();
 		createStaticPlatforms();
 		createGroundWalls();
 		return sprites;

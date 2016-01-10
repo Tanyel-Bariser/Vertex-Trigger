@@ -88,23 +88,23 @@ public class Assets {
 	 * Make sure the level assets have been loaded, i.e. invoked method loadLevelXXX().
 	 */
 	public Drawable getLeftButton() {
-		return coreSkin.getDrawable("Left");
+		return coreSkin.getDrawable("leftButton");
 	}
 
 	public Drawable getRightButton() {
-		return coreSkin.getDrawable("Right");
+		return coreSkin.getDrawable("rightButton");
 	}
 	
 	public Drawable getShootButton() {
-		return coreSkin.getDrawable("Shoot");
+		return coreSkin.getDrawable("shootButton");
 	}
 	
 	public Drawable getJumpButton() {
-		return coreSkin.getDrawable("Jump");
+		return coreSkin.getDrawable("jumpButton");
 	}
 	
 	public Drawable getPauseButton() {
-		return coreSkin.getDrawable("Pause");
+		return coreSkin.getDrawable("pauseButton");
 	}
 
 	public Skin getCoreSkin() {

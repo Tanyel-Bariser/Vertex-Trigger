@@ -114,8 +114,21 @@ public class Player implements Mortal {
 	 * @param delta time passed between previous & current frame
 	 * @return updated player sprite
 	 */
+	
+	static Vector2 newPositionFromPortal;
+	public static void setNewPositionFromPortal(Vector2 newPosition) {
+		newPositionFromPortal = newPosition;
+	}
+	public static Vector2 getNewPositionFromPortal() {
+		return newPositionFromPortal;
+	}
 	@Override
 	public Sprite update(float delta) {
+		if (getNewPositionFromPortal() != null) {
+			body.setTransform(getNewPositionFromPortal(), 0);
+			setNewPositionFromPortal(null);
+		}
+		
 		gun.freeExpiredBullets();
 		gun.destroyTouchingBullets();
 		movePlayer(delta);

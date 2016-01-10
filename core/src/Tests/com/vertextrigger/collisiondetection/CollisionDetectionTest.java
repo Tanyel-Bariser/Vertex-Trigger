@@ -10,6 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.util.ContactBody;
@@ -27,8 +28,10 @@ public class CollisionDetectionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Array<Portal> portals = new Array<>();
+		portals.add(portal);
 		when(player.getBody()).thenReturn(body);
-		collision = new CollisionDetection(player);
+		collision = new CollisionDetection(player, portals);
 		when(contact.getFixtureA()).thenReturn(fixA);
 		when(contact.getFixtureB()).thenReturn(fixB);
 		when(contact.getWorldManifold()).thenReturn(worldManifold);
@@ -111,22 +114,6 @@ public class CollisionDetectionTest {
 		assertFalse(collision.isPlayerFeetContact(contact, isPlayerContact));
 	}
 	
-//	@Test
-//	public void whenPlayerFeetInContactWithGroundPlayerPositionAndAngleShouldBeSetToPlatform() {
-//		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
-//		when(fixB.getUserData()).thenReturn(ContactBody.GROUND);
-//		when(body.getPosition()).thenReturn(new Vector2(0,1));
-//		
-//		Vector2 platformPosition = new Vector2(2,2);
-//		float platformAngle = 2.2f;
-//		when(body.getPosition()).thenReturn(platformPosition);
-//		when(body.getAngle()).thenReturn(platformAngle);
-//		when(fixB.getBody()).thenReturn(body);
-//		
-//		collision.postSolve(contact, null);
-//		verify(body).setTransform(platformPosition, platformAngle);
-//	}
-//	
 	@Test
 	public void whenPlayerFeetInContactWithGroundPlayerCanJump() {
 		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
@@ -138,13 +125,14 @@ public class CollisionDetectionTest {
 		verify(player).setCanJump();
 	}
 	
-	@Test public void whenAnythingTouchesPortalItWillBeTransportedToAnotherPortal() {
+	@Test
+	public void whenAnythingTouchesPortalItWillBeTransportedToAnotherPortal() {
 		when(fixA.getUserData()).thenReturn(ContactBody.PLAYER);
-		when(fixB.getUserData()).thenReturn(ContactBody.PORTAL);
+		when(fixB.getUserData()).thenReturn(ContactBody.PORTAL_ONE);
 		when(body.getPosition()).thenReturn(new Vector2(0,1));
-		when(fixB.getBody()).thenReturn(body);
+		when(fixA.getBody()).thenReturn(body);
 		
 		collision.postSolve(contact, null);
-		verify(portal).;
+		verify(portal).teleport(body);
 	}
 }
