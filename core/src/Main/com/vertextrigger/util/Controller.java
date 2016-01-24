@@ -2,8 +2,10 @@ package com.vertextrigger.util;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.main.VertexTrigger;
@@ -13,9 +15,16 @@ import com.vertextrigger.main.VertexTrigger;
  */
 public class Controller implements InputProcessor {
 	private final Screen level;
+	private final Table buttonLayer;
 	private final Stage stage;
 	private final Player player;
-	protected boolean isAndroidDevice; 
+	protected boolean isAndroidDevice;
+
+	Vector2 leftButtonPosition = new Vector2(-50, 0);
+	Vector2 rightButtonPosition = new Vector2(-25, 0);
+	Vector2 pauseButtonPosition = new Vector2(0, 0);
+	Vector2 shootButtonPosition = new Vector2(25, 0);
+	Vector2 jumpButtonPosition = new Vector2(50, 0);
 
 	/**
 	 * Create all virtual buttons for Android version
@@ -24,21 +33,31 @@ public class Controller implements InputProcessor {
 		this.level = level; 
 		this.stage = stage;
 		this.player = player;
-		
+		this.buttonLayer = new Table().debug();
+
 		setDeviceType();
 		if (isAndroidDevice) {
 			createLeftButton(new ImageButton(getLeftButton()));
 			createRightButton(new ImageButton(getRightButton()));
 			createPauseButton(new ImageButton(getPauseButton()));
 			createShootButton(new ImageButton(getShootButton()));
-			createJumpButton(new ImageButton(getJumpButton()));			
+			createJumpButton(new ImageButton(getJumpButton()));
+
+			buttonLayer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			buttonLayer.setPosition(0, 0);
+			buttonLayer.align(Align.center|Align.bottom);
+			stage.addActor(buttonLayer);
 		}
 	}
 
 	public Controller(Player player, Screen level) {
 		this(player, level, new Stage());
 	}
-	
+
+	public Stage getStage() {
+		return stage;
+	}
+
 	/**
 	 * Overriden by unit tests to set the device type for testing either Android or desktop
 	 */
@@ -76,14 +95,22 @@ public class Controller implements InputProcessor {
 	 */
 	void createLeftButton(ImageButton left) {
 		left.addListener(getLeftClickListener());
-		stage.addActor(left);
+		left.setPosition(leftButtonPosition.x, leftButtonPosition.y);
+		buttonLayer.add(left).width(200).height(200);
+		//stage.addActor(left);
 	}
 	
 	ClickListener getLeftClickListener() {
 		return new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				player.moveLeft();
+				return true;
+			}
+
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				player.stopMoving();
 			}
 		};
 	}
@@ -94,14 +121,22 @@ public class Controller implements InputProcessor {
 	 */
 	void createRightButton(ImageButton right) {
 		right.addListener(getRightClickListener());
-		stage.addActor(right);
+		right.setPosition(rightButtonPosition.x, rightButtonPosition.y);
+		buttonLayer.add(right).width(200).height(200);
+		//stage.addActor(right);
 	}
 	
 	ClickListener getRightClickListener() {
 		return new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				player.moveRight();
+				return true;
+			}
+
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				player.stopMoving();
 			}
 		};
 	}
@@ -112,14 +147,24 @@ public class Controller implements InputProcessor {
 	 */
 	void createPauseButton(ImageButton pause) {
 		pause.addListener(getPauseClickListener());
-		stage.addActor(pause);
+		pause.setPosition(pauseButtonPosition.x, pauseButtonPosition.y);
+		buttonLayer.add(pause).width(200).height(200);
+		//stage.addActor(pause);
 	}
-	
+
+	boolean paused = false;
 	ClickListener getPauseClickListener() {
 		return new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				level.pause();
+				if (paused) {
+					level.resume();
+					paused = false;
+				}
+				else {
+					level.pause();
+					paused = true;
+				}
 			}
 		};
 	}
@@ -130,7 +175,9 @@ public class Controller implements InputProcessor {
 	 */
 	void createShootButton(ImageButton shoot) {
 		shoot.addListener(getShootClickListener());
-		stage.addActor(shoot);
+		shoot.setPosition(shootButtonPosition.x, shootButtonPosition.y);
+		buttonLayer.add(shoot).width(200).height(200);
+		//stage.addActor(shoot);
 	}
 	
 	ClickListener getShootClickListener() {
@@ -148,7 +195,9 @@ public class Controller implements InputProcessor {
 	 */
 	void createJumpButton(ImageButton jump) {
 		jump.addListener(getJumpClickListener());
-		stage.addActor(jump);
+		jump.setPosition(jumpButtonPosition.x, jumpButtonPosition.y);
+		buttonLayer.add(jump).width(200).height(200);
+		//stage.addActor(jump);
 	}
 	
 	ClickListener getJumpClickListener() {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
@@ -38,6 +39,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private Array<Entity> entities;
 	private Array<Sprite> backgroundSprites;
 	private State state = State.RUNNING;
+	private Stage stage;
 	
 	protected abstract void initialiseAssets();
 	protected abstract AbstractLevelBuilder createLevelBuilder();
@@ -58,7 +60,9 @@ public abstract class AbstractGameScreen implements Screen {
 		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
 		batch = new SpriteBatch();
 		entities.add(player);
-		Gdx.input.setInputProcessor(new Controller(player, this));
+		Controller controller = new Controller(player, this);
+		Gdx.input.setInputProcessor(controller);
+		stage = controller.getStage();
 		physicsDebugger = new Box2DDebugRenderer();
 		addMortal(player);
 	}
@@ -82,6 +86,7 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		Gdx.input.setInputProcessor(stage);
 	}
 
     int jumpCount = 10;
@@ -115,6 +120,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		removeDeadEntities();
+		stage.draw();
 		physicsDebugger.render(world, camera.combined);
 	}
 	
