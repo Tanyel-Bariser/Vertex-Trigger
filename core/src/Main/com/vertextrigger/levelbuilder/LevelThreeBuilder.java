@@ -2,6 +2,8 @@ package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class LevelThreeBuilder extends AbstractLevelBuilder {
@@ -47,6 +49,7 @@ public class LevelThreeBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	protected void createPortals() {
+	public Array<Portal> createPortals() {
+		return null;
 	}
 }
