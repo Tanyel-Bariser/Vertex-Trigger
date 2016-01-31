@@ -1,6 +1,6 @@
 android {
-    buildToolsVersion "23.0.1"
-    compileSdkVersion 20
+    buildToolsVersion "23.0.2"
+    compileSdkVersion 23
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId "com.vertextrigger"
         minSdkVersion 8
-        targetSdkVersion 20
+        targetSdkVersion 23
     }
 }
 
