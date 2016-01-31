@@ -1,6 +1,7 @@
 package com.vertextrigger.screen;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
@@ -86,7 +87,9 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(stage);
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			Gdx.input.setInputProcessor(stage);
+		}
 	}
 
     int jumpCount = 10;
