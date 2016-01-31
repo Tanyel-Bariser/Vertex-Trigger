@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>desktop</name>
+	<name>VertexTrigger-desktop</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -12,19 +12,14 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.springsource.ide.eclipse.gradle.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<locationURI>copy_PARENT/android/assets</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/android/assets</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>copy_PARENT</name>
-			<value>file:/C:/Users/Tanyel/Desktop/VertexTrigger</value>
-		</variable>
-	</variableList>
 </projectDescription>

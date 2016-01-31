@@ -1,1 +1,0 @@
-Vertex Trigger - an action platform game by Tanyel Bariser and Hugh Davey
