@@ -16,7 +16,7 @@ public class Assets {
 	private Skin enemySkin;
 	private Skin mainScreenSkin;
 	private Skin levelSkin;
-	private final AssetManager assetManager;
+	private AssetManager assetManager;
 
 	public Assets() {
 		assetManager = new AssetManager();

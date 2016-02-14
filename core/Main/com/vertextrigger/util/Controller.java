@@ -204,8 +204,10 @@ public class Controller implements InputProcessor {
 	ClickListener getJumpClickListener() {
 		return new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 				player.jump();
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		};
 	}
