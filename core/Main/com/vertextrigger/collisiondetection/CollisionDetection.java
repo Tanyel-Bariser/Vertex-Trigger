@@ -30,27 +30,8 @@ public class CollisionDetection implements ContactListener {
 	 * are first in contact with each other.
 	 */
 	@Override
-	public void beginContact(Contact contact) {
-        Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);
-        
-
-        if (isPortalOneContact(contactBodies)) {
-        	Portal portal = portals.get(0);
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
-        		}
-        	}
-        }
-        else if (isPortalTwoContact(contactBodies)) {
-        	Portal portal = portals.get(1);
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
-        		}
-        	}
-        }
+	public void beginContact(Contact contact) {        
+        portalTransport(contact);
 
 		// If player is in contact with an item
 				// Play rewarding pick up sound effect
@@ -77,9 +58,31 @@ public class CollisionDetection implements ContactListener {
 				// Return user back to main menu screen
 	}
 
+	private void portalTransport(Contact contact) {
+        Fixture[] fixtures = getFixtures(contact);
+        ContactBody[] contactBodies = getContactBodies(fixtures);
+        if (isPortalOneContact(contactBodies)) {
+        	Portal portal = portals.get(0);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
+        else if (isPortalTwoContact(contactBodies)) {
+        	Portal portal = portals.get(1);
+        	for (Fixture fix : fixtures) {
+        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
+        			portal.teleport(fix.getBody());
+        		}
+        	}
+        }
+	}
+
 	// UNUSED METHOD FROM INTERFACE
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		portalTransport(contact);
 	}
 	
 	/**
@@ -88,6 +91,7 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+		portalTransport(contact);
         Fixture[] fixtures = getFixtures(contact);
         ContactBody[] contactBodies = getContactBodies(fixtures);
         /*
@@ -136,7 +140,7 @@ public class CollisionDetection implements ContactListener {
         if (isPlayerContact(contactBodies) && isBulletContact(contactBodies)) {
         	for (Fixture fix : fixtures) {
         		if(fix.getUserData().equals(ContactBody.BULLET)) {
-        			fix.getBody().setAwake(false);
+//        			fix.getBody().setAwake(false);
         		}
         	}
         }
@@ -212,6 +216,7 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void endContact(Contact contact) {
+		portalTransport(contact);
 		player.setCannotJump();
 		// If player's feet is not in contact with platform
 				// FIRST WAIT FOR 0.2 SECONDS

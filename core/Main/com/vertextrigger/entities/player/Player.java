@@ -1,5 +1,4 @@
 package com.vertextrigger.entities.player;
-import static com.vertextrigger.util.GameObjectSize.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,8 +14,8 @@ import com.vertextrigger.util.GameObjectSize;
  * This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Mortal {
-	static final float JUMP_POWER = 600f;
-	static final float MOVEMENT_SPEED = 1500;
+	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
+	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
 	private final Body body;
 	private final Animator animator;
 	private final Gun gun;
@@ -25,7 +24,6 @@ public class Player implements Mortal {
 	private float movement = 0;
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
-	private boolean keepJumping;
 	boolean isFacingLeft;
 	
 	public Player(Vector2 initialPosition, Body body, Gun gun, Animator animator) {
@@ -83,24 +81,11 @@ public class Player implements Mortal {
 		canJump = false;
 	}
 
-	public void setKeepJumping() {
-		keepJumping = true;
-	}
-	
-	public void setStopJumping() {
-		keepJumping = false;
-	}
-	
-	public boolean isKeepJumping() {
-		return keepJumping;
-	}
-	
-    public void jump() {
-		if (canJump || keepJumping) {
+	public void jump() {
+		if (canJump) {
 			boolean wakeForSimulation = true;
 			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x,
 					body.getWorldCenter().y, wakeForSimulation);
-			setKeepJumping();
 		}
 	}
 
@@ -130,8 +115,8 @@ public class Player implements Mortal {
 		}
 		
 		gun.freeExpiredBullets();
-		gun.destroyTouchingBullets();
-		movePlayer(delta);
+		body.setLinearVelocity(movement, body.getLinearVelocity().y);
+//		movePlayer(delta);
 		if (!isShooting) {
 			animator.setAnimationType();
 		}

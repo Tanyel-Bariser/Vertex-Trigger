@@ -61,12 +61,12 @@ public class Animator {
 	public void setAnimationType() {
 		if (body.getUserData() == ContactBody.DEAD) {
 			setAnimationDeath();
-		} else if (body.getLinearVelocity().y > 0.1) {
+		} else if (body.getLinearVelocity().y > 0.05) {
 			setAnimationRising();
-		} else if (body.getLinearVelocity().y < -0.1) {
+		} else if (body.getLinearVelocity().y < -0.05) {
 			setAnimationFalling();
-		} else if (body.getLinearVelocity().x > 10
-				|| body.getLinearVelocity().x < -10) {
+		} else if (body.getLinearVelocity().x > 5
+				|| body.getLinearVelocity().x < -5) {
 			setAnimationMoving();
 		} else {
 			setAnimationStanding();

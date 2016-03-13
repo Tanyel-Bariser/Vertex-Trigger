@@ -1,6 +1,7 @@
 package com.vertextrigger.entities.player;
 import static com.vertextrigger.util.GameObjectSize.*;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
@@ -14,7 +15,7 @@ import com.vertextrigger.util.GameObjectSize;
  * Bullets are freed 5 seconds after being shot.
  */
 public class Bullet implements Poolable, Entity {
-	static final float SHOT_POWER = 500;
+	static final float SHOT_POWER = 0.1f;
 	private final Body body;
 	private final Sprite sprite;
 	private boolean isVisible = false;
@@ -42,6 +43,7 @@ public class Bullet implements Poolable, Entity {
 	}
 	
 	public void setNotVisible() {
+		Gdx.app.log("Bullet", "Out of camera view");
 		isVisible = false;
 	}
 	
@@ -88,8 +90,8 @@ public class Bullet implements Poolable, Entity {
 			setNewPositionFromPortal(null);
 		}
 		
-		Vector2 currentPosition = getPosition();
-		sprite.setPosition(currentPosition.x - getOffsetX(), currentPosition.y - getOffsetY());
+		sprite.setPosition(body.getPosition().x - getOffsetX()+0.22f, 
+				body.getPosition().y - getOffsetY()+0.17f);
 		return sprite;
 	}
 		
@@ -102,11 +104,8 @@ public class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public void reset() {
-		body.setTransform(BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW, 0);
-	}
-
-	boolean isInInitialPosition() {
-		return isInitialPositionX() && isInitialPositionY();
+		body.setTransform(0, -50f, 0);
+		body.setLinearVelocity(new Vector2(0,0));
 	}
 	
 	private boolean isInitialPositionX() {

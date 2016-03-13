@@ -1,7 +1,9 @@
 package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.math.Vector2;
+
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.*;
+
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
@@ -64,7 +66,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 			sprites.add(platform.getSprite());
 			
 			positionX += size.getPhysicalWidth() * 2;
-			positionY += 5f;
+			positionY += 5f * GameObjectSize.OBJECT_SIZE;
 		}
 		Vector2 p = new Vector2(-19, -19);
 		StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
@@ -84,12 +86,13 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		bodyDef.position.set(0, 0);
 
 		ChainShape worldContainerShape = new ChainShape();
+		
+		float CONTAINER_SIZE = 2f;
 
-		final int WALL_HEIGHT = 50;
-		Vector2 topLeft = new Vector2(-20f, WALL_HEIGHT);
-		Vector2 bottomLeft = new Vector2(-20f, -20f);
-		Vector2 bottomRight = new Vector2(20f, -20f);
-		Vector2 topRight = new Vector2(20f, WALL_HEIGHT);
+		Vector2 bottomLeft = new Vector2(-CONTAINER_SIZE, -CONTAINER_SIZE);
+		Vector2 bottomRight = new Vector2(CONTAINER_SIZE, -CONTAINER_SIZE);
+		Vector2 topRight = new Vector2(CONTAINER_SIZE, CONTAINER_SIZE);
+		Vector2 topLeft = new Vector2(-CONTAINER_SIZE, CONTAINER_SIZE);
 
 		worldContainerShape.createChain(new Vector2[] { topLeft, bottomLeft,
 				bottomRight, topRight, topLeft });
@@ -111,11 +114,17 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public Vector2 getInitialPosition() {
-		return new Vector2(0, 10);
+		return new Vector2(0, 0);
 	}
 
 	@Override
 	public Array<Portal> createPortals() {
-		return new PortalFactory().createPortalPair(world, new Vector2(-7,-12.5f), new Vector2(7,-7.5f), MOVING_SAME_DIRECTION);
+		float portalHeight = GameObjectSize.PORTAL_SIZE.getPhysicalHeight();
+		float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
+
+		return new PortalFactory().createPortalPair(world, 
+				new Vector2(-2 + portalWidth, -2 + portalHeight), 
+				new Vector2(2 - portalWidth, -2 + portalHeight), 
+				MOVING_SAME_DIRECTION);
 	}
 }

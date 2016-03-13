@@ -26,8 +26,8 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 	
 	private void createHead(Body body) {
 		CircleShape head = new CircleShape();
-		head.setPosition(new Vector2(0f, 1.5f));
-		head.setRadius(0.6f);
+		head.setPosition(new Vector2(0f, 1.5f * GameObjectSize.OBJECT_SIZE));
+		head.setRadius(0.6f * GameObjectSize.OBJECT_SIZE);
 		FixtureDef fixtureDef = createFixtureDefinition();
 		fixtureDef.shape = head;
 		Fixture headFixture = body.createFixture(fixtureDef);
@@ -45,7 +45,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 	
 	@Override
 	protected PolygonShape createShape() {
-		GameObjectSize size = POKER_SIZE;
+		GameObjectSize size = POKER_BODY_SIZE;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;

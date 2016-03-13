@@ -44,12 +44,12 @@ public class Poker extends AbstractEnemy {
 
 	@Override
 	public float getOffsetX() {
-		return POKER_SIZE.getOffsetX();
+		return POKER_BODY_SIZE.getOffsetX();
 	}
 
 	@Override
 	public float getOffsetY() {
-		return POKER_SIZE.getOffsetY();
+		return POKER_BODY_SIZE.getOffsetY();
 	}
 
 	@Override

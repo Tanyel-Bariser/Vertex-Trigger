@@ -12,7 +12,7 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 	
 	public PokerAnimationFactory() {
         spriteFactory = new SpriteFactory();
-        size = POKER_SIZE;
+        size = POKER_BODY_SIZE;
     }
 	
 	@Override

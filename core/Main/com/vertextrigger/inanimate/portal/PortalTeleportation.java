@@ -6,6 +6,7 @@ import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.util.ContactBody;
+import com.vertextrigger.util.GameObjectSize;
 
 public enum PortalTeleportation {	
 	MOVING_OPPOSITE_VERTICAL_DIRECTION {
@@ -56,15 +57,16 @@ public enum PortalTeleportation {
 	abstract void setLinearVelocity(Body body);
 	
 	private Vector2 getPairPortalPosition(Body body, Vector2 exitCoordinate) {
-		float displacement = 1.5f;
+		float displacement =0;
+		displacement = 1.5f * GameObjectSize.OBJECT_SIZE;
 		if (isMovingUpRight(body)) {
-			return new Vector2(exitCoordinate.x + displacement, exitCoordinate.y + displacement);
+			return new Vector2(exitCoordinate.x + displacement, exitCoordinate.y);
 		} else if (isMovingUpLeft(body)) {
-			return new Vector2(exitCoordinate.x - displacement, exitCoordinate.y + displacement);  
+			return new Vector2(exitCoordinate.x - displacement, exitCoordinate.y);  
 		} else if (isMovingDownLeft(body)) {
-			return new Vector2(exitCoordinate.x - displacement, exitCoordinate.y - displacement);
+			return new Vector2(exitCoordinate.x - displacement, exitCoordinate.y);
 		} else if (isMovingDownRight(body)){
-			return new Vector2(exitCoordinate.x + displacement, exitCoordinate.y - displacement);
+			return new Vector2(exitCoordinate.x + displacement, exitCoordinate.y);
 		}
 		throw new RuntimeException("Have I not covered all directions???!!!");
 	}

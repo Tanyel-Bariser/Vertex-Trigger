@@ -22,9 +22,9 @@ public class Gun {
 	void shoot(Vector2 position, boolean gunPointingLeft) {
 		Bullet bullet = bulletPool.obtain();
 		if (gunPointingLeft) {
-			bullet.setPosition(new Vector2(position.x - 0.01f, position.y+0.6f));
+			bullet.setPosition(new Vector2(position.x - 0.1f, position.y));
 		} else {
-			bullet.setPosition(new Vector2(position.x + 0.01f, position.y+0.6f));
+			bullet.setPosition(new Vector2(position.x + 0.1f, position.y));
 		}
 		bullet.shoot(gunPointingLeft);
 
@@ -34,17 +34,7 @@ public class Gun {
 
 	void freeExpiredBullets() {
 		for(Bullet bullet : bullets) {
-			boolean initial = bullet.isInInitialPosition();
-			if (!bullet.isVisible() && !initial) {
-				bulletPool.free(bullet);
-				bullets.removeValue(bullet, true);
-			}
-		}
-	}
-	
-	void destroyTouchingBullets() {
-		for (Bullet bullet : bullets) {
-			if (!bullet.getBody().isAwake()) {
+			if (!bullet.isVisible()) {
 				bulletPool.free(bullet);
 				bullets.removeValue(bullet, true);
 			}

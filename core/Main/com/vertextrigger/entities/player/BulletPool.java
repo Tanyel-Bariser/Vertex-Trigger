@@ -19,7 +19,7 @@ public class BulletPool extends Pool<Bullet> {
 	public BulletPool(World world) {
 		this.world = world;
 	}
-
+	
 	/**
 	 * Creates new bullet object if there are no more currently left 
 	 * in the bullet pool. Lazy instantiation.

@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.player.Bullet;
@@ -19,12 +18,12 @@ import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
 
 public abstract class AbstractGameScreen implements Screen {
+	private static final float baseGravity = -9.81f;
 	protected Player player;
 	protected World world;
-	protected final Vector2 GRAVITY = new Vector2(0, -70000f);
-	protected final float OLD_G = -70000f;
+	protected final Vector2 GRAVITY = new Vector2(0, baseGravity);
 	private final static Array<Bullet> bullets = new Array<>();
-	private final float ZOOM = 30f;
+	private final float ZOOM = 20 / GameObjectSize.OBJECT_SIZE;
 	private final VertexTrigger vertexTrigger;
 	private final AbstractLevelBuilder levelBuilder;
 	private final OrthographicCamera camera;
@@ -104,15 +103,6 @@ public abstract class AbstractGameScreen implements Screen {
 			updateEntities(delta);
 			updateCamera();
 		}
-
-        if (player.isKeepJumping() && jumpCount > 0) {
-            player.jump();
-            jumpCount--;
-            if (jumpCount == 0) {
-                player.setStopJumping();
-                jumpCount = 10;
-            }
-        }
         
         for (Bullet bullet : bullets) {
         	if (!isInScreen(bullet.getSprite())) {
@@ -148,9 +138,9 @@ public abstract class AbstractGameScreen implements Screen {
 	}
 	
 	private void updateWorld(float delta) {
-		GRAVITY.y  = GRAVITY.y * delta;
-		world.setGravity(new Vector2(0, OLD_G * delta));
-		//TODO why does enemy fall faster than player
+		float adjustedDelta = approxFPS * delta;
+		GRAVITY.y  = baseGravity * adjustedDelta * adjustedDelta;
+		world.setGravity(GRAVITY);
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 	}
 	
@@ -163,12 +153,12 @@ public abstract class AbstractGameScreen implements Screen {
 	}
 	
 	private Array<Sprite> getVisibleSprites() {
-//		Array<Sprite> sprites = new Array<Sprite>();
-//		for (Sprite sprite : entitySprites) {
-//			if (isInScreen(sprite)) {
-//				sprites.add(sprite);
-//			}
-//		}
+		Array<Sprite> sprites = new Array<Sprite>();
+		for (Sprite sprite : entitySprites) {
+			if (isInScreen(sprite)) {
+				sprites.add(sprite);
+			}
+		}
 		return entitySprites;
 	}
 	
@@ -177,12 +167,16 @@ public abstract class AbstractGameScreen implements Screen {
 		float bottomEdge = camera.position.y - camera.viewportHeight / 2;
 		float leftEdge = camera.position.x - camera.viewportWidth / 2;
 		float rightEdge = camera.position.x + camera.viewportWidth / 2;
-		int errorMargin = 4;
+		float errorMargin = 0;//4 / GameObjectSize.OBJECT_SIZE;
 		
 		boolean belowTop = sprite.getY() < topEdge + errorMargin;
 		boolean aboveBottom = sprite.getY() > bottomEdge - errorMargin;
 		boolean inRight = sprite.getX() < rightEdge + errorMargin;
 		boolean inLeft = sprite.getX() > leftEdge - errorMargin;
+//		if (sprite.getHeight() == GameObjectSize.BULLET_SIZE.getSpriteHeight()) {
+//			Gdx.app.log("belowTop=" + belowTop + "; aboveBottom=" + aboveBottom, 
+//					"; inRight=" + inRight + "; inLeft=" + inLeft);
+//		}
 		return belowTop && aboveBottom && inRight && inLeft;
 	}
 	
