@@ -8,8 +8,8 @@ public interface Mortal extends Entity {
 	boolean isDeathAnimationFinished();
 	
 	void die();
-
-	boolean isDead();
 	
+	boolean isDead();
+
 	Body getBody();
 }

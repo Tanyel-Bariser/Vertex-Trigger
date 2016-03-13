@@ -106,7 +106,7 @@ public abstract class AbstractGameScreen implements Screen {
         
         for (Bullet bullet : bullets) {
         	if (!isInScreen(bullet.getSprite())) {
-        		bullet.setNotVisible();
+        		bullet.setFreeable();
         	}
         }
 

@@ -2,10 +2,8 @@ package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 public enum PortalTeleportation {	
@@ -40,17 +38,14 @@ public enum PortalTeleportation {
 		
 		Vector2 pairPortalPosition = getPairPortalPosition(body, exitCoordinate);
 		
-		switch((ContactBody)body.getUserData()) {
-		case PLAYER:
+		Object userData = body.getUserData();
+		if (userData instanceof Player) {
 			Player.setNewPositionFromPortal(pairPortalPosition);
-			break;
-		case BULLET:
-			Bullet.setNewPositionFromPortal(pairPortalPosition);
-			break;
-		default:
-			break;
-		
 		}
+		else if (userData instanceof Bullet) {
+			Bullet.setNewPositionFromPortal(pairPortalPosition);
+		}
+		
 		setLinearVelocity(body);
 	}
 

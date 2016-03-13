@@ -11,11 +11,10 @@ public abstract class AbstractBodyFactory {
 	
 	protected abstract Shape createShape();	
 	
-	protected Body createBody(World world, Vector2 initialPosition, ContactBody contactBody, BodyType bodyType, FixtureDef fixtureDefinition) {
+	protected Body createBody(World world, Vector2 initialPosition, BodyType bodyType, FixtureDef fixtureDefinition) {
 		BodyDef bodyDef = buildBodyDefinition(initialPosition, bodyType);
 		Body body = world.createBody(bodyDef);
-		body.setUserData(contactBody);
-		buildFixture(body, contactBody, fixtureDefinition);
+		buildFixture(body, fixtureDefinition);
 		return body;
 	}
 	
@@ -26,9 +25,8 @@ public abstract class AbstractBodyFactory {
 		return bodyDefinition;
 	}
 		
-	protected void buildFixture(Body body, ContactBody contactBody, FixtureDef fixtureDefinition) {
+	protected void buildFixture(Body body, FixtureDef fixtureDefinition) {
 		assert(body != null);
 		Fixture fixture = body.createFixture(fixtureDefinition);
-		fixture.setUserData(contactBody);
 	}
 }

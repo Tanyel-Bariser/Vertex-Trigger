@@ -9,7 +9,7 @@ import static com.vertextrigger.util.GameObjectSize.*;
 
 public class PlayerBodyFactory extends AbstractBodyFactory {
 	public Body createPlayerBody(World world, Vector2 initialPosition) {
-		Body body = createBody(world, initialPosition, ContactBody.PLAYER, BodyType.DynamicBody, createFixtureDefinition());
+		Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(true);
 		return body;
 	}

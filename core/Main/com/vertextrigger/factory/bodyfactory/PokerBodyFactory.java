@@ -10,15 +10,13 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 import static com.vertextrigger.util.GameObjectSize.*;
 
 public class PokerBodyFactory extends AbstractBodyFactory {
 	
 	public Body createPokerBody(World world, Vector2 initialPosition) {
-		Body body = createBody(world, initialPosition, ContactBody.ENEMY, 
-				BodyType.DynamicBody, createFixtureDefinition());
+		Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(true);
 		createHead(body);
 		return body;
@@ -30,8 +28,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 		head.setRadius(0.6f * GameObjectSize.OBJECT_SIZE);
 		FixtureDef fixtureDef = createFixtureDefinition();
 		fixtureDef.shape = head;
-		Fixture headFixture = body.createFixture(fixtureDef);
-		headFixture.setUserData(ContactBody.ENEMY_HEAD);
+		body.createFixture(fixtureDef);
 	}
 	
 	@Override

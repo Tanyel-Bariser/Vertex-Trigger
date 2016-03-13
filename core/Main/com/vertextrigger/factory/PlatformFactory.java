@@ -2,12 +2,10 @@ package com.vertextrigger.factory;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.factory.animationfactory.AbstractAnimationFactory;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
 import com.vertextrigger.inanimate.StaticPlatform;
-import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PlatformFactory {

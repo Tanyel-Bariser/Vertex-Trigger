@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.util.ContactBody;
 
 public class Animator {
 	private Entity entity;
@@ -59,7 +58,7 @@ public class Animator {
 	}
 
 	public void setAnimationType() {
-		if (body.getUserData() == ContactBody.DEAD) {
+		if ( ((Mortal)body.getUserData()).isDead() ) {
 			setAnimationDeath();
 		} else if (body.getLinearVelocity().y > 0.05) {
 			setAnimationRising();

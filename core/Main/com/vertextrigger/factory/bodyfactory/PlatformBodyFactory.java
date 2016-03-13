@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PlatformBodyFactory extends AbstractBodyFactory {
@@ -16,7 +15,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 	
 	public Body createPlatformBody(World world, Vector2 initialPosition, GameObjectSize size) {
 		this.size = size;
-		return createBody(world, initialPosition, ContactBody.GROUND, BodyType.StaticBody, createFixtureDefinition());
+		return createBody(world, initialPosition, BodyType.StaticBody, createFixtureDefinition());
 	}
 	
 	@Override

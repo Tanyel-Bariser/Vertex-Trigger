@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.factory.*;
+import com.vertextrigger.inanimate.Ground;
 import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.inanimate.portal.PortalFactory;
@@ -80,13 +81,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	}
 	
 	@Override
-	protected void createGroundWalls() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.StaticBody;
-		bodyDef.position.set(0, 0);
-
-		ChainShape worldContainerShape = new ChainShape();
-		
+	protected void createGroundWalls() {		
 		float CONTAINER_SIZE = 2f;
 
 		Vector2 bottomLeft = new Vector2(-CONTAINER_SIZE, -CONTAINER_SIZE);
@@ -94,18 +89,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		Vector2 topRight = new Vector2(CONTAINER_SIZE, CONTAINER_SIZE);
 		Vector2 topLeft = new Vector2(-CONTAINER_SIZE, CONTAINER_SIZE);
 
-		worldContainerShape.createChain(new Vector2[] { topLeft, bottomLeft,
-				bottomRight, topRight, topLeft });
-
-		FixtureDef fixDef = new FixtureDef();
-		fixDef.shape = worldContainerShape;
-		fixDef.friction = 0.9f;
-		fixDef.restitution = 0;
-
-		Body worldContainer = world.createBody(bodyDef);
-		worldContainer.createFixture(fixDef).setUserData(ContactBody.GROUND);
-
-		worldContainerShape.dispose();	
+		new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
 	}
 
 	@Override

@@ -1,30 +1,20 @@
 package com.vertextrigger.collisiondetection;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.entities.enemy.AbstractEnemy;
+import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.inanimate.portal.Portal;
-import com.vertextrigger.util.ContactBody;
 
 public class CollisionDetection implements ContactListener {
-	private final Player player; 
-	private final Body playerBody;	
-	private final Array<Portal> portals;
-	
-	public CollisionDetection(Player player, Array<Portal> portals) {
-		this.player = player;
-		this.playerBody = player.getBody();
-		this.portals = portals;
-	}
-
 	/**
 	 * This method is called once when two game objects
 	 * are first in contact with each other.
@@ -60,20 +50,14 @@ public class CollisionDetection implements ContactListener {
 
 	private void portalTransport(Contact contact) {
         Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);
-        if (isPortalOneContact(contactBodies)) {
-        	Portal portal = portals.get(0);
+        Object[] entities = getUserData(fixtures);
+        if (isContact(Portal.class, entities)) {
+        	Portal portal = (Portal) getType(Portal.class, entities);
         	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
-        		}
-        	}
-        }
-        else if (isPortalTwoContact(contactBodies)) {
-        	Portal portal = portals.get(1);
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER) || fix.getUserData().equals(ContactBody.BULLET)) {
-        			portal.teleport(fix.getBody());
+        		if(isContact(Player.class, fix) || isContact(Bullet.class, fix)) {
+        			if (portal != null) {
+        				portal.teleport(fix.getBody());
+        			}
         		}
         	}
         }
@@ -93,24 +77,24 @@ public class CollisionDetection implements ContactListener {
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		portalTransport(contact);
         Fixture[] fixtures = getFixtures(contact);
-        ContactBody[] contactBodies = getContactBodies(fixtures);
+        Object[] contactBodies = getUserData(fixtures);
         /*
         boolean isPlayerContact = isPlayerContact(contactBodies);
         boolean isGroundContact = isGroundContact(contactBodies);
         boolean isBulletContact = isBulletContact(contactBodies);
         boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);*/
         
-        if (isPlayerFeetContact(contact, isPlayerContact(contactBodies))) {
-        	if (isGroundContact(contactBodies)) {
-        		player.setCanJump();
-        	}
-        	if (isEnemyHeadContact(contactBodies)) {
-        		for (Fixture fix : fixtures) {
-            		if(fix.getUserData().equals(ContactBody.ENEMY_HEAD)) {
-            			fix.getBody().setUserData(ContactBody.DEAD);
-            		}
-            	}
-        	}
+    	
+    	if (isContact(Player.class, contactBodies)) {
+    		Player player = (Player) getType(Player.class, contactBodies);
+    		// see if feet contact
+    		if (contact.getWorldManifold().getPoints()[0].y < player.getPosition().y) {
+    			if (player != null) {
+    				player.setCanJump();
+    			}
+    		}
+    	}
+        
 		// If player's feet is in contact with a "normal" platform
 				// Set player's angle to that of the platform
 				// Allow player the ability to jump
@@ -128,78 +112,55 @@ public class CollisionDetection implements ContactListener {
 				// of gravity, until the player jumps
 		// If player's feet is in contact with conveyor belt/magnet/fan style platform
 				// Set players movements to that of conveyor belt platform behaviour
-        	return;
-        }
-        if (isPlayerContact(contactBodies) && isEnemyContact(contactBodies)) {
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.PLAYER)) {
-        			fix.getBody().setUserData(ContactBody.DEAD);
-        		}
-        	}
-        }
-        if (isPlayerContact(contactBodies) && isBulletContact(contactBodies)) {
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.BULLET)) {
-//        			fix.getBody().setAwake(false);
-        		}
-        	}
-        }
-        if (isEnemyContact(contactBodies) && isBulletContact(contactBodies)) {
-        	for (Fixture fix : fixtures) {
-        		if(fix.getUserData().equals(ContactBody.ENEMY)) {
-        			fix.getBody().setUserData(ContactBody.DEAD);
-        		}
-        	}
-        }
-	}
-	
-	private boolean isEnemyContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.ENEMY) || 
-			   contactBodies[1] == (ContactBody.ENEMY);
+        	
+    	
+    	if (isContact(Player.class, contactBodies) && isContact(AbstractEnemy.class, contactBodies)) {
+    		Player player = (Player) getType(Player.class, contactBodies);
+    		if (player != null) {
+    			player.die();
+    		}
+    	}
+    	
+    	if (isContact(Player.class, contactBodies) && isContact(Bullet.class, contactBodies)) {
+    		Gdx.app.log("Collision", "A hit!");
+    		Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
+    		if (bullet != null) {
+    			bullet.setFreeable();
+    		}
+    	}
+    		
+    	if (isContact(Bullet.class, contactBodies) && isContact(AbstractEnemy.class, contactBodies)) {
+    		AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class, contactBodies);
+    		if (enemy != null) {
+    			enemy.die();
+    		}
+    	}
 	}
 
 	private Fixture[] getFixtures(Contact contact) {
 		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
 	}
 
-	private ContactBody[] getContactBodies(Fixture[] fixtures) {
-		return new ContactBody[]{(ContactBody) fixtures[0].getUserData(), 
-			(ContactBody) fixtures[1].getUserData()};
-	}
-
-	boolean isPortalOneContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.PORTAL_ONE) || 
-			   contactBodies[1] == (ContactBody.PORTAL_ONE);
+	private Object[] getUserData(Fixture[] fixtures) {
+		return new Object[]{ fixtures[0].getUserData(), fixtures[1].getUserData() };
 	}
 	
-	boolean isPortalTwoContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.PORTAL_TWO) || 
-			   contactBodies[1] == (ContactBody.PORTAL_TWO);
+	boolean isContact(Class type, Object... contactBodies) {
+		for (Object o : contactBodies) {
+			if (o.getClass().equals(type)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	boolean isPlayerContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.PLAYER) || 
-		  	   contactBodies[1] == (ContactBody.PLAYER);
-	}
-
-	boolean isGroundContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.GROUND) || 
-			   contactBodies[1] == (ContactBody.GROUND);
-	}
-
-	boolean isBulletContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.BULLET) || 
-		  	   contactBodies[1] == (ContactBody.BULLET);
-	}
-	
-	boolean isEnemyHeadContact(ContactBody[] contactBodies) {
-		return contactBodies[0] == (ContactBody.ENEMY_HEAD) || 
-		  	   contactBodies[1] == (ContactBody.ENEMY_HEAD);
-	}
-	
-	boolean isPlayerFeetContact(Contact contact, boolean isPlayerContact) {
-		return isPlayerContact &&
-			   contact.getWorldManifold().getPoints()[0].y < playerBody.getPosition().y;
+	Object getType(Class type, Object[] contactBodies) {
+		for (Object o : contactBodies) {
+			if (o.getClass().equals(type)) {
+				return (o);
+			}
+		}
+		return null;
 	}
 	
 	private Vector2 getPosition(Fixture fixture) {
@@ -209,6 +170,7 @@ public class CollisionDetection implements ContactListener {
 	private float getAngle(Fixture fixture) {
 		return fixture.getBody().getAngle();
 	}
+	
 
 	/**
 	 * This method is called once when two game objects
@@ -217,7 +179,16 @@ public class CollisionDetection implements ContactListener {
 	@Override
 	public void endContact(Contact contact) {
 		portalTransport(contact);
-		player.setCannotJump();
+		
+		Fixture[] fixtures = getFixtures(contact);
+        Object[] contactBodies = getUserData(fixtures);
+        
+        if (isContact(Player.class, contactBodies)) {
+    		Player player = (Player) getType(Player.class, contactBodies);
+    		if (player != null) {
+    			player.setCannotJump();;
+    		}
+    	}
 		// If player's feet is not in contact with platform
 				// FIRST WAIT FOR 0.2 SECONDS
 				// Deny player the ability to jump

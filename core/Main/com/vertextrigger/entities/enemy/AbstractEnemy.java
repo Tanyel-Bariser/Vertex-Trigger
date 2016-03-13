@@ -8,7 +8,6 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.Path;
-import com.vertextrigger.util.ContactBody;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path
@@ -20,11 +19,13 @@ public abstract class AbstractEnemy implements Mortal {
 	protected Body body;
 	protected AnimationSet animationSet;
 	protected Animator animator;
+	private boolean isDead;
 	
 	public AbstractEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet) {
 		path = null;
 		this.body = body;
 		this.animationSet = animationSet;
+		isDead = false;
 		animator = new Animator(animationSet);
 		animator.setEntity(this);
 	}
@@ -62,15 +63,12 @@ public abstract class AbstractEnemy implements Mortal {
 		// Update enemy sprite based on animation
 		// Set enemy's sprite position & angle to match
 		// the new position of enemy's physical body
-		// Return enemy sprite after it's position/angle has been updated
-		if (getBody().getUserData() == ContactBody.DEAD) {
-			die();
-		}		
+		// Return enemy sprite after it's position/angle has been updated		
 		return null;
 	}
 	
 	@Override
 	public boolean isDead() {
-		return getBody().getUserData() == ContactBody.DEAD;
+		return isDead;
 	}
 }

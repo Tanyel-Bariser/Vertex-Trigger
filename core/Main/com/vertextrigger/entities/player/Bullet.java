@@ -1,14 +1,14 @@
 package com.vertextrigger.entities.player;
-import static com.vertextrigger.util.GameObjectSize.*;
+import static com.vertextrigger.factory.bodyfactory.BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW;
+import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
-import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
-import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Bullets are shot from the player's position horizontally.
@@ -18,11 +18,15 @@ public class Bullet implements Poolable, Entity {
 	static final float SHOT_POWER = 0.1f;
 	private final Body body;
 	private final Sprite sprite;
-	private boolean isVisible = false;
+	private boolean isFreeable = false;
 	
 	Bullet(Body body, Sprite sprite) {
 		this.body = body;
 		this.sprite = sprite;
+		body.setUserData(this);
+		for (Fixture fix : body.getFixtureList()) {
+			fix.setUserData(this);
+		}
 	}
 	
 	Vector2 getPosition() {
@@ -30,8 +34,6 @@ public class Bullet implements Poolable, Entity {
 	}
 	
 	void shoot(boolean shootLeft) {
-		isVisible = true;
-		
 		float left = -SHOT_POWER;
 		float right = SHOT_POWER;
 		if (shootLeft) shoot(left);
@@ -42,13 +44,12 @@ public class Bullet implements Poolable, Entity {
 		return sprite;
 	}
 	
-	public void setNotVisible() {
-		Gdx.app.log("Bullet", "Out of camera view");
-		isVisible = false;
+	public void setFreeable() {
+		isFreeable = true;
 	}
 	
-	public boolean isVisible() {
-		return isVisible;
+	public boolean isFreeable() {
+		return isFreeable;
 	}
 	
 	private void shoot(float horizontalVelocity) {
@@ -104,19 +105,12 @@ public class Bullet implements Poolable, Entity {
 	 */
 	@Override
 	public void reset() {
-		body.setTransform(0, -50f, 0);
+		Gdx.app.log("RESET","");
+		body.setTransform(INITIAL_POSITION_OUT_OF_CAMERA_VIEW.x, INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y, 0);
 		body.setLinearVelocity(new Vector2(0,0));
+		isFreeable = false;
 	}
 	
-	private boolean isInitialPositionX() {
-		return body.getPosition().x < BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.x + 1 &&  // x to the left of -49 
-			   body.getPosition().x > BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.x - 1;  // x to right of -51
-	}
-	private boolean isInitialPositionY() {
-		return body.getPosition().y < BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y + 1 &&
-			   body.getPosition().y > BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW.y - 1;
-	}
-
 	@Override
 	public Body getBody() {
 		return body;

@@ -1,6 +1,9 @@
 package com.vertextrigger.entities.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -22,9 +25,9 @@ public class Gun {
 	void shoot(Vector2 position, boolean gunPointingLeft) {
 		Bullet bullet = bulletPool.obtain();
 		if (gunPointingLeft) {
-			bullet.setPosition(new Vector2(position.x - 0.1f, position.y));
+			bullet.setPosition(new Vector2(position.x - 1f, position.y));
 		} else {
-			bullet.setPosition(new Vector2(position.x + 0.1f, position.y));
+			bullet.setPosition(new Vector2(position.x + 1f, position.y));
 		}
 		bullet.shoot(gunPointingLeft);
 
@@ -34,7 +37,8 @@ public class Gun {
 
 	void freeExpiredBullets() {
 		for(Bullet bullet : bullets) {
-			if (!bullet.isVisible()) {
+			if (bullet.isFreeable()) {
+				Gdx.app.log("Bullet", "SHOULD BE FREED");
 				bulletPool.free(bullet);
 				bullets.removeValue(bullet, true);
 			}

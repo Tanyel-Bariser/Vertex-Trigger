@@ -29,7 +29,7 @@ public class GameScreenFactory {
 				Array<Portal> portals = new Array<>();
 				AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this);
 				prototypeLevelBuilder.setPlayer(player);
-				world.setContactListener(new CollisionDetection(player, prototypeLevelBuilder.createPortals()));
+				world.setContactListener(new CollisionDetection());
 				return prototypeLevelBuilder;
 			}
 		};

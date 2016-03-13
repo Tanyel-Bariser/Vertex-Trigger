@@ -2,11 +2,11 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
-import com.vertextrigger.util.ContactBody;
 import com.vertextrigger.util.GameObjectSize;
 
 /**
@@ -25,13 +25,19 @@ public class Player implements Mortal {
 	private float additionalHorizontalForce = 0;
 	private float onSticky = 1;
 	boolean isFacingLeft;
+	private boolean isDead;
 	
 	public Player(Vector2 initialPosition, Body body, Gun gun, Animator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		this.gun = gun;
 		this.animator = animator;
+		isDead = false;
 		animator.setEntity(this);
+		body.setUserData(this);
+		for (Fixture fix : body.getFixtureList()) {
+			fix.setUserData(this);
+		}
 	}
 	
 	public Body getBody() {
@@ -199,6 +205,10 @@ public class Player implements Mortal {
 	
 	@Override
 	public boolean isDead() {
-		return getBody().getUserData() == ContactBody.DEAD;
+		return isDead;
+	}
+
+	public Vector2 getPosition() {
+		return body.getPosition();
 	}
 }

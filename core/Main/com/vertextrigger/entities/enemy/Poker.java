@@ -1,12 +1,12 @@
 package com.vertextrigger.entities.enemy;
-import static com.vertextrigger.util.GameObjectSize.*;
+import static com.vertextrigger.util.GameObjectSize.POKER_BODY_SIZE;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
-import com.vertextrigger.util.ContactBody;
-import com.vertextrigger.util.GameObjectSize;
 
 public class Poker extends AbstractEnemy {
 	private boolean facingLeft;
@@ -15,6 +15,10 @@ public class Poker extends AbstractEnemy {
 	public Poker(Array<Vector2> coordinates, Body body, AnimationSet anims) {
 		super(coordinates, body, anims);
 		isDeathAnimationFinished = false;
+		body.setUserData(this);
+		for (Fixture fix : body.getFixtureList()) {
+			fix.setUserData(this);
+		}
 	}
 
 	@Override
