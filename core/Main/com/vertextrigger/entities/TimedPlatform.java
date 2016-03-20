@@ -27,6 +27,7 @@ public abstract class TimedPlatform implements Entity {
 		// Set sprite & animation for platform
 		setupSpriteAnimation();
 		// Create physical platform body
+		setUserData(null);
 	}
 	
 
@@ -54,4 +55,11 @@ public abstract class TimedPlatform implements Entity {
 	 */
 	@Override
 	public abstract Sprite update(float delta);
+	
+
+
+	@Override
+	public void setUserData(Body body) {
+		throw new IllegalStateException("Unimplemented");
+	}
 }

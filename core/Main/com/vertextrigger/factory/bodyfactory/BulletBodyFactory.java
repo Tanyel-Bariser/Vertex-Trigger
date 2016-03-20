@@ -6,11 +6,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.GameObjectSize;
 
 public class BulletBodyFactory extends AbstractBodyFactory {
-	public static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(0,-1);
+	public static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(Float.MAX_VALUE,Float.MAX_VALUE);
 	static final float DENSITY = 3f;
 	static final float FRICTION = 1f;
 	static final float BOUNCY = 1f;
-	static float RADIUS = 0.1f;
 	
 	public Body createBulletBody(World world) {
 		Body body = createBody(world, INITIAL_POSITION_OUT_OF_CAMERA_VIEW,
@@ -34,7 +33,7 @@ public class BulletBodyFactory extends AbstractBodyFactory {
 	@Override
 	protected Shape createShape() {
 		CircleShape shape = new CircleShape();
-		shape.setRadius(0.5f * GameObjectSize.OBJECT_SIZE);
+		shape.setRadius(GameObjectSize.BULLET_SIZE.getPhysicalHeight() * GameObjectSize.OBJECT_SIZE);
 		return shape;
 	}
 }

@@ -13,6 +13,7 @@ import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.GameScreenFactory;
+import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
@@ -105,8 +106,10 @@ public abstract class AbstractGameScreen implements Screen {
 		}
         
         for (Bullet bullet : bullets) {
-        	if (!isInScreen(bullet.getSprite())) {
-        		bullet.setFreeable();
+        	if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer()) {
+        		bullets.removeValue(bullet, true);
+        		entities.removeValue(bullet, true);
+        		world.destroyBody(bullet.getBody());
         	}
         }
 

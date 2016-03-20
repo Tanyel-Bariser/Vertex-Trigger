@@ -127,6 +127,7 @@ public abstract class AbstractLevelBuilder {
 	public Array<Sprite> buildLevelLayout() {
 		createStaticPlatforms();
 		createGroundWalls();
+		createPortals();
 		return sprites;
 	}
 	

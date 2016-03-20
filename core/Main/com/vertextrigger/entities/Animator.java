@@ -64,8 +64,8 @@ public class Animator {
 			setAnimationRising();
 		} else if (body.getLinearVelocity().y < -0.05) {
 			setAnimationFalling();
-		} else if (body.getLinearVelocity().x > 5
-				|| body.getLinearVelocity().x < -5) {
+		} else if (body.getLinearVelocity().x > 0.05
+				|| body.getLinearVelocity().x < -0.05) {
 			setAnimationMoving();
 		} else {
 			setAnimationStanding();

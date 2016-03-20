@@ -1,47 +1,36 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class Gun {
 	private final AbstractGameScreen gameScreen;
-	private final BulletPool bulletPool;
-	private final Array<Bullet> bullets;
+	private final BulletFactory bulletFactory;
 
-	public Gun(AbstractGameScreen gameScreen, BulletPool pool) {
+	public Gun(AbstractGameScreen gameScreen, BulletFactory bulletFactory) {
 		this.gameScreen = gameScreen;
-		this.bulletPool = pool;
-		bullets = new Array<Bullet>();
+		this.bulletFactory = bulletFactory;
 	}
+	
 	
 	/**
 	 * Bullets are shot from the position of the player's gun
 	 * in the direction the player is facing
 	 */
 	void shoot(Vector2 position, boolean gunPointingLeft) {
-		Bullet bullet = bulletPool.obtain();
+		Bullet bullet = bulletFactory.createBullet();
+		bullet.getBody().setActive(true);
 		if (gunPointingLeft) {
-			bullet.setPosition(new Vector2(position.x - 1f, position.y));
+			bullet.setPosition(new Vector2(position.x - 0.1f, position.y + 0.1f));
 		} else {
-			bullet.setPosition(new Vector2(position.x + 1f, position.y));
+			bullet.setPosition(new Vector2(position.x + 0.1f, position.y + 0.1f));
 		}
 		bullet.shoot(gunPointingLeft);
 
-		bullets.add(bullet);
 		gameScreen.addEntity(bullet);
 	}
-
-	void freeExpiredBullets() {
-		for(Bullet bullet : bullets) {
-			if (bullet.isFreeable()) {
-				Gdx.app.log("Bullet", "SHOULD BE FREED");
-				bulletPool.free(bullet);
-				bullets.removeValue(bullet, true);
-			}
-		}
-	}
+	
+	
 }

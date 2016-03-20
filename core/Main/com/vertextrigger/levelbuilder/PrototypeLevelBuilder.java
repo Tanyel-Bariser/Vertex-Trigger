@@ -58,7 +58,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		PlatformFactory factory = new PlatformFactory(world);
 		GameObjectSize size = SMALL_PLATFORM_SIZE;
 		float positionX = 0;
-		float positionY = -15;
+		float positionY = -2.2f;
 		
 		for (int i = 0; i < 5; i++) {
 			Vector2 p0 = new Vector2(positionX, positionY);
@@ -69,15 +69,10 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 			positionX += size.getPhysicalWidth() * 2;
 			positionY += 5f * GameObjectSize.OBJECT_SIZE;
 		}
-		Vector2 p = new Vector2(-19, -19);
+		Vector2 p = new Vector2(-2.5f, -2.5f);
 		StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
 		bouncePlatform.setRotation(200);
 		sprites.add(bouncePlatform.getSprite());
-		
-		Vector2 p2 = new Vector2(-15, -15);
-		StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size, p2);
-		bouncePlatform2.setRotation(0);
-		sprites.add(bouncePlatform2.getSprite());
 	}
 	
 	@Override
@@ -105,10 +100,14 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	public Array<Portal> createPortals() {
 		float portalHeight = GameObjectSize.PORTAL_SIZE.getPhysicalHeight();
 		float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
+		
+		Vector2 portal1Position = new Vector2(-2 + portalWidth, -2f + portalHeight);
+		//Vector2 portal2Position = new Vector2(2f - portalWidth, -0.5f + portalHeight);
+		Vector2 portal2Position = new Vector2(2f - portalWidth, -2f + portalHeight);
 
 		return new PortalFactory().createPortalPair(world, 
-				new Vector2(-2 + portalWidth, -2 + portalHeight), 
-				new Vector2(2 - portalWidth, -2 + portalHeight), 
-				MOVING_SAME_DIRECTION);
+				portal1Position, 
+				portal2Position, 
+				MOVING_DIFFERENT_XY_AXIS_DIRECTION);
 	}
 }

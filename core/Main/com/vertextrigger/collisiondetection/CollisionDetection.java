@@ -1,7 +1,5 @@
 package com.vertextrigger.collisiondetection;
 
-import java.util.Optional;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -9,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
@@ -50,15 +49,21 @@ public class CollisionDetection implements ContactListener {
 
 	private void portalTransport(Contact contact) {
         Fixture[] fixtures = getFixtures(contact);
-        Object[] entities = getUserData(fixtures);
+        Collidable[] entities = getUserData(fixtures);
         if (isContact(Portal.class, entities)) {
         	Portal portal = (Portal) getType(Portal.class, entities);
-        	for (Fixture fix : fixtures) {
-        		if(isContact(Player.class, fix) || isContact(Bullet.class, fix)) {
-        			if (portal != null) {
-        				portal.teleport(fix.getBody());
-        			}
-        		}
+        	Entity e = null;
+
+        	if (isContact(Portal.class, entities) && isContact(Bullet.class, entities)) {
+        		e = (Bullet) getType(Bullet.class, entities);
+        	}
+        	else if (isContact(Portal.class, entities) && isContact(Player.class, entities)) {
+        		e = (Player) getType(Bullet.class, entities);
+        	}
+        		
+        	Gdx.app.log("", "contact!");
+        	if (portal != null && e != null) {
+        		portal.teleport(e.getBody());
         	}
         }
 	}
@@ -66,7 +71,7 @@ public class CollisionDetection implements ContactListener {
 	// UNUSED METHOD FROM INTERFACE
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		portalTransport(contact);
+		//portalTransport(contact);
 	}
 	
 	/**
@@ -75,9 +80,9 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-		portalTransport(contact);
+		//portalTransport(contact);
         Fixture[] fixtures = getFixtures(contact);
-        Object[] contactBodies = getUserData(fixtures);
+        Collidable[] contactBodies = getUserData(fixtures);
         /*
         boolean isPlayerContact = isPlayerContact(contactBodies);
         boolean isGroundContact = isGroundContact(contactBodies);
@@ -122,10 +127,9 @@ public class CollisionDetection implements ContactListener {
     	}
     	
     	if (isContact(Player.class, contactBodies) && isContact(Bullet.class, contactBodies)) {
-    		Gdx.app.log("Collision", "A hit!");
     		Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
     		if (bullet != null) {
-    			bullet.setFreeable();
+    			bullet.setHitPlayer();
     		}
     	}
     		
@@ -141,23 +145,23 @@ public class CollisionDetection implements ContactListener {
 		return new Fixture[] {contact.getFixtureA(), contact.getFixtureB()};
 	}
 
-	private Object[] getUserData(Fixture[] fixtures) {
-		return new Object[]{ fixtures[0].getUserData(), fixtures[1].getUserData() };
+	private Collidable[] getUserData(Fixture[] fixtures) {
+		return new Collidable[]{ (Collidable) fixtures[0].getUserData(), (Collidable) fixtures[1].getUserData() };
 	}
 	
-	boolean isContact(Class type, Object... contactBodies) {
-		for (Object o : contactBodies) {
-			if (o.getClass().equals(type)) {
+	boolean isContact(Class<? extends Collidable> type, Collidable... contactBodies) {
+		for (Collidable c : contactBodies) {
+			if (c.getClass().equals(type)) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	Object getType(Class type, Object[] contactBodies) {
-		for (Object o : contactBodies) {
-			if (o.getClass().equals(type)) {
-				return (o);
+	Collidable getType(Class<? extends Collidable> type, Collidable[] contactBodies) {
+		for (Collidable c : contactBodies) {
+			if (c.getClass().equals(type)) {
+				return (c);
 			}
 		}
 		return null;
@@ -181,7 +185,7 @@ public class CollisionDetection implements ContactListener {
 		portalTransport(contact);
 		
 		Fixture[] fixtures = getFixtures(contact);
-        Object[] contactBodies = getUserData(fixtures);
+		Collidable[] contactBodies = getUserData(fixtures);
         
         if (isContact(Player.class, contactBodies)) {
     		Player player = (Player) getType(Player.class, contactBodies);

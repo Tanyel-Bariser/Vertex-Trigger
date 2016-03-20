@@ -33,6 +33,7 @@ public abstract class DangerousBall implements Entity {
 		// Set the coordinates of the predefined path
 		// for the dangerous ball to follow in a loop
 		path = new Path(body, coordinates);
+		setUserData(body);
 	}
 	
 	/**
@@ -61,5 +62,10 @@ public abstract class DangerousBall implements Entity {
 		// the new position of dangerous ball's physical body
 		// Return sprite after it's position/angle has been updated
 		return null;
+	}
+
+	@Override
+	public void setUserData(Body body) {
+		throw new IllegalStateException("Unimplemented");
 	}
 }

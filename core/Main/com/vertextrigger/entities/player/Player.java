@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
+import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.util.GameObjectSize;
 
 /**
@@ -34,10 +35,7 @@ public class Player implements Mortal {
 		this.animator = animator;
 		isDead = false;
 		animator.setEntity(this);
-		body.setUserData(this);
-		for (Fixture fix : body.getFixtureList()) {
-			fix.setUserData(this);
-		}
+		setUserData(body);
 	}
 	
 	public Body getBody() {
@@ -120,7 +118,6 @@ public class Player implements Mortal {
 			setNewPositionFromPortal(null);
 		}
 		
-		gun.freeExpiredBullets();
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
 //		movePlayer(delta);
 		if (!isShooting) {
@@ -210,5 +207,14 @@ public class Player implements Mortal {
 
 	public Vector2 getPosition() {
 		return body.getPosition();
+	}
+
+
+	@Override
+	public void setUserData(Body body) {
+		body.setUserData(this);
+		for (Fixture fix : body.getFixtureList()) {
+			fix.setUserData(this);
+		}
 	}
 }

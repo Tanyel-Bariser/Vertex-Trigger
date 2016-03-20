@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.entities.Animator;
-import com.vertextrigger.entities.player.BulletPool;
 import com.vertextrigger.entities.player.Gun;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.animationfactory.PlayerAnimationFactory;
@@ -20,7 +19,10 @@ public class PlayerFactory {
 	}
 	
 	private static Gun createGun(World world, AbstractGameScreen screen) {
-		BulletPool pool = new BulletPool(world);
-		return new Gun(screen, pool);
+		return new Gun(screen, createBulletFactory(world));
+	}
+	
+	private static BulletFactory createBulletFactory(World world) {
+		return new BulletFactory(world);
 	}
 }

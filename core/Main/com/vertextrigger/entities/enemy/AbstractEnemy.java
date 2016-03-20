@@ -3,6 +3,7 @@ package com.vertextrigger.entities.enemy;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
@@ -28,6 +29,7 @@ public abstract class AbstractEnemy implements Mortal {
 		isDead = false;
 		animator = new Animator(animationSet);
 		animator.setEntity(this);
+		setUserData(body);
 	}
 		
 	/**
@@ -70,5 +72,13 @@ public abstract class AbstractEnemy implements Mortal {
 	@Override
 	public boolean isDead() {
 		return isDead;
+	}
+	
+	@Override
+	public void setUserData(Body body) {
+		body.setUserData(this);
+		for (Fixture fix : body.getFixtureList()) {
+			fix.setUserData(this);
+		}
 	}
 }

@@ -17,6 +17,7 @@ public class ExplodingPlatform extends TimedPlatform {
 		super(world, position);
 		// Set the amount of time to pass between platform explosions
 		time = SECONDS_BEFORE_EXPLODE;
+		setUserData(null);
 	}
 
 	/**
@@ -63,5 +64,10 @@ public class ExplodingPlatform extends TimedPlatform {
 	@Override
 	public float getOffsetY() {
 		return 0;
+	}
+
+	@Override
+	public void setUserData(Body body) {
+		throw new IllegalStateException("Unimplemented");
 	}
 }
