@@ -16,6 +16,7 @@ public abstract class DangerousBall implements Entity {
 	protected Body body;
 	protected Sprite sprite;
 	protected float speed;
+	protected Vector2 newPositionFromPortal;
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body
@@ -67,5 +68,10 @@ public abstract class DangerousBall implements Entity {
 	@Override
 	public void setUserData(Body body) {
 		throw new IllegalStateException("Unimplemented");
+	}
+	
+	@Override
+	public void setNewPositionFromPortal(Vector2 newPositionFromPortal) {
+		this.newPositionFromPortal = newPositionFromPortal;
 	}
 }

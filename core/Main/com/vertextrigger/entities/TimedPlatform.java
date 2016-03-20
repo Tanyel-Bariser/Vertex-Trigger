@@ -15,6 +15,7 @@ public abstract class TimedPlatform implements Entity {
 	protected float time;
 	protected Sprite sprite;
 	protected Animation animation;
+	protected Vector2 newPositionFromPortal;
 
 	/**
 	 * Initialises the physical properties of the platform's physical body
@@ -61,5 +62,10 @@ public abstract class TimedPlatform implements Entity {
 	@Override
 	public void setUserData(Body body) {
 		throw new IllegalStateException("Unimplemented");
+	}
+	
+	@Override
+	public void setNewPositionFromPortal(Vector2 newPositionFromPortal) {
+		this.newPositionFromPortal = newPositionFromPortal;
 	}
 }

@@ -95,6 +95,7 @@ public class Player implements Mortal {
 
 	boolean isShooting;
 	private boolean isDeathAnimationFinished;
+	private Vector2 newPositionFromPortal;
 	/**
 	 * Moves physical body of player left or right.
 	 * Chooses appropriate player sprite based on animation.
@@ -103,18 +104,10 @@ public class Player implements Mortal {
 	 * @param delta time passed between previous & current frame
 	 * @return updated player sprite
 	 */
-	
-	static Vector2 newPositionFromPortal;
-	public static void setNewPositionFromPortal(Vector2 newPosition) {
-		newPositionFromPortal = newPosition;
-	}
-	public static Vector2 getNewPositionFromPortal() {
-		return newPositionFromPortal;
-	}
 	@Override
 	public Sprite update(float delta) {
-		if (getNewPositionFromPortal() != null) {
-			body.setTransform(getNewPositionFromPortal(), 0);
+		if (newPositionFromPortal != null) {
+			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
 		
@@ -209,12 +202,16 @@ public class Player implements Mortal {
 		return body.getPosition();
 	}
 
-
 	@Override
 	public void setUserData(Body body) {
 		body.setUserData(this);
 		for (Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);
 		}
+	}
+	
+	@Override
+	public void setNewPositionFromPortal(Vector2 newPositionFromPortal) {
+		this.newPositionFromPortal = newPositionFromPortal;
 	}
 }

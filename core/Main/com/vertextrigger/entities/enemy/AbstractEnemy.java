@@ -21,6 +21,7 @@ public abstract class AbstractEnemy implements Mortal {
 	protected AnimationSet animationSet;
 	protected Animator animator;
 	private boolean isDead;
+	private Vector2 newPositionFromPortal;
 	
 	public AbstractEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet) {
 		path = null;
@@ -48,17 +49,10 @@ public abstract class AbstractEnemy implements Mortal {
 	 * @param delta time passed between previous & current frame
 	 * @return updated enemy sprite
 	 */
-	static Vector2 newPositionFromPortal;
-	public static void setNewPositionFromPortal(Vector2 newPosition) {
-		newPositionFromPortal = newPosition;
-	}
-	public static Vector2 getNewPositionFromPortal() {
-		return newPositionFromPortal;
-	}
 	@Override
 	public Sprite update(float delta) {
-		if (getNewPositionFromPortal() != null) {
-			body.setTransform(getNewPositionFromPortal(), 0);
+		if (newPositionFromPortal != null) {
+			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
 		// Move enemy further along it's predefined path based on delta
@@ -80,5 +74,10 @@ public abstract class AbstractEnemy implements Mortal {
 		for (Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);
 		}
+	}
+	
+	@Override
+	public void setNewPositionFromPortal(Vector2 newPositionFromPortal) {
+		this.newPositionFromPortal = newPositionFromPortal;
 	}
 }

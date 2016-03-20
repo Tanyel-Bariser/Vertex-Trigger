@@ -1,14 +1,11 @@
 package com.vertextrigger.entities.player;
 
-import static com.vertextrigger.factory.bodyfactory.BulletBodyFactory.INITIAL_POSITION_OUT_OF_CAMERA_VIEW;
 import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.utils.Pool.Poolable;
 import com.vertextrigger.entities.Entity;
 
 /**
@@ -20,6 +17,7 @@ public class Bullet implements Entity {
 	private final Body body;
 	private final Sprite sprite;
 	private boolean hitPlayer = false;
+	private Vector2 newPositionFromPortal;
 
 	public Bullet(Body body, Sprite sprite) {
 		this.body = body;
@@ -67,6 +65,11 @@ public class Bullet implements Entity {
 	void setPosition(Vector2 position) {
 		body.setTransform(position, 0);
 	}
+	
+	@Override
+	public void setNewPositionFromPortal(Vector2 newPortalPosition) {
+		this.newPositionFromPortal = newPortalPosition;
+	}
 
 	/**
 	 * Updates the bullet sprite so that its position matches that of the
@@ -77,21 +80,10 @@ public class Bullet implements Entity {
 	 *            not used
 	 * @return updated sprite of this bullet
 	 */
-
-	static Vector2 newPositionFromPortal;
-
-	public static void setNewPositionFromPortal(Vector2 newPosition) {
-		newPositionFromPortal = newPosition;
-	}
-
-	public static Vector2 getNewPositionFromPortal() {
-		return newPositionFromPortal;
-	}
-
 	@Override
 	public Sprite update(float delta) {
-		if (getNewPositionFromPortal() != null) {
-			body.setTransform(getNewPositionFromPortal(), 0);
+		if (newPositionFromPortal != null) {
+			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
 
