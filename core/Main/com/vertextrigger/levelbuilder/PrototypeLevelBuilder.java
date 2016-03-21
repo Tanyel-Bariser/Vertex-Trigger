@@ -29,6 +29,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	public PrototypeLevelBuilder(World world, AbstractGameScreen screen) {
 		super(world, screen);
 		this.screen = screen;
+		AudioManager.playLevelOneMusic();
 		//VertexTrigger.ASSETS.loadPrototypeLevel();
 		//spriteFactory = new SpriteFactory();
 	}
