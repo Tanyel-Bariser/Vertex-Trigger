@@ -2,6 +2,7 @@ package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.util.AudioManager;
 import com.vertextrigger.util.GameObjectSize;
 
 public enum PortalTeleportation {	
@@ -34,6 +35,7 @@ public enum PortalTeleportation {
 	public void teleport(Body body, Vector2 pairPortalPosition) {
 		Vector2 exitPosition = getExitPosition(body, pairPortalPosition);
 		((Teleportable)body.getUserData()).setNewPositionFromPortal(exitPosition);
+		AudioManager.playPortalSound();
 		setLinearVelocity(body);
 	}
 
