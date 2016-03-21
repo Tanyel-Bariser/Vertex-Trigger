@@ -31,6 +31,15 @@ public class AudioManager {
 		gameIsMuted ^= true;
 	}
 
+	public static void disposeAll() {
+		for (Sound s : soundEffects.values()) {
+			s.dispose();
+		}
+		for (Music m : gameMusic.values()) {
+			m.dispose();
+		}
+	}
+
 	/**
 	 * Plays main menu music, while preventing other music from
 	 * clashing with the main menu music and it only plays

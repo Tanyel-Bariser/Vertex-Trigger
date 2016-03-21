@@ -3,6 +3,7 @@ package com.vertextrigger.main;
 import com.badlogic.gdx.*;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.util.Assets;
+import com.vertextrigger.util.AudioManager;
 
 /**
  * First class called by the respective ports, i.e. Android, Desktop,
@@ -38,5 +39,6 @@ public class VertexTrigger extends Game {
 	@Override
 	public void dispose() {
 		// Dispose of all resources including assets
+		AudioManager.disposeAll();
 	}
 }
