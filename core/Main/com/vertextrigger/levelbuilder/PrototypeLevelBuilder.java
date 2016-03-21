@@ -83,13 +83,13 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	
 	@Override
 	protected void createGroundWalls() {
-		float CONTAINER_HEIGHT = 4f;
-		float CONTAINER_WIDTH = 3f;
+		float CONTAINER_WIDTH = 4f;
+		float CONTAINER_HEIGHT = 3f;
 
-		Vector2 bottomLeft = new Vector2(-CONTAINER_HEIGHT, -CONTAINER_WIDTH);
-		Vector2 bottomRight = new Vector2(-CONTAINER_HEIGHT, CONTAINER_WIDTH);
-		Vector2 topRight = new Vector2(CONTAINER_HEIGHT, CONTAINER_WIDTH);
-		Vector2 topLeft = new Vector2(CONTAINER_HEIGHT, -CONTAINER_WIDTH);
+		Vector2 bottomLeft = new Vector2(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
+		Vector2 bottomRight = new Vector2(-CONTAINER_WIDTH, CONTAINER_HEIGHT);
+		Vector2 topRight = new Vector2(CONTAINER_WIDTH, CONTAINER_HEIGHT);
+		Vector2 topLeft = new Vector2(CONTAINER_WIDTH, -CONTAINER_HEIGHT);
 
 		new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
 	}
