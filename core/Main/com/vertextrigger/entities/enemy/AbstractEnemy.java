@@ -67,6 +67,11 @@ public abstract class AbstractEnemy implements Mortal {
 	public boolean isDead() {
 		return isDead;
 	}
+
+	@Override
+	public void setDead() {
+		isDead = true;
+	}
 	
 	@Override
 	public void setUserData(Body body) {

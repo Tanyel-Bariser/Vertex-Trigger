@@ -177,6 +177,10 @@ public class Player implements Mortal {
 		return GameObjectSize.PLAYER_SIZE.getOffsetY();
 	}
 
+	@Override
+	public void setDead() {
+		isDead = true;
+	}
 
 	@Override
 	public void die() {

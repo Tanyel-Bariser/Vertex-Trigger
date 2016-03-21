@@ -114,7 +114,7 @@ public class CollisionDetection implements ContactListener {
 				&& isContact(AbstractEnemy.class, contactBodies)) {
 			Player player = (Player) getType(Player.class, contactBodies);
 			if (player != null) {
-				player.die();
+				player.setDead();
 			}
 		}
 
@@ -131,7 +131,7 @@ public class CollisionDetection implements ContactListener {
 			AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class,
 					contactBodies);
 			if (enemy != null) {
-				enemy.die();
+				enemy.setDead();
 			}
 		}
 	}

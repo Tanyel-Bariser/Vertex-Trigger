@@ -36,7 +36,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createEnemies() {
 		//TODO make enemy have circle head and poly body. jumping on head should kill it
-		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(4,0));
+		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0.5f, 0f));
 		entities.add(enemy);
 		screen.addMortal(enemy);		
 	}
@@ -69,20 +69,27 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 			positionX += size.getPhysicalWidth() * 2;
 			positionY += 5f * GameObjectSize.OBJECT_SIZE;
 		}
-		Vector2 p = new Vector2(-2.5f, -2.5f);
+
+		Vector2 p = new Vector2(-1.5f, -2.5f);
 		StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
 		bouncePlatform.setRotation(200);
 		sprites.add(bouncePlatform.getSprite());
+
+		Vector2 q = new Vector2(2.5f, -1.5f);
+		StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size, q);
+		bouncePlatform2.setRotation((float) Math.PI / 2);
+		sprites.add(bouncePlatform2.getSprite());
 	}
 	
 	@Override
-	protected void createGroundWalls() {		
-		float CONTAINER_SIZE = 2f;
+	protected void createGroundWalls() {
+		float CONTAINER_HEIGHT = 4f;
+		float CONTAINER_WIDTH = 3f;
 
-		Vector2 bottomLeft = new Vector2(-CONTAINER_SIZE, -CONTAINER_SIZE);
-		Vector2 bottomRight = new Vector2(CONTAINER_SIZE, -CONTAINER_SIZE);
-		Vector2 topRight = new Vector2(CONTAINER_SIZE, CONTAINER_SIZE);
-		Vector2 topLeft = new Vector2(-CONTAINER_SIZE, CONTAINER_SIZE);
+		Vector2 bottomLeft = new Vector2(-CONTAINER_HEIGHT, -CONTAINER_WIDTH);
+		Vector2 bottomRight = new Vector2(-CONTAINER_HEIGHT, CONTAINER_WIDTH);
+		Vector2 topRight = new Vector2(CONTAINER_HEIGHT, CONTAINER_WIDTH);
+		Vector2 topLeft = new Vector2(CONTAINER_HEIGHT, -CONTAINER_WIDTH);
 
 		new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
 	}
@@ -101,13 +108,12 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		float portalHeight = GameObjectSize.PORTAL_SIZE.getPhysicalHeight();
 		float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
 		
-		Vector2 portal1Position = new Vector2(-2 + portalWidth, -2f + portalHeight);
-		//Vector2 portal2Position = new Vector2(2f - portalWidth, -0.5f + portalHeight);
+		Vector2 portal1Position = new Vector2(-.8f + portalWidth, -2.5f + portalHeight);
 		Vector2 portal2Position = new Vector2(2f - portalWidth, -2f + portalHeight);
 
 		return new PortalFactory().createPortalPair(world, 
 				portal1Position, 
 				portal2Position, 
-				MOVING_DIFFERENT_XY_AXIS_DIRECTION);
+				MOVING_SAME_DIRECTION);
 	}
 }
