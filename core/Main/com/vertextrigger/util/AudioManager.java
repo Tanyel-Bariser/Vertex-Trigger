@@ -14,19 +14,10 @@ import static com.vertextrigger.util.SOUND_FX.*;
  * Manages the playing and stopping of music and sound effects
  */
 public class AudioManager {
-	static boolean gameIsMuted;
-	final static Map<String, Music> activeMusic;
-	final static Map<String, Music> gameMusic;
-	final static Map<String, Sound> soundEffects;
-
-	/**
-	 * Initialize class including all sfx and music
-	 */
-	static {
-		activeMusic = new HashMap<>();
-		gameMusic = new HashMap<>();
-		soundEffects = new HashMap<>();
-	}
+	private static boolean gameIsMuted;
+	private static final Map<String, Music> activeMusic = new HashMap<>();
+	private static final Map<String, Music> gameMusic = new HashMap<>();
+	private static final Map<String, Sound> soundEffects = new HashMap<>();
 
 	/** mutes the game if it is unmuted, and vice-versa. plays a sound for feedback irrespective of whether game is muted */
 	public static void toggleMute() {
@@ -41,6 +32,7 @@ public class AudioManager {
 		}
 	}
 
+	/** stops any playing music and disposes of everything */
 	public static void disposeAll() {
 		stopAllMusic();
 		for (Sound s : soundEffects.values()) {
@@ -236,5 +228,4 @@ public class AudioManager {
 		}
 		activeMusic.clear();
 	}
-
 }
