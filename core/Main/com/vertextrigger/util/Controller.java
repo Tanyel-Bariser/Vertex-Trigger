@@ -158,16 +158,22 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (paused) {
-					level.resume();
-					paused = false;
-				}
-				else {
-					level.pause();
-					paused = true;
-				}
+				pause();
 			}
 		};
+	}
+
+	private void pause() {
+		if (paused) {
+			AudioManager.onResume();
+			level.resume();
+			paused = false;
+		}
+		else {
+			AudioManager.onPause();
+			level.pause();
+			paused = true;
+		}
 	}
 
 	/**
@@ -228,7 +234,7 @@ public class Controller implements InputProcessor {
 				player.moveRight();
 				break;
 			case Input.Keys.P:
-				level.pause();
+				pause();
 				break;
 			case Input.Keys.SPACE:
 				player.shoot();
@@ -240,7 +246,9 @@ public class Controller implements InputProcessor {
 				player.spinLikeCrazy();
 				break;
 			case Input.Keys.M:
-				AudioManager.toggleMute();
+				if (!paused) {
+					AudioManager.toggleMute();
+				}
 				break;
 			default: return false;
 		}

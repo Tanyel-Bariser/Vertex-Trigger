@@ -14,7 +14,7 @@ import static com.vertextrigger.util.SOUND_FX.*;
  * Manages the playing and stopping of music and sound effects
  */
 public class AudioManager {
-	private static boolean gameIsMuted;
+	private static boolean gameIsMuted, gameIsPaused;
 	private static final Map<String, Music> activeMusic = new HashMap<>();
 	private static final Map<String, Music> gameMusic = new HashMap<>();
 	private static final Map<String, Sound> soundEffects = new HashMap<>();
@@ -30,6 +30,22 @@ public class AudioManager {
 		else {
 			resumeAllMusic();
 		}
+	}
+
+	/** called when level is paused. if we are unmuted then we wish to pause all music. either way we set gameIsPaused to true to disable SFX */
+	public static void onPause() {
+		if (!gameIsMuted) {
+			pauseAllMusic();
+		}
+		gameIsPaused = true;
+	}
+
+	/** called when level is unpaused. if we are unmuted then we wish to resume all music. either way we set gameIsPaused to false to re-enable SFX */
+	public static void onResume() {
+		if (!gameIsMuted) {
+			resumeAllMusic();
+		}
+		gameIsPaused = false;
 	}
 
 	/** stops any playing music and disposes of everything */
@@ -157,9 +173,9 @@ public class AudioManager {
 		playSound(sound, false);
 	}
 
-	/** play a sound effect. option to override muteness setting */
+	/** play a sound effect if game is unmuted and unpaused. option to override muteness setting */
 	private static void playSound(SOUND_FX sound, boolean overrideMute) {
-		if (overrideMute || !gameIsMuted) {
+		if ((overrideMute || !gameIsMuted) && !gameIsPaused) {
 			Sound effect = getSoundEffect(sound);
 			effect.play();
 		}
