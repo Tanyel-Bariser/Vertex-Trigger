@@ -1,4 +1,5 @@
 package com.vertextrigger.entities.player;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
+import com.vertextrigger.util.AudioManager;
 import com.vertextrigger.util.GameObjectSize;
 
 /**
@@ -88,6 +90,7 @@ public class Player implements Mortal {
 	public void jump() {
 		if (canJump) {
 			boolean wakeForSimulation = true;
+			AudioManager.playJumpSound();
 			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x,
 					body.getWorldCenter().y, wakeForSimulation);
 		}
@@ -184,6 +187,7 @@ public class Player implements Mortal {
 
 	@Override
 	public void die() {
+		AudioManager.playPlayerKilledSound();
 		animator.playDeathAnimation(this);
 	}
 

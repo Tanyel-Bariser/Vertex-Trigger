@@ -34,6 +34,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private final int VELOCITYITERATIONS = 8; // Box2d manual recommends 8 & 3
 	private final int POSITIONITERATIONS = 3; // for these iterations values
 	private final Array<Mortal> mortalBeings;
+	private final Array<Mortal> deadMortals;
 	private final Array<Sprite> entitySprites;
 	private final Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
@@ -54,8 +55,9 @@ public abstract class AbstractGameScreen implements Screen {
 		this.vertexTrigger = vertexTrigger;
 		this.levelBuilder = createLevelBuilder();
 		player = levelBuilder.getPlayer();
-		mortalBeings = new Array<Mortal>();		
-		entitySprites = new Array<Sprite>();
+		mortalBeings = new Array<>();
+		deadMortals = new Array<>();
+		entitySprites = new Array<>();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth()/ZOOM, Gdx.graphics.getHeight()/ZOOM);
 		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
 		batch = new SpriteBatch();
@@ -123,14 +125,20 @@ public abstract class AbstractGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
-	
+
 	private void removeDeadEntities() {
 		for(Mortal mortal : mortalBeings) {
 			if (mortal.isDead()) {
-				mortal.die();
+				// fixes bug where Entity#die is called tens of times in a row before death animation is finished
+				if (!deadMortals.contains(mortal, true)) {
+					mortal.die();
+					deadMortals.add(mortal);
+				}
+
 				if (mortal.isDeathAnimationFinished()) {
 					mortalBeings.removeValue(mortal, true);
 					entities.removeValue(mortal, true);
+					deadMortals.removeValue(mortal, true);
 					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
 						vertexTrigger.setScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));

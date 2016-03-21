@@ -1,16 +1,34 @@
 package com.vertextrigger.util;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.vertextrigger.util.SOUND_FX.*;
+
 /**
  * Manages the playing and stopping of music and sound effects
  */
 public class AudioManager {
+	static boolean gameIsMuted;
+	final static Map<String, Music> gameMusic;
+	final static Map<String, Sound> soundEffects;
 
 	/**
-	 * Initialises music and sound effect variables
+	 * Initialize class including all sfx and music
 	 */
-	public static void initialiseAudioManager() {
-		// Create music, that loops, and sound effects
-		// Create container of all music
+	static {
+		gameMusic = new HashMap<>();
+		soundEffects = new HashMap<>();
+	}
+
+	/** mutes the game if it is unmuted, and vice-versa. plays a sound for feedback irrespective of whether game is muted */
+	public static void toggleMute() {
+		playSound(BUTTON, true);
+		gameIsMuted ^= true;
 	}
 
 	/**
@@ -63,7 +81,7 @@ public class AudioManager {
 	 * for user signifying they have jumped 
 	 */
 	public static void playJumpSound() {
-		// Play a jumping sound effect
+		playSound(JUMP);
 	}
 	
 	/**
@@ -71,7 +89,7 @@ public class AudioManager {
 	 * signifying they have pick up something advantageous 
 	 */
 	public static void playPickUpSound() {
-		// Play a rewarding sound effect
+		playSound(POWER_UP);
 	}
 
 	/**
@@ -79,7 +97,7 @@ public class AudioManager {
 	 * signifying they have shot their gun
 	 */
 	public static void playShootSound() {
-		// Play gun shot sound effect
+		playSound(SHOOT);
 	}
 
 	/**
@@ -89,13 +107,20 @@ public class AudioManager {
 	public static void playRicochetSound() {
 		// Play bullet richocheting sound effect
 	}
+
+	/**
+	 * Plays sound effect of portal usage
+	 */
+	public static void playPortalSound() {
+		playSound(PORTAL);
+	}
 	
 	/**
 	 * Play sound effect to inform user the player has
 	 * been killed.
 	 */
 	public static void playPlayerKilledSound() {
-		// Play kill sound effect
+		playSound(PLAYER_DEATH);
 	}
 
 	/**
@@ -103,6 +128,43 @@ public class AudioManager {
 	 * been killed.
 	 */
 	public static void playEnemyKilledSound() {
-		// Play enemy kill sound effect
+		playSound(ENEMY_DEATH);
+	}
+
+	/**
+	 * Lazily loads a sound effect into memory and returns a reference to it
+	 *
+	 * If sound effect is not loaded, load it into memory and cache it in the map of sound effects
+	 */
+	private static Sound getSoundEffect(SOUND_FX sound) {
+		if (!soundEffects.containsKey(sound.name())) {
+			soundEffects.put(sound.name(), Gdx.audio.newSound(Gdx.files.internal(sound.getPath())));
+		}
+		return soundEffects.get(sound.name());
+	}
+
+	/**
+	 * Lazily returns a reference to a music file
+	 *
+	 * If music is not loaded, load it into memory and cache it in the map of sound effects
+	 */
+	private static Music getMusicFile(MUSIC music) {
+		if (!gameMusic.containsKey(music.name())) {
+			gameMusic.put(music.name(), Gdx.audio.newMusic(Gdx.files.internal(music.getPath())));
+		}
+		return gameMusic.get(music.name());
+	}
+
+	/** play a sound effect if the game is not muted */
+	private static void playSound(SOUND_FX sound) {
+		playSound(sound, false);
+	}
+
+	/** play a sound effect. option to override muteness setting */
+	private static void playSound(SOUND_FX sound, boolean overrideMute) {
+		if (overrideMute || !gameIsMuted) {
+			Sound effect = getSoundEffect(sound);
+			effect.play();
+		}
 	}
 }

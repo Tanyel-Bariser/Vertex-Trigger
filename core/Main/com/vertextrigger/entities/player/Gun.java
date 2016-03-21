@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.util.AudioManager;
 
 public class Gun {
 	private final AbstractGameScreen gameScreen;
@@ -28,7 +29,7 @@ public class Gun {
 			bullet.setPosition(new Vector2(position.x + 0.1f, position.y + 0.1f));
 		}
 		bullet.shoot(gunPointingLeft);
-
+		AudioManager.playShootSound();
 		gameScreen.addEntity(bullet);
 	}
 	

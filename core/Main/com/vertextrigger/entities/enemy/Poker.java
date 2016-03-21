@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.AnimationSet;
+import com.vertextrigger.util.AudioManager;
 
 public class Poker extends AbstractEnemy {
 	private boolean facingLeft;
@@ -58,6 +59,7 @@ public class Poker extends AbstractEnemy {
 
 	@Override
 	public void die() {
+		AudioManager.playEnemyKilledSound();
 		animator.playDeathAnimation(this);
 	}
 

@@ -238,6 +238,10 @@ public class Controller implements InputProcessor {
 				break;
 			case Input.Keys.R:
 				player.spinLikeCrazy();
+				break;
+			case Input.Keys.M:
+				AudioManager.toggleMute();
+				break;
 			default: return false;
 		}
 		return true;

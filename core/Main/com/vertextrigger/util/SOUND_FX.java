@@ -4,14 +4,16 @@ enum SOUND_FX {
     BUTTON("sound/button.ogg"),
     DIE("sound/die.wav"),
     // DOOR("sound/door.wav"),// TODO find door asset
-    ENEMY("sound/enemy.wav"),
+    ENEMY_DEATH("sound/enemy.wav"),
     JUMP("sound/jump.wav"),
-//    PORTAL("sound/portal.wav"),
+	PLAYER_DEATH("sound/die.wav"),
+	PORTAL("sound/portal.ogg"),
+	POWER_UP("sound/powerup.wav"),
     SHOOT("sound/shoot.wav");
 
 	private final String path;
 	
-	private SOUND_FX(String path) {
+	SOUND_FX(String path) {
 		this.path = path;
 	}
 	
