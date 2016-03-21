@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.vertextrigger.util.MUSIC.*;
 import static com.vertextrigger.util.SOUND_FX.*;
 
 /**
@@ -14,6 +15,7 @@ import static com.vertextrigger.util.SOUND_FX.*;
  */
 public class AudioManager {
 	static boolean gameIsMuted;
+	final static Map<String, Music> activeMusic;
 	final static Map<String, Music> gameMusic;
 	final static Map<String, Sound> soundEffects;
 
@@ -21,6 +23,7 @@ public class AudioManager {
 	 * Initialize class including all sfx and music
 	 */
 	static {
+		activeMusic = new HashMap<>();
 		gameMusic = new HashMap<>();
 		soundEffects = new HashMap<>();
 	}
@@ -29,9 +32,17 @@ public class AudioManager {
 	public static void toggleMute() {
 		playSound(BUTTON, true);
 		gameIsMuted ^= true;
+
+		if (gameIsMuted) {
+			pauseAllMusic();
+		}
+		else {
+			resumeAllMusic();
+		}
 	}
 
 	public static void disposeAll() {
+		stopAllMusic();
 		for (Sound s : soundEffects.values()) {
 			s.dispose();
 		}
@@ -46,10 +57,8 @@ public class AudioManager {
 	 * if the user has not muted the music in the setting
 	 */
 	public static void playMainScreenMusic() {
-		// Stop other music from playing
-		// If user has not muted the music in settings
-		// And the main menu music is not already playing
-				// Play main menu screen music
+		stopAllMusic();
+		playMusic(MAIN_SCREEN, true);
 	}
 
 	/**
@@ -58,10 +67,8 @@ public class AudioManager {
 	 * if the user has not muted the music in the setting
 	 */
 	public static void playLevelOneMusic() {
-		// Stop other music from playing
-		// If user has not muted the music in settings
-		// And the level one music is not already playing
-				// Play main menu screen music
+		stopAllMusic();
+		playMusic(LEVEL_ONE, true);
 	}
 
 	/**
@@ -70,19 +77,8 @@ public class AudioManager {
 	 * if the user has not muted the music in the setting
 	 */
 	public static void playLevelTwoMusic() {
-		// Stop other music from playing
-		// If user has not muted the music in settings
-		// And the level two music is not already playing
-				// Play main menu screen music
-	}
-	
-	/**
-	 * Checks if each music is playing and stops it
-	 */
-	public static void stopMusic() {
-		// For each music
-				// If music is playing
-						// Stop  music
+		stopAllMusic();
+		playMusic(LEVEL_TWO, true);
 	}
 	
 	/**
@@ -114,7 +110,7 @@ public class AudioManager {
 	 * as feedback for user
 	 */
 	public static void playRicochetSound() {
-		// Play bullet richocheting sound effect
+		// Play bullet ricocheting sound effect
 	}
 
 	/**
@@ -176,4 +172,69 @@ public class AudioManager {
 			effect.play();
 		}
 	}
+
+	/** play a music file by either starting or resuming if it was paused. option to loop (e.g. for level background music) */
+	private static void playMusic(MUSIC music, boolean loop) {
+		if (!activeMusic.containsKey(music.name())) {
+			startMusic(music, loop);
+		}
+		resumeMusic(activeMusic.get(music.name()));
+	}
+
+	/** starts some music that is stopped. adds to the active music map to keep track of this. only starts playback if game is not muted */
+	private static void startMusic(MUSIC music, boolean loop) {
+		Music gameMusic = getMusicFile(music);
+		gameMusic.setLooping(loop);
+		activeMusic.put(music.name(), gameMusic);
+
+		if (!gameIsMuted) {
+			gameMusic.play();
+		}
+		else {
+			gameMusic.pause();
+		}
+	}
+
+	/** pauses a music file */
+	private static void pauseMusic(Music music) {
+		if (music.isPlaying()) {
+			music.pause();
+		}
+	}
+
+	/** pauses all music files */
+	private static void pauseAllMusic() {
+		for (Music m : activeMusic.values()) {
+			pauseMusic(m);
+		}
+	}
+
+	/** resumes a music file if the game is not muted */
+	private static void resumeMusic(Music music) {
+		if (!music.isPlaying() && !gameIsMuted) {
+			music.play();
+		}
+	}
+
+	/** resumes all music files */
+	private static void resumeAllMusic() {
+		for (Music m : activeMusic.values()) {
+			resumeMusic(m);
+		}
+	}
+
+	/** stops a music file */
+	private static void stopMusic(MUSIC music) {
+		Music stopped = activeMusic.remove(music.name());
+		stopped.stop();
+	}
+
+	/** stops all music files */
+	private static void stopAllMusic() {
+		for (Music m : activeMusic.values()) {
+			m.stop();
+		}
+		activeMusic.clear();
+	}
+
 }
