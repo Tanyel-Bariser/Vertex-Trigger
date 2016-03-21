@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Align;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.main.VertexTrigger;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 /**
  * Manages the creation & use of the buttons that control the player & the game
  */
@@ -19,6 +21,7 @@ public class Controller implements InputProcessor {
 	private final Table buttonLayer;
 	private final Stage stage;
 	private final Player player;
+	private State gameState;
 	protected boolean isAndroidDevice;
 
 	Vector2 leftButtonPosition = new Vector2(-50, 0);
@@ -30,11 +33,12 @@ public class Controller implements InputProcessor {
 	/**
 	 * Create all virtual buttons for Android version
 	 */
-	Controller(Player player, Screen level, Stage stage) {
+	Controller(Player player, Screen level, Stage stage, State gameState) {
 		this.level = level; 
 		this.stage = stage;
 		this.player = player;
 		this.buttonLayer = new Table().debug();
+		this.gameState = gameState;
 
 		setDeviceType();
 		if (isAndroidDevice) {
@@ -51,8 +55,8 @@ public class Controller implements InputProcessor {
 		}
 	}
 
-	public Controller(Player player, Screen level) {
-		this(player, level, new Stage());
+	public Controller(Player player, Screen level, State gameState) {
+		this(player, level, new Stage(), gameState);
 	}
 
 	public Stage getStage() {
@@ -105,13 +109,17 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				player.moveLeft();
+				if (gameState != State.PAUSED) {
+					player.moveLeft();
+				}
 				return true;
 			}
 
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				player.stopMoving();
+				if (gameState != State.PAUSED) {
+					player.stopMoving();
+				}
 			}
 		};
 	}
@@ -131,13 +139,17 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				player.moveRight();
+				if (gameState != State.PAUSED) {
+					player.moveRight();
+				}
 				return true;
 			}
 
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				player.stopMoving();
+				if (gameState != State.PAUSED) {
+					player.stopMoving();
+				}
 			}
 		};
 	}
@@ -153,27 +165,13 @@ public class Controller implements InputProcessor {
 		//stage.addActor(pause);
 	}
 
-	boolean paused = false;
 	ClickListener getPauseClickListener() {
 		return new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				pause();
+				togglePause();
 			}
 		};
-	}
-
-	private void pause() {
-		if (paused) {
-			AudioManager.onResume();
-			level.resume();
-			paused = false;
-		}
-		else {
-			AudioManager.onPause();
-			level.pause();
-			paused = true;
-		}
 	}
 
 	/**
@@ -191,7 +189,9 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				player.shoot();
+				if (gameState != State.PAUSED) {
+					player.shoot();
+				}
 			}
 		};
 	}
@@ -210,9 +210,10 @@ public class Controller implements InputProcessor {
 	ClickListener getJumpClickListener() {
 		return new ClickListener() {
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				player.jump();
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (gameState != State.PAUSED) {
+					player.jump();
+				}
 				return super.touchDown(event, x, y, pointer, button);
 			}
 		};
@@ -226,33 +227,51 @@ public class Controller implements InputProcessor {
 		if (player.isDead()) {
 			return false;
 		}
-		switch (keycode) {
-			case Input.Keys.LEFT:
-				player.moveLeft();
-				break;
-			case Input.Keys.RIGHT:
-				player.moveRight();
-				break;
-			case Input.Keys.P:
-				pause();
-				break;
-			case Input.Keys.SPACE:
-				player.shoot();
-				break;
-			case Input.Keys.UP:
-				player.jump();
-				break;
-			case Input.Keys.R:
-				player.spinLikeCrazy();
-				break;
-			case Input.Keys.M:
-				if (!paused) {
+
+		// deal with pause separately as we want to disable all other input if the game is paused
+		if (keycode == Input.Keys.P) {
+			togglePause();
+		}
+
+		// if game is paused then buttons do not work
+		if (gameState == State.RUNNING) {
+			switch (keycode) {
+				case Input.Keys.LEFT:
+					player.moveLeft();
+					break;
+				case Input.Keys.RIGHT:
+					player.moveRight();
+					break;
+				case Input.Keys.SPACE:
+					player.shoot();
+					break;
+				case Input.Keys.UP:
+					player.jump();
+					break;
+				case Input.Keys.R:
+					player.spinLikeCrazy();
+					break;
+				case Input.Keys.M:
 					AudioManager.toggleMute();
-				}
-				break;
-			default: return false;
+					break;
+				default:
+					return false;
+			}
 		}
 		return true;
+	}
+
+	private void togglePause() {
+		if (gameState == State.PAUSED) {
+			AudioManager.onResume();
+			level.resume();
+			gameState = State.RUNNING;
+		}
+		else {
+			AudioManager.onPause();
+			level.pause();
+			gameState = State.PAUSED;
+		}
 	}
 
 	/**
@@ -260,7 +279,7 @@ public class Controller implements InputProcessor {
 	 */
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Input.Keys.LEFT || keycode == Input.Keys.RIGHT) {
+		if ((keycode == Input.Keys.LEFT || keycode == Input.Keys.RIGHT) && gameState != State.PAUSED) {
 			player.stopMoving();
 			return true;
 		}

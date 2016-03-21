@@ -62,7 +62,7 @@ public abstract class AbstractGameScreen implements Screen {
 		Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
 		batch = new SpriteBatch();
 		entities.add(player);
-		Controller controller = new Controller(player, this);
+		Controller controller = new Controller(player, this, state);
 		Gdx.input.setInputProcessor(controller);
 		stage = controller.getStage();
 		physicsDebugger = new Box2DDebugRenderer();
@@ -93,7 +93,6 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 	}
 
-    int jumpCount = 10;
 	/**
 	 * Render method is invoked repeatedly once per frame, approximately 60
 	 * frames per second, during the game
