@@ -110,7 +110,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
 		
 		Vector2 portal1Position = new Vector2(-.8f + portalWidth, -2.5f + portalHeight);
-		Vector2 portal2Position = new Vector2(2f - portalWidth, -2f + portalHeight);
+		Vector2 portal2Position = new Vector2(2.2f - portalWidth, -2f + portalHeight);
 
 		return new PortalFactory().createPortalPair(world, 
 				portal1Position, 

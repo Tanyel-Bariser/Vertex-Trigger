@@ -10,13 +10,13 @@ public class Portal implements Collidable {
     private final Body body;
     private final Sprite sprite;
     private final PortalTeleportation teleportation;
-    private final Vector2 pairedPortalPosition;
+    private Portal pairedPortal;
+    private boolean isDisabled;
 
-    Portal(Body body, Sprite sprite, PortalTeleportation teleportation, Vector2 pairedPortalPosition) {
+    Portal(Body body, Sprite sprite, PortalTeleportation teleportation) {
     	this.body = body;
     	this.sprite = sprite;
     	this.teleportation = teleportation;
-		this.pairedPortalPosition = pairedPortalPosition;
 		setUserData(body);
 	}
 
@@ -24,7 +24,18 @@ public class Portal implements Collidable {
      * @param body that enters portal to be teleported to the paired portal
      */
 	public void teleport(Body body) {
-		teleportation.teleport(body, getPairedPosition());
+		if (isDisabled == false) {
+			pairedPortal.disable();
+			teleportation.teleport(body, getPairedPosition());
+		}
+	}
+
+	private void disable() {
+		isDisabled = true;
+	}
+	
+	public void enable() {
+		isDisabled = false;
 	}
 
 	Vector2 getPosition() {
@@ -32,7 +43,7 @@ public class Portal implements Collidable {
 	}
 
 	Vector2 getPairedPosition() {
-		return pairedPortalPosition;
+		return pairedPortal.getPosition();
 	}
 
 	public Sprite getSprite() {
@@ -53,5 +64,9 @@ public class Portal implements Collidable {
 		for (Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);
 		}
+	}
+
+	public void setPairedPortal(Portal pairedPortal) {
+		this.pairedPortal = pairedPortal;
 	}
 }

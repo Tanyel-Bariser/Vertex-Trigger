@@ -1,0 +1,5 @@
+2. Fix player platform collision detecting
+3. Speed up reload after death
+4. Tween death animation properly
+5. Don't allow bullets to stack up and go in all directions
+50. Update unit tests

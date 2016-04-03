@@ -27,6 +27,6 @@ public abstract class AbstractBodyFactory {
 		
 	protected void buildFixture(Body body, FixtureDef fixtureDefinition) {
 		assert(body != null);
-		Fixture fixture = body.createFixture(fixtureDefinition);
+		body.createFixture(fixtureDefinition);
 	}
 }
