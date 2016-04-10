@@ -1,16 +1,12 @@
 package com.vertextrigger.entities.player;
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.Animator;
-import com.vertextrigger.entities.Mortal;
-import com.vertextrigger.factory.entityfactory.BulletFactory;
-import com.vertextrigger.util.AudioManager;
-import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.entities.*;
+import com.vertextrigger.util.*;
 
 /**
  * Main character of the game
@@ -40,6 +36,7 @@ public class Player implements Mortal {
 		setUserData(body);
 	}
 	
+	@Override
 	public Body getBody() {
 		return body;
 	}
@@ -79,11 +76,11 @@ public class Player implements Mortal {
 		}, 0.1f);
 	}
 	
-	public void setCanJump() {
+	void setCanJump() {
 		canJump = true; 
 	}
 	
-	public void setCannotJump() {
+	void setCannotJump() {
 		canJump = false;
 	}
 
@@ -214,7 +211,11 @@ public class Player implements Mortal {
 	public void setUserData(Body body) {
 		body.setUserData(this);
 		for (Fixture fix : body.getFixtureList()) {
-			fix.setUserData(this);
+			if (fix.getUserData() instanceof PlayerFeet) {
+				((PlayerFeet)fix.getUserData()).setPlayer(this);
+			} else {
+				fix.setUserData(this);
+			}
 		}
 	}
 	

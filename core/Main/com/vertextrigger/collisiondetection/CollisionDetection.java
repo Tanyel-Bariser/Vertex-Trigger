@@ -9,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.player.Bullet;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.entities.player.PlayerFeet;
+import com.vertextrigger.inanimate.Ground;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.inanimate.portal.Teleportable;
 import com.vertextrigger.util.GameObjectSize;
@@ -21,6 +24,13 @@ public class CollisionDetection implements ContactListener {
 	@Override
 	public void beginContact(Contact contact) {
 		portalTransport(contact);
+
+		Fixture[] fixtures = getFixtures(contact);
+		Collidable[] contactBodies = getUserData(fixtures);
+		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
+		if (playerFeet != null){
+			playerFeet.setPlayerCanJump();
+		}
 
 		// If player is in contact with an item
 		// Play rewarding pick up sound effect
@@ -85,14 +95,6 @@ public class CollisionDetection implements ContactListener {
 		 * isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
 		 */
 
-		if (isContact(Player.class, contactBodies)) {
-			Player player = (Player) getType(Player.class, contactBodies);
-			// see if feet contact
-			if (isPlayerFeetContact(contact, player)) {
-				player.setCanJump();
-			}
-		}
-
 		// If player's feet is in contact with a "normal" platform
 		// Set player's angle to that of the platform
 		// Allow player the ability to jump
@@ -112,41 +114,20 @@ public class CollisionDetection implements ContactListener {
 		// platform
 		// Set players movements to that of conveyor belt platform behaviour
 
-		if (isContact(Player.class, contactBodies)
-				&& isContact(AbstractEnemy.class, contactBodies)) {
-			Player player = (Player) getType(Player.class, contactBodies);
-			if (player != null) {
-				player.setDead();
-			}
+		Player player = (Player) getType(Player.class, contactBodies);
+		AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class, contactBodies);
+		if (player != null && enemy != null) {
+			player.setDead();
 		}
 
-		if (isContact(Player.class, contactBodies)
-				&& isContact(Bullet.class, contactBodies)) {
-			Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
-			if (bullet != null) {
-				bullet.setHitPlayer();
-			}
+		Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
+		if (player != null && bullet != null) {
+			bullet.setHitPlayer();
 		}
 
-		if (isContact(Bullet.class, contactBodies)
-				&& isContact(AbstractEnemy.class, contactBodies)) {
-			AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class,
-					contactBodies);
-			if (enemy != null) {
-				enemy.setDead();
-			}
+		if (enemy != null && bullet != null) {
+			enemy.setDead();
 		}
-	}
-
-	private boolean isPlayerFeetContact(Contact contact, Player player) {
-		Vector2 leftContactPosition = contact.getWorldManifold().getPoints()[0];
-		Vector2 rightContactPosition = contact.getWorldManifold().getPoints()[1];
-		float leftPlayerEdge = player.getPosition().x - GameObjectSize.PLAYER_SIZE.getPhysicalWidth()/2;
-		float rightPlayerEdge = player.getPosition().x + GameObjectSize.PLAYER_SIZE.getPhysicalWidth()/2;
-		return leftContactPosition.y < player.getPosition().y &&
-				rightContactPosition.y < player.getPosition().y &&
-				rightContactPosition.x > rightPlayerEdge &&
-				leftContactPosition.x < leftPlayerEdge;
 	}
 
 	private Fixture[] getFixtures(Contact contact) {
@@ -197,9 +178,9 @@ public class CollisionDetection implements ContactListener {
 
 		reenablePortals(contactBodies);
 
-		Player player = (Player) getType(Player.class, contactBodies);
-		if (player != null) {
-			player.setCannotJump();
+		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
+		if (playerFeet != null) {
+			playerFeet.setPlayerCannotJump();
 		}
 		// If player's feet is not in contact with platform
 		// FIRST WAIT FOR 0.2 SECONDS

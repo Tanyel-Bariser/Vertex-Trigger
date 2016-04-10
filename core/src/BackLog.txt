@@ -1,5 +1,13 @@
-2. Fix player platform collision detecting
-3. Speed up reload after death
-4. Tween death animation properly
-5. Don't allow bullets to stack up and go in all directions
-50. Update unit tests
+• Speed up reload after death
+• Tween death animation properly
+• Don't allow bullets to stack up and go in all directions
+• Game is much slower on big screen, when connecting my laptop to a TV
+• Player can still move, shoot, etc. after death on Android
+• Game crashes if bullets are lingering after death on Android, i.e. not destroyed
+• Bullet should be destroyed once below a certain velocity
+• Music is restarted at player death
+• Sound effects don't work first time on Android
+• Replace jump button with an up arrow
+• Find portal sprite
+• Enemy shouldn't be pushed so easily by player
+• Refactor a class and update its unit tests so they all pass
