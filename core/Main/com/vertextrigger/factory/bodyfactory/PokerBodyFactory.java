@@ -35,7 +35,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 	protected FixtureDef createFixtureDefinition() {
 		FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
-		fixtureDefinition.density = 3f;
+		fixtureDefinition.density = 100f;
 		fixtureDefinition.friction = 1f;
 		return fixtureDefinition;
 	}

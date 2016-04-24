@@ -107,7 +107,7 @@ public abstract class AbstractGameScreen implements Screen {
 		}
         
         for (Bullet bullet : bullets) {
-        	if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer() || player.isDead()) {
+        	if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer() || player.isDead() || bullet.isTooSlow()) {
         		bullets.removeValue(bullet, true);
         		entities.removeValue(bullet, true);
         		world.destroyBody(bullet.getBody());

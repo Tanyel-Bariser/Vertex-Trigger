@@ -10,43 +10,10 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.util.AudioManager;
 
 public class Poker extends AbstractEnemy {
-	private boolean facingLeft;
-	private boolean isDeathAnimationFinished;
+	public Poker(Array<Vector2> coordinates, Body body,	AnimationSet animationSet) {
+		super(coordinates, body, animationSet);
+	}
 	
-	public Poker(Array<Vector2> coordinates, Body body, AnimationSet anims) {
-		super(coordinates, body, anims);
-		isDeathAnimationFinished = false;
-		body.setUserData(this);
-		for (Fixture fix : body.getFixtureList()) {
-			fix.setUserData(this);
-		}
-	}
-
-	@Override
-	protected void spriteAnimationSetup() {
-	}
-
-	@Override
-	public Sprite update(float delta) {
-		super.update(delta);
-		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
-	}
-
-	@Override
-	public Body getBody() {
-		return body;
-	}
-
-	@Override
-	public void setFacingLeft() {
-		facingLeft = true;
-	}
-
-	@Override
-	public void setFacingRight() {
-		facingLeft = false;
-	}
-
 	@Override
 	public float getOffsetX() {
 		return POKER_BODY_SIZE.getOffsetX();
@@ -55,21 +22,5 @@ public class Poker extends AbstractEnemy {
 	@Override
 	public float getOffsetY() {
 		return POKER_BODY_SIZE.getOffsetY();
-	}
-
-	@Override
-	public void die() {
-		AudioManager.playEnemyKilledSound();
-		animator.playDeathAnimation(this);
-	}
-
-	@Override
-	public void setDeathAnimationFinished() {
-		isDeathAnimationFinished = true;
-	}
-	
-	@Override
-	public boolean isDeathAnimationFinished() {
-		return isDeathAnimationFinished;
 	}
 }

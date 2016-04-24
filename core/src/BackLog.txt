@@ -1,15 +1,30 @@
-DEFECTS:
-• Tween death animation properly or Remove unused death sprites [Hugh look into this]
+Defects:
+• Fix Eclipse preferences (format on save, line length, make running the app 1 click and F11, final as default, * for imports, only one newline in a row, think of more stuff
 • Game is much slower on big screen, when connecting my laptop to a TV [Tanyel look into this]
 • Game crashes if bullets are lingering after death on Android, i.e. not destroyed [POSSIBLY FIXED CANNOT REPRODUCE - Tanyel to look into this]
 
-• Bullet should be destroyed once below a certain velocity
-• Music is restarted at player death
-• Sound effects don't work first time on Android
-• Replace jump button with an up arrow
-• Find portal sprite
-• Enemy shouldn't be pushed so easily by player
+Assets:
+• Tween death animation properly or Remove unused death sprites [Hugh look into this]
+• Music is restarted at player death [hugh look into]
+• Sound effects don't work first time on Android [hugh look into]
+• Replace jump button with an up arrow [hugh regen atlas at home]
+• Find portal sprite [hugh regen atlas at home]
+• Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
+• Sprite for magnet
+• Sprite for metallic shield
+
+Game:
+• Flying monster with predefined path
+• Flying monster shoot metal bullets
+• Magnets pull on metal bullets
+• Make magnets level as prototype
+
+Code Quality:
 • Refactor a class and update its unit tests so they all pass
+
+R and D:
+• Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
+• Particle explosions
 
 GAME DESIGN EXPLORATION:
 	What if we created a flying monster that shot metal spiked balls, which also bounce off of platforms and
@@ -29,3 +44,5 @@ or not it is worth picking up for each particular level.
 under water in each level and has a limited amount of oxygen, i.e. time, to complete the level and has the choice
 to pick up a bubble, which allows him to breathe under water, i.e. have unlimited time, but has the disadvantage
 of making him jump extra high in a set of levels with spiked ceilings or be within jumping height of other enemies.
+	Fire shield that protects against fire balls but burns platforms the player stands on so they disappear.
+	Lever to flood fire level to make it into an under water level.

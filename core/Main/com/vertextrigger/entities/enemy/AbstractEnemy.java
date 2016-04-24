@@ -9,34 +9,37 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.Path;
+import com.vertextrigger.util.AudioManager;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path
  * This class manages an enemy's physical body & its movements & sprite animation
  */
 public abstract class AbstractEnemy implements Mortal {
-	// Predefined path for enemy's physical body to follow
 	protected Path path;
 	protected Body body;
 	protected AnimationSet animationSet;
 	protected Animator animator;
-	private boolean isDead;
-	private Vector2 newPositionFromPortal;
+	protected boolean isDead;
+	protected Vector2 newPositionFromPortal;
+	protected boolean facingLeft;
+	protected boolean isDeathAnimationFinished;
 	
 	public AbstractEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet) {
 		path = null;
 		this.body = body;
 		this.animationSet = animationSet;
+		isDeathAnimationFinished = false;		
 		isDead = false;
 		animator = new Animator(animationSet);
 		animator.setEntity(this);
 		setUserData(body);
 	}
-		
-	/**
-	 * Create & set all sprites & animations the enemy will need
-	 */
-	protected abstract void spriteAnimationSetup();
+
+	@Override
+	public Body getBody() {
+		return body;
+	}
 
 	/**
 	 * Moves the enemy further along its predefined
@@ -55,12 +58,22 @@ public abstract class AbstractEnemy implements Mortal {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
+		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
 		// Move enemy further along it's predefined path based on delta
 		// Update enemy sprite based on animation
 		// Set enemy's sprite position & angle to match
 		// the new position of enemy's physical body
 		// Return enemy sprite after it's position/angle has been updated		
-		return null;
+	}
+
+	@Override
+	public void setFacingLeft() {
+		facingLeft = true;
+	}
+
+	@Override
+	public void setFacingRight() {
+		facingLeft = false;
 	}
 	
 	@Override
@@ -71,6 +84,22 @@ public abstract class AbstractEnemy implements Mortal {
 	@Override
 	public void setDead() {
 		isDead = true;
+	}
+
+	@Override
+	public void setDeathAnimationFinished() {
+		isDeathAnimationFinished = true;
+	}
+	
+	@Override
+	public boolean isDeathAnimationFinished() {
+		return isDeathAnimationFinished;
+	}
+
+	@Override
+	public void die() {
+		AudioManager.playEnemyKilledSound();
+		animator.playDeathAnimation(this);
 	}
 	
 	@Override

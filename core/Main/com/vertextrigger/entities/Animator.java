@@ -42,8 +42,7 @@ public class Animator {
 	float currentAngle = 0;
 	float frameTime;
 
-	public Sprite getUpdatedSprite(float delta, float bodyAngle,
-			Vector2 newPosition) {
+	public Sprite getUpdatedSprite(float delta, float bodyAngle, Vector2 newPosition) {
 		frameTime += delta;
 		Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
 
