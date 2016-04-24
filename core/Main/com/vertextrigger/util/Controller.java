@@ -102,14 +102,13 @@ public class Controller implements InputProcessor {
 		left.addListener(getLeftClickListener());
 		left.setPosition(leftButtonPosition.x, leftButtonPosition.y);
 		buttonLayer.add(left).width(200).height(200);
-		//stage.addActor(left);
 	}
 	
 	ClickListener getLeftClickListener() {
 		return new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.moveLeft();
 				}
 				return true;
@@ -117,11 +116,15 @@ public class Controller implements InputProcessor {
 
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.stopMoving();
 				}
 			}
 		};
+	}
+	
+	private boolean isControllable() {
+		return  gameState != State.PAUSED && player.isDead() == false;
 	}
 	
 	/**
@@ -139,7 +142,7 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.moveRight();
 				}
 				return true;
@@ -147,7 +150,7 @@ public class Controller implements InputProcessor {
 
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.stopMoving();
 				}
 			}
@@ -189,7 +192,7 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.shoot();
 				}
 			}
@@ -211,7 +214,7 @@ public class Controller implements InputProcessor {
 		return new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				if (gameState != State.PAUSED) {
+				if (isControllable()) {
 					player.jump();
 				}
 				return super.touchDown(event, x, y, pointer, button);
@@ -248,8 +251,8 @@ public class Controller implements InputProcessor {
 				case Input.Keys.UP:
 					player.jump();
 					break;
-				case Input.Keys.R:
-					player.spinLikeCrazy();
+				case Input.Keys.D:
+					player.setDead();
 					break;
 				case Input.Keys.M:
 					AudioManager.toggleMute();

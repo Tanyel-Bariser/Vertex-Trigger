@@ -25,13 +25,6 @@ public class CollisionDetection implements ContactListener {
 	public void beginContact(Contact contact) {
 		portalTransport(contact);
 
-		Fixture[] fixtures = getFixtures(contact);
-		Collidable[] contactBodies = getUserData(fixtures);
-		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
-		if (playerFeet != null){
-			playerFeet.setPlayerCanJump();
-		}
-
 		// If player is in contact with an item
 		// Play rewarding pick up sound effect
 		// Notify player that he has an item
@@ -88,6 +81,10 @@ public class CollisionDetection implements ContactListener {
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		Fixture[] fixtures = getFixtures(contact);
 		Collidable[] contactBodies = getUserData(fixtures);
+		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
+		if (playerFeet != null){
+			playerFeet.setPlayerCanJump();
+		}
 		/*
 		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean
 		 * isGroundContact = isGroundContact(contactBodies); boolean

@@ -107,7 +107,7 @@ public abstract class AbstractGameScreen implements Screen {
 		}
         
         for (Bullet bullet : bullets) {
-        	if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer()) {
+        	if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer() || player.isDead()) {
         		bullets.removeValue(bullet, true);
         		entities.removeValue(bullet, true);
         		world.destroyBody(bullet.getBody());
@@ -115,9 +115,9 @@ public abstract class AbstractGameScreen implements Screen {
         }
 
 		drawToScreen(delta, getVisibleSprites());
-		removeDeadEntities();
 		stage.draw();
 		physicsDebugger.render(world, camera.combined);
+		removeDeadEntities();
 	}
 	
 	private void clearScreen() {
@@ -140,6 +140,7 @@ public abstract class AbstractGameScreen implements Screen {
 					deadMortals.removeValue(mortal, true);
 					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
+						world.dispose();
 						vertexTrigger.setScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));
 					}
 				}

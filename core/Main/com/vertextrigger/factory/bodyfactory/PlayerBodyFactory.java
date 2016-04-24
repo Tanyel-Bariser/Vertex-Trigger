@@ -10,6 +10,8 @@ import com.vertextrigger.entities.player.PlayerFeet;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PlayerBodyFactory extends AbstractBodyFactory {
+	private final GameObjectSize size = PLAYER_SIZE;
+	
 	public Body createPlayerBody(World world, Vector2 initialPosition) {
 		Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(true);
@@ -18,14 +20,8 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 	}
 
 	private void createFeet(Body body) {
-		CircleShape feet = new CircleShape();
-		Vector2 sensorPosition = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * OBJECT_SIZE)) * 6);
-		feet.setPosition(sensorPosition);
-		feet.setRadius(0.5f * OBJECT_SIZE);
-		
 		FixtureDef fixtureDef = createFixtureDefinition();
-		fixtureDef.shape = feet;
-		fixtureDef.isSensor = true;
+		fixtureDef.shape = createFeet();
 		fixtureDef.density = 0;
 		Fixture fixture = body.createFixture(fixtureDef);
 		fixture.setUserData(new PlayerFeet());
@@ -40,9 +36,18 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 		return fixtureDefinition;
 	}
 	
+	private PolygonShape createFeet() {
+		PolygonShape feet = new PolygonShape();
+		Vector2 center = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * OBJECT_SIZE)) * 6);
+		float width = size.getPhysicalWidth() * 0.9f;
+		float height = size.getPhysicalHeight() / 10;
+		
+		feet.setAsBox(width, height, center, 0);
+		return feet;
+	}
+	
 	@Override
 	protected Shape createShape() {
-		GameObjectSize size = PLAYER_SIZE;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;

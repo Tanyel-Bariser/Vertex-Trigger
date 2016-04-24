@@ -1,9 +1,8 @@
-• Speed up reload after death
-• Tween death animation properly
-• Don't allow bullets to stack up and go in all directions
-• Game is much slower on big screen, when connecting my laptop to a TV
-• Player can still move, shoot, etc. after death on Android
-• Game crashes if bullets are lingering after death on Android, i.e. not destroyed
+DEFECTS:
+• Tween death animation properly or Remove unused death sprites [Hugh look into this]
+• Game is much slower on big screen, when connecting my laptop to a TV [Tanyel look into this]
+• Game crashes if bullets are lingering after death on Android, i.e. not destroyed [POSSIBLY FIXED CANNOT REPRODUCE - Tanyel to look into this]
+
 • Bullet should be destroyed once below a certain velocity
 • Music is restarted at player death
 • Sound effects don't work first time on Android
@@ -11,3 +10,22 @@
 • Find portal sprite
 • Enemy shouldn't be pushed so easily by player
 • Refactor a class and update its unit tests so they all pass
+
+GAME DESIGN EXPLORATION:
+	What if we created a flying monster that shot metal spiked balls, which also bounce off of platforms and
+go through portals in the same way the players bullets do. This will make the game play sort of like the Atari
+Breakout game where the player has to work out exactly where the metal spiked balls would land after bouncing
+and teleporting around in order to avoid them. In addition we could have magnets in these levels which pull on
+the metal spiked balls so they curve.
+	To make this more interesting we could allow the player to choose whether or not to pick up a metallic,
+bubble like, shield which on the one hand would guard him from the metallic spiked balls, but on the other
+hand cause him to be pulled to-and-fro by the magnets into other potential dangers. This would give the player
+an interesting choice to decide whether or not picking up the metallic shield is advantageous for that
+particular level.
+	This concept could be extended into a main theme of the game where each world, i.e. set of levels, has a
+unique power up, each of which has its own combination of pros and cons forcing the player to choose whether
+or not it is worth picking up for each particular level.
+	Another example that might be worth exploring could be an under water world, where the player starts off
+under water in each level and has a limited amount of oxygen, i.e. time, to complete the level and has the choice
+to pick up a bubble, which allows him to breathe under water, i.e. have unlimited time, but has the disadvantage
+of making him jump extra high in a set of levels with spiked ceilings or be within jumping height of other enemies.

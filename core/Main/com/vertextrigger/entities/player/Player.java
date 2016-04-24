@@ -2,11 +2,14 @@ package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.*;
-import com.vertextrigger.util.*;
+import com.vertextrigger.entities.Animator;
+import com.vertextrigger.entities.Mortal;
+import com.vertextrigger.util.AudioManager;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Main character of the game
@@ -161,10 +164,6 @@ public class Player implements Mortal {
 	 */
 	public void setOffStickyPlatform() {
 		onSticky = 1;
-	}
-	
-	public void spinLikeCrazy() {
-		body.setTransform(body.getPosition().x, body.getPosition().y, body.getAngle()+2);
 	}
 
 	@Override
