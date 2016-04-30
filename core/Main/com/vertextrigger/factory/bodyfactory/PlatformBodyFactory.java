@@ -1,26 +1,22 @@
 package com.vertextrigger.factory.bodyfactory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PlatformBodyFactory extends AbstractBodyFactory {
 
 	private GameObjectSize size;
-	
-	public Body createPlatformBody(World world, Vector2 initialPosition, GameObjectSize size) {
+
+	public Body createPlatformBody(final World world, final Vector2 initialPosition, final GameObjectSize size) {
 		this.size = size;
 		return createBody(world, initialPosition, BodyType.StaticBody, createFixtureDefinition());
 	}
-	
+
 	@Override
 	protected FixtureDef createFixtureDefinition() {
-		FixtureDef fixtureDefinition = new FixtureDef();
+		final FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
 		fixtureDefinition.density = 3f;
 		fixtureDefinition.friction = 0.9f;
@@ -29,7 +25,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 
 	@Override
 	protected Shape createShape() {
-		PolygonShape shape = new PolygonShape();
+		final PolygonShape shape = new PolygonShape();
 		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
 		return shape;
 	}

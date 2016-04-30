@@ -7,18 +7,18 @@ public class PlayerFeet implements Collidable {
 	Player player;
 
 	@Override
-	public void setUserData(Body body) {
+	public void setUserData(final Body body) {
 		throw new UnsupportedOperationException("Cannot PlayerFeet.setUserData(Body body)");
 	}
-	
-	void setPlayer(Player player) {
+
+	void setPlayer(final Player player) {
 		this.player = player;
 	}
-	
+
 	public void setPlayerCanJump() {
 		player.setCanJump();
 	}
-	
+
 	public void setPlayerCannotJump() {
 		player.setCannotJump();
 	}

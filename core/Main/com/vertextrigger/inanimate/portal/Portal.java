@@ -2,28 +2,28 @@ package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.collisiondetection.Collidable;
 
 public class Portal implements Collidable {
-    private final Body body;
-    private final Sprite sprite;
-    private final PortalTeleportation teleportation;
-    private Portal pairedPortal;
-    private boolean isDisabled;
+	private final Body body;
+	private final Sprite sprite;
+	private final PortalTeleportation teleportation;
+	private Portal pairedPortal;
+	private boolean isDisabled;
 
-    Portal(Body body, Sprite sprite, PortalTeleportation teleportation) {
-    	this.body = body;
-    	this.sprite = sprite;
-    	this.teleportation = teleportation;
+	Portal(final Body body, final Sprite sprite, final PortalTeleportation teleportation) {
+		this.body = body;
+		this.sprite = sprite;
+		this.teleportation = teleportation;
 		setUserData(body);
 	}
 
-    /**
-     * @param body that enters portal to be teleported to the paired portal
-     */
-	public void teleport(Body body) {
+	/**
+	 * @param body
+	 *            that enters portal to be teleported to the paired portal
+	 */
+	public void teleport(final Body body) {
 		if (isDisabled == false) {
 			pairedPortal.disable();
 			teleportation.teleport(body, getPairedPosition());
@@ -33,7 +33,7 @@ public class Portal implements Collidable {
 	private void disable() {
 		isDisabled = true;
 	}
-	
+
 	public void enable() {
 		isDisabled = false;
 	}
@@ -49,7 +49,7 @@ public class Portal implements Collidable {
 	public Sprite getSprite() {
 		return sprite;
 	}
-	
+
 	Body getBody() {
 		return body;
 	}
@@ -59,14 +59,14 @@ public class Portal implements Collidable {
 	}
 
 	@Override
-	public void setUserData(Body body) {
+	public void setUserData(final Body body) {
 		body.setUserData(this);
-		for (Fixture fix : body.getFixtureList()) {
+		for (final Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);
 		}
 	}
 
-	public void setPairedPortal(Portal pairedPortal) {
+	public void setPairedPortal(final Portal pairedPortal) {
 		this.pairedPortal = pairedPortal;
 	}
 }

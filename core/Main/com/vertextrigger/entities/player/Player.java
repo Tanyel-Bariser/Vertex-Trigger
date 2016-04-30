@@ -2,18 +2,14 @@ package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.vertextrigger.entities.Animator;
-import com.vertextrigger.entities.Mortal;
-import com.vertextrigger.util.AudioManager;
-import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.entities.*;
+import com.vertextrigger.util.*;
 
 /**
- * Main character of the game
- * This class manages the player's physical body & its movements & sprite animation
+ * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
 public class Player implements Mortal {
 	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
@@ -28,8 +24,8 @@ public class Player implements Mortal {
 	private float onSticky = 1;
 	boolean isFacingLeft;
 	private boolean isDead;
-	
-	public Player(Vector2 initialPosition, Body body, Gun gun, Animator animator) {
+
+	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
 		this.initialPosition = initialPosition;
 		this.body = body;
 		this.gun = gun;
@@ -38,34 +34,35 @@ public class Player implements Mortal {
 		animator.setEntity(this);
 		setUserData(body);
 	}
-	
+
 	@Override
 	public Body getBody() {
 		return body;
 	}
-	
+
 	/**
 	 * Reset player position to the initial position of the level he's in
 	 */
 	public void diedResetPosition() {
 		body.setTransform(initialPosition, 0);
 	}
-	
-	public void setAngle(float angle) {
+
+	public void setAngle(final float angle) {
 		body.setTransform(body.getPosition(), angle);
 	}
-	
+
+	@Override
 	public void setFacingLeft() {
 		isFacingLeft = true;
 	}
-	
+
+	@Override
 	public void setFacingRight() {
 		isFacingLeft = false;
 	}
-	
+
 	/**
-	 * Bullets are shot from the position of the player's gun
-	 * in the direction the player is facing
+	 * Bullets are shot from the position of the player's gun in the direction the player is facing
 	 */
 	public void shoot() {
 		gun.shoot(body.getPosition(), isFacingLeft);
@@ -78,59 +75,57 @@ public class Player implements Mortal {
 			}
 		}, 0.1f);
 	}
-	
+
 	void setCanJump() {
-		canJump = true; 
+		canJump = true;
 	}
-	
+
 	void setCannotJump() {
 		canJump = false;
 	}
 
 	public void jump() {
 		if (canJump) {
-			boolean wakeForSimulation = true;
+			final boolean wakeForSimulation = true;
 			AudioManager.playJumpSound();
-			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x,
-					body.getWorldCenter().y, wakeForSimulation);
+			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x, body.getWorldCenter().y, wakeForSimulation);
 		}
 	}
 
 	boolean isShooting;
 	private boolean isDeathAnimationFinished;
 	private Vector2 newPositionFromPortal;
+
 	/**
-	 * Moves physical body of player left or right.
-	 * Chooses appropriate player sprite based on animation.
-	 * Returns the updated player's sprite for rendering.
-	 * 
-	 * @param delta time passed between previous & current frame
+	 * Moves physical body of player left or right. Chooses appropriate player sprite based on animation. Returns the updated player's sprite for
+	 * rendering.
+	 *
+	 * @param delta
+	 *            time passed between previous & current frame
 	 * @return updated player sprite
 	 */
 	@Override
-	public Sprite update(float delta) {
+	public Sprite update(final float delta) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
-		
+
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
-//		movePlayer(delta);
+		// movePlayer(delta);
 		if (!isShooting) {
 			animator.setAnimationType();
 		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
 	}
-	
-	private void movePlayer(float delta) {
-		float totalHorizontalMovement = (movement + additionalHorizontalForce)
-				* onSticky;
-		body.setLinearVelocity(totalHorizontalMovement * delta,
-				body.getLinearVelocity().y * delta);
+
+	private void movePlayer(final float delta) {
+		final float totalHorizontalMovement = (movement + additionalHorizontalForce) * onSticky;
+		body.setLinearVelocity(totalHorizontalMovement * delta, body.getLinearVelocity().y * delta);
 	}
-	
-	public void moveLeft() {		
+
+	public void moveLeft() {
 		movement = -MOVEMENT_SPEED;
 	}
 
@@ -141,24 +136,23 @@ public class Player implements Mortal {
 	public void stopMoving() {
 		movement = 0;
 	}
-	
+
 	/**
-	 * Allows application of additional horizontal force on player,
-	 * for example, if standing on a push/pull, i.e. conveyor belt, platform
-	 * 
+	 * Allows application of additional horizontal force on player, for example, if standing on a push/pull, i.e. conveyor belt, platform
+	 *
 	 * @param horizontalForce
 	 */
-	public void additionalExternalHorizontalForce(float horizontalForce) {
+	public void additionalExternalHorizontalForce(final float horizontalForce) {
 		additionalHorizontalForce = horizontalForce;
 	}
-	
+
 	/**
 	 * Halves normal player horizontal speed
 	 */
 	public void setOnStickyPlatform() {
-		onSticky  = 0.5f;
+		onSticky = 0.5f;
 	}
-	
+
 	/**
 	 * Restores normal player horizontal speed
 	 */
@@ -191,12 +185,12 @@ public class Player implements Mortal {
 	public void setDeathAnimationFinished() {
 		isDeathAnimationFinished = true;
 	}
-	
+
 	@Override
 	public boolean isDeathAnimationFinished() {
 		return isDeathAnimationFinished;
 	}
-	
+
 	@Override
 	public boolean isDead() {
 		return isDead;
@@ -207,19 +201,19 @@ public class Player implements Mortal {
 	}
 
 	@Override
-	public void setUserData(Body body) {
+	public void setUserData(final Body body) {
 		body.setUserData(this);
-		for (Fixture fix : body.getFixtureList()) {
+		for (final Fixture fix : body.getFixtureList()) {
 			if (fix.getUserData() instanceof PlayerFeet) {
-				((PlayerFeet)fix.getUserData()).setPlayer(this);
+				((PlayerFeet) fix.getUserData()).setPlayer(this);
 			} else {
 				fix.setUserData(this);
 			}
 		}
 	}
-	
+
 	@Override
-	public void setNewPositionFromPortal(Vector2 newPositionFromPortal) {
+	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
 		this.newPositionFromPortal = newPositionFromPortal;
 	}
 }

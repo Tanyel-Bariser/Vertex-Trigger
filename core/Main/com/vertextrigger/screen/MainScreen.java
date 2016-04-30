@@ -4,27 +4,26 @@ import com.badlogic.gdx.Screen;
 import com.vertextrigger.main.VertexTrigger;
 
 /**
- * The first screen the user sees, with the option of selecting the level they
- * want to play. The first level will always be able to be selected & so will
- * previously completed levels.
+ * The first screen the user sees, with the option of selecting the level they want to play. The first level will always be able to be selected & so
+ * will previously completed levels.
  */
 public class MainScreen implements Screen {
-	
+
 	/**
 	 * Sets main game class for smooth screen transitions
-	 * 
-	 * @param vertexTrigger main game class
+	 *
+	 * @param vertexTrigger
+	 *            main game class
 	 */
-	public MainScreen(VertexTrigger vertexTrigger) {
+	public MainScreen(final VertexTrigger vertexTrigger) {
 		// Set main game class
 	}
 
 	/**
-	 * Render method is invoked repeatedly once per frame, approximately 60
-	 * frames per second, during the game
+	 * Render method is invoked repeatedly once per frame, approximately 60 frames per second, during the game
 	 */
 	@Override
-	public void render(float delta) {
+	public void render(final float delta) {
 		// Set the colour to clear the screen to
 		// Clear the screen to the selected colour
 		// Play main screen music
@@ -36,12 +35,11 @@ public class MainScreen implements Screen {
 	 * Automatically called when application is resized
 	 */
 	@Override
-	public void resize(int width, int height) {
+	public void resize(final int width, final int height) {
 	}
 
 	/**
-	 * Show method is invoked once when the main screen is first created & is
-	 * used to set up the main screen
+	 * Show method is invoked once when the main screen is first created & is used to set up the main screen
 	 */
 	@Override
 	public void show() {
@@ -61,9 +59,8 @@ public class MainScreen implements Screen {
 	}
 
 	/**
-	 * Hide method is invoked automatically when the screen is switch to another
-	 * screen & is an appropriate place to dispose of the assets being used in
-	 * this screen
+	 * Hide method is invoked automatically when the screen is switch to another screen & is an appropriate place to dispose of the assets being used
+	 * in this screen
 	 */
 	@Override
 	public void hide() {
@@ -81,8 +78,7 @@ public class MainScreen implements Screen {
 	}
 
 	/**
-	 * Dispose method needs to be invoked manually when this class is no longer
-	 * being used to dispose of the assets it's using
+	 * Dispose method needs to be invoked manually when this class is no longer being used to dispose of the assets it's using
 	 */
 	@Override
 	public void dispose() {

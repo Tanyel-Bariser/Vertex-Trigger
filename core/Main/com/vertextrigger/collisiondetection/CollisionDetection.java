@@ -1,28 +1,17 @@
 package com.vertextrigger.collisiondetection;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
-import com.vertextrigger.entities.player.Bullet;
-import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.entities.player.PlayerFeet;
-import com.vertextrigger.inanimate.Ground;
-import com.vertextrigger.inanimate.StaticPlatform;
-import com.vertextrigger.inanimate.portal.Portal;
-import com.vertextrigger.inanimate.portal.Teleportable;
-import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.entities.player.*;
+import com.vertextrigger.inanimate.portal.*;
 
 public class CollisionDetection implements ContactListener {
 	/**
-	 * This method is called once when two game objects are first in contact
-	 * with each other.
+	 * This method is called once when two game objects are first in contact with each other.
 	 */
 	@Override
-	public void beginContact(Contact contact) {
+	public void beginContact(final Contact contact) {
 		portalTransport(contact);
 
 		// If player is in contact with an item
@@ -50,19 +39,18 @@ public class CollisionDetection implements ContactListener {
 		// Return user back to main menu screen
 	}
 
-	private void portalTransport(Contact contact) {
-		Fixture[] fixtures = getFixtures(contact);
-		Collidable[] collidableObject = getUserData(fixtures);
-		Portal portal = (Portal) getType(Portal.class, collidableObject);
-		Teleportable teleportable = (Teleportable) getType(Teleportable.class,
-				collidableObject);
-		if (portal != null && teleportable != null) {
+	private void portalTransport(final Contact contact) {
+		final Fixture[] fixtures = getFixtures(contact);
+		final Collidable[] collidableObject = getUserData(fixtures);
+		final Portal portal = (Portal) getType(Portal.class, collidableObject);
+		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
+		if ((portal != null) && (teleportable != null)) {
 			portal.teleport(teleportable.getBody());
 		}
 	}
 
-	private void reenablePortals(Collidable[] collidableObject) {
-		Portal portal = (Portal) getType(Portal.class, collidableObject);
+	private void reenablePortals(final Collidable[] collidableObject) {
+		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		if (portal != null) {
 			portal.enable();
 		}
@@ -70,26 +58,23 @@ public class CollisionDetection implements ContactListener {
 
 	// UNUSED METHOD FROM INTERFACE
 	@Override
-	public void preSolve(Contact contact, Manifold oldManifold) {
+	public void preSolve(final Contact contact, final Manifold oldManifold) {
 	}
 
 	/**
-	 * This method is called continuously during contact of two or more game
-	 * objects.
+	 * This method is called continuously during contact of two or more game objects.
 	 */
 	@Override
-	public void postSolve(Contact contact, ContactImpulse impulse) {
-		Fixture[] fixtures = getFixtures(contact);
-		Collidable[] contactBodies = getUserData(fixtures);
-		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
-		if (playerFeet != null){
+	public void postSolve(final Contact contact, final ContactImpulse impulse) {
+		final Fixture[] fixtures = getFixtures(contact);
+		final Collidable[] contactBodies = getUserData(fixtures);
+		final PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
+		if (playerFeet != null) {
 			playerFeet.setPlayerCanJump();
 		}
 		/*
-		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean
-		 * isGroundContact = isGroundContact(contactBodies); boolean
-		 * isBulletContact = isBulletContact(contactBodies); boolean
-		 * isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
+		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean isGroundContact = isGroundContact(contactBodies); boolean isBulletContact
+		 * = isBulletContact(contactBodies); boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
 		 */
 
 		// If player's feet is in contact with a "normal" platform
@@ -111,34 +96,32 @@ public class CollisionDetection implements ContactListener {
 		// platform
 		// Set players movements to that of conveyor belt platform behaviour
 
-		Player player = (Player) getType(Player.class, contactBodies);
-		AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class, contactBodies);
-		if (player != null && enemy != null) {
+		final Player player = (Player) getType(Player.class, contactBodies);
+		final AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class, contactBodies);
+		if ((player != null) && (enemy != null)) {
 			player.setDead();
 		}
 
-		Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
-		if (player != null && bullet != null) {
+		final Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
+		if ((player != null) && (bullet != null)) {
 			bullet.setHitPlayer();
 		}
 
-		if (enemy != null && bullet != null) {
+		if ((enemy != null) && (bullet != null)) {
 			enemy.setDead();
 		}
 	}
 
-	private Fixture[] getFixtures(Contact contact) {
+	private Fixture[] getFixtures(final Contact contact) {
 		return new Fixture[] { contact.getFixtureA(), contact.getFixtureB() };
 	}
 
-	private Collidable[] getUserData(Fixture[] fixtures) {
-		return new Collidable[] { (Collidable) fixtures[0].getUserData(),
-				(Collidable) fixtures[1].getUserData() };
+	private Collidable[] getUserData(final Fixture[] fixtures) {
+		return new Collidable[] { (Collidable) fixtures[0].getUserData(), (Collidable) fixtures[1].getUserData() };
 	}
 
-	boolean isContact(Class<? extends Collidable> type,
-			Collidable... contactBodies) {
-		for (Collidable c : contactBodies) {
+	boolean isContact(final Class<? extends Collidable> type, final Collidable... contactBodies) {
+		for (final Collidable c : contactBodies) {
 			if (type.isInstance(c)) {
 				return true;
 			}
@@ -146,9 +129,8 @@ public class CollisionDetection implements ContactListener {
 		return false;
 	}
 
-	Collidable getType(Class<? extends Collidable> type,
-			Collidable[] contactBodies) {
-		for (Collidable c : contactBodies) {
+	Collidable getType(final Class<? extends Collidable> type, final Collidable[] contactBodies) {
+		for (final Collidable c : contactBodies) {
 			if (type.isInstance(c)) {
 				return (c);
 			}
@@ -156,26 +138,25 @@ public class CollisionDetection implements ContactListener {
 		return null;
 	}
 
-	private Vector2 getPosition(Fixture fixture) {
+	private Vector2 getPosition(final Fixture fixture) {
 		return fixture.getBody().getPosition();
 	}
 
-	private float getAngle(Fixture fixture) {
+	private float getAngle(final Fixture fixture) {
 		return fixture.getBody().getAngle();
 	}
 
 	/**
-	 * This method is called once when two game objects are no longer in contact
-	 * with each other.
+	 * This method is called once when two game objects are no longer in contact with each other.
 	 */
 	@Override
-	public void endContact(Contact contact) {
-		Fixture[] fixtures = getFixtures(contact);
-		Collidable[] contactBodies = getUserData(fixtures);
+	public void endContact(final Contact contact) {
+		final Fixture[] fixtures = getFixtures(contact);
+		final Collidable[] contactBodies = getUserData(fixtures);
 
 		reenablePortals(contactBodies);
 
-		PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
+		final PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
 		if (playerFeet != null) {
 			playerFeet.setPlayerCannotJump();
 		}

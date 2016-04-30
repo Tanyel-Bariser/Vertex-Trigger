@@ -19,17 +19,17 @@ public class SpriteFactory {
 		coreSkin = VertexTrigger.ASSETS.getCoreSkin();
 		levelSkin = VertexTrigger.ASSETS.getLevelSkin();
 	}
-	
-	public Sprite createCoreSprite(String name, GameObjectSize size) {
+
+	public Sprite createCoreSprite(final String name, final GameObjectSize size) {
 		return createSprite(name, size, VertexTrigger.ASSETS.getCoreSkin());
 	}
-	
-	public Sprite createLevelSprite(String name, GameObjectSize size) {
+
+	public Sprite createLevelSprite(final String name, final GameObjectSize size) {
 		return createSprite(name, size, VertexTrigger.ASSETS.getLevelSkin());
 	}
-	
-	private Sprite createSprite(String name, GameObjectSize size, Skin skin) {
-		Sprite sprite = skin.getSprite(name);
+
+	private Sprite createSprite(final String name, final GameObjectSize size, final Skin skin) {
+		final Sprite sprite = skin.getSprite(name);
 		sprite.setSize(size.getSpriteWidth(), size.getSpriteHeight());
 		sprite.setOriginCenter();
 		return new Sprite(sprite);
@@ -40,7 +40,7 @@ public class SpriteFactory {
 	public Sprite createBullet() {
 		if (bullet == null) {
 			bullet = coreSkin.getSprite("bullet");
-			float radius = 0.5f;
+			final float radius = 0.5f;
 			bullet.setSize(radius, radius);
 			return bullet;
 		}

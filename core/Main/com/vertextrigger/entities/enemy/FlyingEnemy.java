@@ -3,15 +3,14 @@ package com.vertextrigger.entities.enemy;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.entities.AnimationSet;
-import com.vertextrigger.entities.Path;
+import com.vertextrigger.entities.*;
 
 public class FlyingEnemy extends AbstractEnemy {
-	public FlyingEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet) {
+	public FlyingEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet) {
 		super(coordinates, body, animationSet);
 	}
-	
-	public FlyingEnemy(Array<Vector2> coordinates, Body body, AnimationSet animationSet, Path path) {
+
+	public FlyingEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet, final Path path) {
 		this(coordinates, body, animationSet);
 		this.path = path;
 	}

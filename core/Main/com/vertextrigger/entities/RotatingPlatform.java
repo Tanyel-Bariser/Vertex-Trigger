@@ -10,32 +10,32 @@ import com.badlogic.gdx.physics.box2d.*;
 public class RotatingPlatform extends TimedPlatform {
 	private final float TIME_BETWEEN_ROTATION = 2f;
 
-	public RotatingPlatform(World world, Vector2 position) {
+	public RotatingPlatform(final World world, final Vector2 position) {
 		super(world, position);
 		// Set the amount of time to pass between each time the platform rotates
 		time = TIME_BETWEEN_ROTATION;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	protected void setupSpriteAnimation() {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
-	protected Body createPlatformBody(World world, Vector2 position) {
+	protected Body createPlatformBody(final World world, final Vector2 position) {
 		return null;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
-	public Sprite update(float delta) {
+	public Sprite update(final float delta) {
 		return null;
 	}
 

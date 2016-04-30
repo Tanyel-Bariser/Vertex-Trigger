@@ -1,9 +1,6 @@
 package com.vertextrigger.entities.enemy;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class EnemyBodyFactoryTest {
 	EnemyBodyFactory factory;
@@ -11,7 +8,7 @@ public class EnemyBodyFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		factory = new EnemyBodyFactory();
-		
+
 	}
 
 	@Test

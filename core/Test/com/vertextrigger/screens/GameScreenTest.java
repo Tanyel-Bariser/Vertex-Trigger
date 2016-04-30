@@ -1,7 +1,5 @@
 package com.vertextrigger.screens;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,9 +12,11 @@ import com.vertextrigger.screen.AbstractGameScreen;
 @RunWith(MockitoJUnitRunner.class)
 public class GameScreenTest {
 	AbstractGameScreen screen;
-	@Mock VertexTrigger vertexTrigger;
-	@Mock AbstractLevelBuilder levelBuilder;
-	
+	@Mock
+	VertexTrigger vertexTrigger;
+	@Mock
+	AbstractLevelBuilder levelBuilder;
+
 	@Before
 	public void setUp() throws Exception {
 	}

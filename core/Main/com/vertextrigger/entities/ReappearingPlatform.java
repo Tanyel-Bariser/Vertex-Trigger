@@ -2,13 +2,12 @@ package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class ReappearingPlatform extends TimedPlatform {
 	private final float SECONDS_BETWEEN_DISAPPEAR_REAPPEAR = 3f;
 
-	public ReappearingPlatform(World world, Vector2 position) {
+	public ReappearingPlatform(final World world, final Vector2 position) {
 		super(world, position);
 		// Set the amount of time to pass between
 		// the platform disappearing/reappearing
@@ -16,25 +15,25 @@ public class ReappearingPlatform extends TimedPlatform {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	protected void setupSpriteAnimation() {
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@Override
-	protected Body createPlatformBody(World world, Vector2 position) {
+	protected Body createPlatformBody(final World world, final Vector2 position) {
 		return null;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
-	public Sprite update(float delta) {
+	public Sprite update(final float delta) {
 		return null;
 	}
 

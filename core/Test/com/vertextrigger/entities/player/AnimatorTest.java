@@ -1,6 +1,7 @@
 package com.vertextrigger.entities.player;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Mockito.*;
 
 import org.junit.*;
@@ -16,16 +17,21 @@ import com.vertextrigger.entities.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AnimatorTest {
 	Animator animator;
-	@Mock Body player;
-	@Mock AnimationSet animationSet;
-	@Mock Animation animation;
+	@Mock
+	Body player;
+	@Mock
+	AnimationSet animationSet;
+	@Mock
+	Animation animation;
 	float movingLeft;
 	float movingRight;
-	@Mock Sprite sprite;
+	@Mock
+	Sprite sprite;
 	float angle = 3f;
 	float delta = 6.41f;
-	Vector2 position = new Vector2(2,2);
-	@Mock Entity entity;
+	Vector2 position = new Vector2(2, 2);
+	@Mock
+	Entity entity;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,7 +44,7 @@ public class AnimatorTest {
 		movingLeft = -0.31f;
 		movingRight = .31f;
 	}
-	
+
 	private void setUpAnimationFactory() {
 		when(animationSet.getMoving()).thenReturn(animation);
 		when(animationSet.getStanding()).thenReturn(animation);
@@ -62,28 +68,28 @@ public class AnimatorTest {
 		animator.getUpdatedSprite(delta, angle, position);
 		verify(sprite, never()).flip(true, false);
 	}
-	
+
 	@Test
 	public void whenPlayerUpdatedDeltaIsAddedToFrame() {
 		animator.getUpdatedSprite(delta, angle, position);
 		verify(animation).getKeyFrame(delta);
 	}
-	
+
 	@Test
 	public void whenPlayerIsMovingMoreThanThresholdThenPlayerShouldMoveRight() {
 		animator.setHorizontalMovement(movingRight);
 		assertEquals(false, animator.isMovingLeft());
 	}
-	
+
 	@Test
 	public void whenPlayerIsMovingLessThanThresholdThenPlayerShouldMoveLeft() {
 		animator.setHorizontalMovement(movingLeft);
 		assertEquals(true, animator.isMovingLeft());
 	}
-	
+
 	@Test
 	public void whenPlayerIsNotMovingOutsideThresholdThenPlayerShouldNotChangeDirection() {
-		boolean playerDirectionStaysSame = animator.isMovingLeft();
+		final boolean playerDirectionStaysSame = animator.isMovingLeft();
 		animator.setHorizontalMovement(0f);
 		assertEquals(playerDirectionStaysSame, animator.isMovingLeft());
 		animator.setHorizontalMovement(0.3f);

@@ -1,7 +1,5 @@
 Defects:
-• Fix Eclipse preferences (format on save, line length, make running the app 1 click and F11, final as default, * for imports, only one newline in a row, think of more stuff
 • Game is much slower on big screen, when connecting my laptop to a TV [Tanyel look into this]
-• Game crashes if bullets are lingering after death on Android, i.e. not destroyed [POSSIBLY FIXED CANNOT REPRODUCE - Tanyel to look into this]
 
 Assets:
 • Tween death animation properly or Remove unused death sprites [Hugh look into this]

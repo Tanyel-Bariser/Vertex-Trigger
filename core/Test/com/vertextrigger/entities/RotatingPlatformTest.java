@@ -1,7 +1,5 @@
 package com.vertextrigger.entities;
 
-import static org.junit.Assert.*;
-
 import org.junit.*;
 
 public class RotatingPlatformTest {

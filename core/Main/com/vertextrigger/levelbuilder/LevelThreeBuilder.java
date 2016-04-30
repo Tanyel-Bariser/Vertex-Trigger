@@ -7,8 +7,8 @@ import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class LevelThreeBuilder extends AbstractLevelBuilder {
-		
-	public LevelThreeBuilder(World world, AbstractGameScreen screen) {
+
+	public LevelThreeBuilder(final World world, final AbstractGameScreen screen) {
 		super(world, screen);
 		// Load assets required for level three,
 		// while unloading unneeded assets

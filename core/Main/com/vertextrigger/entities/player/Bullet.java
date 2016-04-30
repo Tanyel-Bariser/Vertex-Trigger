@@ -5,13 +5,11 @@ import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.Entity;
 
 /**
- * Bullets are shot from the player's position horizontally. Bullets are freed 5
- * seconds after being shot.
+ * Bullets are shot from the player's position horizontally. Bullets are freed 5 seconds after being shot.
  */
 public class Bullet implements Entity {
 	static final float SHOT_POWER = 0.001f;
@@ -20,7 +18,7 @@ public class Bullet implements Entity {
 	private boolean hitPlayer = false;
 	private Vector2 newPositionFromPortal;
 
-	public Bullet(Body body, Sprite sprite) {
+	public Bullet(final Body body, final Sprite sprite) {
 		this.body = body;
 		this.sprite = sprite;
 		setUserData(body);
@@ -30,13 +28,14 @@ public class Bullet implements Entity {
 		return body.getPosition();
 	}
 
-	void shoot(boolean shootLeft) {
-		float left = -SHOT_POWER;
-		float right = SHOT_POWER;
-		if (shootLeft)
+	void shoot(final boolean shootLeft) {
+		final float left = -SHOT_POWER;
+		final float right = SHOT_POWER;
+		if (shootLeft) {
 			shoot(left);
-		else
+		} else {
 			shoot(right);
+		}
 	}
 
 	public Sprite getSprite() {
@@ -51,51 +50,49 @@ public class Bullet implements Entity {
 		return hitPlayer;
 	}
 
-	private void shoot(float horizontalVelocity) {
-		Vector2 velocity = new Vector2(horizontalVelocity, 0);
-		boolean wakeForSimulation = true;
+	private void shoot(final float horizontalVelocity) {
+		final Vector2 velocity = new Vector2(horizontalVelocity, 0);
+		final boolean wakeForSimulation = true;
 		body.applyLinearImpulse(velocity, body.getPosition(), wakeForSimulation);
 	}
 
 	/**
 	 * Allows player to set the position of the bullet to that of his gun
-	 * 
+	 *
 	 * @param position
 	 *            to set bullet
 	 */
-	void setPosition(Vector2 position) {
+	void setPosition(final Vector2 position) {
 		body.setTransform(position, 0);
 	}
-	
+
 	@Override
-	public void setNewPositionFromPortal(Vector2 newPortalPosition) {
-		this.newPositionFromPortal = newPortalPosition;
+	public void setNewPositionFromPortal(final Vector2 newPortalPosition) {
+		newPositionFromPortal = newPortalPosition;
 	}
 
 	/**
-	 * Updates the bullet sprite so that its position matches that of the
-	 * bullet's physical body, therefore should be called once per frame for
+	 * Updates the bullet sprite so that its position matches that of the bullet's physical body, therefore should be called once per frame for
 	 * accurate rendering.
-	 * 
+	 *
 	 * @param delta
 	 *            not used
 	 * @return updated sprite of this bullet
 	 */
 	@Override
-	public Sprite update(float delta) {
+	public Sprite update(final float delta) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
 
-		Gdx.app.log("", "" + this.getBody().getLinearVelocity());
-		
-		sprite.setPosition(body.getPosition().x - getOffsetX() + 0.22f,
-				body.getPosition().y - getOffsetY() + 0.17f);
+		Gdx.app.log("", "" + getBody().getLinearVelocity());
+
+		sprite.setPosition((body.getPosition().x - getOffsetX()) + 0.22f, (body.getPosition().y - getOffsetY()) + 0.17f);
 		return sprite;
 	}
 
-	public static void destroyBullet(Fixture fix) {
+	public static void destroyBullet(final Fixture fix) {
 		fix.getBody().setTransform(50, 50, 0);
 	}
 
@@ -123,17 +120,16 @@ public class Bullet implements Entity {
 	}
 
 	@Override
-	public void setUserData(Body body) {
+	public void setUserData(final Body body) {
 		body.setUserData(this);
-		for (Fixture fix : body.getFixtureList()) {
+		for (final Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);
 		}
 	}
 
 	public boolean isTooSlow() {
-		Vector2 velocity = body.getLinearVelocity();
-		float speedThreshold = 0.5f;
-		return velocity.x < speedThreshold && velocity.x > -speedThreshold && 
-				velocity.y < speedThreshold && velocity.y > -speedThreshold;
+		final Vector2 velocity = body.getLinearVelocity();
+		final float speedThreshold = 0.5f;
+		return (velocity.x < speedThreshold) && (velocity.x > -speedThreshold) && (velocity.y < speedThreshold) && (velocity.y > -speedThreshold);
 	}
 }
