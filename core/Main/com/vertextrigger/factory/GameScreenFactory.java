@@ -25,7 +25,7 @@ public class GameScreenFactory {
 				final Vector2 initialPosition = new Vector2(0, 0);
 				final Player player = PlayerFactory.createPlayer(world, initialPosition, this);
 				final Array<Portal> portals = new Array<>();
-				final AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this);
+				final AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this, 4, 3);
 				prototypeLevelBuilder.setPlayer(player);
 				world.setContactListener(new CollisionDetection());
 				return prototypeLevelBuilder;

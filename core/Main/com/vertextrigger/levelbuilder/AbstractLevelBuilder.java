@@ -11,6 +11,9 @@ import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public abstract class AbstractLevelBuilder {
+	protected float CONTAINER_WIDTH;
+	protected float CONTAINER_HEIGHT;
+
 	protected World world;
 	protected Array<Entity> entities;
 	protected Array<Sprite> sprites;
@@ -19,12 +22,14 @@ public abstract class AbstractLevelBuilder {
 	protected Array<Portal> portals;
 	protected SpriteFactory spriteFactory;
 
-	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen) {
+	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
 		this.world = world;
-
 		spriteFactory = new SpriteFactory();
 		entities = new Array<Entity>();
 		sprites = new Array<Sprite>();
+
+		this.CONTAINER_WIDTH = CONTAINER_WIDTH;
+		this.CONTAINER_HEIGHT = CONTAINER_HEIGHT;
 	}
 
 	public Player getPlayer() {
@@ -136,4 +141,20 @@ public abstract class AbstractLevelBuilder {
 	 * @return position player starts the level at
 	 */
 	public abstract Vector2 getInitialPosition();
+
+	public float getGroundLevel() {
+		return -CONTAINER_HEIGHT;
+	}
+
+	public float getCeilingLevel() {
+		return CONTAINER_HEIGHT;
+	}
+
+	public float getLeftBorderOfLevel() {
+		return -CONTAINER_WIDTH;
+	}
+
+	public float getRightBorderOfLevel() {
+		return CONTAINER_WIDTH;
+	}
 }

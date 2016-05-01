@@ -9,7 +9,7 @@ import com.vertextrigger.screen.AbstractGameScreen;
 public class LevelThreeBuilder extends AbstractLevelBuilder {
 
 	public LevelThreeBuilder(final World world, final AbstractGameScreen screen) {
-		super(world, screen);
+		super(world, screen, 0, 0);
 		// Load assets required for level three,
 		// while unloading unneeded assets
 		// Play level one music

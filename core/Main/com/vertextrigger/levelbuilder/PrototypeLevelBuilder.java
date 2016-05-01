@@ -17,15 +17,12 @@ import com.vertextrigger.util.*;
  * A prototype level to allow manual testing of player controls & game objects
  */
 public class PrototypeLevelBuilder extends AbstractLevelBuilder {
-	SpriteFactory spriteFactory;
-	AbstractGameScreen screen;
+	private final AbstractGameScreen screen;
 
-	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen) {
-		super(world, screen);
+	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
+		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		this.screen = screen;
 		AudioManager.playLevelOneMusic();
-		// VertexTrigger.ASSETS.loadPrototypeLevel();
-		// spriteFactory = new SpriteFactory();
 	}
 
 	@Override
@@ -79,9 +76,6 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	protected void createGroundWalls() {
-		final float CONTAINER_WIDTH = 4f;
-		final float CONTAINER_HEIGHT = 3f;
-
 		final Vector2 bottomLeft = new Vector2(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
 		final Vector2 bottomRight = new Vector2(-CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		final Vector2 topRight = new Vector2(CONTAINER_WIDTH, CONTAINER_HEIGHT);

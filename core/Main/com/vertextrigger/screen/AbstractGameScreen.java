@@ -1,6 +1,7 @@
 package com.vertextrigger.screen;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
@@ -20,7 +21,11 @@ public abstract class AbstractGameScreen implements Screen {
 	protected World world;
 	protected final Vector2 GRAVITY = new Vector2(0, baseGravity);
 	private final static Array<Bullet> bullets = new Array<>();
-	private final float ZOOM = 20 / GameObjectSize.OBJECT_SIZE;
+	private static float phoneWidth = 768;
+	public static final float WIDTH = Gdx.graphics.getWidth();
+	public static final float HEIGHT = Gdx.graphics.getHeight();
+	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
+	private final float ZOOM = (20 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
 	private final VertexTrigger vertexTrigger;
 	private final AbstractLevelBuilder levelBuilder;
 	private final OrthographicCamera camera;
@@ -37,10 +42,19 @@ public abstract class AbstractGameScreen implements Screen {
 	private Array<Sprite> backgroundSprites;
 	private State state = State.RUNNING;
 	private final Stage stage;
+	private static final float roomForThumbs;
 
 	protected abstract void initialiseAssets();
 
 	protected abstract AbstractLevelBuilder createLevelBuilder();
+
+	static {
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			roomForThumbs = adjustedPhoneWidth / 2;
+		} else {
+			roomForThumbs = 0;
+		}
+	}
 
 	/**
 	 * Sets main game class for smooth screen transitions
@@ -175,26 +189,41 @@ public abstract class AbstractGameScreen implements Screen {
 		final float bottomEdge = camera.position.y - (camera.viewportHeight / 2);
 		final float leftEdge = camera.position.x - (camera.viewportWidth / 2);
 		final float rightEdge = camera.position.x + (camera.viewportWidth / 2);
-		final float errorMargin = 0;// 4 / GameObjectSize.OBJECT_SIZE;
+		final float errorMargin = GameObjectSize.OBJECT_SIZE;
 
 		final boolean belowTop = sprite.getY() < (topEdge + errorMargin);
 		final boolean aboveBottom = sprite.getY() > (bottomEdge - errorMargin);
 		final boolean inRight = sprite.getX() < (rightEdge + errorMargin);
 		final boolean inLeft = sprite.getX() > (leftEdge - errorMargin);
-		// if (sprite.getHeight() ==
-		// GameObjectSize.BULLET_SIZE.getSpriteHeight()) {
-		// Gdx.app.log("belowTop=" + belowTop + "; aboveBottom=" + aboveBottom,
-		// "; inRight=" + inRight + "; inLeft=" + inLeft);
-		// }
 		return belowTop && aboveBottom && inRight && inLeft;
 	}
 
 	private void updateCamera() {
-		final float playerY = player.getBody().getPosition().y;
-		final float playerX = player.getBody().getPosition().x;
-		camera.position.y = playerY;
-		camera.position.x = playerX;
+		updateCameraPositionX();
+		updateCameraPositionY();
 		camera.update();
+	}
+
+	private void updateCameraPositionX() {
+		final float playerX = player.getBody().getPosition().x;
+		if (playerX < (levelBuilder.getLeftBorderOfLevel() + (camera.viewportWidth / 2))) {
+			camera.position.x = levelBuilder.getLeftBorderOfLevel() + (camera.viewportWidth / 2);
+		} else if (playerX > (levelBuilder.getRightBorderOfLevel() - (camera.viewportWidth / 2))) {
+			camera.position.x = levelBuilder.getRightBorderOfLevel() - (camera.viewportWidth / 2);
+		} else {
+			camera.position.x = playerX;
+		}
+	}
+
+	private void updateCameraPositionY() {
+		final float playerY = player.getBody().getPosition().y;
+		if (playerY < ((levelBuilder.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs)) {
+			camera.position.y = (levelBuilder.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs;
+		} else if (playerY > (levelBuilder.getCeilingLevel() - (camera.viewportHeight / 2))) {
+			camera.position.y = levelBuilder.getCeilingLevel() - (camera.viewportHeight / 2);
+		} else {
+			camera.position.y = playerY;
+		}
 	}
 
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {

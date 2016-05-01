@@ -2,7 +2,6 @@ package com.vertextrigger.entities.player;
 
 import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -85,8 +84,6 @@ public class Bullet implements Entity {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
-
-		Gdx.app.log("", "" + getBody().getLinearVelocity());
 
 		sprite.setPosition((body.getPosition().x - getOffsetX()) + 0.22f, (body.getPosition().y - getOffsetY()) + 0.17f);
 		return sprite;
