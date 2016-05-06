@@ -1,0 +1,26 @@
+
+portal.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+portal_red
+  rotate: false
+  xy: 0, 0
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+portal_green
+  rotate: false
+  xy: 258, 1
+  size: 256, 511
+  orig: 256, 511
+  offset: 0, 0
+  index: -1
+portal_blue
+  rotate: false
+  xy: 516, 2
+  size: 256, 510
+  orig: 256, 510
+  offset: 0, 0
+  index: -1
