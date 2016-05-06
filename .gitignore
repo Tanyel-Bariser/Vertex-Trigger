@@ -45,6 +45,9 @@ local.properties
 .externalToolBuilders/
 *.launch
 
+## IntelliJ
+.iml
+
 ## NetBeans
 **/nbproject/private/
 build/
