@@ -101,6 +101,10 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		final Vector2 portal1Position = new Vector2(-.8f + portalWidth, -2.5f + portalHeight);
 		final Vector2 portal2Position = new Vector2(2.2f - portalWidth, -2f + portalHeight);
 
-		return new PortalFactory().createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
+		final Array<Portal> portals = new PortalFactory().createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
+		for (final Portal portal : portals) {
+			sprites.add(portal.getSprite());
+		}
+		return portals;
 	}
 }

@@ -12,8 +12,16 @@ public class CollisionDetection implements ContactListener {
 	 */
 	@Override
 	public void beginContact(final Contact contact) {
-		portalTransport(contact);
+		final Fixture[] fixtures = getFixtures(contact);
+		final Collidable[] collidableObjects = getUserData(fixtures);
 
+		portalTransport(collidableObjects);
+
+		final Portal portal = (Portal) getType(Portal.class, collidableObjects);
+		final Bullet bullet = (Bullet) getType(Bullet.class, collidableObjects);
+		if ((bullet != null) && (portal == null)) {
+			bullet.incrementCollisions();
+		}
 		// If player is in contact with an item
 		// Play rewarding pick up sound effect
 		// Notify player that he has an item
@@ -39,9 +47,7 @@ public class CollisionDetection implements ContactListener {
 		// Return user back to main menu screen
 	}
 
-	private void portalTransport(final Contact contact) {
-		final Fixture[] fixtures = getFixtures(contact);
-		final Collidable[] collidableObject = getUserData(fixtures);
+	private void portalTransport(final Collidable[] collidableObject) {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
 		if ((portal != null) && (teleportable != null)) {

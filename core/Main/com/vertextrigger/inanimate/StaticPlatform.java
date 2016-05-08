@@ -22,7 +22,7 @@ public class StaticPlatform implements Collidable {
 		return sprite;
 	}
 
-	public void setPosition() {
+	public void setSpritePosition() {
 		final GameObjectSize platformSize = SMALL_PLATFORM_SIZE;
 		sprite.setPosition(body.getPosition().x - (sprite.getWidth() / platformSize.getOffsetX()), body.getPosition().y
 				- (sprite.getHeight() / platformSize.getOffsetY()));

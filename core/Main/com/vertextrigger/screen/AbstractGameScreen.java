@@ -126,7 +126,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		physicsDebugger.render(world, camera.combined);
+		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 
@@ -189,7 +189,7 @@ public abstract class AbstractGameScreen implements Screen {
 		final float bottomEdge = camera.position.y - (camera.viewportHeight / 2);
 		final float leftEdge = camera.position.x - (camera.viewportWidth / 2);
 		final float rightEdge = camera.position.x + (camera.viewportWidth / 2);
-		final float errorMargin = GameObjectSize.OBJECT_SIZE;
+		final float errorMargin = adjustedPhoneWidth * 0.1f;
 
 		final boolean belowTop = sprite.getY() < (topEdge + errorMargin);
 		final boolean aboveBottom = sprite.getY() > (bottomEdge - errorMargin);

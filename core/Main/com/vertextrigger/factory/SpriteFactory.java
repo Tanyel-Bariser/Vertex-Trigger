@@ -28,23 +28,15 @@ public class SpriteFactory {
 		return createSprite(name, size, VertexTrigger.ASSETS.getLevelSkin());
 	}
 
+	public Sprite createPortalSprite(final String name, final GameObjectSize size) {
+		return createSprite(name, size, VertexTrigger.ASSETS.getPortalSkin());
+	}
+
 	private Sprite createSprite(final String name, final GameObjectSize size, final Skin skin) {
 		final Sprite sprite = skin.getSprite(name);
 		sprite.setSize(size.getSpriteWidth(), size.getSpriteHeight());
 		sprite.setOriginCenter();
 		return new Sprite(sprite);
-	}
-
-	Sprite bullet = null;
-
-	public Sprite createBullet() {
-		if (bullet == null) {
-			bullet = coreSkin.getSprite("bullet");
-			final float radius = 0.5f;
-			bullet.setSize(radius, radius);
-			return bullet;
-		}
-		return new Sprite(bullet);
 	}
 
 	/**
