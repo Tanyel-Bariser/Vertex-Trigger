@@ -20,7 +20,7 @@ public class Gun {
 	/**
 	 * Bullets are shot from the position of the player's gun in the direction the player is facing
 	 */
-	void shoot(final Vector2 position, final boolean gunPointingLeft) {
+	boolean shoot(final Vector2 position, final boolean gunPointingLeft) {
 		if (canShoot) {
 			final Bullet bullet = bulletFactory.createBullet();
 			bullet.getBody().setActive(true);
@@ -41,7 +41,10 @@ public class Gun {
 					canShoot = true;
 				}
 			}, 0.5f);
+
+			return true;
 		}
+		return false;
 	}
 
 }

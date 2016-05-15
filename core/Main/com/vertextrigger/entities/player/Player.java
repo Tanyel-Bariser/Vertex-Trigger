@@ -65,15 +65,16 @@ public class Player implements Mortal {
 	 * Bullets are shot from the position of the player's gun in the direction the player is facing
 	 */
 	public void shoot() {
-		gun.shoot(body.getPosition(), isFacingLeft);
-		animator.setAnimationShooting();
-		isShooting = true;
-		Timer.schedule(new Task() {
-			@Override
-			public void run() {
-				isShooting = false;
-			}
-		}, 0.1f);
+		if (gun.shoot(body.getPosition(), isFacingLeft)) {
+			animator.setAnimationShooting();
+			isShooting = true;
+			Timer.schedule(new Task() {
+				@Override
+				public void run() {
+					isShooting = false;
+				}
+			}, 0.1f);
+		}
 	}
 
 	void setCanJump() {
