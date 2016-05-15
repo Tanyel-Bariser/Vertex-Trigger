@@ -55,9 +55,9 @@ public class Animator {
 	public void setAnimationType() {
 		if (((Mortal) body.getUserData()).isDead()) {
 			setAnimationDeath();
-		} else if (body.getLinearVelocity().y > 0.05) {
+		} else if (body.getLinearVelocity().y > 0.01) {
 			setAnimationRising();
-		} else if (body.getLinearVelocity().y < -0.05) {
+		} else if (body.getLinearVelocity().y < -0.01) {
 			setAnimationFalling();
 		} else if ((body.getLinearVelocity().x > 0.05) || (body.getLinearVelocity().x < -0.05)) {
 			setAnimationMoving();

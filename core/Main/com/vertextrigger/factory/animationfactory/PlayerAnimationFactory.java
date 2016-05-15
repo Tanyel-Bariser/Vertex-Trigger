@@ -40,28 +40,17 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 		return animationCache.get(name);
 	}
 
-	private Sprite[] createSpritesReverseOrder(final String name, final int numOfSprites) {
-		if (!animationCache.containsKey(name)) {
-			final Sprite[] sprites = new Sprite[numOfSprites];
-			for (int i = numOfSprites - 1; i >= 0; i--) {
-				sprites[i] = spriteFactory.createCoreSprite(name + i, size);
-			}
-			animationCache.put(name, sprites);
-		}
-		return animationCache.get(name);
-	}
-
 	@Override
 	protected Animation getRising() {
 		final Animation jumpAnimation = new Animation(.5f, createSprites("jump", 2));
-		jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
+		jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);
 		return jumpAnimation;
 	}
 
 	@Override
 	protected Animation getFalling() {
-		final Animation jumpAnimation = new Animation(.5f, createSpritesReverseOrder("jump", 2));
-		jumpAnimation.setPlayMode(Animation.PlayMode.LOOP);
+		final Animation jumpAnimation = new Animation(.5f, createSprites("jump", 2));
+		jumpAnimation.setPlayMode(Animation.PlayMode.LOOP_REVERSED);
 		return jumpAnimation;
 	}
 
