@@ -3,7 +3,6 @@ Plan: Fix all defects and get assets in place first then read the AI manual, the
 Defects:
 � Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
 � Jumping through portal the first time, inhibits jump height
-� Hide/disable/handle Android buttons (back, menu, etc.)
 
 Assets:
 � Tween death animation properly or Remove unused death sprites [Hugh look into this]
