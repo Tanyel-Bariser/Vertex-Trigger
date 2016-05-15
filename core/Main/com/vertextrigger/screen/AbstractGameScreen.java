@@ -37,6 +37,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private final Array<Mortal> mortalBeings;
 	private final Array<Mortal> deadMortals;
 	private final Array<Sprite> entitySprites;
+	private Sprite playerSprite;
 	private final Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
 	private Array<Sprite> backgroundSprites;
@@ -170,7 +171,12 @@ public abstract class AbstractGameScreen implements Screen {
 		entitySprites.clear();
 		for (final Entity entity : entities) {
 			final Sprite sprite = entity.update(delta);
-			entitySprites.add(sprite);
+
+			if (entity instanceof Player) {
+				playerSprite = sprite;
+			} else {
+				entitySprites.add(sprite);
+			}
 		}
 	}
 
@@ -229,12 +235,15 @@ public abstract class AbstractGameScreen implements Screen {
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+
 		for (final Sprite sprite : visibleEntitySprite) {
 			sprite.draw(batch);
 		}
 		for (final Sprite sprite : backgroundSprites) {
 			sprite.draw(batch);
 		}
+
+		playerSprite.draw(batch);				// draw player sprite last so it is on top of portals
 		batch.end();
 	}
 

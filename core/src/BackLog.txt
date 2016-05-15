@@ -1,33 +1,30 @@
 Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
 
 Defects:
-• Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
-• Jumping through portal the first time, inhibits jump height
-• Hide/disable/handle Android buttons (back, menu, etc.)
+ï¿½ Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
+ï¿½ Jumping through portal the first time, inhibits jump height
+ï¿½ Hide/disable/handle Android buttons (back, menu, etc.)
 
 Assets:
-• Tween death animation properly or Remove unused death sprites [Hugh look into this]
-• Music is restarted at player death [hugh look into]
-• Sound effects don't work first time on Android [hugh look into]
-• Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
-• Sprite for magnet
-• Sprite for metallic shield
-• Add portals to core atlas and rewrite Assets/PortalFactory etc (HUGH)
-• Ensure Player sprite is always in front of other spires, i.e. portal
-• Fix player jumping animation
+ï¿½ Tween death animation properly or Remove unused death sprites [Hugh look into this]
+ï¿½ Sound effects don't work first time on Android [hugh look into]
+ï¿½ Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
+ï¿½ Sprite for magnet
+ï¿½ Sprite for metallic shield
+ï¿½ Fix player jumping animation
 
 Game:
-• Flying monster with predefined path
-• Flying monster shoot metal bullets
-• Magnets pull on metal bullets
-• Make magnets level as prototype
+ï¿½ Flying monster with predefined path
+ï¿½ Flying monster shoot metal bullets
+ï¿½ Magnets pull on metal bullets
+ï¿½ Make magnets level as prototype
 
 Code Quality:
-• Refactor a class and update its unit tests so they all pass
+ï¿½ Refactor a class and update its unit tests so they all pass
 
 R and D:
-• Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
-• Particle explosions
+ï¿½ Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
+ï¿½ Particle explosions
 
 GAME DESIGN EXPLORATION:
 	What if we created a flying monster that shot metal spiked balls, which also bounce off of platforms and
