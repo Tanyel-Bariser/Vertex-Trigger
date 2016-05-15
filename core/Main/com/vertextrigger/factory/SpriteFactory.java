@@ -29,7 +29,7 @@ public class SpriteFactory {
 	}
 
 	public Sprite createPortalSprite(final String name, final GameObjectSize size) {
-		return createSprite(name, size, VertexTrigger.ASSETS.getPortalSkin());
+		return createSprite(name, size, VertexTrigger.ASSETS.getCoreSkin());
 	}
 
 	private Sprite createSprite(final String name, final GameObjectSize size, final Skin skin) {

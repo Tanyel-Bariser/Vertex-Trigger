@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 public class Assets {
 	private Skin coreSkin;
 	private Skin enemySkin;
-	private Skin portalSkin;
 	private Skin mainScreenSkin;
 	private Skin levelSkin;
 	private final AssetManager assetManager;
@@ -64,9 +63,6 @@ public class Assets {
 		final TextureAtlas coreAtlas = assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class);
 		coreSkin = new Skin(coreAtlas);
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
-
-		final TextureAtlas portalAtlas = assetManager.get(ATLASES.PORTAL.getPath(), TextureAtlas.class);
-		portalSkin = new Skin(portalAtlas);
 	}
 
 	private void loadCoreLevelAssets() {
@@ -125,9 +121,5 @@ public class Assets {
 
 	public Skin getLevelSkin() {
 		return levelSkin;
-	}
-
-	public Skin getPortalSkin() {
-		return portalSkin;
 	}
 }
