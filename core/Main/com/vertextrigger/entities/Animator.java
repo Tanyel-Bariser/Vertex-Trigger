@@ -118,6 +118,6 @@ public class Animator {
 			public void run() {
 				entity.setDeathAnimationFinished();
 			}
-		}, animationSet.getDeath().getAnimationDuration() / 2);
+		}, animationSet.getDeath().getAnimationDuration());
 	}
 }

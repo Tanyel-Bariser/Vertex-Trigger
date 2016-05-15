@@ -1,19 +1,25 @@
 package com.vertextrigger.factory.animationfactory;
 
-import static com.vertextrigger.util.GameObjectSize.PLAYER_SIZE;
-
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.util.GameObjectSize;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.vertextrigger.util.GameObjectSize.PLAYER_SIZE;
 
 public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
 	private final SpriteFactory spriteFactory;
 	private final GameObjectSize size;
+	private final Map<String, Sprite[]> animationCache;
 
 	public PlayerAnimationFactory() {
 		spriteFactory = new SpriteFactory();
 		size = PLAYER_SIZE;
+		animationCache = new HashMap<>();
 	}
 
 	@Override
@@ -24,19 +30,25 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 	}
 
 	private Sprite[] createSprites(final String name, final int numOfSprites) {
-		final Sprite[] sprites = new Sprite[numOfSprites];
-		for (int i = 0; i < numOfSprites; i++) {
-			sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+		if (!animationCache.containsKey(name)) {
+			final Sprite[] sprites = new Sprite[numOfSprites];
+			for (int i = 0; i < numOfSprites; i++) {
+				sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+			}
+			animationCache.put(name, sprites);
 		}
-		return sprites;
+		return animationCache.get(name);
 	}
 
 	private Sprite[] createSpritesReverseOrder(final String name, final int numOfSprites) {
-		final Sprite[] sprites = new Sprite[numOfSprites];
-		for (int i = numOfSprites - 1; i >= 0; i--) {
-			sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+		if (!animationCache.containsKey(name)) {
+			final Sprite[] sprites = new Sprite[numOfSprites];
+			for (int i = numOfSprites - 1; i >= 0; i--) {
+				sprites[i] = spriteFactory.createCoreSprite(name + i, size);
+			}
+			animationCache.put(name, sprites);
 		}
-		return sprites;
+		return animationCache.get(name);
 	}
 
 	@Override
@@ -73,7 +85,7 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
 	@Override
 	protected Animation getDeath() {
-		final Animation deathAnimation = new Animation(0.1f, createSprites("death", 3)); // showing 3 of 4 frames looks better
+		final Animation deathAnimation = new Animation(0.2f, createSprites("death", 4)); // showing 3 of 4 frames looks better
 		deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
 		return deathAnimation;
 	}
