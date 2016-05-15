@@ -23,7 +23,7 @@ public class PlatformFactory {
 		final Sprite sprite = new SpriteFactory().createLevelSprite(name, size);
 
 		final StaticPlatform platform = new StaticPlatform(sprite, body);
-		platform.setPosition();
+		platform.setSpritePosition();
 		return platform;
 	}
 }

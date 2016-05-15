@@ -11,11 +11,12 @@ import com.vertextrigger.entities.Entity;
  * Bullets are shot from the player's position horizontally. Bullets are freed 5 seconds after being shot.
  */
 public class Bullet implements Entity {
-	static final float SHOT_POWER = 0.001f;
+	static final float SHOT_POWER = 0.0015f;
 	private final Body body;
 	private final Sprite sprite;
-	private boolean hitPlayer = false;
+	private boolean destroyBullet = false;
 	private Vector2 newPositionFromPortal;
+	private int collisions;
 
 	public Bullet(final Body body, final Sprite sprite) {
 		this.body = body;
@@ -42,11 +43,17 @@ public class Bullet implements Entity {
 	}
 
 	public void setHitPlayer() {
-		hitPlayer = true;
+		destroyBullet = true;
 	}
 
 	public boolean hitPlayer() {
-		return hitPlayer;
+		return destroyBullet;
+	}
+
+	private void checkCollisions() {
+		if (collisions > 4) {
+			destroyBullet = true;
+		}
 	}
 
 	private void shoot(final float horizontalVelocity) {
@@ -84,7 +91,7 @@ public class Bullet implements Entity {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
-
+		checkCollisions();
 		sprite.setPosition((body.getPosition().x - getOffsetX()) + 0.22f, (body.getPosition().y - getOffsetY()) + 0.17f);
 		return sprite;
 	}
@@ -126,7 +133,11 @@ public class Bullet implements Entity {
 
 	public boolean isTooSlow() {
 		final Vector2 velocity = body.getLinearVelocity();
-		final float speedThreshold = 0.5f;
+		final float speedThreshold = 2f;
 		return (velocity.x < speedThreshold) && (velocity.x > -speedThreshold) && (velocity.y < speedThreshold) && (velocity.y > -speedThreshold);
+	}
+
+	public void incrementCollisions() {
+		collisions++;
 	}
 }

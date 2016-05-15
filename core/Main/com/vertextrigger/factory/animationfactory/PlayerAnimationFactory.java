@@ -56,8 +56,8 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 	@Override
 	protected Animation getStanding() {
 		final Sprite[] standingSprite = new Sprite[] {
-		// shoot1 sprite is the best image for the player standing
-		spriteFactory.createCoreSprite("shoot1", size), };
+				// shoot1 sprite is the best image for the player standing
+				spriteFactory.createCoreSprite("shoot1", size), };
 
 		final Animation jumpAnimation = new Animation(0.1f, standingSprite);
 		jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);

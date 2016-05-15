@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.collisiondetection.Collidable;
+import com.vertextrigger.util.GameObjectSize;
 
 public class Portal implements Collidable {
 	private final Body body;
@@ -17,6 +18,7 @@ public class Portal implements Collidable {
 		this.sprite = sprite;
 		this.teleportation = teleportation;
 		setUserData(body);
+		setSpritePosition();
 	}
 
 	/**
@@ -28,6 +30,12 @@ public class Portal implements Collidable {
 			pairedPortal.disable();
 			teleportation.teleport(body, getPairedPosition());
 		}
+	}
+
+	public void setSpritePosition() {
+		final GameObjectSize platformSize = GameObjectSize.PORTAL_SIZE;
+		sprite.setPosition(body.getPosition().x - (sprite.getWidth() / platformSize.getOffsetX()), body.getPosition().y
+				- (sprite.getHeight() / platformSize.getOffsetY()));
 	}
 
 	private void disable() {

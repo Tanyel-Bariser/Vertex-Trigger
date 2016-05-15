@@ -1,18 +1,20 @@
+Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
+
 Defects:
-• Game is much slower on big screen, when connecting my laptop to a TV [Tanyel look into this]
+• Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
 • Jumping through portal the first time, inhibits jump height
-• Reduce number of bullets allowed at any one time
 • Hide/disable/handle Android buttons (back, menu, etc.)
 
 Assets:
 • Tween death animation properly or Remove unused death sprites [Hugh look into this]
 • Music is restarted at player death [hugh look into]
 • Sound effects don't work first time on Android [hugh look into]
-• Replace jump button with an up arrow [hugh regen atlas at home]
-• Find portal sprite [hugh regen atlas at home]
 • Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
 • Sprite for magnet
 • Sprite for metallic shield
+• Add portals to core atlas and rewrite Assets/PortalFactory etc (HUGH)
+• Ensure Player sprite is always in front of other spires, i.e. portal
+• Fix player jumping animation
 
 Game:
 • Flying monster with predefined path
