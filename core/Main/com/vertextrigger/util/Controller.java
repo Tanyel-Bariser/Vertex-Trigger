@@ -41,7 +41,7 @@ public class Controller implements InputProcessor {
 		if (isAndroidDevice) {
 			createLeftButton(new ImageButton(getLeftButton()));
 			createRightButton(new ImageButton(getRightButton()));
-			createPauseButton(new ImageButton(getPauseButton()));
+			createPauseButton(new ImageButton(getPauseButton(), null, getResumeButton()));
 			createShootButton(new ImageButton(getShootButton()));
 			createJumpButton(new ImageButton(getJumpButton()));
 
@@ -61,7 +61,7 @@ public class Controller implements InputProcessor {
 	}
 
 	/**
-	 * Overriden by unit tests to set the device type for testing either Android or desktop
+	 * Overridden by unit tests to set the device type for testing either Android or desktop
 	 */
 	void setDeviceType() {
 		isAndroidDevice = Gdx.app.getType() == ApplicationType.Android;
@@ -81,6 +81,10 @@ public class Controller implements InputProcessor {
 
 	Drawable getPauseButton() {
 		return VertexTrigger.ASSETS.getPauseButton();
+	}
+
+	Drawable getResumeButton() {
+		return VertexTrigger.ASSETS.getResumeButton();
 	}
 
 	Drawable getShootButton() {

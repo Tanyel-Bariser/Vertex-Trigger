@@ -111,6 +111,10 @@ public class Assets {
 		return coreSkin.getDrawable("pauseButton");
 	}
 
+	public Drawable getResumeButton() {
+		return coreSkin.getDrawable("resumeButton");
+	}
+
 	public Skin getCoreSkin() {
 		return coreSkin;
 	}
