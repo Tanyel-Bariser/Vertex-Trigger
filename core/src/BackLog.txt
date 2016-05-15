@@ -4,8 +4,8 @@ Defects:
 � Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
 � Sound effects don't work first time on Android [hugh look into]
 � Tween death animation properly or Remove unused death sprites [Hugh look into this]
-� Jumping through portal the first time, inhibits jump height
-� Fix player jumping animation [possibly done but ask tanyel his opinion]
+� Jumping through portal the first time, inhibits jump height [CANNOT REPRODUCE - 15/5/16]
+� Fix player jumping animation [POSSIBLY DONE BUT ASK TANYEL HIS OPINION]
 
 Assets:
 � Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
