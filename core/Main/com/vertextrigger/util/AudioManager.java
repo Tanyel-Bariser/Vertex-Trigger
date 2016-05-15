@@ -76,7 +76,6 @@ public class AudioManager {
 	 * music in the setting
 	 */
 	public static void playLevelOneMusic() {
-		stopAllMusic();
 		playMusic(LEVEL_ONE, true);
 	}
 
@@ -85,7 +84,6 @@ public class AudioManager {
 	 * music in the setting
 	 */
 	public static void playLevelTwoMusic() {
-		stopAllMusic();
 		playMusic(LEVEL_TWO, true);
 	}
 
@@ -182,6 +180,7 @@ public class AudioManager {
 	 */
 	private static void playMusic(final MUSIC music, final boolean loop) {
 		if (!activeMusic.containsKey(music.name())) {
+			stopAllMusic();								// stop all other music from playing
 			startMusic(music, loop);
 		}
 		resumeMusic(activeMusic.get(music.name()));
