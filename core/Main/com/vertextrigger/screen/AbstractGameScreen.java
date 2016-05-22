@@ -37,7 +37,6 @@ public abstract class AbstractGameScreen implements Screen {
 	private final Array<Mortal> mortalBeings;
 	private final Array<Mortal> deadMortals;
 	private final Array<Sprite> entitySprites;
-	private Sprite playerSprite;
 	private final Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
 	private Array<Sprite> backgroundSprites;
@@ -105,14 +104,36 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 	}
 
-	/**
-	 * Render method is invoked repeatedly once per frame, approximately 60 frames per second, during the game
-	 */
+	private final FPSLogger fpsLogger = new FPSLogger();
+	private float acc = 0;
+	private long diff, start = System.currentTimeMillis();
+	private final int maxFPS = 30;
+
+	public void limitToMax30FPS() {
+		if (maxFPS > 0) {
+			diff = System.currentTimeMillis() - start;
+			final long targetDelay = 1000 / maxFPS;
+			if (diff < targetDelay) {
+				try {
+					Thread.sleep(targetDelay - diff);
+				} catch (final InterruptedException e) {
+				}
+			}
+			start = System.currentTimeMillis();
+		}
+	}
+
 	@Override
 	public void render(final float delta) {
+		// fpsLogger.log();
 		clearScreen();
 		if (state == State.RUNNING) {
-			updateWorld(delta);
+			// limitToMax30FPS();
+			acc += delta;
+			while (acc >= TIMESTEP) {
+				updateWorld(delta);
+				acc -= TIMESTEP;
+			}
 			updateEntities(delta);
 			updateCamera();
 		}
@@ -161,8 +182,6 @@ public abstract class AbstractGameScreen implements Screen {
 	}
 
 	private void updateWorld(final float delta) {
-		final float adjustedDelta = approxFPS * delta;
-		GRAVITY.y = baseGravity * adjustedDelta * adjustedDelta;
 		world.setGravity(GRAVITY);
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 	}
@@ -171,12 +190,7 @@ public abstract class AbstractGameScreen implements Screen {
 		entitySprites.clear();
 		for (final Entity entity : entities) {
 			final Sprite sprite = entity.update(delta);
-
-			if (entity instanceof Player) {
-				playerSprite = sprite;
-			} else {
-				entitySprites.add(sprite);
-			}
+			entitySprites.add(sprite);
 		}
 	}
 
@@ -235,15 +249,12 @@ public abstract class AbstractGameScreen implements Screen {
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-
 		for (final Sprite sprite : visibleEntitySprite) {
 			sprite.draw(batch);
 		}
 		for (final Sprite sprite : backgroundSprites) {
 			sprite.draw(batch);
 		}
-
-		playerSprite.draw(batch);				// draw player sprite last so it is on top of portals
 		batch.end();
 	}
 

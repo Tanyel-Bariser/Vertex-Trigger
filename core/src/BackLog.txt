@@ -1,7 +1,6 @@
 Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
 
 Defects:
-� Game is much slower on big screen, when connecting my laptop to a TV, add FPS display [Tanyel look into this]
 � Sound effects don't work first time on Android [hugh look into]
 � Tween death animation properly or Remove unused death sprites [Hugh look into this]
 � Jumping through portal the first time, inhibits jump height [CANNOT REPRODUCE - 15/5/16]

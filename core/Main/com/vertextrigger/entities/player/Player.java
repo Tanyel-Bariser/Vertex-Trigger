@@ -20,8 +20,6 @@ public class Player implements Mortal {
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
 	private float movement = 0;
-	private float additionalHorizontalForce = 0;
-	private float onSticky = 1;
 	boolean isFacingLeft;
 	private boolean isDead;
 
@@ -113,17 +111,11 @@ public class Player implements Mortal {
 		}
 
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
-		// movePlayer(delta);
 		if (!isShooting) {
 			animator.setAnimationType();
 		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
-	}
-
-	private void movePlayer(final float delta) {
-		final float totalHorizontalMovement = (movement + additionalHorizontalForce) * onSticky;
-		body.setLinearVelocity(totalHorizontalMovement * delta, body.getLinearVelocity().y * delta);
 	}
 
 	public void moveLeft() {
@@ -136,29 +128,6 @@ public class Player implements Mortal {
 
 	public void stopMoving() {
 		movement = 0;
-	}
-
-	/**
-	 * Allows application of additional horizontal force on player, for example, if standing on a push/pull, i.e. conveyor belt, platform
-	 *
-	 * @param horizontalForce
-	 */
-	public void additionalExternalHorizontalForce(final float horizontalForce) {
-		additionalHorizontalForce = horizontalForce;
-	}
-
-	/**
-	 * Halves normal player horizontal speed
-	 */
-	public void setOnStickyPlatform() {
-		onSticky = 0.5f;
-	}
-
-	/**
-	 * Restores normal player horizontal speed
-	 */
-	public void setOffStickyPlatform() {
-		onSticky = 1;
 	}
 
 	@Override
