@@ -57,7 +57,7 @@ public class AnimatorTest {
 	public void givenSpriteFacingRightWhenPlayerMovingLeftThenSpriteShouldFlipLeft() {
 		when(sprite.isFlipX()).thenReturn(false);
 		animator.setHorizontalMovement(movingLeft);
-		animator.getUpdatedSprite(delta, angle, position);
+		animator.getUpdatedSprite(delta, position, angle);
 		verify(sprite).flip(true, false);
 	}
 
@@ -65,13 +65,13 @@ public class AnimatorTest {
 	public void givenSpriteFacingLeftWhenPlayerIsMovingLeftThenSpriteShouldNotFlipRight() {
 		when(sprite.isFlipX()).thenReturn(true);
 		animator.setHorizontalMovement(movingLeft);
-		animator.getUpdatedSprite(delta, angle, position);
+		animator.getUpdatedSprite(delta, position, angle);
 		verify(sprite, never()).flip(true, false);
 	}
 
 	@Test
 	public void whenPlayerUpdatedDeltaIsAddedToFrame() {
-		animator.getUpdatedSprite(delta, angle, position);
+		animator.getUpdatedSprite(delta, position, angle);
 		verify(animation).getKeyFrame(delta);
 	}
 
