@@ -34,11 +34,8 @@ public class ExplodingPlatform extends TimedPlatform {
 		return null;
 	}
 
-	/**
-	 *
-	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		return null;
 	}
 

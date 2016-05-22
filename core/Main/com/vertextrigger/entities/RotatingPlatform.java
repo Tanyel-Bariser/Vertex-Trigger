@@ -35,7 +35,7 @@ public class RotatingPlatform extends TimedPlatform {
 	 *
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		return null;
 	}
 

@@ -19,6 +19,7 @@ public abstract class AbstractEnemy implements Mortal {
 	protected Vector2 newPositionFromPortal;
 	protected boolean facingLeft;
 	protected boolean isDeathAnimationFinished;
+	private final InterpolatedPosition enemyState;
 
 	public AbstractEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet) {
 		path = null;
@@ -29,6 +30,7 @@ public abstract class AbstractEnemy implements Mortal {
 		animator = new Animator(animationSet);
 		animator.setEntity(this);
 		setUserData(body);
+		enemyState = new InterpolatedPosition(this.body);
 	}
 
 	@Override
@@ -47,12 +49,12 @@ public abstract class AbstractEnemy implements Mortal {
 	 * @return updated enemy sprite
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
-		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
+		return animator.getUpdatedSprite(delta, enemyState.getNewPosition(alpha, body), enemyState.getNewAngle(alpha, body));
 		// Move enemy further along it's predefined path based on delta
 		// Update enemy sprite based on animation
 		// Set enemy's sprite position & angle to match
@@ -107,5 +109,10 @@ public abstract class AbstractEnemy implements Mortal {
 	@Override
 	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
 		this.newPositionFromPortal = newPositionFromPortal;
+	}
+
+	@Override
+	public void cachePosition() {
+		enemyState.setState(body);
 	}
 }

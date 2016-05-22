@@ -13,6 +13,8 @@ public abstract class TimedPlatform implements Entity {
 	protected Sprite sprite;
 	protected Animation animation;
 	protected Vector2 newPositionFromPortal;
+	protected Body body;
+	private final InterpolatedPosition platformState;
 
 	/**
 	 * Initialises the physical properties of the platform's physical body Sets platforms's sprite & animation
@@ -27,6 +29,7 @@ public abstract class TimedPlatform implements Entity {
 		setupSpriteAnimation();
 		// Create physical platform body
 		setUserData(null);
+		platformState = new InterpolatedPosition(body);
 	}
 
 	/**
@@ -53,7 +56,7 @@ public abstract class TimedPlatform implements Entity {
 	 * @return updated platform's sprite
 	 */
 	@Override
-	public abstract Sprite update(final float delta);
+	public abstract Sprite update(final float delta, final float alpha);
 
 	@Override
 	public void setUserData(final Body body) {
@@ -63,5 +66,10 @@ public abstract class TimedPlatform implements Entity {
 	@Override
 	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
 		this.newPositionFromPortal = newPositionFromPortal;
+	}
+
+	@Override
+	public void cachePosition() {
+		platformState.setState(body);
 	}
 }

@@ -5,7 +5,7 @@ import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.*;
 
 /**
  * Bullets are shot from the player's position horizontally. Bullets are freed 5 seconds after being shot.
@@ -17,11 +17,13 @@ public class Bullet implements Entity {
 	private boolean destroyBullet = false;
 	private Vector2 newPositionFromPortal;
 	private int collisions;
+	private final InterpolatedPosition bulletState;
 
 	public Bullet(final Body body, final Sprite sprite) {
 		this.body = body;
 		this.sprite = sprite;
 		setUserData(body);
+		bulletState = new InterpolatedPosition(this.body);
 	}
 
 	Vector2 getPosition() {
@@ -86,13 +88,15 @@ public class Bullet implements Entity {
 	 * @return updated sprite of this bullet
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
+			bulletState.setState(body);
 			setNewPositionFromPortal(null);
 		}
 		checkCollisions();
-		sprite.setPosition((body.getPosition().x - getOffsetX()) + 0.22f, (body.getPosition().y - getOffsetY()) + 0.17f);
+		final Vector2 newPosition = bulletState.getNewPosition(alpha, body);
+		sprite.setPosition((newPosition.x - getOffsetX()) + 0.22f, (newPosition.y - getOffsetY()) + 0.17f);
 		return sprite;
 	}
 
@@ -139,5 +143,10 @@ public class Bullet implements Entity {
 
 	public void incrementCollisions() {
 		collisions++;
+	}
+
+	@Override
+	public void cachePosition() {
+		bulletState.setState(body);
 	}
 }

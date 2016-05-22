@@ -131,10 +131,13 @@ public abstract class AbstractGameScreen implements Screen {
 			// limitToMax30FPS();
 			acc += delta;
 			while (acc >= TIMESTEP) {
+				cachePreviousEntityPositions();
 				updateWorld(delta);
 				acc -= TIMESTEP;
 			}
-			updateEntities(delta);
+
+			final float alpha = acc / TIMESTEP;
+			updateEntities(delta, alpha);
 			updateCamera();
 		}
 
@@ -150,6 +153,12 @@ public abstract class AbstractGameScreen implements Screen {
 		stage.draw();
 		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
+	}
+
+	private void cachePreviousEntityPositions() {
+		for (final Entity entity : entities) {
+			entity.cachePosition();
+		}
 	}
 
 	private void clearScreen() {
@@ -186,10 +195,10 @@ public abstract class AbstractGameScreen implements Screen {
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 	}
 
-	private void updateEntities(final float delta) {
+	private void updateEntities(final float delta, final float alpha) {
 		entitySprites.clear();
 		for (final Entity entity : entities) {
-			final Sprite sprite = entity.update(delta);
+			final Sprite sprite = entity.update(delta, alpha);
 			entitySprites.add(sprite);
 		}
 	}

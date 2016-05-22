@@ -15,9 +15,10 @@ public interface Entity extends Teleportable {
 	 *
 	 * @param delta
 	 *            time passed between the previous & current frame
+	 * @param alpha
 	 * @return updated sprite position for rendering of current frame
 	 */
-	Sprite update(final float delta);
+	Sprite update(final float delta, final float alpha);
 
 	@Override
 	Body getBody();
@@ -29,4 +30,6 @@ public interface Entity extends Teleportable {
 	float getOffsetX();
 
 	float getOffsetY();
+
+	void cachePosition();
 }

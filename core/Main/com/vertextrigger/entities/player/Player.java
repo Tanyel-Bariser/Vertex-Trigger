@@ -22,6 +22,7 @@ public class Player implements Mortal {
 	private float movement = 0;
 	boolean isFacingLeft;
 	private boolean isDead;
+	private final InterpolatedPosition playerState;
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
 		this.initialPosition = initialPosition;
@@ -31,6 +32,7 @@ public class Player implements Mortal {
 		isDead = false;
 		animator.setEntity(this);
 		setUserData(body);
+		playerState = new InterpolatedPosition(this.body);
 	}
 
 	@Override
@@ -104,9 +106,10 @@ public class Player implements Mortal {
 	 * @return updated player sprite
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
+			playerState.setState(body);
 			setNewPositionFromPortal(null);
 		}
 
@@ -115,7 +118,7 @@ public class Player implements Mortal {
 			animator.setAnimationType();
 		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
-		return animator.getUpdatedSprite(delta, body.getAngle(), body.getPosition());
+		return animator.getUpdatedSprite(delta, playerState.getNewPosition(alpha, body), playerState.getNewAngle(alpha, body));
 	}
 
 	public void moveLeft() {
@@ -185,5 +188,10 @@ public class Player implements Mortal {
 	@Override
 	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
 		this.newPositionFromPortal = newPositionFromPortal;
+	}
+
+	@Override
+	public void cachePosition() {
+		playerState.setState(body);
 	}
 }

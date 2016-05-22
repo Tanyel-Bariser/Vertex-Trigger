@@ -40,14 +40,14 @@ public class Animator {
 	float currentAngle = 0;
 	float frameTime;
 
-	public Sprite getUpdatedSprite(final float delta, final float bodyAngle, final Vector2 newPosition) {
+	public Sprite getUpdatedSprite(final float delta, final Vector2 position, final float angle) {
 		frameTime += delta;
 		final Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
 
-		final float newRotation = getNewRotation(bodyAngle);
+		final float newRotation = getNewRotation(angle);
 		sprite.rotate(newRotation);
 		currentAngle = sprite.getRotation();
-		sprite.setPosition(newPosition.x - (sprite.getWidth() / entity.getOffsetX()), newPosition.y - (sprite.getHeight() / entity.getOffsetY()));
+		sprite.setPosition(position.x - (sprite.getWidth() / entity.getOffsetX()), position.y - (sprite.getHeight() / entity.getOffsetY()));
 		faceSpriteCorrectDirection(sprite);
 		return sprite;
 	}

@@ -15,6 +15,7 @@ public abstract class DangerousBall implements Entity {
 	protected Sprite sprite;
 	protected float speed;
 	protected Vector2 newPositionFromPortal;
+	private final InterpolatedPosition ballState;
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body Sets Dangerous Ball's sprite, could be fire ball or spiked ball, etc.
@@ -34,6 +35,7 @@ public abstract class DangerousBall implements Entity {
 		// for the dangerous ball to follow in a loop
 		path = new Path(body, coordinates);
 		setUserData(body);
+		ballState = new InterpolatedPosition(body);
 	}
 
 	/**
@@ -55,7 +57,7 @@ public abstract class DangerousBall implements Entity {
 	 * @return updated sprite of this dangerous ball
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		// Move dangerous ball along it's predefined path based on delta
 		// Set dangerous ball's sprite position & angle to match
 		// the new position of dangerous ball's physical body
@@ -71,5 +73,10 @@ public abstract class DangerousBall implements Entity {
 	@Override
 	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
 		this.newPositionFromPortal = newPositionFromPortal;
+	}
+
+	@Override
+	public void cachePosition() {
+		ballState.setState(body);
 	}
 }

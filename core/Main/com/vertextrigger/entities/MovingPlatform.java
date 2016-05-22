@@ -51,7 +51,7 @@ public abstract class MovingPlatform implements Entity {
 	 * @return updated sprite of this moving platform
 	 */
 	@Override
-	public Sprite update(final float delta) {
+	public Sprite update(final float delta, final float alpha) {
 		// Move platform along it's predefined path based on delta
 		// Set moving platform's sprite position & angle to match
 		// the new position of the platform's physical body
