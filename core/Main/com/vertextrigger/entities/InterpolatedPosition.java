@@ -23,8 +23,8 @@ public class InterpolatedPosition {
 	}
 
 	private void interpolatePosition(final float alpha, final Body body) {
-		newPosition.x = (body.getPosition().x * alpha) + (previousPosition.x * (1.0f - alpha));
-		newPosition.y = (body.getPosition().y * alpha) + (previousPosition.y * (1.0f - alpha));
+		newPosition.x = body.getPosition().x + ((body.getPosition().x - previousPosition.x) * alpha);
+		newPosition.y = body.getPosition().y + ((body.getPosition().y - previousPosition.y) * alpha);
 	}
 
 	private void interpolateAngle(final float alpha, final Body body) {
