@@ -91,7 +91,7 @@ public class Bullet implements Entity {
 	public Sprite update(final float delta, final float alpha) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
-			bulletState.setState(body);
+			cachePosition();
 			setNewPositionFromPortal(null);
 		}
 		checkCollisions();

@@ -116,9 +116,7 @@ public class Controller implements InputProcessor {
 
 			@Override
 			public void touchUp(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-				if (isControllable()) {
-					player.stopMoving();
-				}
+				player.stopMoving();
 			}
 		};
 	}
@@ -149,9 +147,7 @@ public class Controller implements InputProcessor {
 
 			@Override
 			public void touchUp(final InputEvent event, final float x, final float y, final int pointer, final int button) {
-				if (isControllable()) {
-					player.stopMoving();
-				}
+				player.stopMoving();
 			}
 		};
 	}
@@ -223,14 +219,13 @@ public class Controller implements InputProcessor {
 	 */
 	@Override
 	public boolean keyDown(final int keycode) {
-		if (player.isDead()) {
-			return false;
-		}
-
-		// deal with pause separately as we want to disable all other input if
-		// the game is paused
+		// deal with pause separately as we want to disable all other input if the game is paused
 		if (keycode == Input.Keys.P) {
 			togglePause();
+		}
+
+		if (isControllable() == false) {
+			return false;
 		}
 
 		// if game is paused then buttons do not work

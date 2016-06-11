@@ -109,7 +109,7 @@ public class Player implements Mortal {
 	public Sprite update(final float delta, final float alpha) {
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
-			playerState.setState(body);
+			cachePosition();
 			setNewPositionFromPortal(null);
 		}
 
@@ -145,6 +145,7 @@ public class Player implements Mortal {
 
 	@Override
 	public void setDead() {
+		stopMoving();
 		isDead = true;
 	}
 
