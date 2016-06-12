@@ -1,9 +1,11 @@
 package com.vertextrigger.entities;
 
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 public class Animator {
@@ -112,6 +114,15 @@ public class Animator {
 	}
 
 	public void playDeathAnimation(final Mortal entity) {
+		// reset frame time to 0 before starting death animation to fix bug where it would skip instantly to the last frame
+		// frame time is used to get the correct sprite for the current animation based on how far we are into the animation
+		// if the world had been running for a bit, the frame time value was high enough to get the last frame of the animation straight away
+		// this led to the inconsistent behaviour we observed: if the player died soon enough into a new world,
+		// the animation played fine. only when some time had passed before death did it play badly
+		//TODO understand why did this not happen with other animations (possibly because most others are loops
+		//TODO for which it makes sense not to ever zero the frame time
+		frameTime = 0;
+
 		setAnimationDeath();
 		Timer.schedule(new Task() {
 			@Override
