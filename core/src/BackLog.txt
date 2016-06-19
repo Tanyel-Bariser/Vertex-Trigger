@@ -2,7 +2,6 @@ Plan: Fix all defects and get assets in place first then read the AI manual, the
 
 Defects:
 � Sound effects don't work first time on Android [hugh look into]
-� Look into amination frametime
 � Sometimes game simulation stops, we think it's due to excessive asset load
 
 Assets:
