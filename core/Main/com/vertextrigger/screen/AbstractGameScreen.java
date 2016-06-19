@@ -44,6 +44,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private final Stage stage;
 	private static final float roomForThumbs;
 	private static final float maxDelta = 0.05f;
+	private final Array<Sprite> visibleSprites = new Array<Sprite>();
 
 	protected abstract void initialiseAssets();
 
@@ -199,18 +200,28 @@ public abstract class AbstractGameScreen implements Screen {
 		entitySprites.clear();
 		for (final Entity entity : entities) {
 			final Sprite sprite = entity.update(delta, alpha);
-			entitySprites.add(sprite);
+			Sprite playerSprite = null;
+			if (entity instanceof Player) {
+				playerSprite = sprite;
+			} else {
+				entitySprites.add(sprite);
+			}
+
+			// Add playerSprite last in ordered array so is drawn last to screen so is on top of other images
+			if (playerSprite != null) {
+				entitySprites.add(playerSprite);
+			}
 		}
 	}
 
 	private Array<Sprite> getVisibleSprites() {
-		final Array<Sprite> sprites = new Array<Sprite>();
+		visibleSprites.clear();
 		for (final Sprite sprite : entitySprites) {
 			if (isInScreen(sprite)) {
-				sprites.add(sprite);
+				visibleSprites.add(sprite);
 			}
 		}
-		return entitySprites;
+		return visibleSprites;
 	}
 
 	private boolean isInScreen(final Sprite sprite) {
@@ -258,10 +269,10 @@ public abstract class AbstractGameScreen implements Screen {
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		for (final Sprite sprite : visibleEntitySprite) {
+		for (final Sprite sprite : backgroundSprites) {
 			sprite.draw(batch);
 		}
-		for (final Sprite sprite : backgroundSprites) {
+		for (final Sprite sprite : visibleEntitySprite) {
 			sprite.draw(batch);
 		}
 		batch.end();
