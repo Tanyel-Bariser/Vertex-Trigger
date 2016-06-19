@@ -18,6 +18,8 @@ public class Bullet implements Entity {
 	private Vector2 newPositionFromPortal;
 	private int collisions;
 	private final InterpolatedPosition bulletState;
+	private boolean canTeleport = true;
+	private boolean exitedFirstPortal;
 
 	public Bullet(final Body body, final Sprite sprite) {
 		this.body = body;
@@ -148,5 +150,20 @@ public class Bullet implements Entity {
 	@Override
 	public void cachePosition() {
 		bulletState.setState(body);
+	}
+
+	@Override
+	public boolean canTeleport() {
+		return canTeleport;
+	}
+
+	@Override
+	public void setTeleportable(final boolean canTeleport) {
+		if ((canTeleport == true) && (exitedFirstPortal == false)) {
+			exitedFirstPortal = true;
+		} else {
+			exitedFirstPortal = false;
+			this.canTeleport = canTeleport;
+		}
 	}
 }

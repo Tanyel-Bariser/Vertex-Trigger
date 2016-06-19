@@ -15,6 +15,8 @@ public abstract class TimedPlatform implements Entity {
 	protected Vector2 newPositionFromPortal;
 	protected Body body;
 	private final InterpolatedPosition platformState;
+	private boolean canTeleport = true;
+	private boolean exitedFirstPortal;
 
 	/**
 	 * Initialises the physical properties of the platform's physical body Sets platforms's sprite & animation
@@ -71,5 +73,20 @@ public abstract class TimedPlatform implements Entity {
 	@Override
 	public void cachePosition() {
 		platformState.setState(body);
+	}
+
+	@Override
+	public boolean canTeleport() {
+		return canTeleport;
+	}
+
+	@Override
+	public void setTeleportable(final boolean canTeleport) {
+		if ((canTeleport == true) && (exitedFirstPortal == false)) {
+			exitedFirstPortal = true;
+		} else {
+			exitedFirstPortal = false;
+			this.canTeleport = canTeleport;
+		}
 	}
 }

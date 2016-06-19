@@ -8,4 +8,8 @@ public interface Teleportable extends Collidable {
 	void setNewPositionFromPortal(final Vector2 newPositionFromPortal);
 
 	Body getBody();
+
+	boolean canTeleport();
+
+	void setTeleportable(final boolean canTeleport);
 }

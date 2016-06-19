@@ -11,7 +11,6 @@ public class Portal implements Collidable {
 	private final Sprite sprite;
 	private final PortalTeleportation teleportation;
 	private Portal pairedPortal;
-	private boolean isDisabled;
 
 	Portal(final Body body, final Sprite sprite, final PortalTeleportation teleportation) {
 		this.body = body;
@@ -26,24 +25,13 @@ public class Portal implements Collidable {
 	 *            that enters portal to be teleported to the paired portal
 	 */
 	public void teleport(final Body body) {
-		if (isDisabled == false) {
-			pairedPortal.disable();
-			teleportation.teleport(body, getPairedPosition());
-		}
+		teleportation.teleport(body, getPairedPosition());
 	}
 
 	public void setSpritePosition() {
 		final GameObjectSize platformSize = GameObjectSize.PORTAL_SIZE;
 		sprite.setPosition(body.getPosition().x - (sprite.getWidth() / platformSize.getOffsetX()), body.getPosition().y
 				- (sprite.getHeight() / platformSize.getOffsetY()));
-	}
-
-	private void disable() {
-		isDisabled = true;
-	}
-
-	public void enable() {
-		isDisabled = false;
 	}
 
 	Vector2 getPosition() {

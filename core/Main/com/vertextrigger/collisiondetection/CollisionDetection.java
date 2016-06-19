@@ -1,6 +1,5 @@
 package com.vertextrigger.collisiondetection;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.entities.player.*;
@@ -50,15 +49,17 @@ public class CollisionDetection implements ContactListener {
 	private void portalTransport(final Collidable[] collidableObject) {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
-		if ((portal != null) && (teleportable != null)) {
+		if ((portal != null) && (teleportable != null) && teleportable.canTeleport()) {
+			teleportable.setTeleportable(false);
 			portal.teleport(teleportable.getBody());
 		}
 	}
 
-	private void reenablePortals(final Collidable[] collidableObject) {
+	private void resetTeleportable(final Collidable[] collidableObject) {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
-		if (portal != null) {
-			portal.enable();
+		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
+		if ((portal != null) && (teleportable != null)) {
+			teleportable.setTeleportable(true);
 		}
 	}
 
@@ -144,14 +145,6 @@ public class CollisionDetection implements ContactListener {
 		return null;
 	}
 
-	private Vector2 getPosition(final Fixture fixture) {
-		return fixture.getBody().getPosition();
-	}
-
-	private float getAngle(final Fixture fixture) {
-		return fixture.getBody().getAngle();
-	}
-
 	/**
 	 * This method is called once when two game objects are no longer in contact with each other.
 	 */
@@ -160,7 +153,7 @@ public class CollisionDetection implements ContactListener {
 		final Fixture[] fixtures = getFixtures(contact);
 		final Collidable[] contactBodies = getUserData(fixtures);
 
-		reenablePortals(contactBodies);
+		resetTeleportable(contactBodies);
 
 		final PlayerFeet playerFeet = (PlayerFeet) getType(PlayerFeet.class, contactBodies);
 		if (playerFeet != null) {

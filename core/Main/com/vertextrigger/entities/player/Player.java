@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
-import com.vertextrigger.util.*;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
@@ -22,6 +22,11 @@ public class Player implements Mortal {
 	boolean isFacingLeft;
 	private boolean isDead;
 	private final InterpolatedPosition playerState;
+	boolean isShooting;
+	private boolean isDeathAnimationFinished;
+	private Vector2 newPositionFromPortal;
+	private boolean canTeleport = true;
+	private boolean exitedFirstPortal;
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
 		this.initialPosition = initialPosition;
@@ -82,10 +87,6 @@ public class Player implements Mortal {
 			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x, body.getWorldCenter().y, wakeForSimulation);
 		}
 	}
-
-	boolean isShooting;
-	private boolean isDeathAnimationFinished;
-	private Vector2 newPositionFromPortal;
 
 	/**
 	 * Moves physical body of player left or right. Chooses appropriate player sprite based on animation. Returns the updated player's sprite for
@@ -181,5 +182,20 @@ public class Player implements Mortal {
 	@Override
 	public void cachePosition() {
 		playerState.setState(body);
+	}
+
+	@Override
+	public boolean canTeleport() {
+		return canTeleport;
+	}
+
+	@Override
+	public void setTeleportable(final boolean canTeleport) {
+		if ((canTeleport == true) && (exitedFirstPortal == false)) {
+			exitedFirstPortal = true;
+		} else {
+			exitedFirstPortal = false;
+			this.canTeleport = canTeleport;
+		}
 	}
 }
