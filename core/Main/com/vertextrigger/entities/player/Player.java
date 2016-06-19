@@ -3,8 +3,6 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.*;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.util.*;
 
@@ -65,16 +63,7 @@ public class Player implements Mortal {
 	 * Bullets are shot from the position of the player's gun in the direction the player is facing
 	 */
 	public void shoot() {
-		if (gun.shoot(body.getPosition(), isFacingLeft)) {
-			animator.setAnimationShooting();
-			isShooting = true;
-			Timer.schedule(new Task() {
-				@Override
-				public void run() {
-					isShooting = false;
-				}
-			}, 0.1f);
-		}
+		animator.playShootAnimation(gun.shoot(body.getPosition(), isFacingLeft));
 	}
 
 	void setCanJump() {
@@ -114,9 +103,6 @@ public class Player implements Mortal {
 		}
 
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
-		if (!isShooting) {
-			animator.setAnimationType();
-		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, playerState.getNewPosition(alpha, body), playerState.getNewAngle(alpha, body));
 	}

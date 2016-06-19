@@ -1,11 +1,9 @@
 package com.vertextrigger.entities;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
 
 public class Animator {
@@ -14,6 +12,9 @@ public class Animator {
 	private Animation currentAnimation;
 	private final AnimationSet animationSet;
 	private boolean movingLeft;
+	private float currentAngle = 0;
+	private float frameTime;
+	private boolean isAnimationTypeUpdateable = true;
 
 	public Animator(final AnimationSet animationSet) {
 		this.animationSet = animationSet;
@@ -39,10 +40,10 @@ public class Animator {
 		return movingLeft;
 	}
 
-	float currentAngle = 0;
-	float frameTime;
-
 	public Sprite getUpdatedSprite(final float delta, final Vector2 position, final float angle) {
+		if (isAnimationTypeUpdateable) {
+			setAnimationType();
+		}
 		frameTime += delta;
 		final Sprite sprite = (Sprite) currentAnimation.getKeyFrame(frameTime);
 
@@ -56,36 +57,31 @@ public class Animator {
 
 	public void setAnimationType() {
 		if (((Mortal) body.getUserData()).isDead()) {
-			setAnimationDeath();
+			setAnimation(animationSet.getDeath());
 		} else if (body.getLinearVelocity().y > 0.01) {
-			setAnimationRising();
+			setAnimation(animationSet.getRising());
 		} else if (body.getLinearVelocity().y < -0.01) {
-			setAnimationFalling();
+			setAnimation(animationSet.getFalling());
 		} else if ((body.getLinearVelocity().x > 0.05) || (body.getLinearVelocity().x < -0.05)) {
-			setAnimationMoving();
+			setAnimation(animationSet.getMoving());
 		} else {
-			setAnimationStanding();
+			setAnimation(animationSet.getStanding());
 		}
 	}
 
-	private void setAnimationStanding() {
-		currentAnimation = animationSet.getStanding();
+	private void resetFrameTime() {
+		frameTime = 0;
+	}
+
+	private void setAnimation(final Animation animation) {
+		if (currentAnimation != animation) {
+			resetFrameTime();
+			currentAnimation = animation;
+		}
 	}
 
 	public void setAnimationShooting() {
-		currentAnimation = animationSet.getShooting();
-	}
-
-	private void setAnimationMoving() {
-		currentAnimation = animationSet.getMoving();
-	}
-
-	private void setAnimationFalling() {
-		currentAnimation = animationSet.getFalling();
-	}
-
-	private void setAnimationRising() {
-		currentAnimation = animationSet.getRising();
+		setAnimation(animationSet.getShooting());
 	}
 
 	private float getNewRotation(float bodyAngle) {
@@ -109,21 +105,21 @@ public class Animator {
 		}
 	}
 
-	public void setAnimationDeath() {
-		currentAnimation = animationSet.getDeath();
+	public void playShootAnimation(final boolean isGunFired) {
+		if (isGunFired) {
+			setAnimation(animationSet.getShooting());
+			isAnimationTypeUpdateable = false;
+			Timer.schedule(new Task() {
+				@Override
+				public void run() {
+					isAnimationTypeUpdateable = true;
+				}
+			}, 0.1f);
+		}
 	}
 
 	public void playDeathAnimation(final Mortal entity) {
-		// reset frame time to 0 before starting death animation to fix bug where it would skip instantly to the last frame
-		// frame time is used to get the correct sprite for the current animation based on how far we are into the animation
-		// if the world had been running for a bit, the frame time value was high enough to get the last frame of the animation straight away
-		// this led to the inconsistent behaviour we observed: if the player died soon enough into a new world,
-		// the animation played fine. only when some time had passed before death did it play badly
-		//TODO understand why did this not happen with other animations (possibly because most others are loops
-		//TODO for which it makes sense not to ever zero the frame time
-		frameTime = 0;
-
-		setAnimationDeath();
+		setAnimation(animationSet.getDeath());
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {

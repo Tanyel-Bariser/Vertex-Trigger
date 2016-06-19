@@ -43,6 +43,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private State state = State.RUNNING;
 	private final Stage stage;
 	private static final float roomForThumbs;
+	private static final float maxDelta = 0.05f;
 
 	protected abstract void initialiseAssets();
 
@@ -129,10 +130,10 @@ public abstract class AbstractGameScreen implements Screen {
 		clearScreen();
 		if (state == State.RUNNING) {
 			// limitToMax30FPS();
-			if (delta < 0.25f) {
+			if (delta < maxDelta) {
 				acc += delta;
 			} else {
-				acc += 0.25f;
+				acc += maxDelta;
 			}
 			while (acc >= TIMESTEP) {
 				cachePreviousEntityPositions();
@@ -155,7 +156,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		physicsDebugger.render(world, camera.combined);
+		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 

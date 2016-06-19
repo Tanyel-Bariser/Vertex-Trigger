@@ -1,14 +1,12 @@
 package com.vertextrigger.factory.animationfactory;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import static com.vertextrigger.util.GameObjectSize.PLAYER_SIZE;
+
+import java.util.*;
+
+import com.badlogic.gdx.graphics.g2d.*;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.util.GameObjectSize;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.vertextrigger.util.GameObjectSize.PLAYER_SIZE;
 
 public class PlayerAnimationFactory extends AbstractAnimationFactory {
 
@@ -57,8 +55,8 @@ public class PlayerAnimationFactory extends AbstractAnimationFactory {
 	@Override
 	protected Animation getStanding() {
 		final Sprite[] standingSprite = new Sprite[] {
-				// shoot1 sprite is the best image for the player standing
-				spriteFactory.createCoreSprite("shoot1", size), };
+		// shoot1 sprite is the best image for the player standing
+		spriteFactory.createCoreSprite("shoot1", size), };
 
 		final Animation jumpAnimation = new Animation(0.1f, standingSprite);
 		jumpAnimation.setPlayMode(Animation.PlayMode.NORMAL);
