@@ -3,9 +3,9 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
-import com.vertextrigger.util.AudioManager;
 
 public class Gun {
 	private final AbstractGameScreen gameScreen;

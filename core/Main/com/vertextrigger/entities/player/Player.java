@@ -3,6 +3,7 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.util.*;
 

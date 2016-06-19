@@ -2,7 +2,7 @@ package com.vertextrigger.inanimate.portal;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.util.AudioManager;
+import com.vertextrigger.assets.AudioManager;
 
 public enum PortalTeleportation {
 	MOVING_OPPOSITE_VERTICAL_DIRECTION {

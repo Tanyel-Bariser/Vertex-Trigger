@@ -1,11 +1,11 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
-enum FONT {
+enum FontPath {
 	REGULAR("font/regular-12.fnt"), THIN("font/thin-12.fnt");
 
 	private final String path;
 
-	private FONT(final String path) {
+	private FontPath(final String path) {
 		this.path = path;
 	}
 

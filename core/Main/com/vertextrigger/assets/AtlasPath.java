@@ -1,12 +1,12 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
-enum ATLASES {
+enum AtlasPath {
 	CORE("atlas/core.pack"), MAIN_SCREEN("atlas/main_screen.pack"), LEVEL_ONE("atlas/level_one.pack"), LEVEL_TWO("atlas/level_two.pack"), PROTOTYPE(
-			"atlas/prototype.pack"), PORTAL("atlas/portal.pack");
+			"atlas/prototype.pack");
 
 	private final String path;
 
-	private ATLASES(final String path) {
+	private AtlasPath(final String path) {
 		this.path = path;
 	}
 

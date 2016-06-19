@@ -1,11 +1,11 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
-enum BACKGROUND {
+enum BackgroundPath {
 	MAIN_SCREEN("background/main_screen.png"), LEVEL_ONE("background/level_one.png"), LEVEL_TWO("background/level_two.png");
 
 	private final String path;
 
-	private BACKGROUND(final String path) {
+	private BackgroundPath(final String path) {
 		this.path = path;
 	}
 

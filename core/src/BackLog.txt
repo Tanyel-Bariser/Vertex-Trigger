@@ -1,8 +1,9 @@
 Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
 
 Defects:
-� Sound effects don't work first time on Android [hugh look into]
 � Sometimes game simulation stops, we think it's due to excessive asset load
+� More than one thing cannot go through portal at the same time, because portal is temporarily switched off
+	when go through it.
 
 Assets:
 � Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee

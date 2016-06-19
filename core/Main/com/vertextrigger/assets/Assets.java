@@ -1,4 +1,4 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.*;
@@ -34,47 +34,46 @@ public class Assets {
 
 	public void loadMainScreen() {
 		assetManager.clear();
-		assetManager.load(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class);
-		assetManager.load(BACKGROUND.MAIN_SCREEN.getPath(), Texture.class);
-		assetManager.load(MUSIC.MAIN_SCREEN.getPath(), Music.class);
-		assetManager.load(FONT.REGULAR.getPath(), BitmapFont.class);
+		assetManager.load(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class);
+		assetManager.load(BackgroundPath.MAIN_SCREEN.getPath(), Texture.class);
+		assetManager.load(MusicPath.MAIN_SCREEN.getPath(), Music.class);
+		assetManager.load(FontPath.REGULAR.getPath(), BitmapFont.class);
 		assetManager.finishLoading();
 
-		mainScreenSkin = new Skin(assetManager.get(ATLASES.MAIN_SCREEN.getPath(), TextureAtlas.class));
+		mainScreenSkin = new Skin(assetManager.get(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class));
 	}
 
 	public void loadPrototypeLevel() {
-		loadLevelAssets(ATLASES.PROTOTYPE, BACKGROUND.LEVEL_ONE, MUSIC.LEVEL_ONE);
+		loadLevelAssets(AtlasPath.PROTOTYPE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}
 
 	public void loadLevelOne() {
-		loadLevelAssets(ATLASES.LEVEL_ONE, BACKGROUND.LEVEL_ONE, MUSIC.LEVEL_ONE);
+		loadLevelAssets(AtlasPath.LEVEL_ONE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}
 
-	private void loadLevelAssets(final ATLASES atlas, final BACKGROUND background, final MUSIC music) {
+	private void loadLevelAssets(final AtlasPath atlas, final BackgroundPath background, final MusicPath music) {
 		assetManager.clear();
 		loadCoreLevelAssets();
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
 		assetManager.load(background.getPath(), Texture.class);
 		assetManager.load(music.getPath(), Music.class);
-		assetManager.load(ATLASES.PORTAL.getPath(), TextureAtlas.class);
 		assetManager.finishLoading();
 
-		final TextureAtlas coreAtlas = assetManager.get(ATLASES.CORE.getPath(), TextureAtlas.class);
+		final TextureAtlas coreAtlas = assetManager.get(AtlasPath.CORE.getPath(), TextureAtlas.class);
 		coreSkin = new Skin(coreAtlas);
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 	}
 
 	private void loadCoreLevelAssets() {
-		assetManager.load(ATLASES.CORE.getPath(), TextureAtlas.class);
-		for (final SOUND_FX soundFx : SOUND_FX.values()) {
+		assetManager.load(AtlasPath.CORE.getPath(), TextureAtlas.class);
+		for (final SoundFxPath soundFx : SoundFxPath.values()) {
 			assetManager.load(soundFx.getPath(), Sound.class);
 		}
-		assetManager.load(FONT.THIN.getPath(), BitmapFont.class);
+		assetManager.load(FontPath.THIN.getPath(), BitmapFont.class);
 	}
 
 	public void loadLevelTwo() {
-		loadLevelAssets(ATLASES.LEVEL_TWO, BACKGROUND.LEVEL_TWO, MUSIC.LEVEL_TWO);
+		loadLevelAssets(AtlasPath.LEVEL_TWO, BackgroundPath.LEVEL_TWO, MusicPath.LEVEL_TWO);
 	}
 
 	/**

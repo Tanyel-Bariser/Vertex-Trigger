@@ -1,6 +1,7 @@
 package com.vertextrigger.main;
 
 import com.badlogic.gdx.*;
+import com.vertextrigger.assets.*;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.util.*;
 

@@ -1,4 +1,4 @@
-package com.vertextrigger.util;
+package com.vertextrigger.controller;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.*;
@@ -7,8 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
+import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.util.State;
 
 /**
  * Manages the creation & use of the buttons that control the player & the game

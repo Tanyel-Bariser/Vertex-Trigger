@@ -1,7 +1,7 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
-import static com.vertextrigger.util.MUSIC.*;
-import static com.vertextrigger.util.SOUND_FX.*;
+import static com.vertextrigger.assets.MusicPath.*;
+import static com.vertextrigger.assets.SoundFxPath.*;
 
 import java.util.*;
 
@@ -16,6 +16,12 @@ public class AudioManager {
 	private static final Map<String, Music> activeMusic = new HashMap<>();
 	private static final Map<String, Music> gameMusic = new HashMap<>();
 	private static final Map<String, Sound> soundEffects = new HashMap<>();
+
+	static {
+		for (final SoundFxPath sfx : SoundFxPath.values()) {
+			soundEffects.put(sfx.name(), Gdx.audio.newSound(Gdx.files.internal(sfx.getPath())));
+		}
+	}
 
 	/**
 	 * mutes the game if it is unmuted, and vice-versa. plays a sound for feedback irrespective of whether game is muted
@@ -137,14 +143,9 @@ public class AudioManager {
 	}
 
 	/**
-	 * Lazily loads a sound effect into memory and returns a reference to it
-	 *
-	 * If sound effect is not loaded, load it into memory and cache it in the map of sound effects
+	 * Returns a reference to a sound effect
 	 */
-	private static Sound getSoundEffect(final SOUND_FX sound) {
-		if (!soundEffects.containsKey(sound.name())) {
-			soundEffects.put(sound.name(), Gdx.audio.newSound(Gdx.files.internal(sound.getPath())));
-		}
+	private static Sound getSoundEffect(final SoundFxPath sound) {
 		return soundEffects.get(sound.name());
 	}
 
@@ -153,7 +154,7 @@ public class AudioManager {
 	 *
 	 * If music is not loaded, load it into memory and cache it in the map of sound effects
 	 */
-	private static Music getMusicFile(final MUSIC music) {
+	private static Music getMusicFile(final MusicPath music) {
 		if (!gameMusic.containsKey(music.name())) {
 			gameMusic.put(music.name(), Gdx.audio.newMusic(Gdx.files.internal(music.getPath())));
 		}
@@ -161,14 +162,14 @@ public class AudioManager {
 	}
 
 	/** play a sound effect if the game is not muted */
-	private static void playSound(final SOUND_FX sound) {
+	private static void playSound(final SoundFxPath sound) {
 		playSound(sound, false);
 	}
 
 	/**
 	 * play a sound effect if game is unmuted and unpaused. option to override muteness setting
 	 */
-	private static void playSound(final SOUND_FX sound, final boolean overrideMute) {
+	private static void playSound(final SoundFxPath sound, final boolean overrideMute) {
 		if ((overrideMute || !gameIsMuted) && !gameIsPaused) {
 			final Sound effect = getSoundEffect(sound);
 			effect.play();
@@ -178,9 +179,9 @@ public class AudioManager {
 	/**
 	 * play a music file by either starting or resuming if it was paused. option to loop (e.g. for level background music)
 	 */
-	private static void playMusic(final MUSIC music, final boolean loop) {
+	private static void playMusic(final MusicPath music, final boolean loop) {
 		if (!activeMusic.containsKey(music.name())) {
-			stopAllMusic();								// stop all other music from playing
+			stopAllMusic(); // stop all other music from playing
 			startMusic(music, loop);
 		}
 		resumeMusic(activeMusic.get(music.name()));
@@ -189,7 +190,7 @@ public class AudioManager {
 	/**
 	 * starts some music that is stopped. adds to the active music map to keep track of this. only starts playback if game is not muted
 	 */
-	private static void startMusic(final MUSIC music, final boolean loop) {
+	private static void startMusic(final MusicPath music, final boolean loop) {
 		final Music gameMusic = getMusicFile(music);
 		gameMusic.setLooping(loop);
 		activeMusic.put(music.name(), gameMusic);
@@ -230,7 +231,7 @@ public class AudioManager {
 	}
 
 	/** stops a music file */
-	private static void stopMusic(final MUSIC music) {
+	private static void stopMusic(final MusicPath music) {
 		final Music stopped = activeMusic.remove(music.name());
 		stopped.stop();
 	}

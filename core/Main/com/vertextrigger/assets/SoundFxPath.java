@@ -1,6 +1,6 @@
-package com.vertextrigger.util;
+package com.vertextrigger.assets;
 
-enum SOUND_FX {
+enum SoundFxPath {
 	BUTTON("sound/button.ogg"), DIE("sound/die.wav"),
 	// DOOR("sound/door.wav"),// TODO find door asset
 	ENEMY_DEATH("sound/enemy.wav"), JUMP("sound/jump.wav"), PLAYER_DEATH("sound/die.wav"), PORTAL("sound/portal.ogg"), POWER_UP("sound/powerup.wav"), SHOOT(
@@ -8,7 +8,7 @@ enum SOUND_FX {
 
 	private final String path;
 
-	SOUND_FX(final String path) {
+	SoundFxPath(final String path) {
 		this.path = path;
 	}
 

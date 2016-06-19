@@ -6,6 +6,7 @@ import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.enemy.AbstractEnemy;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.inanimate.*;
