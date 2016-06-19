@@ -81,12 +81,17 @@ public abstract class TimedPlatform implements Entity {
 	}
 
 	@Override
-	public void setTeleportable(final boolean canTeleport) {
-		if ((canTeleport == true) && (exitedFirstPortal == false)) {
-			exitedFirstPortal = true;
+	public void enteredPortal() {
+		canTeleport = false;
+		exitedFirstPortal = false;
+	}
+
+	@Override
+	public void exitedPortal() {
+		if (exitedFirstPortal) {
+			canTeleport = true;
 		} else {
-			exitedFirstPortal = false;
-			this.canTeleport = canTeleport;
+			exitedFirstPortal = true;
 		}
 	}
 }

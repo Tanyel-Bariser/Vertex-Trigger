@@ -158,12 +158,17 @@ public class Bullet implements Entity {
 	}
 
 	@Override
-	public void setTeleportable(final boolean canTeleport) {
-		if ((canTeleport == true) && (exitedFirstPortal == false)) {
+	public void enteredPortal() {
+		canTeleport = false;
+		exitedFirstPortal = false;
+	}
+
+	@Override
+	public void exitedPortal() {
+		if (exitedFirstPortal == false) {
 			exitedFirstPortal = true;
 		} else {
-			exitedFirstPortal = false;
-			this.canTeleport = canTeleport;
+			canTeleport = true;
 		}
 	}
 }

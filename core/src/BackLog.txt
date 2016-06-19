@@ -2,6 +2,7 @@ Plan: Fix all defects and get assets in place first then read the AI manual, the
 
 Defects:
 � Sometimes game simulation stops, we think it's due to excessive asset load
+� Poker sprite is too long for physical body
 
 Assets:
 � Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee

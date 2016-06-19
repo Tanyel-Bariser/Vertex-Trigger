@@ -11,5 +11,7 @@ public interface Teleportable extends Collidable {
 
 	boolean canTeleport();
 
-	void setTeleportable(final boolean canTeleport);
+	void enteredPortal();
+
+	void exitedPortal();
 }

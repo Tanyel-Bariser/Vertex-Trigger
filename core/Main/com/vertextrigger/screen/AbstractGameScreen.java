@@ -158,7 +158,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		// physicsDebugger.render(world, camera.combined);
+		physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 

@@ -50,7 +50,7 @@ public class CollisionDetection implements ContactListener {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
 		if ((portal != null) && (teleportable != null) && teleportable.canTeleport()) {
-			teleportable.setTeleportable(false);
+			teleportable.enteredPortal();
 			portal.teleport(teleportable.getBody());
 		}
 	}
@@ -59,7 +59,7 @@ public class CollisionDetection implements ContactListener {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
 		if ((portal != null) && (teleportable != null)) {
-			teleportable.setTeleportable(true);
+			teleportable.exitedPortal();
 		}
 	}
 
