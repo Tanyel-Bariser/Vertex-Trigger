@@ -20,8 +20,7 @@ public abstract class AbstractEnemy implements Mortal {
 	protected boolean facingLeft;
 	protected boolean isDeathAnimationFinished;
 	private final InterpolatedPosition enemyState;
-	private boolean canTeleport = true;
-	private boolean exitedFirstPortal;
+	private boolean isTeleportable = true;
 
 	public AbstractEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet) {
 		path = null;
@@ -119,22 +118,12 @@ public abstract class AbstractEnemy implements Mortal {
 	}
 
 	@Override
-	public boolean canTeleport() {
-		return canTeleport;
-	}
-
-	@Override
-	public void enteredPortal() {
-		canTeleport = false;
-		exitedFirstPortal = false;
+	public boolean isTeleportable() {
+		return isTeleportable;
 	}
 
 	@Override
 	public void exitedPortal() {
-		if (exitedFirstPortal) {
-			canTeleport = true;
-		} else {
-			exitedFirstPortal = true;
-		}
+		isTeleportable ^= true;
 	}
 }

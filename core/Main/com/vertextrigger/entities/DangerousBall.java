@@ -16,8 +16,7 @@ public abstract class DangerousBall implements Entity {
 	protected float speed;
 	protected Vector2 newPositionFromPortal;
 	private final InterpolatedPosition ballState;
-	private boolean canTeleport = true;
-	private boolean exitedFirstPortal;;
+	private boolean isTeleportable = true;
 
 	/**
 	 * Initialises the physical properties of the Dangerous Ball's physical body Sets Dangerous Ball's sprite, could be fire ball or spiked ball, etc.
@@ -83,22 +82,12 @@ public abstract class DangerousBall implements Entity {
 	}
 
 	@Override
-	public boolean canTeleport() {
-		return canTeleport;
-	}
-
-	@Override
-	public void enteredPortal() {
-		canTeleport = false;
-		exitedFirstPortal = false;
+	public boolean isTeleportable() {
+		return isTeleportable;
 	}
 
 	@Override
 	public void exitedPortal() {
-		if (exitedFirstPortal) {
-			canTeleport = true;
-		} else {
-			exitedFirstPortal = true;
-		}
+		isTeleportable ^= true;
 	}
 }

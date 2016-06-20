@@ -9,9 +9,7 @@ public interface Teleportable extends Collidable {
 
 	Body getBody();
 
-	boolean canTeleport();
-
-	void enteredPortal();
+	boolean isTeleportable();
 
 	void exitedPortal();
 }

@@ -25,8 +25,7 @@ public class Player implements Mortal {
 	boolean isShooting;
 	private boolean isDeathAnimationFinished;
 	private Vector2 newPositionFromPortal;
-	private boolean canTeleport = true;
-	private boolean exitedFirstPortal;
+	private boolean isTeleportable = true;
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
 		this.initialPosition = initialPosition;
@@ -185,22 +184,12 @@ public class Player implements Mortal {
 	}
 
 	@Override
-	public boolean canTeleport() {
-		return canTeleport;
-	}
-
-	@Override
-	public void enteredPortal() {
-		canTeleport = false;
-		exitedFirstPortal = false;
+	public boolean isTeleportable() {
+		return isTeleportable;
 	}
 
 	@Override
 	public void exitedPortal() {
-		if (exitedFirstPortal) {
-			canTeleport = true;
-		} else {
-			exitedFirstPortal = true;
-		}
+		isTeleportable ^= true;
 	}
 }

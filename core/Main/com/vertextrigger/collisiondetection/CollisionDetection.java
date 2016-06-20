@@ -49,8 +49,7 @@ public class CollisionDetection implements ContactListener {
 	private void portalTransport(final Collidable[] collidableObject) {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
-		if ((portal != null) && (teleportable != null) && teleportable.canTeleport()) {
-			teleportable.enteredPortal();
+		if ((portal != null) && (teleportable != null) && teleportable.isTeleportable()) {
 			portal.teleport(teleportable.getBody());
 		}
 	}
