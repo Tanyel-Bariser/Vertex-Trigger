@@ -2,7 +2,7 @@ package com.vertextrigger.entities.enemy;
 
 import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.ai.steer.*;
-import com.badlogic.gdx.ai.steer.behaviors.Wander;
+import com.badlogic.gdx.ai.steer.behaviors.*;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.*;
@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.Path;
+
+;
 
 /**
  * Enemies can kill the player if touched & follows a predefined path This class manages an enemy's physical body & its movements & sprite animation
@@ -28,11 +30,21 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 	private boolean isTeleportable = true;
 
 	// STEERING FIELDS
-	private final SteeringAcceleration<Vector2> steeringOutput;
-	private final SteeringBehavior<Vector2> steeringBehavior;
+	private final SteeringAcceleration<Vector2> faceSteeringOutput;
+	private final SteeringAcceleration<Vector2> wanderSteeringOutput;
+	private SteeringBehavior<Vector2> face;
+	private SteeringBehavior<Vector2> wander;
 	private final boolean independentFacing = true;
+	private float zeroLinearSpeedThreshold = 0.1f;
+	private float maxLinearSpeed = 0.1f;
+	private float maxLinearAcceleration = 1f;
+	private float maxAngularSpeed = 30f;
+	private float maxAngularAcceleration = 30f;
+	private boolean isTagged;
 
-	public AbstractEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet) {
+	Steerable targ;
+
+	public AbstractEnemy(final Array<Vector2> coordinates, final Body body, final AnimationSet animationSet, final Steerable<Vector2> target) {
 		path = null;
 		this.body = body;
 		this.animationSet = animationSet;
@@ -42,47 +54,18 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 		animator.setEntity(this);
 		setUserData(body);
 		enemyState = new InterpolatedPosition(this.body);
-		steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-		steeringBehavior = new Wander<Vector2>(this).setFaceEnabled(true) // We want to use Face internally (independent facing is on)
-				.setAlignTolerance(0.001f) // Used by Face
-				.setDecelerationRadius(5) // Used by Face
-				.setTimeToTarget(0.1f) // Used by Face
-				.setWanderOffset(90) //
-				.setWanderOrientation(10) //
-				.setWanderRadius(40) //
-				.setWanderRate(MathUtils.PI2 * 4).setTarget(new Location<Vector2>() {
-
-					@Override
-					public float vectorToAngle(final Vector2 vector) {
-						return (float) Math.atan2(-vector.x, vector.y);
-					}
-
-					@Override
-					public void setOrientation(final float orientation) {
-					}
-
-					@Override
-					public Location<Vector2> newLocation() {
-						return this;
-					}
-
-					@Override
-					public Vector2 getPosition() {
-						return new Vector2(10, 0);
-					}
-
-					@Override
-					public float getOrientation() {
-						return 0;
-					}
-
-					@Override
-					public Vector2 angleToVector(final Vector2 outVector, final float angle) {
-						outVector.x = -(float) Math.sin(angle);
-						outVector.y = (float) Math.cos(angle);
-						return outVector;
-					}
-				});
+		faceSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+		wanderSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+		if (target != null) {
+			face = new Face<Vector2>(this).setDecelerationRadius(5f).setTarget(target);
+			wander = new Wander<Vector2>(this) //
+					.setWanderOffset(90) //
+					.setWanderOrientation(10) //
+					.setWanderRadius(250) //
+					.setWanderRate(MathUtils.PI2 * 4) //
+					.setTarget(target); //
+			targ = target;
+		}
 	}
 
 	@Override
@@ -102,10 +85,11 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 	 */
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		if (steeringBehavior != null) {
+		if (face != null) {
 			GdxAI.getTimepiece().update(delta);
 			// Calculate steering acceleration
-			steeringBehavior.calculateSteering(steeringOutput);
+			face.calculateSteering(faceSteeringOutput);
+			wander.calculateSteering(wanderSteeringOutput);
 
 			/*
 			 * Here you might want to add a motor control layer filtering steering accelerations. For instance, a car in a driving game has physical
@@ -114,13 +98,16 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 			 */
 
 			// Apply steering acceleration to move this agent
-			// applySteering(steeringOutput, delta);
+			applyFaceSteering(faceSteeringOutput, delta);
+			applyWanderSteering(wanderSteeringOutput, delta);
 		}
 
 		if (newPositionFromPortal != null) {
 			body.setTransform(newPositionFromPortal, 0);
 			setNewPositionFromPortal(null);
 		}
+
+		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		return animator.getUpdatedSprite(delta, enemyState.getNewPosition(alpha, body), enemyState.getNewAngle(alpha, body));
 		// Move enemy further along it's predefined path based on delta
 		// Update enemy sprite based on animation
@@ -129,10 +116,24 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 		// Return enemy sprite after it's position/angle has been updated
 	}
 
-	private void applySteering(final SteeringAcceleration<Vector2> steering, final float time) {
+	private void applyWanderSteering(final SteeringAcceleration<Vector2> steering, final float time) {
 		// Update position and linear velocity. Velocity is trimmed to maximum speed
-		getPosition().mulAdd(getLinearVelocity(), time);
-		getLinearVelocity().mulAdd(steering.linear, time).limit(getMaxLinearSpeed());
+		setLinearVelocity(steering.linear);
+		// Update orientation and angular velocity
+		if (independentFacing) {
+			setOrientation(getOrientation() + (getAngularVelocity() * time));
+			setAngularVelocity(getAngularVelocity() + (steering.angular * time));
+		} else {
+			// For non-independent facing we have to align orientation to linear velocity
+			final float newOrientation = calculateOrientationFromLinearVelocity(this);
+			if (newOrientation != getOrientation()) {
+				setAngularVelocity((newOrientation - getOrientation()) * time);
+				setOrientation(newOrientation);
+			}
+		}
+	}
+
+	private void applyFaceSteering(final SteeringAcceleration<Vector2> steering, final float time) {
 
 		// Update orientation and angular velocity
 		if (independentFacing) {
@@ -146,7 +147,23 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 				setOrientation(newOrientation);
 			}
 		}
-		// setLinearVelocity(steering.linear);
+	}
+
+	private void setPosition(final Vector2 position) {
+		body.setTransform(position, body.getAngle());
+	}
+
+	@Override
+	public Vector2 getPosition() {
+		return body.getPosition();
+	}
+
+	private void setAngularVelocity(final float angularVelocity) {
+		body.setAngularVelocity(angularVelocity);
+	}
+
+	private void setLinearVelocity(final Vector2 linearVelocity) {
+		body.setLinearVelocity(linearVelocity);
 	}
 
 	// For non-independent facing
@@ -235,7 +252,7 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 	}
 
 	// Actual implementation depends on your coordinate system.
-	// Here we assume the y-axis is pointing upwards.
+	// Here we assume the y-axis i)s pointing upwards.
 	@Override
 	public Vector2 angleToVector(final Vector2 outVector, final float angle) {
 		outVector.x = -(float) Math.sin(angle);
@@ -244,21 +261,78 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 	}
 
 	@Override
-	public Vector2 getLinearVelocity() {
-		return body.getLinearVelocity();
+	public float getOrientation() {
+		return body.getAngle();
 	}
 
-	public void setLinearVelocity(final Vector2 linearVelocity) {
-		body.setLinearVelocity(linearVelocity);
+	@Override
+	public void setOrientation(final float orientation) {
+		body.setTransform(getPosition(), orientation);
+	}
+
+	@Override
+	public Location<Vector2> newLocation() {
+		return this;
+	}
+
+	@Override
+	public float getZeroLinearSpeedThreshold() {
+		return zeroLinearSpeedThreshold;
+	}
+
+	@Override
+	public void setZeroLinearSpeedThreshold(final float zeroLinearSpeedThreshold) {
+		this.zeroLinearSpeedThreshold = zeroLinearSpeedThreshold;
+	}
+
+	@Override
+	public float getMaxLinearSpeed() {
+		return maxLinearSpeed;
+	}
+
+	@Override
+	public void setMaxLinearSpeed(final float maxLinearSpeed) {
+		this.maxLinearSpeed = maxLinearSpeed;
+	}
+
+	@Override
+	public float getMaxLinearAcceleration() {
+		return maxLinearAcceleration;
+	}
+
+	@Override
+	public void setMaxLinearAcceleration(final float maxLinearAcceleration) {
+		this.maxLinearAcceleration = maxLinearAcceleration;
+	}
+
+	@Override
+	public float getMaxAngularSpeed() {
+		return maxAngularSpeed;
+	}
+
+	@Override
+	public void setMaxAngularSpeed(final float maxAngularSpeed) {
+		this.maxAngularSpeed = maxAngularSpeed;
+	}
+
+	@Override
+	public float getMaxAngularAcceleration() {
+		return maxAngularAcceleration;
+	}
+
+	@Override
+	public void setMaxAngularAcceleration(final float maxAngularAcceleration) {
+		this.maxAngularAcceleration = maxAngularAcceleration;
+	}
+
+	@Override
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
 	}
 
 	@Override
 	public float getAngularVelocity() {
 		return body.getAngularVelocity();
-	}
-
-	private void setAngularVelocity(final float angularVelocity) {
-		body.setAngularVelocity(angularVelocity);
 	}
 
 	@Override
@@ -268,75 +342,11 @@ public abstract class AbstractEnemy implements Steerable<Vector2>, Mortal {
 
 	@Override
 	public boolean isTagged() {
-		return false;
+		return isTagged;
 	}
 
 	@Override
-	public void setTagged(final boolean tagged) {
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		return body.getPosition();
-	}
-
-	@Override
-	public float getOrientation() {
-		return body.getAngle();
-	}
-
-	@Override
-	public void setOrientation(final float angle) {
-		body.setTransform(getPosition(), angle);
-	}
-
-	@Override
-	public Location<Vector2> newLocation() {
-		return null;
-	}
-
-	@Override
-	public float getZeroLinearSpeedThreshold() {
-		return 0;
-	}
-
-	@Override
-	public void setZeroLinearSpeedThreshold(final float value) {
-	}
-
-	@Override
-	public float getMaxLinearSpeed() {
-		return 0.5f;
-	}
-
-	@Override
-	public void setMaxLinearSpeed(final float maxLinearSpeed) {
-	}
-
-	@Override
-	public float getMaxLinearAcceleration() {
-		return 0.5f;
-	}
-
-	@Override
-	public void setMaxLinearAcceleration(final float maxLinearAcceleration) {
-	}
-
-	@Override
-	public float getMaxAngularSpeed() {
-		return 0.5f;
-	}
-
-	@Override
-	public void setMaxAngularSpeed(final float maxAngularSpeed) {
-	}
-
-	@Override
-	public float getMaxAngularAcceleration() {
-		return 0.5f;
-	}
-
-	@Override
-	public void setMaxAngularAcceleration(final float maxAngularAcceleration) {
+	public void setTagged(final boolean isTagged) {
+		this.isTagged = isTagged;
 	}
 }

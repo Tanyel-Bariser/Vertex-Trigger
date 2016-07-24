@@ -1,5 +1,6 @@
 package com.vertextrigger.levelbuilder;
 
+import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -48,7 +49,7 @@ public abstract class AbstractLevelBuilder {
 	 * @param world
 	 *            for all enemies in this level to reside in
 	 */
-	protected abstract void createEnemies();
+	protected abstract void createEnemies(final Steerable<Vector2> target);
 
 	/**
 	 * Create all dangerous balls needed for the particular game level at the specific initial positions & to follow their predefined path Then adds
@@ -111,7 +112,7 @@ public abstract class AbstractLevelBuilder {
 	 */
 	public Array<Entity> buildEntities() {
 		// Create enemies then add them to the entities container
-		createEnemies();
+		createEnemies(getPlayer());
 		// Create dangerous ball(s) then add them to the entities container
 		createDangerousBalls();
 		// Return container of all entities needed for this level

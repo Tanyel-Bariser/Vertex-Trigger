@@ -54,6 +54,7 @@ public class Assets {
 	private void loadLevelAssets(final AtlasPath atlas, final BackgroundPath background, final MusicPath music) {
 		assetManager.clear();
 		loadCoreLevelAssets();
+		loadEnemies();
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
 		assetManager.load(background.getPath(), Texture.class);
 		assetManager.load(music.getPath(), Music.class);
@@ -62,6 +63,7 @@ public class Assets {
 		final TextureAtlas coreAtlas = assetManager.get(AtlasPath.CORE.getPath(), TextureAtlas.class);
 		coreSkin = new Skin(coreAtlas);
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
+		enemySkin = new Skin(assetManager.get(AtlasPath.ENEMY.getPath(), TextureAtlas.class));
 	}
 
 	private void loadCoreLevelAssets() {
@@ -74,6 +76,10 @@ public class Assets {
 
 	public void loadLevelTwo() {
 		loadLevelAssets(AtlasPath.LEVEL_TWO, BackgroundPath.LEVEL_TWO, MusicPath.LEVEL_TWO);
+	}
+
+	private void loadEnemies() {
+		assetManager.load(AtlasPath.ENEMY.getPath(), TextureAtlas.class);
 	}
 
 	/**
@@ -120,5 +126,9 @@ public class Assets {
 
 	public Skin getLevelSkin() {
 		return levelSkin;
+	}
+
+	public Skin getEnemySkin() {
+		return enemySkin;
 	}
 }

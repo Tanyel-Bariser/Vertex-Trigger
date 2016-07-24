@@ -1,5 +1,6 @@
 package com.vertextrigger.levelbuilder;
 
+import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -16,7 +17,7 @@ public class LevelOneBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	protected void createEnemies() {
+	protected void createEnemies(final Steerable<Vector2> target) {
 	}
 
 	@Override

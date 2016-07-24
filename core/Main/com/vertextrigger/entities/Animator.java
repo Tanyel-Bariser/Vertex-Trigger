@@ -34,6 +34,7 @@ public class Animator {
 		} else if (horizontalMovement > rightMovementThreshold) {
 			movingLeft = false;
 		}
+		final String m = movingLeft ? "left" : "right";
 	}
 
 	public boolean isMovingLeft() {

@@ -13,6 +13,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 		final Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(true);
 		createHead(body);
+		body.setGravityScale(0);
 		return body;
 	}
 
@@ -30,7 +31,7 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 		final FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
 		fixtureDefinition.density = 100f;
-		fixtureDefinition.friction = 1f;
+		fixtureDefinition.friction = 0;
 		return fixtureDefinition;
 	}
 

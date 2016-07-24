@@ -38,6 +38,6 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 
 	@Override
 	protected Animation getStanding() {
-		return new Animation(0, spriteFactory.createLevelSprite("pokerMad", size));
+		return new Animation(0, spriteFactory.createEnemySprite("bee_fly", size));
 	}
 }
