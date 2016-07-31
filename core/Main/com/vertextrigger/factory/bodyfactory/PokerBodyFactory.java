@@ -13,7 +13,6 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 		final Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(true);
 		createHead(body);
-		body.setGravityScale(0);
 		return body;
 	}
 

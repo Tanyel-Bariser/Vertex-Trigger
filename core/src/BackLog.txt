@@ -12,13 +12,14 @@ Assets:
 � Sprite for metallic shield
 
 Game:
+� Restore Poker to normal and make FlyingBee or similar enemy (Keep FlyingBee from flying below a set height and have it shoot at player)
 � Flying monster with predefined path
 � Flying monster shoot metal bullets
 � Magnets pull on metal bullets
 � Make magnets level as prototype
 
 Code Quality:
-� Refactor a class and update its unit tests so they all pass
+� Think about putting shared code into an AbstractEntity class
 
 R and D:
 � Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors

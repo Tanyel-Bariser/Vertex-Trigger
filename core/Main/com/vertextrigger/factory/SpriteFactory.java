@@ -9,16 +9,6 @@ import com.vertextrigger.util.GameObjectSize;
  * Encapsulates the creation of sprites
  */
 public class SpriteFactory {
-	private final Skin coreSkin;
-	private final Skin levelSkin;
-
-	/**
-	 * Initialises storage of sprites that can be accessed by name
-	 */
-	public SpriteFactory() {
-		coreSkin = VertexTrigger.ASSETS.getCoreSkin();
-		levelSkin = VertexTrigger.ASSETS.getLevelSkin();
-	}
 
 	public Sprite createCoreSprite(final String name, final GameObjectSize size) {
 		return createSprite(name, size, VertexTrigger.ASSETS.getCoreSkin());

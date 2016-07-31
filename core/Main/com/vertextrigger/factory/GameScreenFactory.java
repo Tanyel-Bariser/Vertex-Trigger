@@ -4,8 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.collisiondetection.CollisionDetection;
-import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.factory.entityfactory.PlayerFactory;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.levelbuilder.*;
 import com.vertextrigger.main.VertexTrigger;
@@ -22,11 +20,9 @@ public class GameScreenFactory {
 			@Override
 			protected AbstractLevelBuilder createLevelBuilder() {
 				world = new World(GRAVITY, true);
-				final Vector2 initialPosition = new Vector2(0, 0);
-				final Player player = PlayerFactory.createPlayer(world, initialPosition, this);
+				final Vector2 initialPlayerPosition = new Vector2(0, 0);
 				final Array<Portal> portals = new Array<>();
-				final AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this, 4, 3);
-				prototypeLevelBuilder.setPlayer(player);
+				final AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this, 4, 3, initialPlayerPosition);
 				world.setContactListener(new CollisionDetection());
 				return prototypeLevelBuilder;
 			}

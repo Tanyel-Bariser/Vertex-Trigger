@@ -1,23 +1,25 @@
 package com.vertextrigger.factory.animationfactory;
 
-import static com.vertextrigger.util.GameObjectSize.POKER_BODY_SIZE;
+import static com.vertextrigger.util.GameObjectSize.BEE_SIZE;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.util.GameObjectSize;
 
-public class PokerAnimationFactory extends AbstractAnimationFactory {
+public class BeeAnimationFactory extends AbstractAnimationFactory {
 	final SpriteFactory spriteFactory;
 	final GameObjectSize size;
 
-	public PokerAnimationFactory() {
+	public BeeAnimationFactory() {
 		spriteFactory = new SpriteFactory();
-		size = POKER_BODY_SIZE;
+		size = BEE_SIZE;
 	}
 
 	@Override
 	protected Animation getMoving() {
-		return new Animation(0, spriteFactory.createLevelSprite("pokerMad", size));
+		final Sprite sprite = spriteFactory.createEnemySprite("bee_fly", size);
+		sprite.flip(false, true);
+		return new Animation(0, sprite);
 	}
 
 	/**
@@ -27,9 +29,9 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 	 */
 	@Override
 	protected Animation getDeath() {
-		final Sprite[] deathSprites = new Sprite[] { spriteFactory.createLevelSprite("snakeLava_ani", size),
-				spriteFactory.createLevelSprite("snakeLava", size), spriteFactory.createLevelSprite("snakeLava_ani", size),
-				spriteFactory.createLevelSprite("snakeLava_dead", size), };
+		final Sprite sprite = spriteFactory.createEnemySprite("bee_dead", size);
+		sprite.flip(false, true);
+		final Sprite[] deathSprites = new Sprite[] { sprite };
 
 		final Animation deathAnimation = new Animation(.4f, deathSprites);
 		deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
@@ -38,6 +40,8 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 
 	@Override
 	protected Animation getStanding() {
-		return new Animation(0, spriteFactory.createLevelSprite("pokerMad", size));
+		final Sprite sprite = spriteFactory.createEnemySprite("bee_fly", size);
+		sprite.flip(false, true);
+		return new Animation(0, sprite);
 	}
 }
