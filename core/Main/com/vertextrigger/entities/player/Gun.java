@@ -4,10 +4,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class Gun {
+	private static final float SHOT_POWER = 0.0015f;
 	private final AbstractGameScreen gameScreen;
 	private final BulletFactory bulletFactory;
 	private boolean canShoot = true;
@@ -22,7 +24,7 @@ public class Gun {
 	 */
 	boolean shoot(final Vector2 position, final boolean gunPointingLeft) {
 		if (canShoot) {
-			final Bullet bullet = bulletFactory.createBullet();
+			final Bullet bullet = bulletFactory.createPlayerBullet();
 			bullet.getBody().setActive(true);
 			if (gunPointingLeft) {
 				bullet.setPosition(new Vector2(position.x - 0.1f, position.y + 0.1f));
@@ -30,7 +32,7 @@ public class Gun {
 				bullet.setPosition(new Vector2(position.x + 0.1f, position.y + 0.1f));
 			}
 
-			bullet.shoot(gunPointingLeft);
+			shootBullet(bullet, gunPointingLeft);
 			AudioManager.playShootSound();
 			gameScreen.addEntity(bullet);
 			canShoot = false;
@@ -47,4 +49,8 @@ public class Gun {
 		return false;
 	}
 
+	private void shootBullet(final Bullet bullet, final boolean shootLeft) {
+		final Vector2 velocity = shootLeft ? new Vector2(-SHOT_POWER, 0) : new Vector2(SHOT_POWER, 0);
+		bullet.shoot(velocity);
+	}
 }

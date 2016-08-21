@@ -32,7 +32,7 @@ public class BulletBodyFactory extends AbstractBodyFactory {
 	@Override
 	protected Shape createShape() {
 		final CircleShape shape = new CircleShape();
-		shape.setRadius(GameObjectSize.BULLET_SIZE.getPhysicalHeight() * GameObjectSize.OBJECT_SIZE);
+		shape.setRadius(GameObjectSize.PLAYER_BULLET_SIZE.getPhysicalHeight() * GameObjectSize.OBJECT_SIZE);
 		return shape;
 	}
 }

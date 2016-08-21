@@ -1,7 +1,6 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.inanimate.portal.Teleportable;
 
 /**
@@ -19,9 +18,6 @@ public interface Entity extends Teleportable {
 	 * @return updated sprite position for rendering of current frame
 	 */
 	Sprite update(final float delta, final float alpha);
-
-	@Override
-	Body getBody();
 
 	void setFacingLeft();
 

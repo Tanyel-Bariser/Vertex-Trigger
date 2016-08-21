@@ -1,19 +1,15 @@
 Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
 
 Defects:
-� Poker got stuck teleporting back and forth endlessly 17/07/2016, we think due to having two bodies, i.e. head and torso, where each toggles isTeleportable independently
-� Player sprite disappears when touching left of screen edge and same with Poker when lies down, probably to do with AbstractGameScreen.isInScreen() method being too constrained
-� Poker doesn't die when shot and has no sprite
 � Sometimes game simulation stops, we think it's due to excessive asset load
 
 Assets:
+� Flip Bee sprite upside down in atlas
 � Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
 � Sprite for magnet
 � Sprite for metallic shield
 
 Game:
-� Restore Poker to normal and make FlyingBee or similar enemy (Keep FlyingBee from flying below a set height and have it shoot at player)
-� Flying monster with predefined path
 � Flying monster shoot metal bullets
 � Magnets pull on metal bullets
 � Make magnets level as prototype

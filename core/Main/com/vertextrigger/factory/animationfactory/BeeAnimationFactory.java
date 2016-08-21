@@ -18,7 +18,6 @@ public class BeeAnimationFactory extends AbstractAnimationFactory {
 	@Override
 	protected Animation getMoving() {
 		final Sprite sprite = spriteFactory.createEnemySprite("bee_fly", size);
-		sprite.flip(false, true);
 		return new Animation(0, sprite);
 	}
 
@@ -30,7 +29,6 @@ public class BeeAnimationFactory extends AbstractAnimationFactory {
 	@Override
 	protected Animation getDeath() {
 		final Sprite sprite = spriteFactory.createEnemySprite("bee_dead", size);
-		sprite.flip(false, true);
 		final Sprite[] deathSprites = new Sprite[] { sprite };
 
 		final Animation deathAnimation = new Animation(.4f, deathSprites);
@@ -41,7 +39,6 @@ public class BeeAnimationFactory extends AbstractAnimationFactory {
 	@Override
 	protected Animation getStanding() {
 		final Sprite sprite = spriteFactory.createEnemySprite("bee_fly", size);
-		sprite.flip(false, true);
 		return new Animation(0, sprite);
 	}
 }

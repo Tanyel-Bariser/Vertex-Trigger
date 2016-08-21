@@ -1,6 +1,4 @@
-package com.vertextrigger.entities.player;
-
-import static com.vertextrigger.util.GameObjectSize.BULLET_SIZE;
+package com.vertextrigger.entities.bullet;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -10,9 +8,8 @@ import com.vertextrigger.entities.*;
 /**
  * Bullets are shot from the player's position horizontally. Bullets are freed 5 seconds after being shot.
  */
-public class Bullet implements Entity {
-	static final float SHOT_POWER = 0.0015f;
-	private final Body body;
+public abstract class Bullet implements Entity {
+	protected final Body body;
 	private final Sprite sprite;
 	private boolean destroyBullet = false;
 	private Vector2 newPositionFromPortal;
@@ -27,18 +24,12 @@ public class Bullet implements Entity {
 		bulletState = new InterpolatedPosition(this.body);
 	}
 
-	Vector2 getPosition() {
-		return body.getPosition();
+	public void shoot(final Vector2 velocity) {
+		body.applyLinearImpulse(velocity, body.getPosition(), true);
 	}
 
-	void shoot(final boolean shootLeft) {
-		final float left = -SHOT_POWER;
-		final float right = SHOT_POWER;
-		if (shootLeft) {
-			shoot(left);
-		} else {
-			shoot(right);
-		}
+	Vector2 getPosition() {
+		return body.getPosition();
 	}
 
 	public Sprite getSprite() {
@@ -59,19 +50,13 @@ public class Bullet implements Entity {
 		}
 	}
 
-	private void shoot(final float horizontalVelocity) {
-		final Vector2 velocity = new Vector2(horizontalVelocity, 0);
-		final boolean wakeForSimulation = true;
-		body.applyLinearImpulse(velocity, body.getPosition(), wakeForSimulation);
-	}
-
 	/**
 	 * Allows player to set the position of the bullet to that of his gun
 	 *
 	 * @param position
 	 *            to set bullet
 	 */
-	void setPosition(final Vector2 position) {
+	public void setPosition(final Vector2 position) {
 		body.setTransform(position, 0);
 	}
 
@@ -101,10 +86,6 @@ public class Bullet implements Entity {
 		return sprite;
 	}
 
-	public static void destroyBullet(final Fixture fix) {
-		fix.getBody().setTransform(50, 50, 0);
-	}
-
 	@Override
 	public Body getBody() {
 		return body;
@@ -116,16 +97,6 @@ public class Bullet implements Entity {
 
 	@Override
 	public void setFacingRight() {
-	}
-
-	@Override
-	public float getOffsetX() {
-		return BULLET_SIZE.getOffsetX();
-	}
-
-	@Override
-	public float getOffsetY() {
-		return BULLET_SIZE.getOffsetY();
 	}
 
 	@Override

@@ -1,7 +1,8 @@
 package com.vertextrigger.util;
 
 public enum GameObjectSize {
-	BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.26f, 0.2f), //
+	PLAYER_BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.26f, 0.2f), //
+	BEE_BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.26f, 0.2f), //
 	BEE_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
 	PLAYER_SIZE(2.5f, 4.5f, 0.5f, 1.5f, 1.9f, 2.2f), //
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //

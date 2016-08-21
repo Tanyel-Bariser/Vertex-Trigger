@@ -70,7 +70,7 @@ public abstract class AbstractFlyingEnemy extends AbstractEnemy implements Steer
 		return super.update(delta, alpha);
 	}
 
-	private void applyWanderSteering(final SteeringAcceleration<Vector2> steering, final float time) {
+	protected void applyWanderSteering(final SteeringAcceleration<Vector2> steering, final float time) {
 		// Update position and linear velocity. Velocity is trimmed to maximum speed
 		setLinearVelocity(steering.linear);
 		// Update orientation and angular velocity
@@ -107,7 +107,7 @@ public abstract class AbstractFlyingEnemy extends AbstractEnemy implements Steer
 		body.setAngularVelocity(angularVelocity);
 	}
 
-	private void setLinearVelocity(final Vector2 linearVelocity) {
+	protected void setLinearVelocity(final Vector2 linearVelocity) {
 		body.setLinearVelocity(linearVelocity);
 	}
 

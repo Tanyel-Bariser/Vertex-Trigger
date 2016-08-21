@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.controller.Controller;
 import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.entities.player.*;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
@@ -230,7 +231,7 @@ public abstract class AbstractGameScreen implements Screen {
 		final float bottomEdge = camera.position.y - (camera.viewportHeight / 2);
 		final float leftEdge = camera.position.x - (camera.viewportWidth / 2);
 		final float rightEdge = camera.position.x + (camera.viewportWidth / 2);
-		final float errorMargin = adjustedPhoneWidth * 0.1f;
+		final float errorMargin = adjustedPhoneWidth * 0.4f;
 
 		final boolean belowTop = sprite.getY() < (topEdge + errorMargin);
 		final boolean aboveBottom = sprite.getY() > (bottomEdge - errorMargin);

@@ -13,6 +13,7 @@ public class BeeBodyFactory extends AbstractBodyFactory {
 	public Body createBeeBody(final World world, final Vector2 initialPosition) {
 		final Body body = createBody(world, initialPosition, BodyType.DynamicBody, createFixtureDefinition());
 		body.setFixedRotation(false);
+		body.setGravityScale(0);
 		return body;
 	}
 
@@ -27,8 +28,8 @@ public class BeeBodyFactory extends AbstractBodyFactory {
 
 	@Override
 	protected Shape createShape() {
-		final PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.getPhysicalWidth(), size.getPhysicalHeight());
+		final CircleShape shape = new CircleShape();
+		shape.setRadius(size.getPhysicalWidth());
 		return shape;
 	}
 

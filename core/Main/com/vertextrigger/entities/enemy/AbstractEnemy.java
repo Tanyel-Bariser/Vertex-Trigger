@@ -9,7 +9,7 @@ import com.vertextrigger.entities.*;
 /**
  * Enemies can kill the player if touched & follows a predefined path This class manages an enemy's physical body & its movements & sprite animation
  */
-public abstract class AbstractEnemy implements Mortal {
+public abstract class AbstractEnemy implements Mortal, Enemy {
 	protected Body body;
 	protected AnimationSet animationSet;
 	protected Animator animator;

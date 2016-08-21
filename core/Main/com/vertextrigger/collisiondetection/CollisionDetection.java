@@ -1,7 +1,8 @@
 package com.vertextrigger.collisiondetection;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.enemy.AbstractEnemy;
+import com.vertextrigger.entities.bullet.Bullet;
+import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.player.*;
 import com.vertextrigger.inanimate.portal.*;
 
@@ -49,6 +50,11 @@ public class CollisionDetection implements ContactListener {
 	private void portalTransport(final Collidable[] collidableObject) {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
+
+		if (teleportable instanceof PokerHead) {
+			return;
+		}
+
 		if ((portal != null) && (teleportable != null) && teleportable.isTeleportable()) {
 			portal.teleport(teleportable.getBody());
 		}
@@ -103,7 +109,8 @@ public class CollisionDetection implements ContactListener {
 		// Set players movements to that of conveyor belt platform behaviour
 
 		final Player player = (Player) getType(Player.class, contactBodies);
-		final AbstractEnemy enemy = (AbstractEnemy) getType(AbstractEnemy.class, contactBodies);
+		final Enemy enemy = (Enemy) getType(Enemy.class, contactBodies);
+
 		if ((player != null) && (enemy != null)) {
 			player.setDead();
 		}
