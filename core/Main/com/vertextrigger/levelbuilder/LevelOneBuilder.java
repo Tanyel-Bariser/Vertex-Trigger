@@ -45,11 +45,6 @@ public class LevelOneBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	public Vector2 getInitialPosition() {
-		return null;
-	}
-
-	@Override
 	public Array<Portal> createPortals() {
 		return null;
 	}

@@ -115,6 +115,13 @@ public class AudioManager {
 	}
 
 	/**
+	 * Play sound of bee shooting it stinger/bullet
+	 */
+	public static void playBeeShootSound() {
+		playSound(SHOOT);
+	}
+
+	/**
 	 * Plays sound effect of bullet ricocheting as feedback for user
 	 */
 	public static void playRicochetSound() {

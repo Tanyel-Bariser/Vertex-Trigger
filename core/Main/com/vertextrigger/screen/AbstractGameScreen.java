@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.controller.Controller;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.bullet.Bullet;
-import com.vertextrigger.entities.player.*;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
@@ -75,7 +75,7 @@ public abstract class AbstractGameScreen implements Screen {
 		deadMortals = new Array<>();
 		entitySprites = new Array<>();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth() / ZOOM, Gdx.graphics.getHeight() / ZOOM);
-		final Vector2 initialPosition = setUpLevelAndReturnInitialPosition();
+		setUpLevel();
 		batch = new SpriteBatch();
 		entities.add(player);
 		final Controller controller = new Controller(player, this, state);
@@ -85,11 +85,10 @@ public abstract class AbstractGameScreen implements Screen {
 		addMortal(player);
 	}
 
-	private Vector2 setUpLevelAndReturnInitialPosition() {
+	private void setUpLevel() {
 		levelBuilder.setGameScreen(this);
 		entities = levelBuilder.buildEntities();
 		backgroundSprites = levelBuilder.buildLevelLayout();
-		return levelBuilder.getInitialPosition();
 	}
 
 	public static void addBullet(final Bullet bullet) {
@@ -150,7 +149,7 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 
 		for (final Bullet bullet : bullets) {
-			if ((isInScreen(bullet.getSprite()) == false) || bullet.hitPlayer() || player.isDead() || bullet.isTooSlow()) {
+			if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer() || player.isDead() || bullet.isTooSlow()) {
 				bullets.removeValue(bullet, true);
 				entities.removeValue(bullet, true);
 				world.destroyBody(bullet.getBody());

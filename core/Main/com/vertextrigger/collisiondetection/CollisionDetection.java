@@ -19,7 +19,7 @@ public class CollisionDetection implements ContactListener {
 
 		final Portal portal = (Portal) getType(Portal.class, collidableObjects);
 		final Bullet bullet = (Bullet) getType(Bullet.class, collidableObjects);
-		if ((bullet != null) && (portal == null)) {
+		if (bullet != null && portal == null) {
 			bullet.incrementCollisions();
 		}
 		// If player is in contact with an item

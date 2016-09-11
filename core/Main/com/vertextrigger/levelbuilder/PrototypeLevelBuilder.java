@@ -22,12 +22,11 @@ import com.vertextrigger.util.GameObjectSize;
 public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	private final AbstractGameScreen screen;
 
-	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT,
-			final Vector2 initialPlayerPosition) {
+	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
 		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		this.screen = screen;
 		AudioManager.playLevelOneMusic();
-		player = PlayerFactory.createPlayer(world, initialPlayerPosition, screen);
+		player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen);
 	}
 
 	@Override
@@ -36,7 +35,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		entities.add(enemy);
 		screen.addMortal(enemy);
 
-		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player);
+		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player, screen);
 		entities.add(enemy);
 		screen.addMortal(enemy);
 	}
@@ -90,11 +89,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public void resetLevelLayout() {
-	}
-
-	@Override
-	public Vector2 getInitialPosition() {
-		return new Vector2(0, 0);
+		// TO BE USED WHEN WE GET ROUND TO CACHING EVERYTHING UPFRONT!!!!!!!!!!!!!
 	}
 
 	@Override
@@ -104,9 +99,22 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 		final Vector2 portal1Position = new Vector2(-.8f + portalWidth, -2.5f + portalHeight);
 		final Vector2 portal2Position = new Vector2(2.2f - portalWidth, -2f + portalHeight);
+		final Vector2 portal3Position = new Vector2(-.5f + portalWidth, -3f + portalHeight);
+		final Vector2 portal4Position = new Vector2(.2f - portalWidth, -1f + portalHeight);
+		final Vector2 portal5Position = new Vector2(-3f + portalWidth, -0.5f + portalHeight);
+		final Vector2 portal6Position = new Vector2(2.9f - portalWidth, -1f + portalHeight);
 
-		final Array<Portal> portals = new PortalFactory().createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
+		final Array<Portal> portals = PortalFactory.createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
+		final Array<Portal> portals1 = PortalFactory.createPortalPair(world, portal3Position, portal4Position, MOVING_SAME_DIRECTION);
+		final Array<Portal> portals2 = PortalFactory.createPortalPair(world, portal5Position, portal6Position, MOVING_SAME_DIRECTION);
+
 		for (final Portal portal : portals) {
+			sprites.add(portal.getSprite());
+		}
+		for (final Portal portal : portals1) {
+			sprites.add(portal.getSprite());
+		}
+		for (final Portal portal : portals2) {
 			sprites.add(portal.getSprite());
 		}
 		return portals;

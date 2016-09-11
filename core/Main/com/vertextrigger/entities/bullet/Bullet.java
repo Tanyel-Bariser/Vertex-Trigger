@@ -9,7 +9,7 @@ import com.vertextrigger.entities.*;
  * Bullets are shot from the player's position horizontally. Bullets are freed 5 seconds after being shot.
  */
 public abstract class Bullet implements Entity {
-	protected final Body body;
+	private final Body body;
 	private final Sprite sprite;
 	private boolean destroyBullet = false;
 	private Vector2 newPositionFromPortal;
@@ -51,7 +51,7 @@ public abstract class Bullet implements Entity {
 	}
 
 	/**
-	 * Allows player to set the position of the bullet to that of his gun
+	 * Sets the position of the bullet
 	 *
 	 * @param position
 	 *            to set bullet

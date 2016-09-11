@@ -138,11 +138,6 @@ public abstract class AbstractLevelBuilder {
 		this.gameScreen = gameScreen;
 	}
 
-	/**
-	 * @return position player starts the level at
-	 */
-	public abstract Vector2 getInitialPosition();
-
 	public float getGroundLevel() {
 		return -CONTAINER_HEIGHT;
 	}

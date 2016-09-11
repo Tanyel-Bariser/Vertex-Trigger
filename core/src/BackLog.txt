@@ -1,15 +1,19 @@
 Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
 
 Defects:
-� Sometimes game simulation stops, we think it's due to excessive asset load
+� Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 
 Assets:
 � Flip Bee sprite upside down in atlas
 � Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
 � Sprite for magnet
 � Sprite for metallic shield
+� Bee shoot sound
+� Bullet ricochet sound
 
 Game:
+� Change AudioManager#beeShootSound to have bee shoot sound
+� Change BulletFactory#createBeeBullet to return bee bullet
 � Flying monster shoot metal bullets
 � Magnets pull on metal bullets
 � Make magnets level as prototype

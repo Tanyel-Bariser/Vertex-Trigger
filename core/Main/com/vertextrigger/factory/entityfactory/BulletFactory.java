@@ -11,7 +11,7 @@ import com.vertextrigger.screen.AbstractGameScreen;
 public class BulletFactory {
 	private final World world;
 
-	BulletFactory(final World world) {
+	public BulletFactory(final World world) {
 		this.world = world;
 	}
 

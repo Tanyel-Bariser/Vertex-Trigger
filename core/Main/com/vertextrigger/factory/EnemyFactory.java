@@ -7,6 +7,8 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.factory.animationfactory.*;
 import com.vertextrigger.factory.bodyfactory.*;
+import com.vertextrigger.factory.entityfactory.BulletFactory;
+import com.vertextrigger.screen.AbstractGameScreen;
 
 public class EnemyFactory {
 	public static AbstractEnemy createPokerEnemy(final World world, final Vector2 initialPosition) {
@@ -16,10 +18,15 @@ public class EnemyFactory {
 		return new Poker(body, anims);
 	}
 
-	public static AbstractFlyingEnemy createBeeEnemy(final World world, final Vector2 initialPosition, final Steerable<Vector2> target) {
+	public static AbstractFlyingEnemy createBeeEnemy(final World world, final Vector2 initialPosition, final Steerable<Vector2> target,
+			final AbstractGameScreen screen) {
 		final BeeBodyFactory factory = new BeeBodyFactory();
 		final Body body = factory.createBeeBody(world, initialPosition);
 		final AnimationSet anims = new BeeAnimationFactory().createAnimationSet();
-		return new Bee(body, anims, target);
+		return new Bee(body, anims, target, createBulletFactory(world), screen);
+	}
+
+	private static BulletFactory createBulletFactory(final World world) {
+		return new BulletFactory(world);
 	}
 }
