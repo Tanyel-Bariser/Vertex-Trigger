@@ -1,13 +1,12 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.collisiondetection.Collidable;
 
 public class PlayerFeet implements Collidable {
 	Player player;
 
 	@Override
-	public void setUserData(final Body body) {
+	public void setUserData() {
 		throw new UnsupportedOperationException("Cannot PlayerFeet.setUserData(Body body)");
 	}
 

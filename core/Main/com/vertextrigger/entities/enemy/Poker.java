@@ -3,11 +3,12 @@ package com.vertextrigger.entities.enemy;
 import static com.vertextrigger.util.GameObjectSize.POKER_BODY_SIZE;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.AnimationSet;
+import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.entities.*;
 
-public class Poker extends AbstractEnemy {
+public class Poker extends AbstractEntity implements Enemy, Mortal {
 	public Poker(final Body body, final AnimationSet animationSet) {
-		super(body, animationSet);
+		super(body, new AnimatorImpl(animationSet));
 	}
 
 	@Override
@@ -21,7 +22,7 @@ public class Poker extends AbstractEnemy {
 	}
 
 	@Override
-	public void setUserData(final Body body) {
+	public void setUserData() {
 		body.setUserData(this);
 		for (final Fixture fix : body.getFixtureList()) {
 			if (fix.getUserData() instanceof PokerHead) {
@@ -30,5 +31,11 @@ public class Poker extends AbstractEnemy {
 				fix.setUserData(this);
 			}
 		}
+	}
+
+	@Override
+	public void die() {
+		AudioManager.playEnemyKilledSound();
+		animator.playDeathAnimation(this);
 	}
 }

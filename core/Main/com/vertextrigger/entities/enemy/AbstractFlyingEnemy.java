@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.entities.*;
 
-public abstract class AbstractFlyingEnemy extends AbstractEnemy implements Steerable<Vector2>, Mortal {
+public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enemy, Mortal, Steerable<Vector2> {
 	// STEERING FIELDS
 	private final SteeringAcceleration<Vector2> faceSteeringOutput;
 	private final SteeringAcceleration<Vector2> wanderSteeringOutput;
@@ -24,7 +24,7 @@ public abstract class AbstractFlyingEnemy extends AbstractEnemy implements Steer
 	private boolean isTagged;
 
 	public AbstractFlyingEnemy(final Body body, final AnimationSet animationSet, final Steerable<Vector2> target) {
-		super(body, animationSet);
+		super(body, new AnimatorImpl(animationSet));
 		faceSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 		wanderSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 		if (target != null) {

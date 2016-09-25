@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.vertextrigger.collisiondetection.Collidable;
 
 public class Ground implements Collidable {
+	private final Body worldContainer;
 
 	public Ground(final World world, final Vector2[] corners) {
 		final BodyDef bodyDef = new BodyDef();
@@ -20,17 +21,17 @@ public class Ground implements Collidable {
 		fixDef.friction = 0.9f;
 		fixDef.restitution = 0;
 
-		final Body worldContainer = world.createBody(bodyDef);
+		worldContainer = world.createBody(bodyDef);
 		worldContainer.createFixture(fixDef).setUserData(this);
 
-		setUserData(worldContainer);
+		setUserData();
 		worldContainerShape.dispose();
 	}
 
 	@Override
-	public void setUserData(final Body body) {
-		body.setUserData(this);
-		for (final Fixture fix : body.getFixtureList()) {
+	public void setUserData() {
+		worldContainer.setUserData(this);
+		for (final Fixture fix : worldContainer.getFixtureList()) {
 			fix.setUserData(this);
 		}
 	}

@@ -15,7 +15,7 @@ public class StaticPlatform implements Collidable {
 	public StaticPlatform(final Sprite sprite, final Body body) {
 		this.sprite = sprite;
 		this.body = body;
-		setUserData(body);
+		setUserData();
 	}
 
 	public Sprite getSprite() {
@@ -35,7 +35,7 @@ public class StaticPlatform implements Collidable {
 	}
 
 	@Override
-	public void setUserData(final Body body) {
+	public void setUserData() {
 		body.setUserData(this);
 		for (final Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);

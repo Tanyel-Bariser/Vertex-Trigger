@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.enemy.AbstractEnemy;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.entityfactory.PlayerFactory;
 import com.vertextrigger.inanimate.*;
@@ -31,7 +31,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	protected void createEnemies(final Steerable<Vector2> target) {
-		AbstractEnemy enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0.5f, 0f));
+		Mortal enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0.5f, 0f));
 		entities.add(enemy);
 		screen.addMortal(enemy);
 

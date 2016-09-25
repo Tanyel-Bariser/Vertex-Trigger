@@ -16,7 +16,7 @@ public class Portal implements Collidable {
 		this.body = body;
 		this.sprite = sprite;
 		this.teleportation = teleportation;
-		setUserData(body);
+		setUserData();
 		setSpritePosition();
 	}
 
@@ -55,7 +55,7 @@ public class Portal implements Collidable {
 	}
 
 	@Override
-	public void setUserData(final Body body) {
+	public void setUserData() {
 		body.setUserData(this);
 		for (final Fixture fix : body.getFixtureList()) {
 			fix.setUserData(this);

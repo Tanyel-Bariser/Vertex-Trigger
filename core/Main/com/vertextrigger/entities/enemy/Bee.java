@@ -27,7 +27,12 @@ public class Bee extends AbstractFlyingEnemy {
 		this.target = target;
 		this.bulletFactory = bulletFactory;
 		this.screen = screen;
+	}
 
+	@Override
+	public void die() {
+		AudioManager.playEnemyKilledSound();
+		animator.playDeathAnimation(this);
 	}
 
 	@Override
