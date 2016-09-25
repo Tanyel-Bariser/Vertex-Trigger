@@ -1,6 +1,7 @@
 package com.vertextrigger.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.inanimate.portal.Teleportable;
 
 /**
@@ -28,4 +29,6 @@ public interface Entity extends Teleportable {
 	float getOffsetY();
 
 	void cachePosition();
+
+	Vector2 getPosition();
 }

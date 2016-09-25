@@ -10,16 +10,25 @@ Assets:
 � Sprite for metallic shield
 � Bee shoot sound
 � Bullet ricochet sound
+� Sprite for bee bullet
 
 Game:
-� Change AudioManager#beeShootSound to have bee shoot sound
-� Change BulletFactory#createBeeBullet to return bee bullet
-� Flying monster shoot metal bullets
 � Magnets pull on metal bullets
-� Make magnets level as prototype
 
 Code Quality:
 � Think about putting shared code into an AbstractEntity class
+- setUserData
+- setNewPositionFromPortal
+- parts of update
+- setFacingLeft/Right
+- isTeleportable
+- exitedPortal
+- cachePosition?
+- getPosition
+- getBody
+- isDead/setDead/etc?
+- setDeathAnimationFinished
+- isDeathAnimationFinished
 
 R and D:
 � Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors

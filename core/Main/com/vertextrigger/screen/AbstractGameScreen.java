@@ -27,7 +27,7 @@ public abstract class AbstractGameScreen implements Screen {
 	public static final float WIDTH = Gdx.graphics.getWidth();
 	public static final float HEIGHT = Gdx.graphics.getHeight();
 	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
-	private final float ZOOM = (20 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
+	private final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
 	private final VertexTrigger vertexTrigger;
 	private final AbstractLevelBuilder levelBuilder;
 	private final OrthographicCamera camera;
@@ -149,7 +149,7 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 
 		for (final Bullet bullet : bullets) {
-			if (isInScreen(bullet.getSprite()) == false || bullet.hitPlayer() || player.isDead() || bullet.isTooSlow()) {
+			if (isInScreen(bullet.getSprite()) == false || bullet.destroyBullet() || player.isDead() || bullet.isTooSlow()) {
 				bullets.removeValue(bullet, true);
 				entities.removeValue(bullet, true);
 				world.destroyBody(bullet.getBody());

@@ -1,7 +1,7 @@
 package com.vertextrigger.collisiondetection;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.bullet.Bullet;
+import com.vertextrigger.entities.bullet.*;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.player.*;
 import com.vertextrigger.inanimate.portal.*;
@@ -115,9 +115,25 @@ public class CollisionDetection implements ContactListener {
 			player.setDead();
 		}
 
-		final Bullet bullet = (Bullet) getType(Bullet.class, contactBodies);
+		handlePlayerBulletCollision(contactBodies, player, enemy);
+		handleEnemyBulletCollision(contactBodies, player, enemy);
+	}
+
+	private void handleEnemyBulletCollision(final Collidable[] contactBodies, final Player player, final Enemy enemy) {
+		final EnemyBullet bullet = (EnemyBullet) getType(EnemyBullet.class, contactBodies);
+		if ((enemy != null) && (bullet != null)) {
+			bullet.setDestroyBullet();
+		}
+
 		if ((player != null) && (bullet != null)) {
-			bullet.setHitPlayer();
+			player.setDead();
+		}
+	}
+
+	private void handlePlayerBulletCollision(final Collidable[] contactBodies, final Player player, final Enemy enemy) {
+		final PlayerBullet bullet = (PlayerBullet) getType(PlayerBullet.class, contactBodies);
+		if ((player != null) && (bullet != null)) {
+			bullet.setDestroyBullet();
 		}
 
 		if ((enemy != null) && (bullet != null)) {

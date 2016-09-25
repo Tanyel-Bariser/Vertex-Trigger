@@ -9,6 +9,7 @@ public class PlayerBullet extends Bullet {
 
 	public PlayerBullet(final Body body, final Sprite sprite) {
 		super(body, sprite);
+		numberOfCollisions = 4;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public class BulletFactory {
 
 	public Bullet createBeeBullet() {
 		final Body bulletBody = createBulletBody();
-		final Bullet bullet = new EnemyBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", BEE_BULLET_SIZE));
+		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", BEE_BULLET_SIZE));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}

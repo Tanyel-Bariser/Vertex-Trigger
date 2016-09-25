@@ -12,22 +12,15 @@ import com.vertextrigger.util.GameObjectSize;
 /**
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
-public class Player implements Steerable<Vector2>, Mortal {
+public class Player extends AbstractEntity implements Steerable<Vector2>, Mortal {
 	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
-	private final Body body;
-	private final Animator animator;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
 	private float movement = 0;
-	boolean isFacingLeft;
-	private boolean isDead;
-	private final InterpolatedPosition playerState;
-	boolean isShooting;
-	private boolean isDeathAnimationFinished;
-	private Vector2 newPositionFromPortal;
-	private boolean isTeleportable = true;
+
+	// Steerable fields
 	private boolean isTagged;
 	private float maxAngularAcceleration = 10;
 	private float maxAngularSpeed = 10;
@@ -36,19 +29,9 @@ public class Player implements Steerable<Vector2>, Mortal {
 	private float zeroLinearSpeedThreshold = 0.1f;
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
+		super(body, animator);
 		this.initialPosition = initialPosition;
-		this.body = body;
 		this.gun = gun;
-		this.animator = animator;
-		isDead = false;
-		animator.setEntity(this);
-		setUserData(body);
-		playerState = new InterpolatedPosition(this.body);
-	}
-
-	@Override
-	public Body getBody() {
-		return body;
 	}
 
 	/**
@@ -56,20 +39,6 @@ public class Player implements Steerable<Vector2>, Mortal {
 	 */
 	public void diedResetPosition() {
 		body.setTransform(initialPosition, 0);
-	}
-
-	public void setAngle(final float angle) {
-		body.setTransform(body.getPosition(), angle);
-	}
-
-	@Override
-	public void setFacingLeft() {
-		isFacingLeft = true;
-	}
-
-	@Override
-	public void setFacingRight() {
-		isFacingLeft = false;
 	}
 
 	/**
@@ -105,15 +74,9 @@ public class Player implements Steerable<Vector2>, Mortal {
 	 */
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		if (newPositionFromPortal != null) {
-			body.setTransform(newPositionFromPortal, 0);
-			cachePosition();
-			setNewPositionFromPortal(null);
-		}
-
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
-		return animator.getUpdatedSprite(delta, playerState.getNewPosition(alpha, body), playerState.getNewAngle(alpha, body));
+		return super.update(delta, alpha);
 	}
 
 	public void moveLeft() {
@@ -141,7 +104,7 @@ public class Player implements Steerable<Vector2>, Mortal {
 	@Override
 	public void setDead() {
 		stopMoving();
-		isDead = true;
+		super.setDead();
 	}
 
 	@Override
@@ -151,27 +114,7 @@ public class Player implements Steerable<Vector2>, Mortal {
 	}
 
 	@Override
-	public void setDeathAnimationFinished() {
-		isDeathAnimationFinished = true;
-	}
-
-	@Override
-	public boolean isDeathAnimationFinished() {
-		return isDeathAnimationFinished;
-	}
-
-	@Override
-	public boolean isDead() {
-		return isDead;
-	}
-
-	@Override
-	public Vector2 getPosition() {
-		return body.getPosition();
-	}
-
-	@Override
-	public void setUserData(final Body body) {
+	public void setUserData() {
 		body.setUserData(this);
 		for (final Fixture fix : body.getFixtureList()) {
 			if (fix.getUserData() instanceof PlayerFeet) {
@@ -180,26 +123,6 @@ public class Player implements Steerable<Vector2>, Mortal {
 				fix.setUserData(this);
 			}
 		}
-	}
-
-	@Override
-	public void setNewPositionFromPortal(final Vector2 newPositionFromPortal) {
-		this.newPositionFromPortal = newPositionFromPortal;
-	}
-
-	@Override
-	public void cachePosition() {
-		playerState.setState(body);
-	}
-
-	@Override
-	public boolean isTeleportable() {
-		return isTeleportable;
-	}
-
-	@Override
-	public void exitedPortal() {
-		isTeleportable ^= true;
 	}
 
 	// STEERABLE METHODS BELOW

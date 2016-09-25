@@ -16,7 +16,7 @@ import com.vertextrigger.entities.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AnimatorTest {
-	Animator animator;
+	AnimatorImpl animator;
 	@Mock
 	Body player;
 	@Mock
@@ -37,7 +37,7 @@ public class AnimatorTest {
 	public void setUp() throws Exception {
 		setUpAnimationFactory();
 		when(animation.getKeyFrame(anyFloat())).thenReturn(sprite);
-		animator = new Animator(animationSet);
+		animator = new AnimatorImpl(animationSet);
 		when(entity.getOffsetX()).thenReturn(2.0f);
 		when(entity.getOffsetY()).thenReturn(2.0f);
 		animator.setEntity(entity);

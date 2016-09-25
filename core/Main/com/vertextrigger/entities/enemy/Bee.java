@@ -11,11 +11,15 @@ import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.util.GameObjectSize;
 
 public class Bee extends AbstractFlyingEnemy {
+	private static final float HEIGHT_ABOVE_PLAYER = 2f;
+	private static final int SHOT_FREQUENCY = 3;
 	final Steerable<Vector2> target;
 	final AbstractGameScreen screen;
 	private final BulletFactory bulletFactory;
+	private float timeElapsed;
 
 	public Bee(final Body body, final AnimationSet animationSet, final Steerable<Vector2> target, final BulletFactory bulletFactory,
 			final AbstractGameScreen screen) {
@@ -23,6 +27,7 @@ public class Bee extends AbstractFlyingEnemy {
 		this.target = target;
 		this.bulletFactory = bulletFactory;
 		this.screen = screen;
+
 	}
 
 	@Override
@@ -45,7 +50,7 @@ public class Bee extends AbstractFlyingEnemy {
 	}
 
 	private boolean isNotSufficientlyHigherThanTarget() {
-		return (getPosition().y - target.getPosition().y) < 1f;
+		return (getPosition().y - target.getPosition().y) < HEIGHT_ABOVE_PLAYER;
 	}
 
 	private void moveHigher() {
@@ -55,28 +60,34 @@ public class Bee extends AbstractFlyingEnemy {
 	private void shoot() {
 		final Bullet bullet = bulletFactory.createBeeBullet();
 		bullet.getBody().setActive(true);
-		bullet.setPosition(new Vector2(0, 0));
+
+		final float beeHeight = GameObjectSize.BEE_SIZE.getPhysicalHeight();
+
+		bullet.setPosition(getPosition().add(0, -(beeHeight * 2)));
 		bullet.cachePosition();
 
-		final Vector2 velocity = calculateVelocity(getPosition(), getOrientation());
+		final Vector2 velocity = calculateVelocity(getOrientation());
 
 		bullet.shoot(velocity);
 		AudioManager.playBeeShootSound();
 		screen.addEntity(bullet);
 	}
 
-	private Vector2 calculateVelocity(final Vector2 position, final float orientation) {
-		return new Vector2(-0.0015f, -0.0015f);
+	private Vector2 calculateVelocity(final float orientation) {
+		return new Vector2(getShotPower(-(float) Math.sin(orientation)), getShotPower((float) Math.cos(orientation)));
 	}
 
-	float x = 0;
+	private float getShotPower(final float shotPower) {
+		return shotPower / 1_000;
+	}
 
 	@Override()
 	public Sprite update(final float delta, final float alpha) {
-		x++;
-		if (x > 10) {
+		timeElapsed += delta;
+
+		if (timeElapsed >= SHOT_FREQUENCY) {
 			shoot();
-			x = 0;
+			timeElapsed = 0;
 		}
 
 		return super.update(delta, alpha);

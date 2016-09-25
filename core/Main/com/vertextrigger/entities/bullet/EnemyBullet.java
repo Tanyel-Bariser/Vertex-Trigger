@@ -9,6 +9,7 @@ public class EnemyBullet extends Bullet {
 
 	public EnemyBullet(final Body body, final Sprite sprite) {
 		super(body, sprite);
+		numberOfCollisions = 10;
 	}
 
 	@Override
