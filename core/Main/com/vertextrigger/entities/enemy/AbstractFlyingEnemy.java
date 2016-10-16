@@ -1,13 +1,20 @@
 package com.vertextrigger.entities.enemy;
 
 import com.badlogic.gdx.ai.GdxAI;
-import com.badlogic.gdx.ai.steer.*;
-import com.badlogic.gdx.ai.steer.behaviors.*;
+import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.ai.steer.SteeringAcceleration;
+import com.badlogic.gdx.ai.steer.SteeringBehavior;
+import com.badlogic.gdx.ai.steer.behaviors.Face;
+import com.badlogic.gdx.ai.steer.behaviors.Wander;
 import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.AbstractEntity;
+import com.vertextrigger.entities.AnimationSet;
+import com.vertextrigger.entities.AnimatorImpl;
+import com.vertextrigger.entities.Mortal;
 
 public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enemy, Mortal, Steerable<Vector2> {
 	// STEERING FIELDS
@@ -15,7 +22,6 @@ public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enem
 	private final SteeringAcceleration<Vector2> wanderSteeringOutput;
 	private SteeringBehavior<Vector2> face;
 	private SteeringBehavior<Vector2> wander;
-	private final boolean independentFacing = true;
 	private float zeroLinearSpeedThreshold = 0.1f;
 	private float maxLinearSpeed = 0.1f;
 	private float maxLinearAcceleration = 1f;
@@ -25,13 +31,11 @@ public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enem
 
 	public AbstractFlyingEnemy(final Body body, final AnimationSet animationSet, final Steerable<Vector2> target) {
 		super(body, new AnimatorImpl(animationSet));
-		faceSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
-		wanderSteeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+		faceSteeringOutput = new SteeringAcceleration<>(new Vector2());
+		wanderSteeringOutput = new SteeringAcceleration<>(new Vector2());
 		if (target != null) {
-			face = new Face<Vector2>(this).setDecelerationRadius(5f).setTarget(target);
-			wander = new Wander<Vector2>(this) //
-					.setWanderOffset(90) //
-					.setWanderOrientation(10) //
+			face = new Face<>(this).setDecelerationRadius(5f).setTarget(target);
+			wander = new Wander<>(this) //
 					.setWanderRadius(250) //
 					.setWanderRate(MathUtils.PI2 * 4) //
 					.setTarget(target); //
@@ -70,37 +74,17 @@ public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enem
 		return super.update(delta, alpha);
 	}
 
+	/** wander just responsible for linear velocity, not angle/orientation */
 	protected void applyWanderSteering(final SteeringAcceleration<Vector2> steering, final float time) {
 		// Update position and linear velocity. Velocity is trimmed to maximum speed
 		setLinearVelocity(steering.linear);
-		// Update orientation and angular velocity
-		if (independentFacing) {
-			setOrientation(getOrientation() + (getAngularVelocity() * time));
-			setAngularVelocity(getAngularVelocity() + (steering.angular * time));
-		} else {
-			// For non-independent facing we have to align orientation to linear velocity
-			final float newOrientation = calculateOrientationFromLinearVelocity(this);
-			if (newOrientation != getOrientation()) {
-				setAngularVelocity((newOrientation - getOrientation()) * time);
-				setOrientation(newOrientation);
-			}
-		}
 	}
 
+	/** face solely responsible for angle/orientation */
 	private void applyFaceSteering(final SteeringAcceleration<Vector2> steering, final float time) {
-
 		// Update orientation and angular velocity
-		if (independentFacing) {
-			setOrientation(getOrientation() + (getAngularVelocity() * time));
-			setAngularVelocity(getAngularVelocity() + (steering.angular * time));
-		} else {
-			// For non-independent facing we have to align orientation to linear velocity
-			final float newOrientation = calculateOrientationFromLinearVelocity(this);
-			if (newOrientation != getOrientation()) {
-				setAngularVelocity((newOrientation - getOrientation()) * time);
-				setOrientation(newOrientation);
-			}
-		}
+		setOrientation(getOrientation() + (getAngularVelocity() * time));
+		setAngularVelocity(getAngularVelocity() + (steering.angular * time));
 	}
 
 	private void setAngularVelocity(final float angularVelocity) {
@@ -111,25 +95,14 @@ public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enem
 		body.setLinearVelocity(linearVelocity);
 	}
 
-	// For non-independent facing
-	public float calculateOrientationFromLinearVelocity(final Steerable<Vector2> steerable) {
-		// If we haven't got any velocity, then we can do nothing.
-		if (steerable.getLinearVelocity().isZero(steerable.getZeroLinearSpeedThreshold())) {
-			return steerable.getOrientation();
-		}
-
-		return steerable.vectorToAngle(steerable.getLinearVelocity());
-	}
-
 	// STEERABLE METHODS BELOW
-
-	/* Here you should implement missing methods inherited from Steerable */
 
 	// Actual implementation depends on your coordinate system.
 	// Here we assume the y-axis is pointing upwards.
+	/** reversed default implementation as we want bee to face player with its rear end rather than front */
 	@Override
 	public float vectorToAngle(final Vector2 vector) {
-		return (float) Math.atan2(-vector.x, vector.y);
+		return (float) Math.atan2(vector.x, -vector.y);
 	}
 
 	// Actual implementation depends on your coordinate system.

@@ -79,7 +79,7 @@ public class Bee extends AbstractFlyingEnemy {
 	}
 
 	private Vector2 calculateVelocity(final float orientation) {
-		return new Vector2(getShotPower(-(float) Math.sin(orientation)), getShotPower((float) Math.cos(orientation)));
+		return new Vector2(getShotPower((float) Math.sin(orientation)), getShotPower(-(float) Math.cos(orientation)));
 	}
 
 	private float getShotPower(final float shotPower) {
