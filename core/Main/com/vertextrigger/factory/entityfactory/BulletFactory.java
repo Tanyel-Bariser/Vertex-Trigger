@@ -3,7 +3,7 @@ package com.vertextrigger.factory.entityfactory;
 import static com.vertextrigger.util.GameObjectSize.*;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.ai.SteerableBody;
+import com.vertextrigger.ai.*;
 import com.vertextrigger.entities.bullet.*;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
@@ -24,8 +24,9 @@ public class BulletFactory {
 		final float maxAngularAcceleration = 10f;
 
 		final Body bulletBody = createBulletBody();
-		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", BEE_BULLET_SIZE), new SteerableBody(
-				bulletBody, maxLinearAcceleration, maxLinearSpeed, maxAngularAcceleration, maxAngularSpeed, zeroLinearSpeedThreshold, 10, false));
+		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", BEE_BULLET_SIZE), new Magnet(
+				new SteerableBody(bulletBody, maxLinearAcceleration, maxLinearSpeed, maxAngularAcceleration, maxAngularSpeed,
+						zeroLinearSpeedThreshold, 10, false)));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}
