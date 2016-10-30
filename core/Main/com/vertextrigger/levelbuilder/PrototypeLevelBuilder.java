@@ -3,7 +3,9 @@ package com.vertextrigger.levelbuilder;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -58,6 +60,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		final GameObjectSize size = SMALL_PLATFORM_SIZE;
 		float positionX = 0;
 		float positionY = -2.2f;
+
 		for (int i = 0; i < 5; i++) {
 			final Vector2 p0 = new Vector2(positionX, positionY);
 			final StaticPlatform platform = factory.createPlatform("slice17", size, p0);
@@ -66,6 +69,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 			positionX += size.getPhysicalWidth() * 2;
 			positionY += 5f * GameObjectSize.OBJECT_SIZE;
 		}
+
 		final Vector2 p = new Vector2(-1.5f, -2.5f);
 		final StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
 		bouncePlatform.setRotation(200);
@@ -96,27 +100,21 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	public Array<Portal> createPortals() {
 		final float portalHeight = GameObjectSize.PORTAL_SIZE.getPhysicalHeight();
 		final float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
-
 		final Vector2 portal1Position = new Vector2(-.8f + portalWidth, -2.5f + portalHeight);
 		final Vector2 portal2Position = new Vector2(2.2f - portalWidth, -2f + portalHeight);
-		final Vector2 portal3Position = new Vector2(-.5f + portalWidth, -3f + portalHeight);
-		final Vector2 portal4Position = new Vector2(.2f - portalWidth, -1f + portalHeight);
-		final Vector2 portal5Position = new Vector2(-3f + portalWidth, -0.5f + portalHeight);
-		final Vector2 portal6Position = new Vector2(2.9f - portalWidth, -1f + portalHeight);
-
 		final Array<Portal> portals = PortalFactory.createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
-		final Array<Portal> portals1 = PortalFactory.createPortalPair(world, portal3Position, portal4Position, MOVING_SAME_DIRECTION);
-		final Array<Portal> portals2 = PortalFactory.createPortalPair(world, portal5Position, portal6Position, MOVING_SAME_DIRECTION);
 
 		for (final Portal portal : portals) {
 			sprites.add(portal.getSprite());
 		}
-		for (final Portal portal : portals1) {
-			sprites.add(portal.getSprite());
-		}
-		for (final Portal portal : portals2) {
-			sprites.add(portal.getSprite());
-		}
 		return portals;
+	}
+
+	@Override
+	public Sprite getBackground() {
+		final Sprite background = new SpriteFactory().createLevelOneBackground();
+		background.setPosition(-Gdx.graphics.getWidth() / 1.25f, -Gdx.graphics.getHeight() / 1.875f);
+		background.setScale(0.012f);
+		return background;
 	}
 }

@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.entities.MagnetFlowField;
 
 public class BeeBullet extends EnemyBullet implements Steerable<Vector2> {
-	private static final MagnetFlowField FLOW_FIELD = new MagnetFlowField(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 1);
+	private static final MagnetFlowField FLOW_FIELD = new MagnetFlowField(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 100);
 	private final SteeringAcceleration<Vector2> magnetFieldSteeringOutput;
 	private final FollowFlowField<Vector2> magneticField;
 	private final boolean independentFacing = true;
@@ -181,5 +181,10 @@ public class BeeBullet extends EnemyBullet implements Steerable<Vector2> {
 	@Override
 	public void setTagged(final boolean isTagged) {
 		this.isTagged = isTagged;
+	}
+
+	@Override
+	public boolean isTooSlow() {
+		return false; // TODO remove me after magnet tested
 	}
 }

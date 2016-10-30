@@ -44,7 +44,7 @@ public class Assets {
 	}
 
 	public void loadPrototypeLevel() {
-		loadLevelAssets(AtlasPath.PROTOTYPE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+		loadLevelAssets(AtlasPath.PROTOTYPE, BackgroundPath.LEVEL_THREE, MusicPath.LEVEL_ONE);
 	}
 
 	public void loadLevelOne() {
@@ -130,5 +130,9 @@ public class Assets {
 
 	public Skin getEnemySkin() {
 		return enemySkin;
+	}
+
+	public Sprite getBackground() {
+		return new Sprite(assetManager.get(BackgroundPath.LEVEL_THREE.getPath(), Texture.class));
 	}
 }

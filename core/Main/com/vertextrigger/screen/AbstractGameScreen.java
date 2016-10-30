@@ -19,6 +19,7 @@ import com.vertextrigger.util.*;
 
 public abstract class AbstractGameScreen implements Screen {
 	private static final float baseGravity = -9.81f;
+	private Sprite background;
 	protected Player player;
 	protected World world;
 	protected final Vector2 GRAVITY = new Vector2(0, baseGravity);
@@ -27,7 +28,7 @@ public abstract class AbstractGameScreen implements Screen {
 	public static final float WIDTH = Gdx.graphics.getWidth();
 	public static final float HEIGHT = Gdx.graphics.getHeight();
 	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
-	private final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
+	private static final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
 	private final VertexTrigger vertexTrigger;
 	private final AbstractLevelBuilder levelBuilder;
 	private final OrthographicCamera camera;
@@ -87,6 +88,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 	private void setUpLevel() {
 		levelBuilder.setGameScreen(this);
+		// background = levelBuilder.getBackground();
 		entities = levelBuilder.buildEntities();
 		backgroundSprites = levelBuilder.buildLevelLayout();
 	}
@@ -270,6 +272,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		// background.draw(batch);
 		for (final Sprite sprite : backgroundSprites) {
 			sprite.draw(batch);
 		}

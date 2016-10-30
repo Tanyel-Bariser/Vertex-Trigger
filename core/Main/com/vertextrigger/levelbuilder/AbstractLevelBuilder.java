@@ -153,4 +153,6 @@ public abstract class AbstractLevelBuilder {
 	public float getRightBorderOfLevel() {
 		return CONTAINER_WIDTH;
 	}
+
+	public abstract Sprite getBackground();
 }

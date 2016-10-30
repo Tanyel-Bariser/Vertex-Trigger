@@ -20,11 +20,11 @@ public class MagnetFlowField implements FlowField<Vector2> {
 
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < rows; j++) {
-				field[i][j] = DEFAULT_VECTOR2;
+				field[i][j] = new Vector2((float) i / columns, (float) j / rows);
 			}
 		}
-		set(new Vector2(0, 0));
-		// prettyPrint();
+		// set(new Vector2(0, 0));
+		prettyPrint();
 	}
 
 	private void prettyPrint() {
@@ -46,7 +46,6 @@ public class MagnetFlowField implements FlowField<Vector2> {
 
 	@Override
 	public Vector2 lookup(final Vector2 position) {
-		Gdx.app.log("Position", position.toString());
 		final int column = (int) MathUtils.clamp(position.x, 0, columns - 1);
 		final int row = (int) MathUtils.clamp(position.y, 0, rows - 1);
 		return field[column][row];

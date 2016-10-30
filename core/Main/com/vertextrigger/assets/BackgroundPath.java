@@ -1,7 +1,8 @@
 package com.vertextrigger.assets;
 
 enum BackgroundPath {
-	MAIN_SCREEN("background/main_screen.png"), LEVEL_ONE("background/level_one.png"), LEVEL_TWO("background/level_two.png");
+	MAIN_SCREEN("background/main_screen.png"), LEVEL_ONE("background/level_one.png"), LEVEL_TWO("background/level_two.png"), LEVEL_THREE(
+			"background/level_three.png");
 
 	private final String path;
 

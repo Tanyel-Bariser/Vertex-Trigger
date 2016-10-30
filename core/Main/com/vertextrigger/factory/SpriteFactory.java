@@ -46,7 +46,7 @@ public class SpriteFactory {
 	 */
 	public Sprite createLevelOneBackground() {
 		// create level one background image from assets & return it
-		return null;
+		return VertexTrigger.ASSETS.getBackground();
 	}
 
 	/**
