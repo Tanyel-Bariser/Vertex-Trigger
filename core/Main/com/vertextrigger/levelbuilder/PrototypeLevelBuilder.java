@@ -37,7 +37,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		entities.add(enemy);
 		screen.addMortal(enemy);
 
-		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player, screen);
+		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen);
 		entities.add(enemy);
 		screen.addMortal(enemy);
 	}

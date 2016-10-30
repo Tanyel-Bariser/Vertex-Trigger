@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.steer.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.bullet.Bullet;
@@ -20,13 +21,15 @@ public class Bee extends AbstractFlyingEnemy {
 	final AbstractGameScreen screen;
 	private final BulletFactory bulletFactory;
 	private float timeElapsed;
+	private final SteerableBody steerable;
 
 	public Bee(final Body body, final AnimationSet animationSet, final Steerable<Vector2> target, final BulletFactory bulletFactory,
-			final AbstractGameScreen screen) {
-		super(body, animationSet, target);
+			final AbstractGameScreen screen, final SteerableBody steerable) {
+		super(body, animationSet, target, steerable);
 		this.target = target;
 		this.bulletFactory = bulletFactory;
 		this.screen = screen;
+		this.steerable = steerable;
 	}
 
 	@Override
@@ -59,7 +62,7 @@ public class Bee extends AbstractFlyingEnemy {
 	}
 
 	private void moveHigher() {
-		setLinearVelocity(getLinearVelocity().add(0, 0.1f));
+		steerable.setLinearVelocity(steerable.getLinearVelocity().add(0, 0.1f));
 	}
 
 	private void shoot() {
@@ -71,7 +74,7 @@ public class Bee extends AbstractFlyingEnemy {
 		bullet.setPosition(getPosition().add(0, -(beeHeight * 2)));
 		bullet.cachePosition();
 
-		final Vector2 velocity = calculateVelocity(getOrientation());
+		final Vector2 velocity = calculateVelocity(steerable.getOrientation());
 
 		bullet.shoot(velocity);
 		AudioManager.playBeeShootSound();

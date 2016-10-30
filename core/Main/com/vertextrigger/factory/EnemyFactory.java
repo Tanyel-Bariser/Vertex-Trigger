@@ -3,6 +3,7 @@ package com.vertextrigger.factory;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.factory.animationfactory.*;
@@ -20,10 +21,18 @@ public class EnemyFactory {
 
 	public static Mortal createBeeEnemy(final World world, final Vector2 initialPosition, final Steerable<Vector2> target,
 			final AbstractGameScreen screen) {
+		final float zeroLinearSpeedThreshold = 0.1f;
+		final float maxLinearSpeed = 0.1f;
+		final float maxLinearAcceleration = 1f;
+		final float maxAngularSpeed = 30f;
+		final float maxAngularAcceleration = 30f;
+
 		final BeeBodyFactory factory = new BeeBodyFactory();
 		final Body body = factory.createBeeBody(world, initialPosition);
 		final AnimationSet anims = new BeeAnimationFactory().createAnimationSet();
-		return new Bee(body, anims, target, createBulletFactory(world), screen);
+
+		return new Bee(body, anims, target, createBulletFactory(world), screen, new SteerableBody(body, maxLinearAcceleration, maxLinearSpeed,
+				maxAngularAcceleration, maxAngularSpeed, zeroLinearSpeedThreshold, 10, false));
 	}
 
 	private static BulletFactory createBulletFactory(final World world) {

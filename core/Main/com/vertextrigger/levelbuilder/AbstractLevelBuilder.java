@@ -112,7 +112,7 @@ public abstract class AbstractLevelBuilder {
 	 */
 	public Array<Entity> buildEntities() {
 		// Create enemies then add them to the entities container
-		createEnemies(getPlayer());
+		createEnemies(getPlayer().getSteerable());
 		// Create dangerous ball(s) then add them to the entities container
 		createDangerousBalls();
 		// Return container of all entities needed for this level

@@ -1,10 +1,10 @@
 package com.vertextrigger.entities.player;
 
 import com.badlogic.gdx.ai.steer.Steerable;
-import com.badlogic.gdx.ai.utils.Location;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.util.GameObjectSize;
@@ -12,26 +12,20 @@ import com.vertextrigger.util.GameObjectSize;
 /**
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
-public class Player extends AbstractEntity implements Steerable<Vector2>, Mortal {
-	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
+public class Player extends AbstractEntity implements Mortal {
+	static final float JUMP_POWER = 300 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
 	private float movement = 0;
+	private final SteerableBody steerable;
 
-	// Steerable fields
-	private boolean isTagged;
-	private float maxAngularAcceleration = 10;
-	private float maxAngularSpeed = 10;
-	private float maxLinearAcceleration = 5;
-	private float maxLinearSpeed = 10;
-	private float zeroLinearSpeedThreshold = 0.1f;
-
-	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator) {
+	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator, final SteerableBody steerable) {
 		super(body, animator);
 		this.initialPosition = initialPosition;
 		this.gun = gun;
+		this.steerable = steerable;
 	}
 
 	/**
@@ -125,113 +119,7 @@ public class Player extends AbstractEntity implements Steerable<Vector2>, Mortal
 		}
 	}
 
-	// STEERABLE METHODS BELOW
-
-	/* Here you should implement missing methods inherited from Steerable */
-
-	// Actual implementation depends on your coordinate system.
-	// Here we assume the y-axis is pointing upwards.
-	@Override
-	public float vectorToAngle(final Vector2 vector) {
-		return (float) Math.atan2(-vector.x, vector.y);
-	}
-
-	// Actual implementation depends on your coordinate system.
-	// Here we assume the y-axis is pointing upwards.
-	@Override
-	public Vector2 angleToVector(final Vector2 outVector, final float angle) {
-		outVector.x = -(float) Math.sin(angle);
-		outVector.y = (float) Math.cos(angle);
-		return outVector;
-	}
-
-	@Override
-	public float getOrientation() {
-		return body.getAngle();
-	}
-
-	@Override
-	public void setOrientation(final float orientation) {
-		body.setTransform(getPosition(), orientation);
-	}
-
-	@Override
-	public Location<Vector2> newLocation() {
-		return this;
-	}
-
-	@Override
-	public float getZeroLinearSpeedThreshold() {
-		return zeroLinearSpeedThreshold;
-	}
-
-	@Override
-	public void setZeroLinearSpeedThreshold(final float zeroLinearSpeedThreshold) {
-		this.zeroLinearSpeedThreshold = zeroLinearSpeedThreshold;
-	}
-
-	@Override
-	public float getMaxLinearSpeed() {
-		return maxLinearSpeed;
-	}
-
-	@Override
-	public void setMaxLinearSpeed(final float maxLinearSpeed) {
-		this.maxLinearSpeed = maxLinearSpeed;
-	}
-
-	@Override
-	public float getMaxLinearAcceleration() {
-		return maxLinearAcceleration;
-	}
-
-	@Override
-	public void setMaxLinearAcceleration(final float maxLinearAcceleration) {
-		this.maxLinearAcceleration = maxLinearAcceleration;
-	}
-
-	@Override
-	public float getMaxAngularSpeed() {
-		return maxAngularSpeed;
-	}
-
-	@Override
-	public void setMaxAngularSpeed(final float maxAngularSpeed) {
-		this.maxAngularSpeed = maxAngularSpeed;
-	}
-
-	@Override
-	public float getMaxAngularAcceleration() {
-		return maxAngularAcceleration;
-	}
-
-	@Override
-	public void setMaxAngularAcceleration(final float maxAngularAcceleration) {
-		this.maxAngularAcceleration = maxAngularAcceleration;
-	}
-
-	@Override
-	public Vector2 getLinearVelocity() {
-		return body.getLinearVelocity();
-	}
-
-	@Override
-	public float getAngularVelocity() {
-		return body.getAngularVelocity();
-	}
-
-	@Override
-	public float getBoundingRadius() {
-		return 10;
-	}
-
-	@Override
-	public boolean isTagged() {
-		return isTagged;
-	}
-
-	@Override
-	public void setTagged(final boolean isTagged) {
-		this.isTagged = isTagged;
+	public Steerable<Vector2> getSteerable() {
+		return steerable;
 	}
 }

@@ -16,19 +16,9 @@ Game:
 � Magnets pull on metal bullets
 
 Code Quality:
-� Think about putting shared code into an AbstractEntity class
-- setUserData
-- setNewPositionFromPortal
-- parts of update
-- setFacingLeft/Right
-- isTeleportable
-- exitedPortal
-- cachePosition?
-- getPosition
-- getBody
-- isDead/setDead/etc?
-- setDeathAnimationFinished
-- isDeathAnimationFinished
+� Attempt to extract Steerable<> boilerplate into a single place. See SteeringActor in the gd ai tests for example.
+    Possibly use composition (entities could have some sort of Steerable body they could proxy calls to Body through?)
+    Behaviours could also be extracted out individually, sharing a default impl of calculateSteering, and being able to override
 
 R and D:
 � Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors

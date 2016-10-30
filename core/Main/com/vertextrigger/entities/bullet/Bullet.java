@@ -28,7 +28,7 @@ public abstract class Bullet extends AbstractEntity {
 	}
 
 	public void setPosition(final Vector2 position) {
-		body.setTransform(position, 0);
+		body.setTransform(position, body.getAngle());
 	}
 
 	public void setDestroyBullet() {
