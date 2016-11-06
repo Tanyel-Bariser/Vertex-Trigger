@@ -13,7 +13,19 @@ Assets:
 � Sprite for bee bullet
 
 Game:
-� Magnets pull on metal bullets
+player picks up shield
+	collisiondetector
+	shield.set(player) sets shield's body sensor==false and fixes it's position as player's position
+
+shield is fixed onto Player body, which is part of SteerableBody and creates a magnet and injects itself into the magnet
+
+shield initialized as sensor=true so that player can 'merge' with it and bullets don't bounce off 
+then after pickup this boolean is flipped making it a real 'hard' body
+
+must handle player bullets not deflecting off inside of shield
+
+player should probably have an 'immune to projectiles' boolean set when wearing shield. this means we can have player feet sticking outside of shield body (so player can walk and jump), but that the player will not have an achilles heel.
+
 
 Code Quality:
 � Attempt to extract Steerable<> boilerplate into a single place. See SteeringActor in the gd ai tests for example.

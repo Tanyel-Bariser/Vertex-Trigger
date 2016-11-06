@@ -5,12 +5,13 @@ import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.Mortal;
+import com.vertextrigger.entities.*;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.entityfactory.PlayerFactory;
 import com.vertextrigger.inanimate.*;
@@ -28,7 +29,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		this.screen = screen;
 		AudioManager.playLevelOneMusic();
-		player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen);
+		player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen, magnetFlowFields);
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		entities.add(enemy);
 		screen.addMortal(enemy);
 
-		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen);
+		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen, magnetFlowFields);
 		entities.add(enemy);
 		screen.addMortal(enemy);
 	}
@@ -116,5 +117,12 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		background.setPosition(-Gdx.graphics.getWidth() / 1.25f, -Gdx.graphics.getHeight() / 1.875f);
 		background.setScale(0.012f);
 		return background;
+	}
+
+	@Override
+	public Array<FlowField<Vector2>> createMagnetFlowFields() {
+		final Array<FlowField<Vector2>> magnetFlowFields = new Array<>();
+		magnetFlowFields.add(new MagnetFlowField(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 100));
+		return magnetFlowFields;
 	}
 }

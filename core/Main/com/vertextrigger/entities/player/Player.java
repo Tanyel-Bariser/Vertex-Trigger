@@ -13,7 +13,7 @@ import com.vertextrigger.util.GameObjectSize;
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
 public class Player extends AbstractEntity implements Mortal {
-	static final float JUMP_POWER = 300 * (GameObjectSize.OBJECT_SIZE / 15f);
+	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
 	private final Gun gun;
 	private final Vector2 initialPosition;

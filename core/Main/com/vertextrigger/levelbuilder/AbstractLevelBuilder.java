@@ -1,6 +1,7 @@
 package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.ai.steer.Steerable;
+import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,22 +13,25 @@ import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public abstract class AbstractLevelBuilder {
-	protected float CONTAINER_WIDTH;
-	protected float CONTAINER_HEIGHT;
+	protected final float CONTAINER_WIDTH;
+	protected final float CONTAINER_HEIGHT;
 
-	protected World world;
-	protected Array<Entity> entities;
-	protected Array<Sprite> sprites;
+	protected final World world;
+	protected final Array<Entity> entities;
+	protected final Array<Sprite> sprites;
 	protected AbstractGameScreen gameScreen;
 	protected Player player;
-	protected Array<Portal> portals;
-	protected SpriteFactory spriteFactory;
+	protected final Array<Portal> portals;
+	protected final SpriteFactory spriteFactory;
+	protected final Array<FlowField<Vector2>> magnetFlowFields;
 
 	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
 		this.world = world;
 		spriteFactory = new SpriteFactory();
-		entities = new Array<Entity>();
-		sprites = new Array<Sprite>();
+		entities = new Array<>();
+		sprites = new Array<>();
+		portals = new Array<>();
+		magnetFlowFields = createMagnetFlowFields();
 
 		this.CONTAINER_WIDTH = CONTAINER_WIDTH;
 		this.CONTAINER_HEIGHT = CONTAINER_HEIGHT;
@@ -41,6 +45,8 @@ public abstract class AbstractLevelBuilder {
 		this.player = player;
 		return this;
 	}
+
+	public abstract Array<FlowField<Vector2>> createMagnetFlowFields();
 
 	/**
 	 * Create all enemies needed for the particular game level at the specific initial positions & to follow their predefined path Then adds the
