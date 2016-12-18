@@ -15,6 +15,10 @@ public class CollisionDetection implements ContactListener {
 		final Fixture[] fixtures = getFixtures(contact);
 		final Collidable[] collidableObjects = getUserData(fixtures);
 
+		final Player player = (Player) getType(Player.class, collidableObjects);
+
+		playerTouchedShield(collidableObjects, player);
+
 		portalTransport(collidableObjects);
 
 		final Portal portal = (Portal) getType(Portal.class, collidableObjects);
@@ -45,6 +49,13 @@ public class CollisionDetection implements ContactListener {
 		// If player is in contact with level exit
 		// Save level completion in persistent memory
 		// Return user back to main menu screen
+	}
+
+	private void playerTouchedShield(final Collidable[] collidableObjects, final Player player) {
+		final ShieldBeforePickUp shield = (ShieldBeforePickUp) getType(ShieldBeforePickUp.class, collidableObjects);
+		if (player != null && shield != null) {
+			player.createShield(shield.getSprite());
+		}
 	}
 
 	private void portalTransport(final Collidable[] collidableObject) {

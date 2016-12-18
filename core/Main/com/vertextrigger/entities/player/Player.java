@@ -20,6 +20,7 @@ public class Player extends AbstractEntity implements Mortal {
 	private boolean canJump = false;
 	private float movement = 0;
 	private final SteerableBody steerable;
+	private Sprite shieldSprite;
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator, final SteerableBody steerable) {
 		super(body, animator);
@@ -70,7 +71,34 @@ public class Player extends AbstractEntity implements Mortal {
 	public Sprite update(final float delta, final float alpha) {
 		body.setLinearVelocity(movement, body.getLinearVelocity().y);
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
+		if (shieldSprite != null) {
+			shieldSprite.setCenter(body.getPosition().x, body.getPosition().y);
+		}
 		return super.update(delta, alpha);
+	}
+
+	public void createShield(final Sprite shield) {
+		shieldSprite = shield;
+		createShieldFixture();
+	}
+
+	private void createShieldFixture() {
+		final FixtureDef shield = createShieldFixDef();
+		body.createFixture(shield);
+	}
+
+	protected FixtureDef createShieldFixDef() {
+		final FixtureDef fixtureDefinition = new FixtureDef();
+		fixtureDefinition.shape = createShieldShape();
+		fixtureDefinition.density = 3f;
+		fixtureDefinition.friction = 0f;
+		return fixtureDefinition;
+	}
+
+	protected Shape createShieldShape() {
+		final Shape shape = new CircleShape();
+		shape.setRadius(GameObjectSize.SHIELD_SIZE.getPhysicalWidth());
+		return shape;
 	}
 
 	public void moveLeft() {

@@ -72,6 +72,7 @@ public class Assets {
 			assetManager.load(soundFx.getPath(), Sound.class);
 		}
 		assetManager.load(FontPath.THIN.getPath(), BitmapFont.class);
+		assetManager.load("atlas/tmp/spr_shield.png", Texture.class);
 	}
 
 	public void loadLevelTwo() {
@@ -134,5 +135,9 @@ public class Assets {
 
 	public Sprite getBackground() {
 		return new Sprite(assetManager.get(BackgroundPath.LEVEL_THREE.getPath(), Texture.class));
+	}
+
+	public Sprite getShieldSprite() {
+		return new Sprite(assetManager.get("atlas/tmp/spr_shield.png", Texture.class));
 	}
 }

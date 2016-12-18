@@ -1,19 +1,16 @@
-Plan: Fix all defects and get assets in place first then read the AI manual, then start building first level.
-
 Defects:
-� Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
+� [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 
 Assets:
-� Flip Bee sprite upside down in atlas
-� Sprite for flying metal spiked ball and a monster that shoots it, i.e. perhaps robot bee
 � Sprite for magnet
 � Sprite for metallic shield
 � Bee shoot sound
-� Bullet ricochet sound
-� Sprite for bee bullet
 
 Game:
-player picks up shield
+� Implement bullet ricochet sound
+� Bee bullets shouldn't bounce and should be a sting sprite
+
+� When player picks up shield:
 	collisiondetector
 	shield.set(player) sets shield's body sensor==false and fixes it's position as player's position
 
@@ -24,13 +21,11 @@ then after pickup this boolean is flipped making it a real 'hard' body
 
 must handle player bullets not deflecting off inside of shield
 
-player should probably have an 'immune to projectiles' boolean set when wearing shield. this means we can have player feet sticking outside of shield body (so player can walk and jump), but that the player will not have an achilles heel.
-
+player should probably have an 'immune to projectiles' boolean set when wearing shield. 
+this means we can have player feet sticking outside of shield body (so player can walk and jump), but that the player will not have an achilles heel.
+i.e. the shield sprite will be bigger than its body
 
 Code Quality:
-� Attempt to extract Steerable<> boilerplate into a single place. See SteeringActor in the gd ai tests for example.
-    Possibly use composition (entities could have some sort of Steerable body they could proxy calls to Body through?)
-    Behaviours could also be extracted out individually, sharing a default impl of calculateSteering, and being able to override
 
 R and D:
 � Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
