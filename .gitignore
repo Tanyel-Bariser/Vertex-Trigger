@@ -15,7 +15,7 @@ html/war/WEB-INF/classes/
 .gwt/
 gwt-unitCache/
 www-test/
-.gwt-tmp/
+.gwt-atlas.tmp/
 
 ## Android Studio and Intellij and Android in general
 android/libs/armeabi/
@@ -34,8 +34,8 @@ com_crashlytics_export_strings.xml
 .project
 .metadata
 **/bin/
-tmp/
-*.tmp
+atlas.tmp/
+*.atlas.tmp
 *.bak
 *.swp
 *~.nib

@@ -35,7 +35,7 @@ public class BulletFactory {
 		for (final FlowField<Vector2> magnetFlowField : magnetFlowFields) {
 			magnets.add(new Magnet(steerableBody, magnetFlowField));
 		}
-		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", BEE_BULLET_SIZE), magnets);
+		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createEnemySprite("sting", BEE_BULLET_SIZE), magnets);
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}
