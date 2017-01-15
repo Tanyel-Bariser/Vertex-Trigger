@@ -139,6 +139,11 @@ public class CollisionDetection implements ContactListener {
 		if ((player != null) && (bullet != null)) {
 			player.setDead();
 		}
+
+		if (bullet != null && bullet instanceof BeeBullet) {
+			// bee bullets should not bounce as they are stings
+			bullet.setDestroyBullet();
+		}
 	}
 
 	private void handlePlayerBulletCollision(final Collidable[] contactBodies, final Player player, final Enemy enemy) {

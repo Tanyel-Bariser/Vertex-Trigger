@@ -4,6 +4,7 @@ import static com.vertextrigger.util.GameObjectSize.BEE_SIZE;
 
 import com.badlogic.gdx.ai.steer.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.ai.SteerableBody;
@@ -70,15 +71,20 @@ public class Bee extends AbstractFlyingEnemy {
 		bullet.getBody().setActive(true);
 
 		final float beeHeight = GameObjectSize.BEE_SIZE.getPhysicalHeight();
-
 		bullet.setPosition(getPosition().add(0, -(beeHeight * 2)));
 		bullet.cachePosition();
 
 		final Vector2 velocity = calculateVelocity(steerable.getOrientation());
-
+		rotateBullet(bullet.getSprite());
 		bullet.shoot(velocity);
+
 		AudioManager.playBeeShootSound();
 		screen.addEntity(bullet);
+	}
+
+	private void rotateBullet(final Sprite bulletSprite) {
+		bulletSprite.setRotation(steerable.getOrientation() * MathUtils.radiansToDegrees);
+		bulletSprite.rotate90(false);
 	}
 
 	private Vector2 calculateVelocity(final float orientation) {
