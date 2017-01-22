@@ -17,12 +17,11 @@ public class CollisionDetection implements ContactListener {
 
 		final Player player = (Player) getType(Player.class, collidableObjects);
 
-		playerTouchedShield(collidableObjects, player);
-
+		playerShieldContact(collidableObjects, player);
 		portalTransport(collidableObjects);
 
-		final Portal portal = (Portal) getType(Portal.class, collidableObjects);
 		final Bullet bullet = (Bullet) getType(Bullet.class, collidableObjects);
+		final Portal portal = (Portal) getType(Portal.class, collidableObjects);
 		if (bullet != null && portal == null) {
 			bullet.incrementCollisions();
 		}
@@ -51,10 +50,10 @@ public class CollisionDetection implements ContactListener {
 		// Return user back to main menu screen
 	}
 
-	private void playerTouchedShield(final Collidable[] collidableObjects, final Player player) {
-		final ShieldBeforePickUp shield = (ShieldBeforePickUp) getType(ShieldBeforePickUp.class, collidableObjects);
+	private void playerShieldContact(final Collidable[] collidableObjects, final Player player) {
+		final Shield shield = (Shield) getType(Shield.class, collidableObjects);
 		if (player != null && shield != null) {
-			player.createShield(shield.getSprite());
+			player.setShield(shield);
 		}
 	}
 
@@ -122,7 +121,7 @@ public class CollisionDetection implements ContactListener {
 		final Player player = (Player) getType(Player.class, contactBodies);
 		final Enemy enemy = (Enemy) getType(Enemy.class, contactBodies);
 
-		if ((player != null) && (enemy != null)) {
+		if (player != null && enemy != null && player.isShielded() == false) {
 			player.setDead();
 		}
 
@@ -133,26 +132,27 @@ public class CollisionDetection implements ContactListener {
 	private void handleEnemyBulletCollision(final Collidable[] contactBodies, final Player player, final Enemy enemy) {
 		final EnemyBullet bullet = (EnemyBullet) getType(EnemyBullet.class, contactBodies);
 		if ((enemy != null) && (bullet != null)) {
-			bullet.setDestroyBullet();
+			bullet.destroyBullet();
 		}
 
-		if ((player != null) && (bullet != null)) {
+		if (player != null && bullet != null && player.isShielded() == false) {
 			player.setDead();
 		}
 
 		if (bullet != null && bullet instanceof BeeBullet) {
 			// bee bullets should not bounce as they are stings
-			bullet.setDestroyBullet();
+			bullet.destroyBullet();
 		}
 	}
 
 	private void handlePlayerBulletCollision(final Collidable[] contactBodies, final Player player, final Enemy enemy) {
 		final PlayerBullet bullet = (PlayerBullet) getType(PlayerBullet.class, contactBodies);
-		if ((player != null) && (bullet != null)) {
-			bullet.setDestroyBullet();
+		final Shield shield = (Shield) getType(Shield.class, contactBodies);
+		if ((player != null || shield != null) && bullet != null) {
+			bullet.destroyBullet();
 		}
 
-		if ((enemy != null) && (bullet != null)) {
+		if (enemy != null && bullet != null) {
 			enemy.setDead();
 		}
 	}

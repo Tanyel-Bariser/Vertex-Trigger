@@ -27,7 +27,7 @@ public class NonAnimator implements Animator {
 
 	@Override
 	public Sprite getUpdatedSprite(final float delta, final Vector2 newPosition, final float newAngle) {
-		sprite.setPosition((newPosition.x - entity.getOffsetX()) + 0.22f, (newPosition.y - entity.getOffsetY()) + 0.17f);
+		sprite.setPosition((newPosition.x - entity.getOffsetX()), (newPosition.y - entity.getOffsetY()));
 		return sprite;
 	}
 

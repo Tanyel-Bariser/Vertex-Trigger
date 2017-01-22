@@ -11,7 +11,7 @@ import com.vertextrigger.entities.AbstractEntity;
 public abstract class Bullet extends AbstractEntity {
 	protected int numberOfCollisions;
 	private final Sprite sprite;
-	private boolean destroyBullet = false;
+	private boolean isBulletDestroyed = false;
 	private int collisions;
 
 	public Bullet(final Body body, final Sprite sprite) {
@@ -31,17 +31,17 @@ public abstract class Bullet extends AbstractEntity {
 		body.setTransform(position, body.getAngle());
 	}
 
-	public void setDestroyBullet() {
-		destroyBullet = true;
+	public void destroyBullet() {
+		isBulletDestroyed = true;
 	}
 
-	public boolean destroyBullet() {
-		return destroyBullet;
+	public boolean isBulletDestroyed() {
+		return isBulletDestroyed;
 	}
 
 	private void checkCollisions() {
 		if (collisions > numberOfCollisions) {
-			destroyBullet = true;
+			isBulletDestroyed = true;
 		}
 	}
 

@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.factory.*;
-import com.vertextrigger.factory.entityfactory.PlayerFactory;
+import com.vertextrigger.factory.entityfactory.*;
 import com.vertextrigger.inanimate.*;
 import com.vertextrigger.inanimate.portal.*;
 import com.vertextrigger.screen.AbstractGameScreen;
@@ -124,5 +124,10 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		final Array<FlowField<Vector2>> magnetFlowFields = new Array<>();
 		magnetFlowFields.add(new MagnetFlowField(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 100));
 		return magnetFlowFields;
+	}
+
+	@Override
+	public void createPowerUps() {
+		ShieldFactory.createShield(world, new Vector2(0, -2.7f), screen);
 	}
 }

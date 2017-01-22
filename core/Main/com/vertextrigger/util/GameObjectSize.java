@@ -3,14 +3,14 @@ package com.vertextrigger.util;
 import com.badlogic.gdx.Gdx;
 
 public enum GameObjectSize {
-	PLAYER_BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.26f, 0.2f), //
-	BEE_BULLET_SIZE(1f, 1f, 0.25f, 0.25f, 0.26f, 0.2f), //
+	PLAYER_BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.04f, 0.03f), //
+	BEE_BULLET_SIZE(1f, 1f, 0.25f, 0.25f, 0.07f, 0.04f), //
 	BEE_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
 	BACKGROUND_SIZE(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 0, 0), //
 	PLAYER_SIZE(2.5f, 4.5f, 0.5f, 1.5f, 1.9f, 2.2f), //
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //
 	PORTAL_SIZE(1.5f, 4f, 0.5f, 1.5f, 2f, 2f), // Sprite is bigger oval & body is smaller rectangle that fits inside the sprite
-	SHIELD_SIZE(5, 5, 5, 5, 0, 0), //
+	SHIELD_SIZE(5, 5, PLAYER_SIZE.getPhysicalHeight() * 8.7f, PLAYER_SIZE.getPhysicalHeight() * 8.7f, 0.37f, 0.33f), //
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f);
 
 	public final static float OBJECT_SIZE = 0.15F;

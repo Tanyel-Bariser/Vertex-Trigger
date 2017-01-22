@@ -21,11 +21,13 @@ public class AnimatorImpl implements Animator {
 		currentAnimation = animationSet.getStanding();
 	}
 
+	@Override
 	public void setEntity(final Entity entity) {
 		this.entity = entity;
 		body = entity.getBody();
 	}
 
+	@Override
 	public void setHorizontalMovement(final float horizontalMovement) {
 		final float leftMovementThreshold = -0.3f;
 		final float rightMovementThreshold = 0.3f;
@@ -40,6 +42,7 @@ public class AnimatorImpl implements Animator {
 		return movingLeft;
 	}
 
+	@Override
 	public Sprite getUpdatedSprite(final float delta, final Vector2 position, final float angle) {
 		if (isAnimationTypeUpdateable) {
 			setAnimationType();
@@ -56,7 +59,7 @@ public class AnimatorImpl implements Animator {
 	}
 
 	public void setAnimationType() {
-		if (((Mortal) body.getUserData()).isDead()) {
+		if (body.getUserData() instanceof Mortal && ((Mortal) body.getUserData()).isDead()) {
 			setAnimation(animationSet.getDeath());
 		} else if (body.getLinearVelocity().y > 0.01) {
 			setAnimation(animationSet.getRising());
@@ -105,6 +108,7 @@ public class AnimatorImpl implements Animator {
 		}
 	}
 
+	@Override
 	public void playShootAnimation(final boolean isGunFired) {
 		if (isGunFired) {
 			setAnimation(animationSet.getShooting());
@@ -118,6 +122,7 @@ public class AnimatorImpl implements Animator {
 		}
 	}
 
+	@Override
 	public void playDeathAnimation(final Mortal entity) {
 		setAnimation(animationSet.getDeath());
 		Timer.schedule(new Task() {

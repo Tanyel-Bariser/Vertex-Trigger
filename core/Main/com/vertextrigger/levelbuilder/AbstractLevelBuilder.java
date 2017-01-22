@@ -104,6 +104,8 @@ public abstract class AbstractLevelBuilder {
 
 	public abstract Array<Portal> createPortals();
 
+	public abstract void createPowerUps();
+
 	/**
 	 * Resets the positions of all entities when player dies back to their initial positions of the level
 	 */
@@ -137,6 +139,7 @@ public abstract class AbstractLevelBuilder {
 		createStaticPlatforms();
 		createGroundWalls();
 		createPortals();
+		createPowerUps();
 		return sprites;
 	}
 

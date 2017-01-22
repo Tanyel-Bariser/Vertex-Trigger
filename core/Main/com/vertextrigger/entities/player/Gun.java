@@ -13,6 +13,7 @@ public class Gun {
 	private final AbstractGameScreen gameScreen;
 	private final BulletFactory bulletFactory;
 	private boolean canShoot = true;
+	private boolean isPlayerShielded = false;
 
 	public Gun(final AbstractGameScreen gameScreen, final BulletFactory bulletFactory) {
 		this.gameScreen = gameScreen;
@@ -27,9 +28,9 @@ public class Gun {
 			final Bullet bullet = bulletFactory.createPlayerBullet();
 			bullet.getBody().setActive(true);
 			if (gunPointingLeft) {
-				bullet.setPosition(new Vector2(position.x - 0.1f, position.y + 0.1f));
+				bullet.setPosition(new Vector2(position.x - getShootOffsetDistanceX(), position.y + getShootOffsetDistanceY()));
 			} else {
-				bullet.setPosition(new Vector2(position.x + 0.1f, position.y + 0.1f));
+				bullet.setPosition(new Vector2(position.x + getShootOffsetDistanceX(), position.y + getShootOffsetDistanceY()));
 			}
 
 			shootBullet(bullet, gunPointingLeft);
@@ -47,6 +48,18 @@ public class Gun {
 			return true;
 		}
 		return false;
+	}
+
+	private float getShootOffsetDistanceX() {
+		return isPlayerShielded ? 0.3f : 0.1f;
+	}
+
+	private float getShootOffsetDistanceY() {
+		return 0.1f;
+	}
+
+	void setShielded() {
+		isPlayerShielded = true;
 	}
 
 	private void shootBullet(final Bullet bullet, final boolean shootLeft) {
