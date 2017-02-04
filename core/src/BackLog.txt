@@ -1,5 +1,6 @@
 Defects:
 � [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
+� [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
 
 Assets:
 � Sprite for magnet
