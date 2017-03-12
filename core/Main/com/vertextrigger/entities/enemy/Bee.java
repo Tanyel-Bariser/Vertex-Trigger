@@ -4,8 +4,7 @@ import static com.vertextrigger.util.GameObjectSize.BEE_SIZE;
 
 import com.badlogic.gdx.ai.steer.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.assets.AudioManager;
@@ -92,7 +91,7 @@ public class Bee extends AbstractFlyingEnemy {
 	}
 
 	private float getShotPower(final float shotPower) {
-		return shotPower / 1_000;
+		return shotPower / 2_000;
 	}
 
 	@Override()

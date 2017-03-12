@@ -5,42 +5,45 @@ import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
-import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.entityfactory.*;
 import com.vertextrigger.inanimate.*;
 import com.vertextrigger.inanimate.portal.*;
 import com.vertextrigger.screen.AbstractGameScreen;
-import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.util.*;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
  */
 public class PrototypeLevelBuilder extends AbstractLevelBuilder {
+	private static final int CONTAINER_WIDTH = 4;
+	private static final int CONTAINER_HEIGHT = 4;
 	private final AbstractGameScreen screen;
 
-	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
+	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen) {
 		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		this.screen = screen;
 		AudioManager.playLevelOneMusic();
-		player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen, magnetFlowFields);
+		player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen, magnetFlowField);
 	}
 
 	@Override
 	protected void createEnemies(final Steerable<Vector2> target) {
-		Mortal enemy = EnemyFactory.createPokerEnemy(world, new Vector2(0.5f, 0f));
-		entities.add(enemy);
-		screen.addMortal(enemy);
+		final Poker poker = EnemyFactory.createPokerEnemy(world, new Vector2(0.5f, 0f));
+		entities.add(poker);
+		screen.addMortal(poker);
 
-		enemy = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen, magnetFlowFields);
-		entities.add(enemy);
-		screen.addMortal(enemy);
+		final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen, magnetFlowField);
+		entities.add(bee);
+		screen.addMortal(bee);
 	}
 
 	@Override
@@ -120,10 +123,16 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	public Array<FlowField<Vector2>> createMagnetFlowFields() {
-		final Array<FlowField<Vector2>> magnetFlowFields = new Array<>();
-		magnetFlowFields.add(new MagnetFlowField(null, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 100));
-		return magnetFlowFields;
+	public MagnetFlowField createMagnetFlowField() {
+		final Vector2 worldPosition = new Vector2(0, 0);
+		final Vector2 flowFieldPosition = PositionConverter.convertPosition(CONTAINER_WIDTH, CONTAINER_HEIGHT, worldPosition);
+
+		final Sprite magnetSprite = new SpriteFactory().createMagnetSprite();
+		magnetSprite.setPosition(worldPosition.x, worldPosition.y);
+		sprites.add(magnetSprite);
+
+		final Magnet[] magnetPositions = new Magnet[] { new Magnet(3, flowFieldPosition) };
+		return new MagnetFlowField(CONTAINER_WIDTH, CONTAINER_HEIGHT, magnetPositions);
 	}
 
 	@Override

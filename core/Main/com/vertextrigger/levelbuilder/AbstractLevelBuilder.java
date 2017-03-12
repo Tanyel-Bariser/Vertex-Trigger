@@ -1,21 +1,17 @@
 package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.ai.steer.Steerable;
-import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public abstract class AbstractLevelBuilder {
-	protected final float CONTAINER_WIDTH;
-	protected final float CONTAINER_HEIGHT;
-
 	protected final World world;
 	protected final Array<Entity> entities;
 	protected final Array<Sprite> sprites;
@@ -23,18 +19,21 @@ public abstract class AbstractLevelBuilder {
 	protected Player player;
 	protected final Array<Portal> portals;
 	protected final SpriteFactory spriteFactory;
-	protected final Array<FlowField<Vector2>> magnetFlowFields;
+	protected final MagnetFlowField magnetFlowField;
 
-	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float CONTAINER_WIDTH, final float CONTAINER_HEIGHT) {
+	private final float containerWidth;
+	private final float containerHeight;
+
+	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float containerWidth, final float containerHeight) {
 		this.world = world;
 		spriteFactory = new SpriteFactory();
 		entities = new Array<>();
 		sprites = new Array<>();
 		portals = new Array<>();
-		magnetFlowFields = createMagnetFlowFields();
+		magnetFlowField = createMagnetFlowField();
 
-		this.CONTAINER_WIDTH = CONTAINER_WIDTH;
-		this.CONTAINER_HEIGHT = CONTAINER_HEIGHT;
+		this.containerWidth = containerWidth;
+		this.containerHeight = containerHeight;
 	}
 
 	public Player getPlayer() {
@@ -46,7 +45,7 @@ public abstract class AbstractLevelBuilder {
 		return this;
 	}
 
-	public abstract Array<FlowField<Vector2>> createMagnetFlowFields();
+	public abstract MagnetFlowField createMagnetFlowField();
 
 	/**
 	 * Create all enemies needed for the particular game level at the specific initial positions & to follow their predefined path Then adds the
@@ -148,19 +147,19 @@ public abstract class AbstractLevelBuilder {
 	}
 
 	public float getGroundLevel() {
-		return -CONTAINER_HEIGHT;
+		return -containerHeight;
 	}
 
 	public float getCeilingLevel() {
-		return CONTAINER_HEIGHT;
+		return containerHeight;
 	}
 
 	public float getLeftBorderOfLevel() {
-		return -CONTAINER_WIDTH;
+		return -containerWidth;
 	}
 
 	public float getRightBorderOfLevel() {
-		return CONTAINER_WIDTH;
+		return containerWidth;
 	}
 
 	public abstract Sprite getBackground();

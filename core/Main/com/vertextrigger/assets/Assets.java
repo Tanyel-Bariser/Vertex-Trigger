@@ -58,12 +58,14 @@ public class Assets {
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
 		assetManager.load(background.getPath(), Texture.class);
 		assetManager.load(music.getPath(), Music.class);
+		assetManager.load(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class);
 		assetManager.finishLoading();
 
 		final TextureAtlas coreAtlas = assetManager.get(AtlasPath.CORE.getPath(), TextureAtlas.class);
 		coreSkin = new Skin(coreAtlas);
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 		enemySkin = new Skin(assetManager.get(AtlasPath.ENEMY.getPath(), TextureAtlas.class));
+		mainScreenSkin = new Skin(assetManager.get(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class));
 	}
 
 	private void loadCoreLevelAssets() {

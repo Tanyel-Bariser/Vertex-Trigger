@@ -28,6 +28,8 @@ i.e. the shield sprite will be bigger than its body
 
 Code Quality:
 
+- Rationalize/refactor Assets.java and remove string literals and stop loading all skins every level e.g. UI stuff
+
 R and D:
 � Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 � Particle explosions

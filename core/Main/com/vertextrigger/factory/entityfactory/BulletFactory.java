@@ -2,11 +2,9 @@ package com.vertextrigger.factory.entityfactory;
 
 import static com.vertextrigger.util.GameObjectSize.*;
 
-import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.ai.*;
+import com.vertextrigger.entities.MagnetFlowField;
 import com.vertextrigger.entities.bullet.*;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.factory.bodyfactory.BulletBodyFactory;
@@ -14,11 +12,11 @@ import com.vertextrigger.screen.AbstractGameScreen;
 
 public class BulletFactory {
 	private final World world;
-	private final Array<FlowField<Vector2>> magnetFlowFields;
+	private final MagnetFlowField magnetFlowField;
 
-	public BulletFactory(final World world, final Array<FlowField<Vector2>> magnetFlowFields) {
+	public BulletFactory(final World world, final MagnetFlowField magnetFlowField) {
 		this.world = world;
-		this.magnetFlowFields = magnetFlowFields;
+		this.magnetFlowField = magnetFlowField;
 	}
 
 	public Bullet createBeeBullet() {
@@ -31,11 +29,8 @@ public class BulletFactory {
 		final Body bulletBody = createBulletBody();
 		final SteerableBody steerableBody = new SteerableBody(bulletBody, maxLinearAcceleration, maxLinearSpeed, maxAngularAcceleration,
 				maxAngularSpeed, zeroLinearSpeedThreshold, 10, false);
-		final Array<Magnet> magnets = new Array<>();
-		for (final FlowField<Vector2> magnetFlowField : magnetFlowFields) {
-			magnets.add(new Magnet(steerableBody, magnetFlowField));
-		}
-		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createEnemySprite("sting", BEE_BULLET_SIZE), magnets);
+		final MagnetBehaviour magnet = new MagnetBehaviour(steerableBody, magnetFlowField);
+		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createEnemySprite("sting", BEE_BULLET_SIZE), magnet);
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}

@@ -17,9 +17,8 @@ public class GameScreenFactory {
 			@Override
 			protected AbstractLevelBuilder createLevelBuilder() {
 				world = new World(GRAVITY, true);
-				final AbstractLevelBuilder prototypeLevelBuilder = new PrototypeLevelBuilder(world, this, 4, 3);
 				world.setContactListener(new CollisionDetection());
-				return prototypeLevelBuilder;
+				return new PrototypeLevelBuilder(world, this);
 			}
 		};
 	}

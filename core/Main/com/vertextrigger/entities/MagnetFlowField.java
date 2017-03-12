@@ -2,52 +2,55 @@ package com.vertextrigger.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
-import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.Vector2;
+import com.vertextrigger.ai.Magnet;
+import com.vertextrigger.util.PositionConverter;
 
 public class MagnetFlowField implements FlowField<Vector2> {
-	private static final Vector2 DEFAULT_VECTOR2 = new Vector2(0f, 0f);
-	private final Vector2[] magnetPositions;
-	Vector2[][] field;
-	int rows, columns;
-	int resolution;
+	private final Vector2[][] field;
+	private final int rows, columns;
 
-	public MagnetFlowField(final Vector2[] magnetPositions, final float width, final float height, final int resolution) {
-		this.magnetPositions = magnetPositions;
-		this.resolution = resolution;
-		columns = MathUtils.ceil(width / resolution);
-		rows = MathUtils.ceil(height / resolution);
+	public MagnetFlowField(final int containerWidth, final int containerHeight, final Magnet[] magnets) {
+		columns = (containerWidth * 2) + 1;
+		rows = (containerHeight * 2) + 1;
 		field = new Vector2[columns][rows];
+		Gdx.app.log("columns", "" + columns);
+		Gdx.app.log("rows", "" + rows);
 
-		for (int i = 0; i < columns; i++) {
-			for (int j = 0; j < rows; j++) {
-				field[i][j] = new Vector2((float) i / columns, (float) j / rows);
+		for (int col = 0; col < columns; col++) {
+			ROWS: for (int row = 0; row < rows; row++) {
+				for (final Magnet magnet : magnets) {
+					if (isCloseEnough(col, row, magnet)) {
+						// if we are close enough to the magnet, set an attraction force pointing to the centre of magnet
+						final Vector2 force = new Vector2(-(col + 0.5f), -(row + 0.5f)).add(magnet.getPosition()).nor();
+						field[col][row] = new Vector2(force.x < 0 ? -1 : 1, force.y < 0 ? -1 : 1);
+						continue ROWS;
+					}
+				}
+				// set every other index to 0,0
+				field[col][row] = new Vector2(0, 0).nor();
 			}
 		}
-		// set(new Vector2(0, 0));
 		prettyPrint();
 	}
 
 	private void prettyPrint() {
-		final StringBuilder out = new StringBuilder();
-		for (int i = 0; i < columns; i++) {
-			for (int j = 0; j < rows; j++) {
-				out.append(field[i][j]).append(", ");
+		for (int i = field.length - 1; i >= 0; i--) {
+			final Vector2[] arr = field[i];
+			for (int j = 0; j < arr.length; j++) {
+				System.out.print('(' + String.format("%.1f", field[i][j].x) + "," + String.format("%.1f", field[i][j].y) + "), ");
 			}
-			out.append('\n');
+			System.out.println();
 		}
-		Gdx.app.log("", out.toString());
 	}
 
-	private void set(final Vector2 position) {
-		final int column = (int) MathUtils.clamp(position.x/* / resolution */, 0, columns - 1);
-		final int row = (int) MathUtils.clamp(position.y/* / resolution */, 0, rows - 1);
-		field[column][row] = new Vector2(0.1f, 0.1f);
+	private boolean isCloseEnough(final int column, final int row, final Magnet magnet) {
+		return magnet.getPosition().dst(column + .5f, row + .5f) < magnet.getStrength();
 	}
 
 	@Override
 	public Vector2 lookup(final Vector2 position) {
-		final int column = (int) MathUtils.clamp(position.x, 0, columns - 1);
-		final int row = (int) MathUtils.clamp(position.y, 0, rows - 1);
-		return field[column][row];
+		final Vector2 flowFieldPosition = PositionConverter.convertPosition(4, 4, position);
+		return field[(int) flowFieldPosition.x][(int) flowFieldPosition.y];
 	}
 }

@@ -26,6 +26,10 @@ public class SpriteFactory {
 		return createSprite(name, size, VertexTrigger.ASSETS.getEnemySkin());
 	}
 
+	public Sprite createMagnetSprite() {
+		return createSprite("blue_button00", GameObjectSize.MAGNET_SIZE, VertexTrigger.ASSETS.getMainScreenSkin());
+	}
+
 	private Sprite createSprite(final String name, final GameObjectSize size, final Skin skin) {
 		final Sprite sprite = skin.getSprite(name);
 		sprite.setSize(size.getSpriteWidth(), size.getSpriteHeight());
