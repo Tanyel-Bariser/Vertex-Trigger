@@ -232,7 +232,7 @@ public abstract class AbstractGameScreen implements Screen {
 		final float bottomEdge = camera.position.y - (camera.viewportHeight / 2);
 		final float leftEdge = camera.position.x - (camera.viewportWidth / 2);
 		final float rightEdge = camera.position.x + (camera.viewportWidth / 2);
-		final float errorMargin = adjustedPhoneWidth * 0.4f;
+		final float errorMargin = adjustedPhoneWidth * 0.8f;
 
 		final boolean belowTop = sprite.getY() < (topEdge + errorMargin);
 		final boolean aboveBottom = sprite.getY() > (bottomEdge - errorMargin);

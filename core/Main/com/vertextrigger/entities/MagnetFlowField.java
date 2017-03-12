@@ -9,8 +9,13 @@ import com.vertextrigger.util.PositionConverter;
 public class MagnetFlowField implements FlowField<Vector2> {
 	private final Vector2[][] field;
 	private final int rows, columns;
+	private final int containerWidth;
+	private final int containerHeight;
 
 	public MagnetFlowField(final int containerWidth, final int containerHeight, final Magnet[] magnets) {
+		this.containerWidth = containerWidth;
+		this.containerHeight = containerHeight;
+
 		columns = (containerWidth * 2) + 1;
 		rows = (containerHeight * 2) + 1;
 		field = new Vector2[columns][rows];
@@ -50,7 +55,7 @@ public class MagnetFlowField implements FlowField<Vector2> {
 
 	@Override
 	public Vector2 lookup(final Vector2 position) {
-		final Vector2 flowFieldPosition = PositionConverter.convertPosition(4, 4, position);
+		final Vector2 flowFieldPosition = PositionConverter.convertPosition(containerWidth, containerHeight, position);
 		return field[(int) flowFieldPosition.x][(int) flowFieldPosition.y];
 	}
 }

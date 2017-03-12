@@ -1,37 +1,31 @@
+Order of things to do:
+1. Shield affected by magnet
+2. Create on/off switch for magnetic field
+3. Paper design of level
+4. Refactor Asset manager and get more atlases by this point
+5. Build design of level
+6. Main screen
+7. Refactor everything
+8. Get good art/music
+9. Build more levels
+
 Defects:
 � [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 � [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
 
 Assets:
 � Sprite for magnet
-� Sprite for metallic shield
 � Bee shoot sound
 
 Game:
+� Shield should be affected by magnet
+� Magnet should have a switch which toggles it active/inactive
 � Implement bullet ricochet sound
-� Bee bullets shouldn't bounce and should be a sting sprite
-
-� When player picks up shield:
-	collisiondetector
-	shield.set(player) sets shield's body sensor==false and fixes it's position as player's position
-
-shield is fixed onto Player body, which is part of SteerableBody and creates a magnet and injects itself into the magnet
-
-shield initialized as sensor=true so that player can 'merge' with it and bullets don't bounce off 
-then after pickup this boolean is flipped making it a real 'hard' body
-
-must handle player bullets not deflecting off inside of shield
-
-player should probably have an 'immune to projectiles' boolean set when wearing shield. 
-this means we can have player feet sticking outside of shield body (so player can walk and jump), but that the player will not have an achilles heel.
-i.e. the shield sprite will be bigger than its body
 
 Code Quality:
-
-- Rationalize/refactor Assets.java and remove string literals and stop loading all skins every level e.g. UI stuff
+� Rationalize/refactor Assets.java and remove string literals and stop loading all skins every level e.g. UI stuff
 
 R and D:
-� Steering behaviours @ https://github.com/libgdx/gdx-ai/wiki/Steering-Behaviors
 � Particle explosions
 
 GAME DESIGN EXPLORATION:

@@ -1,7 +1,7 @@
 package com.vertextrigger.levelbuilder;
 
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
-import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
+import static com.vertextrigger.util.GameObjectSize.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
@@ -25,7 +25,7 @@ import com.vertextrigger.util.*;
  */
 public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	private static final int CONTAINER_WIDTH = 4;
-	private static final int CONTAINER_HEIGHT = 4;
+	private static final int CONTAINER_HEIGHT = 3;
 	private final AbstractGameScreen screen;
 
 	public PrototypeLevelBuilder(final World world, final AbstractGameScreen screen) {
@@ -124,14 +124,19 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public MagnetFlowField createMagnetFlowField() {
-		final Vector2 worldPosition = new Vector2(0, 0);
-		final Vector2 flowFieldPosition = PositionConverter.convertPosition(CONTAINER_WIDTH, CONTAINER_HEIGHT, worldPosition);
+		final int magnetStrength = 3;
+		final Vector2[] worldPositions = new Vector2[] { new Vector2(-3.8f, -2.8f), new Vector2(), new Vector2(3.6f, 2.8f), };
+		final Magnet[] magnetPositions = new Magnet[worldPositions.length];
 
-		final Sprite magnetSprite = new SpriteFactory().createMagnetSprite();
-		magnetSprite.setPosition(worldPosition.x, worldPosition.y);
-		sprites.add(magnetSprite);
+		for (int i = 0; i < worldPositions.length; i++) {
+			final Sprite magnetSprite = new SpriteFactory().createMagnetSprite();
+			magnetSprite.setPosition(worldPositions[i].x - MAGNET_SIZE.getSpriteWidth() / 2, worldPositions[i].y - MAGNET_SIZE.getSpriteHeight() / 2);
+			sprites.add(magnetSprite);
 
-		final Magnet[] magnetPositions = new Magnet[] { new Magnet(3, flowFieldPosition) };
+			final Vector2 flowFieldPosition = PositionConverter.convertPosition(CONTAINER_WIDTH, CONTAINER_HEIGHT, worldPositions[i]);
+			magnetPositions[i] = new Magnet(magnetStrength, flowFieldPosition);
+		}
+
 		return new MagnetFlowField(CONTAINER_WIDTH, CONTAINER_HEIGHT, magnetPositions);
 	}
 
