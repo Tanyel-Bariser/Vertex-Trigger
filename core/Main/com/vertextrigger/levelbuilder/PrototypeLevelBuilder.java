@@ -18,7 +18,7 @@ import com.vertextrigger.factory.entityfactory.*;
 import com.vertextrigger.inanimate.*;
 import com.vertextrigger.inanimate.portal.*;
 import com.vertextrigger.screen.AbstractGameScreen;
-import com.vertextrigger.util.*;
+import com.vertextrigger.util.GameObjectSize;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
@@ -124,17 +124,14 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public MagnetFlowField createMagnetFlowField() {
+		final MagnetFactory factory = new MagnetFactory(world, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		final int magnetStrength = 3;
-		final Vector2[] worldPositions = new Vector2[] { new Vector2(-3.8f, -2.8f), new Vector2(), new Vector2(3.6f, 2.8f), };
+		final Vector2[] worldPositions = new Vector2[] { new Vector2(-3.8f, -2.2f), new Vector2(), new Vector2(3.6f, 2.8f), };
 		final Magnet[] magnetPositions = new Magnet[worldPositions.length];
 
 		for (int i = 0; i < worldPositions.length; i++) {
-			final Sprite magnetSprite = new SpriteFactory().createMagnetSprite();
-			magnetSprite.setPosition(worldPositions[i].x - MAGNET_SIZE.getSpriteWidth() / 2, worldPositions[i].y - MAGNET_SIZE.getSpriteHeight() / 2);
-			sprites.add(magnetSprite);
-
-			final Vector2 flowFieldPosition = PositionConverter.convertPosition(CONTAINER_WIDTH, CONTAINER_HEIGHT, worldPositions[i]);
-			magnetPositions[i] = new Magnet(magnetStrength, flowFieldPosition);
+			magnetPositions[i] = factory.createMagnet(MAGNET_SIZE, worldPositions[i], magnetStrength);
+			sprites.add(magnetPositions[i].getSprite());
 		}
 
 		return new MagnetFlowField(CONTAINER_WIDTH, CONTAINER_HEIGHT, magnetPositions);

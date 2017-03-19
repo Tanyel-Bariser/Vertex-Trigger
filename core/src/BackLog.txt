@@ -1,4 +1,3 @@
-� Shield affected by magnet
 � Make magnet solid and bullet disappear when hit it
 � When an attracted object hits the magnet, it makes a sound to signify the magnet is switched off for a couple of seconds
 � Paper design of level - with shield next to magnet
@@ -12,7 +11,7 @@
 Defects:
 � [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 � [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
-� Look into player sinking into ground due to combined force of magnet and gravity
+� Look into player sinking into ground due to combined force of magnet and gravity (defect exists in b021d02f5a603f209e89d498dccc31e62b084b38)
 
 Assets:
 � Sprite for magnet

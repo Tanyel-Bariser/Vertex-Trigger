@@ -1,6 +1,5 @@
 package com.vertextrigger.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.ai.Magnet;
@@ -19,8 +18,6 @@ public class MagnetFlowField implements FlowField<Vector2> {
 		columns = (containerWidth * 2) + 1;
 		rows = (containerHeight * 2) + 1;
 		field = new Vector2[columns][rows];
-		Gdx.app.log("columns", "" + columns);
-		Gdx.app.log("rows", "" + rows);
 
 		for (int col = 0; col < columns; col++) {
 			ROWS: for (int row = 0; row < rows; row++) {
@@ -36,7 +33,6 @@ public class MagnetFlowField implements FlowField<Vector2> {
 				field[col][row] = new Vector2(0, 0).nor();
 			}
 		}
-		prettyPrint();
 	}
 
 	private void prettyPrint() {
