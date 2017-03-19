@@ -10,19 +10,32 @@ public class MagnetFlowField implements FlowField<Vector2> {
 	private final int rows, columns;
 	private final int containerWidth;
 	private final int containerHeight;
+	private final Magnet[] magnets;
 
 	public MagnetFlowField(final int containerWidth, final int containerHeight, final Magnet[] magnets) {
 		this.containerWidth = containerWidth;
 		this.containerHeight = containerHeight;
+		this.magnets = magnets;
 
 		columns = (containerWidth * 2) + 1;
 		rows = (containerHeight * 2) + 1;
 		field = new Vector2[columns][rows];
 
+		setFlowField();
+		generateFlowField();
+	}
+
+	private void setFlowField() {
+		for (final Magnet magnet : magnets) {
+			magnet.setMagnetFlowField(this);
+		}
+	}
+
+	public synchronized void generateFlowField() {
 		for (int col = 0; col < columns; col++) {
 			ROWS: for (int row = 0; row < rows; row++) {
 				for (final Magnet magnet : magnets) {
-					if (isCloseEnough(col, row, magnet)) {
+					if (isCloseEnough(col, row, magnet) && magnet.isActive()) {
 						// if we are close enough to the magnet, set an attraction force pointing to the centre of magnet
 						final Vector2 force = new Vector2(-(col + 0.5f), -(row + 0.5f)).add(magnet.getPosition()).nor();
 						field[col][row] = new Vector2(force.x < 0 ? -1 : 1, force.y < 0 ? -1 : 1);

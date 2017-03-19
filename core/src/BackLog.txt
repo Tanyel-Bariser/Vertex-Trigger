@@ -12,6 +12,7 @@ Defects:
 � [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 � [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
 � Look into player sinking into ground due to combined force of magnet and gravity (defect exists in b021d02f5a603f209e89d498dccc31e62b084b38)
+� Wearing shield makes player run and jump way to fast/high. (player sinking into floor may be related to shield!!)
 
 Assets:
 � Sprite for magnet

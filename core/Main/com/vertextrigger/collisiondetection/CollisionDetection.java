@@ -1,6 +1,7 @@
 package com.vertextrigger.collisiondetection;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.entities.bullet.*;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.player.*;
@@ -18,6 +19,7 @@ public class CollisionDetection implements ContactListener {
 		final Player player = (Player) getType(Player.class, collidableObjects);
 
 		playerShieldContact(collidableObjects, player);
+		shieldMagnetContact(collidableObjects);
 		portalTransport(collidableObjects);
 
 		final Bullet bullet = (Bullet) getType(Bullet.class, collidableObjects);
@@ -48,6 +50,15 @@ public class CollisionDetection implements ContactListener {
 		// If player is in contact with level exit
 		// Save level completion in persistent memory
 		// Return user back to main menu screen
+	}
+
+	private void shieldMagnetContact(final Collidable[] collidableObjects) {
+		final Magnet magnet = (Magnet) getType(Magnet.class, collidableObjects);
+		final Shield shield = (Shield) getType(Shield.class, collidableObjects);
+
+		if (shield != null && magnet != null && magnet.isActive()) {
+			magnet.switchOff();
+		}
 	}
 
 	private void playerShieldContact(final Collidable[] collidableObjects, final Player player) {

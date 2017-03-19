@@ -125,16 +125,16 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	public MagnetFlowField createMagnetFlowField() {
 		final MagnetFactory factory = new MagnetFactory(world, CONTAINER_WIDTH, CONTAINER_HEIGHT);
-		final int magnetStrength = 3;
+		final int magnetStrength = 2;
 		final Vector2[] worldPositions = new Vector2[] { new Vector2(-3.8f, -2.2f), new Vector2(), new Vector2(3.6f, 2.8f), };
-		final Magnet[] magnetPositions = new Magnet[worldPositions.length];
+		final Magnet[] magnets = new Magnet[worldPositions.length];
 
 		for (int i = 0; i < worldPositions.length; i++) {
-			magnetPositions[i] = factory.createMagnet(MAGNET_SIZE, worldPositions[i], magnetStrength);
-			sprites.add(magnetPositions[i].getSprite());
+			magnets[i] = factory.createMagnet(MAGNET_SIZE, worldPositions[i], magnetStrength);
+			sprites.add(magnets[i].getSprite());
 		}
 
-		return new MagnetFlowField(CONTAINER_WIDTH, CONTAINER_HEIGHT, magnetPositions);
+		return new MagnetFlowField(CONTAINER_WIDTH, CONTAINER_HEIGHT, magnets);
 	}
 
 	@Override
