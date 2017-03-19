@@ -5,17 +5,17 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.ai.MagnetBehaviour;
 
 public class BeeBullet extends EnemyBullet {
-	private final MagnetBehaviour magnet;
+	private final MagnetBehaviour magnetBehaviour;
 
-	public BeeBullet(final Body body, final Sprite sprite, final MagnetBehaviour magnet) {
+	public BeeBullet(final Body body, final Sprite sprite, final MagnetBehaviour magnetBehaviour) {
 		super(body, sprite);
-		this.magnet = magnet;
+		this.magnetBehaviour = magnetBehaviour;
 	}
 
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		magnet.calculateSteering();
-		magnet.applySteering(delta);
+		magnetBehaviour.calculateSteering();
+		magnetBehaviour.applySteering(delta);
 		return super.update(delta, alpha);
 	}
 

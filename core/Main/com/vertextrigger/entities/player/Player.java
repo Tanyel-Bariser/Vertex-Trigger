@@ -4,7 +4,7 @@ import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.ai.SteerableBody;
+import com.vertextrigger.ai.*;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.util.GameObjectSize;
@@ -22,12 +22,15 @@ public class Player extends AbstractEntity implements Mortal {
 	private final SteerableBody steerable;
 	private Shield shield;
 	private boolean isShieldSet = false;
+	private final MagnetBehaviour magnetBehaviour;
 
-	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator, final SteerableBody steerable) {
+	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator, final SteerableBody steerable,
+			final MagnetBehaviour magnetBehaviour) {
 		super(body, animator);
 		this.initialPosition = initialPosition;
 		this.gun = gun;
 		this.steerable = steerable;
+		this.magnetBehaviour = magnetBehaviour;
 	}
 
 	/**
@@ -77,6 +80,11 @@ public class Player extends AbstractEntity implements Mortal {
 			shield.setPlayerBody(body);
 			isShieldSet = true;
 			gun.setShielded();
+		}
+
+		if (isShieldSet) {
+			magnetBehaviour.calculateSteering();
+			magnetBehaviour.applySteering(delta);
 		}
 		return super.update(delta, alpha);
 	}

@@ -1,17 +1,18 @@
-Order of things to do:
-1. Shield affected by magnet
-2. Create on/off switch for magnetic field
-3. Paper design of level
-4. Refactor Asset manager and get more atlases by this point
-5. Build design of level
-6. Main screen
-7. Refactor everything
-8. Get good art/music
-9. Build more levels
+� Shield affected by magnet
+� Make magnet solid and bullet disappear when hit it
+� When an attracted object hits the magnet, it makes a sound to signify the magnet is switched off for a couple of seconds
+� Paper design of level - with shield next to magnet
+� Refactor Asset manager and get more atlases by this point
+� Build design of level
+� Main screen
+� Refactor everything
+� Get good art/music
+� Build more levels
 
 Defects:
 � [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 � [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
+� Look into player sinking into ground due to combined force of magnet and gravity
 
 Assets:
 � Sprite for magnet
@@ -29,6 +30,8 @@ R and D:
 � Particle explosions
 
 GAME DESIGN EXPLORATION:
+Perhaps picking up a gun instead of shield can be the pickup that causes the player to be attracted to the magnet
+
 	What if we created a flying monster that shot metal spiked balls, which also bounce off of platforms and
 go through portals in the same way the players bullets do. This will make the game play sort of like the Atari
 Breakout game where the player has to work out exactly where the metal spiked balls would land after bouncing

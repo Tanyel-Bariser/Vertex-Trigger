@@ -29,8 +29,8 @@ public class BulletFactory {
 		final Body bulletBody = createBulletBody();
 		final SteerableBody steerableBody = new SteerableBody(bulletBody, maxLinearAcceleration, maxLinearSpeed, maxAngularAcceleration,
 				maxAngularSpeed, zeroLinearSpeedThreshold, 10, false);
-		final MagnetBehaviour magnet = new MagnetBehaviour(steerableBody, magnetFlowField);
-		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createEnemySprite("sting", BEE_BULLET_SIZE), magnet);
+		final MagnetBehaviour magnetBehaviour = new MagnetBehaviour(steerableBody, magnetFlowField);
+		final Bullet bullet = new BeeBullet(bulletBody, new SpriteFactory().createEnemySprite("sting", BEE_BULLET_SIZE), magnetBehaviour);
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}
