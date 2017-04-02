@@ -38,6 +38,7 @@ public class Assets {
 		assetManager.load(BackgroundPath.MAIN_SCREEN.getPath(), Texture.class);
 		assetManager.load(MusicPath.MAIN_SCREEN.getPath(), Music.class);
 		assetManager.load(FontPath.REGULAR.getPath(), BitmapFont.class);
+		assetManager.load(FontPath.THIN.getPath(), BitmapFont.class);
 		assetManager.finishLoading();
 
 		mainScreenSkin = new Skin(assetManager.get(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class));
@@ -137,6 +138,18 @@ public class Assets {
 
 	public Sprite getBackground() {
 		return new Sprite(assetManager.get(BackgroundPath.LEVEL_THREE.getPath(), Texture.class));
+	}
+
+	public Sprite getMainScreenBackground() {
+		return new Sprite(assetManager.get(BackgroundPath.MAIN_SCREEN.getPath(), Texture.class));
+	}
+
+	public BitmapFont getMainScreenButtonFont() {
+		return assetManager.get(FontPath.THIN.getPath(), BitmapFont.class);
+	}
+
+	public BitmapFont getMainScreenTitleFont() {
+		return assetManager.get(FontPath.REGULAR.getPath(), BitmapFont.class);
 	}
 
 	public Sprite getShieldSprite() {

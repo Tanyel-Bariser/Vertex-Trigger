@@ -3,6 +3,7 @@ package com.vertextrigger.main;
 import com.badlogic.gdx.*;
 import com.vertextrigger.assets.*;
 import com.vertextrigger.factory.GameScreenFactory;
+import com.vertextrigger.screen.MainScreen;
 
 /**
  * First class called by the respective ports, i.e. Android, Desktop, HTML, bootstrapping class.
@@ -14,7 +15,8 @@ public class VertexTrigger extends Game {
 	@Override
 	public void create() {
 		// Open main menu screen
-		setScreen(GameScreenFactory.createPrototypeLevel(this));
+		//setScreen(GameScreenFactory.createPrototypeLevel(this));
+		setScreen(new MainScreen(this));
 	}
 
 	@Override
