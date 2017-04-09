@@ -47,7 +47,7 @@ public class MainScreen implements Screen {
 	private Stage stage;
 
 	public MainScreen(final VertexTrigger vertexTrigger) {
-		this.assets = new Assets();
+		this.assets = VertexTrigger.ASSETS;
 		this.vertexTrigger = vertexTrigger;
 	}
 
@@ -198,6 +198,6 @@ public class MainScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		assets.dispose();
+		assets.unloadMainScreen();
 	}
 }

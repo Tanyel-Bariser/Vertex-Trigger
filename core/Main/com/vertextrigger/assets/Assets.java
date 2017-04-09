@@ -33,7 +33,6 @@ public class Assets {
 	}
 
 	public void loadMainScreen() {
-		assetManager.clear();
 		assetManager.load(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class);
 		assetManager.load(BackgroundPath.MAIN_SCREEN.getPath(), Texture.class);
 		assetManager.load(MusicPath.MAIN_SCREEN.getPath(), Music.class);
@@ -53,7 +52,6 @@ public class Assets {
 	}
 
 	private void loadLevelAssets(final AtlasPath atlas, final BackgroundPath background, final MusicPath music) {
-		assetManager.clear();
 		loadCoreLevelAssets();
 		loadEnemies();
 		assetManager.load(atlas.getPath(), TextureAtlas.class);
@@ -91,6 +89,14 @@ public class Assets {
 	 */
 	public void dispose() {
 		assetManager.dispose();
+	}
+
+	public void unloadMainScreen() {
+		assetManager.unload(AtlasPath.MAIN_SCREEN.getPath());
+		assetManager.unload(BackgroundPath.MAIN_SCREEN.getPath());
+		assetManager.unload(MusicPath.MAIN_SCREEN.getPath());
+		assetManager.unload(FontPath.REGULAR.getPath());
+		assetManager.unload(FontPath.THIN.getPath());
 	}
 
 	/**
