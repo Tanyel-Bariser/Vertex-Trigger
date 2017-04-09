@@ -37,7 +37,7 @@ public class VertexTrigger extends Game {
 	 */
 	@Override
 	public void dispose() {
-		// Dispose of all resources including assets
 		AudioManager.disposeAll();
+		ASSETS.dispose();
 	}
 }

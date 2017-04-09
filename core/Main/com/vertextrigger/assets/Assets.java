@@ -1,9 +1,12 @@
 package com.vertextrigger.assets;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.*;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
@@ -39,16 +42,24 @@ public class Assets {
 		assetManager.load(FontPath.REGULAR.getPath(), BitmapFont.class);
 		assetManager.load(FontPath.THIN.getPath(), BitmapFont.class);
 		assetManager.finishLoading();
-
 		mainScreenSkin = new Skin(assetManager.get(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class));
+	}
+
+	public void unloadMainScreen() {
+		assetManager.unload(AtlasPath.MAIN_SCREEN.getPath());
+		assetManager.unload(BackgroundPath.MAIN_SCREEN.getPath());
+		assetManager.unload(MusicPath.MAIN_SCREEN.getPath());
+		assetManager.unload(FontPath.REGULAR.getPath());
+		assetManager.unload(FontPath.THIN.getPath());
+		mainScreenSkin = null;
 	}
 
 	public void loadPrototypeLevel() {
 		loadLevelAssets(AtlasPath.PROTOTYPE, BackgroundPath.LEVEL_THREE, MusicPath.LEVEL_ONE);
 	}
 
-	public void loadLevelOne() {
-		loadLevelAssets(AtlasPath.LEVEL_ONE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+	public void unloadPrototypeLevel() {
+		unloadLevelAssets(AtlasPath.PROTOTYPE, BackgroundPath.LEVEL_THREE, MusicPath.LEVEL_ONE);
 	}
 
 	private void loadLevelAssets(final AtlasPath atlas, final BackgroundPath background, final MusicPath music) {
@@ -60,11 +71,22 @@ public class Assets {
 		assetManager.load(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class);
 		assetManager.finishLoading();
 
-		final TextureAtlas coreAtlas = assetManager.get(AtlasPath.CORE.getPath(), TextureAtlas.class);
-		coreSkin = new Skin(coreAtlas);
+		coreSkin = new Skin(assetManager.get(AtlasPath.CORE.getPath(), TextureAtlas.class));
 		levelSkin = new Skin(assetManager.get(atlas.getPath(), TextureAtlas.class));
 		enemySkin = new Skin(assetManager.get(AtlasPath.ENEMY.getPath(), TextureAtlas.class));
-		mainScreenSkin = new Skin(assetManager.get(AtlasPath.MAIN_SCREEN.getPath(), TextureAtlas.class));
+	}
+
+	private void unloadLevelAssets(final AtlasPath atlas, final BackgroundPath background, final MusicPath music) {
+		unloadCoreLevelAssets();
+		unloadEnemies();
+		assetManager.unload(atlas.getPath());
+		assetManager.unload(background.getPath());
+		assetManager.unload(music.getPath());
+		assetManager.unload(AtlasPath.MAIN_SCREEN.getPath());
+
+		coreSkin = null;
+		levelSkin = null;
+		enemySkin = null;
 	}
 
 	private void loadCoreLevelAssets() {
@@ -73,15 +95,38 @@ public class Assets {
 			assetManager.load(soundFx.getPath(), Sound.class);
 		}
 		assetManager.load(FontPath.THIN.getPath(), BitmapFont.class);
-		assetManager.load("atlas/tmp/spr_shield.png", Texture.class);
+	}
+
+	private void unloadCoreLevelAssets() {
+		assetManager.unload(AtlasPath.CORE.getPath());
+		for (final SoundFxPath soundFx : SoundFxPath.values()) {
+			assetManager.unload(soundFx.getPath());
+		}
+		assetManager.unload(FontPath.THIN.getPath());
+	}
+
+	private void loadEnemies() {
+		assetManager.load(AtlasPath.ENEMY.getPath(), TextureAtlas.class);
+	}
+
+	private void unloadEnemies() {
+		assetManager.unload(AtlasPath.ENEMY.getPath());
+	}
+
+	public void loadLevelOne() {
+		loadLevelAssets(AtlasPath.LEVEL_ONE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+	}
+
+	public void unloadLevelOne() {
+		unloadLevelAssets(AtlasPath.LEVEL_ONE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}
 
 	public void loadLevelTwo() {
 		loadLevelAssets(AtlasPath.LEVEL_TWO, BackgroundPath.LEVEL_TWO, MusicPath.LEVEL_TWO);
 	}
 
-	private void loadEnemies() {
-		assetManager.load(AtlasPath.ENEMY.getPath(), TextureAtlas.class);
+	public void unloadLevelTwo() {
+		unloadLevelAssets(AtlasPath.LEVEL_TWO, BackgroundPath.LEVEL_TWO, MusicPath.LEVEL_TWO);
 	}
 
 	/**
@@ -89,14 +134,6 @@ public class Assets {
 	 */
 	public void dispose() {
 		assetManager.dispose();
-	}
-
-	public void unloadMainScreen() {
-		assetManager.unload(AtlasPath.MAIN_SCREEN.getPath());
-		assetManager.unload(BackgroundPath.MAIN_SCREEN.getPath());
-		assetManager.unload(MusicPath.MAIN_SCREEN.getPath());
-		assetManager.unload(FontPath.REGULAR.getPath());
-		assetManager.unload(FontPath.THIN.getPath());
 	}
 
 	/**

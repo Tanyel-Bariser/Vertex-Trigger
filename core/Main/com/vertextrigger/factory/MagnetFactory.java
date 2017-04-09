@@ -7,6 +7,8 @@ import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.factory.bodyfactory.MagnetBodyFactory;
 import com.vertextrigger.util.*;
 
+import static com.vertextrigger.util.GameObjectSize.*;
+
 public class MagnetFactory {
 	private final SpriteFactory spriteFactory;
 	private final World world;
@@ -24,10 +26,12 @@ public class MagnetFactory {
 
 	public Magnet createMagnet(final GameObjectSize size, final Vector2 worldPosition, final int strength) {
 		final Body body = bodyFactory.createMagnetBody(world, worldPosition, size);
-		final Sprite sprite = new SpriteFactory().createMagnetSprite();
-		sprite.setPosition(worldPosition.x - size.getSpriteWidth() / 2, worldPosition.y - size.getSpriteHeight() / 2);
+		final Sprite active = new SpriteFactory().createCoreSprite("magnetActive", MAGNET_SIZE);
+		final Sprite inactive = new SpriteFactory().createCoreSprite("magnetInactive", MAGNET_SIZE);
+		active.setPosition(worldPosition.x - size.getSpriteWidth() / 2, worldPosition.y - size.getSpriteHeight() / 2);
+		inactive.setPosition(worldPosition.x - size.getSpriteWidth() / 2, worldPosition.y - size.getSpriteHeight() / 2);
 
 		final Vector2 flowField2dArrayPosition = PositionConverter.convertPosition(containerWidth, containerHeight, worldPosition);
-		return new Magnet(body, sprite, strength, flowField2dArrayPosition);
+		return new Magnet(body, active, inactive, strength, flowField2dArrayPosition);
 	}
 }

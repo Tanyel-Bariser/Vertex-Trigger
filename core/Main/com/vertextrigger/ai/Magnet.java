@@ -10,17 +10,21 @@ import com.vertextrigger.entities.MagnetFlowField;
 
 public class Magnet implements Collidable {
 	private final Body body;
-	private final Sprite sprite;
+	private final Sprite currentSprite;
+	private final Sprite activeSprite;
+	private final Sprite inactiveSprite;
 	private final int strength;
 	private final Vector2 flowField2dArrayPosition;
 	private boolean active = true;
 	private MagnetFlowField magnetFlowField;
 
-	public Magnet(final Body body, final Sprite sprite, final int strength, final Vector2 flowField2dArrayPosition) {
+	public Magnet(final Body body, final Sprite activeSprite, final Sprite inactiveSprite, final int strength, final Vector2 flowField2dArrayPosition) {
 		this.body = body;
-		this.sprite = sprite;
+		this.activeSprite = activeSprite;
+		this.inactiveSprite = inactiveSprite;
 		this.strength = strength;
 		this.flowField2dArrayPosition = flowField2dArrayPosition;
+		currentSprite = new Sprite(activeSprite);
 		setUserData();
 	}
 
@@ -33,7 +37,7 @@ public class Magnet implements Collidable {
 	}
 
 	public Sprite getSprite() {
-		return sprite;
+		return currentSprite;
 	}
 
 	public int getStrength() {
@@ -65,6 +69,7 @@ public class Magnet implements Collidable {
 
 	private void changeState(final boolean active) {
 		this.active = active;
+		this.currentSprite.set(active ? activeSprite : inactiveSprite);
 		magnetFlowField.generateFlowField();
 	}
 

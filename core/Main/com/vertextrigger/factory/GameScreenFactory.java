@@ -15,6 +15,11 @@ public class GameScreenFactory {
 			}
 
 			@Override
+			protected void disposeOfAssets() {
+				VertexTrigger.ASSETS.unloadPrototypeLevel();
+			}
+
+			@Override
 			protected AbstractLevelBuilder createLevelBuilder() {
 				world = new World(GRAVITY, true);
 				world.setContactListener(new CollisionDetection());

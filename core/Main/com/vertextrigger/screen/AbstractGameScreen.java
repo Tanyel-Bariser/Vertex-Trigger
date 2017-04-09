@@ -30,26 +30,28 @@ public abstract class AbstractGameScreen implements Screen {
 	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
 	private static final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
 	private final VertexTrigger vertexTrigger;
-	private final AbstractLevelBuilder levelBuilder;
-	private final OrthographicCamera camera;
-	private final SpriteBatch batch;
+	private AbstractLevelBuilder levelBuilder;
+	private OrthographicCamera camera;
+	private SpriteBatch batch;
 	private final float approxFPS = 60.0f;
 	private final float TIMESTEP = 1.0f / approxFPS;
 	private final int VELOCITYITERATIONS = 8; // Box2d manual recommends 8 & 3
 	private final int POSITIONITERATIONS = 3; // for these iterations values
-	private final Array<Mortal> mortalBeings;
-	private final Array<Mortal> deadMortals;
-	private final Array<Sprite> entitySprites;
-	private final Box2DDebugRenderer physicsDebugger;
+	private Array<Mortal> mortalBeings;
+	private Array<Mortal> deadMortals;
+	private Array<Sprite> entitySprites;
+	private Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
 	private Array<Sprite> backgroundSprites;
 	private State state = State.RUNNING;
-	private final Stage stage;
+	private Stage stage;
 	private static final float roomForThumbs;
 	private static final float maxDelta = 0.05f;
 	private final Array<Sprite> visibleSprites = new Array<Sprite>();
 
 	protected abstract void initialiseAssets();
+
+	protected abstract void disposeOfAssets();
 
 	protected abstract AbstractLevelBuilder createLevelBuilder();
 
@@ -61,15 +63,39 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 	}
 
-	/**
-	 * Sets main game class for smooth screen transitions
-	 *
-	 * @param vertexTrigger
-	 *            main game class
-	 */
 	public AbstractGameScreen(final VertexTrigger vertexTrigger) {
-		initialiseAssets();
 		this.vertexTrigger = vertexTrigger;
+	}
+
+	/**
+	 * Show method is invoked automatically every time we recreate the level
+	 * @see AbstractGameScreen#hide
+	 *
+	 * Load level assets and set up objects
+	 */
+	@Override
+	public void show() {
+		if (Gdx.app.getType() == Application.ApplicationType.Android) {
+			Gdx.input.setInputProcessor(stage);
+		}
+
+		initialiseAssets();
+		initializeLevel();
+	}
+
+	/**
+	 * Hide method is invoked automatically when the screen is switched to another screen
+	 * @see AbstractGameScreen#show()
+	 *
+	 * Unload level assets
+	 */
+	@Override
+	public void hide() {
+		dispose();
+	}
+
+	// TODO refactor this as it is too long and very dependent on statement order (setUpLevel cannot be moved)
+	private void initializeLevel() {
 		levelBuilder = createLevelBuilder();
 		player = levelBuilder.getPlayer();
 		mortalBeings = new Array<>();
@@ -96,16 +122,6 @@ public abstract class AbstractGameScreen implements Screen {
 	public static void addBullet(final Bullet bullet) {
 		if (!bullets.contains(bullet, true)) {
 			bullets.add(bullet);
-		}
-	}
-
-	/**
-	 * Show method is invoked once when the level one screen is first created & is used to set up the screen of the first level
-	 */
-	@Override
-	public void show() {
-		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			Gdx.input.setInputProcessor(stage);
 		}
 	}
 
@@ -310,15 +326,6 @@ public abstract class AbstractGameScreen implements Screen {
 	}
 
 	/**
-	 * Hide method is invoked automatically when the screen is switch to another screen & is an appropriate place to dispose of the assets being used
-	 * in this screen
-	 */
-	@Override
-	public void hide() {
-		dispose();
-	}
-
-	/**
 	 * Invoked when the user pauses the game play
 	 */
 	@Override
@@ -339,6 +346,6 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		// Dispose assets being used in this screen
+		disposeOfAssets();
 	}
 }

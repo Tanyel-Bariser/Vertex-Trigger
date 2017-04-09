@@ -3,256 +3,235 @@ core.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-shield
-  rotate: false
-  xy: 0, 457
-  size: 556, 556
-  orig: 556, 556
-  offset: 0, 0
-  index: -1
-magnetInactive
-  rotate: false
-  xy: 0, 406
-  size: 190, 49
-  orig: 190, 49
-  offset: 0, 0
-  index: -1
-magnetActive
-  rotate: false
-  xy: 558, 968
-  size: 190, 45
-  orig: 190, 45
-  offset: 0, 0
-  index: -1
 portal_blue
   rotate: false
-  xy: 0, 276
+  xy: 0, 372
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 portal_green
   rotate: false
-  xy: 558, 838
+  xy: 0, 242
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 portal_red
   rotate: false
-  xy: 0, 146
+  xy: 66, 372
   size: 64, 128
   orig: 64, 128
   offset: 0, 0
   index: -1
 death2
   rotate: false
-  xy: 66, 310
+  xy: 132, 406
   size: 94, 94
   orig: 94, 94
   offset: 0, 0
   index: -1
 death3
   rotate: false
-  xy: 624, 872
+  xy: 228, 406
   size: 94, 94
   orig: 94, 94
   offset: 0, 0
   index: -1
 death0
   rotate: false
-  xy: 66, 214
+  xy: 324, 406
+  size: 84, 94
+  orig: 84, 94
+  offset: 0, 0
+  index: -1
+death1
+  rotate: false
+  xy: 410, 406
   size: 84, 94
   orig: 84, 94
   offset: 0, 0
   index: -1
 walk5
   rotate: false
-  xy: 558, 742
+  xy: 496, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 walk1
   rotate: false
-  xy: 558, 646
+  xy: 578, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run0
   rotate: false
-  xy: 558, 550
+  xy: 660, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 jump0
   rotate: false
-  xy: 558, 454
+  xy: 742, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run5
   rotate: false
-  xy: 0, 50
+  xy: 824, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot5
   rotate: false
-  xy: 640, 776
+  xy: 906, 406
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot6
   rotate: false
-  xy: 640, 680
+  xy: 0, 146
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 walk0
   rotate: false
-  xy: 640, 584
+  xy: 0, 50
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 walk4
   rotate: false
-  xy: 640, 488
+  xy: 66, 276
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
-death1
-  rotate: false
-  xy: 192, 361
-  size: 84, 94
-  orig: 84, 94
-  offset: 0, 0
-  index: -1
 walk2
   rotate: false
-  xy: 278, 361
+  xy: 148, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 jump1
   rotate: false
-  xy: 360, 361
+  xy: 230, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run2
   rotate: false
-  xy: 442, 361
+  xy: 312, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot3
   rotate: false
-  xy: 524, 358
+  xy: 394, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot1
   rotate: false
-  xy: 606, 358
+  xy: 476, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
-shootButton
-  rotate: false
-  xy: 750, 933
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
 shoot2
   rotate: false
-  xy: 832, 919
+  xy: 558, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot4
   rotate: false
-  xy: 914, 919
+  xy: 640, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run1
   rotate: false
-  xy: 152, 214
+  xy: 722, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run4
   rotate: false
-  xy: 234, 265
+  xy: 804, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 walk3
   rotate: false
-  xy: 316, 265
+  xy: 886, 310
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 shoot0
   rotate: false
-  xy: 398, 265
+  xy: 82, 180
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
-leftButton
-  rotate: false
-  xy: 234, 183
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-rightButton
-  rotate: false
-  xy: 316, 183
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
-jumpButton
-  rotate: false
-  xy: 398, 183
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
 shoot7
   rotate: false
-  xy: 480, 262
+  xy: 82, 84
   size: 80, 94
   orig: 80, 94
   offset: 0, 0
   index: -1
 run3
   rotate: false
-  xy: 562, 262
+  xy: 164, 214
   size: 80, 94
   orig: 80, 94
+  offset: 0, 0
+  index: -1
+shootButton
+  rotate: false
+  xy: 164, 132
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+leftButton
+  rotate: false
+  xy: 246, 228
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+rightButton
+  rotate: false
+  xy: 246, 146
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+jumpButton
+  rotate: false
+  xy: 328, 228
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: -1
 settingsButton
@@ -264,35 +243,35 @@ settingsButton
   index: -1
 unmuteButton
   rotate: false
-  xy: 66, 164
+  xy: 328, 178
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 pauseButton
   rotate: false
-  xy: 480, 212
+  xy: 410, 260
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 resumeButton
   rotate: false
-  xy: 116, 164
+  xy: 460, 260
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 muteButton
   rotate: false
-  xy: 530, 212
+  xy: 510, 260
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 bullet
   rotate: false
-  xy: 640, 463
+  xy: 988, 477
   size: 25, 23
   orig: 25, 23
   offset: 0, 0
