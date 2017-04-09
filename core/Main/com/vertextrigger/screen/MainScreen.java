@@ -12,12 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Timer;
 import com.vertextrigger.assets.Assets;
 import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.factory.BackgroundFactory;
+import com.vertextrigger.factory.ButtonFactory;
+import com.vertextrigger.factory.FontFactory;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.main.VertexTrigger;
 
@@ -94,31 +96,30 @@ public class MainScreen implements Screen {
 	}
 
 	private void initBackground() {
-		background = assets.getMainScreenBackground();
+		background = BackgroundFactory.getMainScreenBackground();
 		background.setSize(800, 600);
 		background.setOriginCenter();
 	}
 
 	private void initTitle() {
-		titleFont = assets.getMainScreenTitleFont();
+		titleFont = FontFactory.getMainScreenTitleFont();
 		titleFont.setColor(Color.RED);
 		titleFont.getData().setScale(2);
 		titleLayout.setText(titleFont, TITLE_TEXT);
 	}
 
 	private void initButtons() {
-		final Skin mainScreenSkin = assets.getMainScreenSkin();
-		initButtonStyle(mainScreenSkin);
+		initButtonStyle();
 		initPrototype();
 		initLevelOne();
 		initLevelTwo();
 	}
 
-	private void initButtonStyle(final Skin mainScreenSkin) {
+	private void initButtonStyle() {
 		// 01, 02, 11, 12, 13
-		final Drawable up = mainScreenSkin.getDrawable("red_button12");
-		final Drawable down = mainScreenSkin.getDrawable("red_button02");
-		buttonFont = assets.getMainScreenButtonFont();
+		final Drawable up = ButtonFactory.getMainScreenButtonUp();
+		final Drawable down = ButtonFactory.getMainScreenButtonDown();
+		buttonFont = FontFactory.getMainScreenButtonFont();
 
 		style = new ImageTextButtonStyle(up, down, null, buttonFont);
 		style.fontColor = Color.ROYAL;

@@ -32,37 +32,4 @@ public class SpriteFactory {
 		sprite.setOriginCenter();
 		return new Sprite(sprite);
 	}
-
-	/**
-	 * @return main menu background sprite
-	 */
-	public Sprite createMainMenuBackground() {
-		// create main menu background image from assets & return it
-		return null;
-	}
-
-	/**
-	 * @return level one background sprite
-	 */
-	public Sprite createLevelOneBackground() {
-		// create level one background image from assets & return it
-		return VertexTrigger.ASSETS.getBackground();
-	}
-
-	/**
-	 * @return level two background sprite
-	 */
-	public Sprite createLevelTwoBackground() {
-		// create level two background image from assets & return it
-		return null;
-	}
-
-	/**
-	 * @return title sprite
-	 */
-	public Sprite createTitle() {
-		// create title image for main screen from assets
-		// Set size & return it
-		return null;
-	}
 }

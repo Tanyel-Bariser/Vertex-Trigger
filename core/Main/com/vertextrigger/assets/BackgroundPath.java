@@ -1,8 +1,10 @@
 package com.vertextrigger.assets;
 
-enum BackgroundPath {
-	MAIN_SCREEN("background/main_screen.png"), LEVEL_ONE("background/level_one.png"), LEVEL_TWO("background/level_two.png"), LEVEL_THREE(
-			"background/level_three.png");
+public enum BackgroundPath {
+	MAIN_SCREEN("background/main_screen.png"),
+	LEVEL_ONE("background/level_one.png"),
+	LEVEL_TWO("background/level_two.png"),
+	LEVEL_THREE("background/level_three.png");
 
 	private final String path;
 
@@ -13,7 +15,7 @@ enum BackgroundPath {
 	/**
 	 * @return directory of background image within assets folder of android project
 	 */
-	String getPath() {
+	public String getPath() {
 		return path;
 	}
 }

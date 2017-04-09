@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Align;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.factory.ButtonFactory;
 import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.State;
 
@@ -74,27 +75,27 @@ public class Controller implements InputProcessor {
 	}
 
 	Drawable getRightButton() {
-		return VertexTrigger.ASSETS.getRightButton();
+		return ButtonFactory.getRightButton();
 	}
 
 	Drawable getLeftButton() {
-		return VertexTrigger.ASSETS.getLeftButton();
+		return ButtonFactory.getLeftButton();
 	}
 
 	Drawable getPauseButton() {
-		return VertexTrigger.ASSETS.getPauseButton();
+		return ButtonFactory.getPauseButton();
 	}
 
 	Drawable getResumeButton() {
-		return VertexTrigger.ASSETS.getResumeButton();
+		return ButtonFactory.getResumeButton();
 	}
 
 	Drawable getShootButton() {
-		return VertexTrigger.ASSETS.getShootButton();
+		return ButtonFactory.getShootButton();
 	}
 
 	Drawable getJumpButton() {
-		return VertexTrigger.ASSETS.getJumpButton();
+		return ButtonFactory.getJumpButton();
 	}
 
 	/**

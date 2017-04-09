@@ -1,7 +1,8 @@
 package com.vertextrigger.assets;
 
-enum FontPath {
-	REGULAR("font/regular-12.fnt"), THIN("font/thin-12.fnt");
+public enum FontPath {
+	REGULAR("font/regular-12.fnt"),
+	THIN("font/thin-12.fnt");
 
 	private final String path;
 
@@ -12,7 +13,7 @@ enum FontPath {
 	/**
 	 * @return directory of font within assets folder of android project
 	 */
-	String getPath() {
+	public String getPath() {
 		return path;
 	}
 }

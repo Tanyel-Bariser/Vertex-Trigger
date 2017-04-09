@@ -75,10 +75,6 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		if (Gdx.app.getType() == Application.ApplicationType.Android) {
-			Gdx.input.setInputProcessor(stage);
-		}
-
 		initialiseAssets();
 		initializeLevel();
 	}
@@ -94,7 +90,8 @@ public abstract class AbstractGameScreen implements Screen {
 		dispose();
 	}
 
-	// TODO refactor this as it is too long and very dependent on statement order (setUpLevel cannot be moved)
+	// TODO refactor this as it is too long and very dependent on statement order
+	// TODO e.g. setUpLevel cannot be moved, not can setting the input processor
 	private void initializeLevel() {
 		levelBuilder = createLevelBuilder();
 		player = levelBuilder.getPlayer();
@@ -106,8 +103,14 @@ public abstract class AbstractGameScreen implements Screen {
 		batch = new SpriteBatch();
 		entities.add(player);
 		final Controller controller = new Controller(player, this, state);
-		Gdx.input.setInputProcessor(controller);
 		stage = controller.getStage();
+
+		if (Gdx.app.getType() == ApplicationType.Desktop) {
+			Gdx.input.setInputProcessor(controller);
+		}
+		else {
+			Gdx.input.setInputProcessor(stage);
+		}
 		physicsDebugger = new Box2DDebugRenderer();
 		addMortal(player);
 	}

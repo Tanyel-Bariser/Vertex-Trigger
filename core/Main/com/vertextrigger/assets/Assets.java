@@ -129,40 +129,6 @@ public class Assets {
 		unloadLevelAssets(AtlasPath.LEVEL_TWO, BackgroundPath.LEVEL_TWO, MusicPath.LEVEL_TWO);
 	}
 
-	/**
-	 * Dispose of assets once they're no longer needed and asset manager itself
-	 */
-	public void dispose() {
-		assetManager.dispose();
-	}
-
-	/**
-	 * Make sure the level assets have been loaded, i.e. invoked method loadLevelXXX().
-	 */
-	public Drawable getLeftButton() {
-		return coreSkin.getDrawable("leftButton");
-	}
-
-	public Drawable getRightButton() {
-		return coreSkin.getDrawable("rightButton");
-	}
-
-	public Drawable getShootButton() {
-		return coreSkin.getDrawable("shootButton");
-	}
-
-	public Drawable getJumpButton() {
-		return coreSkin.getDrawable("jumpButton");
-	}
-
-	public Drawable getPauseButton() {
-		return coreSkin.getDrawable("pauseButton");
-	}
-
-	public Drawable getResumeButton() {
-		return coreSkin.getDrawable("resumeButton");
-	}
-
 	public Skin getCoreSkin() {
 		return coreSkin;
 	}
@@ -179,23 +145,10 @@ public class Assets {
 		return enemySkin;
 	}
 
-	public Sprite getBackground() {
-		return new Sprite(assetManager.get(BackgroundPath.LEVEL_THREE.getPath(), Texture.class));
-	}
-
-	public Sprite getMainScreenBackground() {
-		return new Sprite(assetManager.get(BackgroundPath.MAIN_SCREEN.getPath(), Texture.class));
-	}
-
-	public BitmapFont getMainScreenButtonFont() {
-		return assetManager.get(FontPath.THIN.getPath(), BitmapFont.class);
-	}
-
-	public BitmapFont getMainScreenTitleFont() {
-		return assetManager.get(FontPath.REGULAR.getPath(), BitmapFont.class);
-	}
-
-	public Sprite getShieldSprite() {
-		return new Sprite(assetManager.get("atlas/tmp/spr_shield.png", Texture.class));
+	/**
+	 * Dispose of assets once they're no longer needed and asset manager itself
+	 */
+	public void dispose() {
+		assetManager.dispose();
 	}
 }
