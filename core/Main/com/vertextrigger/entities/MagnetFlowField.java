@@ -48,16 +48,14 @@ public class MagnetFlowField implements FlowField<Vector2> {
 	}
 
 	private Vector2 calculateForce(final int col, final int row, final Magnet magnet) {
-		final Vector2 force = new Vector2(-(col + 0.5f), -(row + 0.5f))
-				.add(magnet.getPosition())
-				.nor();
+		final Vector2 force = new Vector2(-(col + 0.5f), -(row + 0.5f)).add(magnet.getPosition()).nor();
 
 		return new Vector2(binaryForce(force.x), binaryForce(force.y));
 	}
 
-	// takes a force value between -1 and 1 and makes it either -1 or 1	e.g 0.423974 -> 1
+	// takes a force value between -1 and 1 and makes it either -1 or 1 e.g 0.423974 -> 1
 	// TODO think of a better name for this!
-	private float binaryForce(float analogue) {
+	private float binaryForce(final float analogue) {
 		return analogue < 0 ? -1 : 1;
 	}
 

@@ -15,7 +15,7 @@ public class ShieldBodyFactory extends AbstractBodyFactory {
 	protected FixtureDef createFixtureDefinition() {
 		final FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
-		fixtureDefinition.density = 0f;
+		fixtureDefinition.density = .3f;
 		fixtureDefinition.friction = 0f;
 		fixtureDefinition.isSensor = true;
 		return fixtureDefinition;

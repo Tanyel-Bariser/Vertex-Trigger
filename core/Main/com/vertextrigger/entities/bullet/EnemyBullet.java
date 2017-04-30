@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class EnemyBullet extends Bullet {
+	protected boolean isMagnetAttractionOn = true;
 
 	public EnemyBullet(final Body body, final Sprite sprite) {
 		super(body, sprite);
@@ -20,5 +21,9 @@ public class EnemyBullet extends Bullet {
 	@Override
 	public float getOffsetY() {
 		return BEE_BULLET_SIZE.getOffsetY();
+	}
+
+	public void stopMagnetAttraction() {
+		isMagnetAttractionOn = false;
 	}
 }

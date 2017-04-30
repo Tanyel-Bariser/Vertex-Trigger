@@ -1,7 +1,7 @@
 package com.vertextrigger.screen;
 
-import com.badlogic.gdx.*;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
@@ -69,9 +69,10 @@ public abstract class AbstractGameScreen implements Screen {
 
 	/**
 	 * Show method is invoked automatically every time we recreate the level
+	 *
 	 * @see AbstractGameScreen#hide
 	 *
-	 * Load level assets and set up objects
+	 *      Load level assets and set up objects
 	 */
 	@Override
 	public void show() {
@@ -81,9 +82,10 @@ public abstract class AbstractGameScreen implements Screen {
 
 	/**
 	 * Hide method is invoked automatically when the screen is switched to another screen
+	 *
 	 * @see AbstractGameScreen#show()
 	 *
-	 * Unload level assets
+	 *      Unload level assets
 	 */
 	@Override
 	public void hide() {
@@ -107,8 +109,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		if (Gdx.app.getType() == ApplicationType.Desktop) {
 			Gdx.input.setInputProcessor(controller);
-		}
-		else {
+		} else {
 			Gdx.input.setInputProcessor(stage);
 		}
 		physicsDebugger = new Box2DDebugRenderer();
@@ -179,7 +180,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		physicsDebugger.render(world, camera.combined);
+		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 

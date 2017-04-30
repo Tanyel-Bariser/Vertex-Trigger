@@ -20,6 +20,7 @@ public class CollisionDetection implements ContactListener {
 
 		playerShieldContact(collidableObjects, player);
 		shieldMagnetContact(collidableObjects);
+		enemyBulletMagnetContact(collidableObjects);
 		portalTransport(collidableObjects);
 
 		final Bullet bullet = (Bullet) getType(Bullet.class, collidableObjects);
@@ -57,6 +58,15 @@ public class CollisionDetection implements ContactListener {
 		final Shield shield = (Shield) getType(Shield.class, collidableObjects);
 
 		if (shield != null && magnet != null && magnet.isActive()) {
+			magnet.switchOff();
+		}
+	}
+
+	private void enemyBulletMagnetContact(final Collidable[] collidableObjects) {
+		final Magnet magnet = (Magnet) getType(Magnet.class, collidableObjects);
+		final EnemyBullet enemyBullet = (EnemyBullet) getType(EnemyBullet.class, collidableObjects);
+
+		if (enemyBullet != null && magnet != null && magnet.isActive()) {
 			magnet.switchOff();
 		}
 	}
@@ -152,7 +162,12 @@ public class CollisionDetection implements ContactListener {
 
 		if (bullet != null && bullet instanceof BeeBullet) {
 			// bee bullets should not bounce as they are stings
-			bullet.destroyBullet();
+			final Magnet magnet = (Magnet) getType(Magnet.class, contactBodies);
+			if (magnet == null) {
+				bullet.destroyBullet();
+			} else {
+				bullet.stopMagnetAttraction();
+			}
 		}
 	}
 

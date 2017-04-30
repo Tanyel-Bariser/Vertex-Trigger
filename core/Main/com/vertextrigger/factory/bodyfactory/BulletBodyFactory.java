@@ -9,12 +9,13 @@ public class BulletBodyFactory extends AbstractBodyFactory {
 	public static Vector2 INITIAL_POSITION_OUT_OF_CAMERA_VIEW = new Vector2(Float.MAX_VALUE, Float.MAX_VALUE);
 	static final float DENSITY = 3f;
 	static final float FRICTION = 1f;
-	static final float BOUNCY = 1f;
+	private float bouncy;
 
-	public Body createBulletBody(final World world) {
+	public Body createBulletBody(final World world, final boolean isAffectedByGravity, final boolean isBouncy) {
+		bouncy = isBouncy ? 1 : 0;
 		final Body body = createBody(world, INITIAL_POSITION_OUT_OF_CAMERA_VIEW, BodyType.DynamicBody, createFixtureDefinition());
 		body.setBullet(true);
-		body.setGravityScale(0);
+		body.setGravityScale(isAffectedByGravity ? 0.1f : 0);
 		body.setFixedRotation(true);
 		return body;
 	}
@@ -25,7 +26,7 @@ public class BulletBodyFactory extends AbstractBodyFactory {
 		fixtureDefinition.shape = createShape();
 		fixtureDefinition.density = DENSITY;
 		fixtureDefinition.friction = FRICTION;
-		fixtureDefinition.restitution = BOUNCY;
+		fixtureDefinition.restitution = bouncy;
 		return fixtureDefinition;
 	}
 

@@ -15,6 +15,7 @@ import com.vertextrigger.util.GameObjectSize;
 public class Player extends AbstractEntity implements Mortal {
 	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
+	private static final float MOVEMENT_SPEED_WITH_SHIELD = MOVEMENT_SPEED / 2;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -80,6 +81,7 @@ public class Player extends AbstractEntity implements Mortal {
 			shield.setPlayerBody(body);
 			isShieldSet = true;
 			gun.setShielded();
+			setMovementSpeedWithShield();
 		}
 
 		if (isShieldSet) {
@@ -89,16 +91,24 @@ public class Player extends AbstractEntity implements Mortal {
 		return super.update(delta, alpha);
 	}
 
+	private void setMovementSpeedWithShield() {
+		if (Float.compare(movement, MOVEMENT_SPEED) == 0) {
+			movement = MOVEMENT_SPEED_WITH_SHIELD;
+		} else if (Float.compare(movement, -MOVEMENT_SPEED) == 0) {
+			movement = -MOVEMENT_SPEED_WITH_SHIELD;
+		}
+	}
+
 	public void setShield(final Shield shield) {
 		this.shield = shield;
 	}
 
 	public void moveLeft() {
-		movement = -MOVEMENT_SPEED;
+		movement = isShieldSet ? -MOVEMENT_SPEED_WITH_SHIELD : -MOVEMENT_SPEED;
 	}
 
 	public void moveRight() {
-		movement = MOVEMENT_SPEED;
+		movement = isShieldSet ? MOVEMENT_SPEED_WITH_SHIELD : MOVEMENT_SPEED;
 	}
 
 	public void stopMoving() {

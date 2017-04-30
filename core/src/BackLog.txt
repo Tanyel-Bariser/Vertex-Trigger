@@ -1,5 +1,5 @@
-- Make magnet solid and bullet disappear when hit it
-- When an attracted object hits the magnet, it makes a sound to signify the magnet is switched off for a couple of seconds
+Design:
+- First design a mid-game level, to inform what we need to "teach" the user in the initial levels 
 - Paper design of level - with shield next to magnet
 - Refactor Asset manager and get more atlases by this point
 - Build design of level
@@ -11,17 +11,12 @@
 Defects:
 - [mobile] Needs performance testing, i.e. log GC cycles. Sometimes game simulation stops, we think it's due to excessive asset load - Cache everything, especially sprites upfront so not garbage
 - [mobile] Zoom needs adjusting because the bee is often not in view due to the screen being rectangular and not square like the desktop version
-- Look into player sinking into ground due to combined force of magnet and gravity (defect exists in b021d02f5a603f209e89d498dccc31e62b084b38)
-- Wearing shield makes player run and jump way to fast/high. (player sinking into floor may be related to shield!!)
+- [mobile] Fix main screen size issue for Android
+- [mobile] Game sometimes crashes, figure out when it happens and fix it
 
 Assets:
-- Sprite for magnet
-- Bee shoot sound
-
-Game:
-- Shield should be affected by magnet
-- Magnet should have a switch which toggles it active/inactive
 - Implement bullet ricochet sound
+- When an attracted object hits the magnet, it makes a sound to signify the magnet is switched off for a couple of seconds
 
 Code Quality:
 - Rationalize/refactor Assets.java and remove string literals and stop loading all skins every level e.g. UI stuff

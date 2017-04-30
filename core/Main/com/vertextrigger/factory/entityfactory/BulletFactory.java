@@ -26,7 +26,7 @@ public class BulletFactory {
 		final float maxAngularSpeed = 10f;
 		final float maxAngularAcceleration = 10f;
 
-		final Body bulletBody = createBulletBody();
+		final Body bulletBody = createBulletBody(true, false);
 		final SteerableBody steerableBody = new SteerableBody(bulletBody, maxLinearAcceleration, maxLinearSpeed, maxAngularAcceleration,
 				maxAngularSpeed, zeroLinearSpeedThreshold, 10, false);
 		final MagnetBehaviour magnetBehaviour = new MagnetBehaviour(steerableBody, magnetFlowField);
@@ -36,14 +36,14 @@ public class BulletFactory {
 	}
 
 	public Bullet createPlayerBullet() {
-		final Body bulletBody = createBulletBody();
+		final Body bulletBody = createBulletBody(false, true);
 		final Bullet bullet = new PlayerBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", PLAYER_BULLET_SIZE));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
 	}
 
-	private Body createBulletBody() {
+	private Body createBulletBody(final boolean isAffectedByGravity, final boolean isBouncy) {
 		final BulletBodyFactory factory = new BulletBodyFactory();
-		return factory.createBulletBody(world);
+		return factory.createBulletBody(world, isAffectedByGravity, isBouncy);
 	}
 }

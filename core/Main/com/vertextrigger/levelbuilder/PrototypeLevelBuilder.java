@@ -1,5 +1,8 @@
 package com.vertextrigger.levelbuilder;
 
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
+import static com.vertextrigger.util.GameObjectSize.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,24 +12,13 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.MagnetFlowField;
-import com.vertextrigger.entities.enemy.Bee;
-import com.vertextrigger.entities.enemy.Poker;
-import com.vertextrigger.factory.BackgroundFactory;
-import com.vertextrigger.factory.EnemyFactory;
-import com.vertextrigger.factory.MagnetFactory;
-import com.vertextrigger.factory.PlatformFactory;
-import com.vertextrigger.factory.entityfactory.PlayerFactory;
-import com.vertextrigger.factory.entityfactory.ShieldFactory;
-import com.vertextrigger.inanimate.Ground;
-import com.vertextrigger.inanimate.StaticPlatform;
-import com.vertextrigger.inanimate.portal.Portal;
-import com.vertextrigger.inanimate.portal.PortalFactory;
+import com.vertextrigger.entities.enemy.*;
+import com.vertextrigger.factory.*;
+import com.vertextrigger.factory.entityfactory.*;
+import com.vertextrigger.inanimate.*;
+import com.vertextrigger.inanimate.portal.*;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
-
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
-import static com.vertextrigger.util.GameObjectSize.MAGNET_SIZE;
-import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
 /**
  * A prototype level to allow manual testing of player controls & game objects
@@ -90,6 +82,10 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 		final StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size, q);
 		bouncePlatform2.setRotation((float) Math.PI / 2);
 		sprites.add(bouncePlatform2.getSprite());
+
+		final Vector2 position = new Vector2(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
+		final StaticPlatform groundPlatform = factory.createPlatform("snakeLava", GROUND_SIZE, position);
+		sprites.add(groundPlatform.getSprite());
 
 	}
 
