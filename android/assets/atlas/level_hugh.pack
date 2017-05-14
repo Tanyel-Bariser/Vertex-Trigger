@@ -1,0 +1,124 @@
+
+level_hugh.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+purpleRight
+  rotate: false
+  xy: 0, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signRight
+  rotate: false
+  xy: 0, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+window
+  rotate: false
+  xy: 72, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowHillRight
+  rotate: false
+  xy: 0, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowCenter
+  rotate: false
+  xy: 72, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signLeft
+  rotate: false
+  xy: 144, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleHillLeft
+  rotate: false
+  xy: 72, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleMid
+  rotate: false
+  xy: 144, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowCenter_rounded
+  rotate: false
+  xy: 216, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signExit
+  rotate: false
+  xy: 144, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneCaveSpikeBottom
+  rotate: false
+  xy: 216, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowHillLeft
+  rotate: false
+  xy: 288, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleHillRight
+  rotate: false
+  xy: 216, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowLeft
+  rotate: false
+  xy: 288, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleLeft
+  rotate: false
+  xy: 360, 144
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowRight
+  rotate: false
+  xy: 288, 0
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowMid
+  rotate: false
+  xy: 360, 72
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1

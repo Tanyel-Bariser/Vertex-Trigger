@@ -17,7 +17,7 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 
 	@Override
 	protected Animation getMoving() {
-		return new Animation(0, spriteFactory.createLevelSprite("pokerMad", size));
+		return new Animation(0, spriteFactory.createEnemySprite("pokerMad", size));
 	}
 
 	/**
@@ -27,9 +27,9 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 	 */
 	@Override
 	protected Animation getDeath() {
-		final Sprite[] deathSprites = new Sprite[] { spriteFactory.createLevelSprite("snakeLava_ani", size),
-				spriteFactory.createLevelSprite("snakeLava", size), spriteFactory.createLevelSprite("snakeLava_ani", size),
-				spriteFactory.createLevelSprite("snakeLava_dead", size), };
+		final Sprite[] deathSprites = new Sprite[] { spriteFactory.createEnemySprite("snakeLava_ani", size),
+				spriteFactory.createEnemySprite("snakeLava", size), spriteFactory.createEnemySprite("snakeLava_ani", size),
+				spriteFactory.createEnemySprite("snakeLava_dead", size), };
 
 		final Animation deathAnimation = new Animation(.4f, deathSprites);
 		deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
@@ -38,6 +38,6 @@ public class PokerAnimationFactory extends AbstractAnimationFactory {
 
 	@Override
 	protected Animation getStanding() {
-		return new Animation(0, spriteFactory.createLevelSprite("pokerMad", size));
+		return new Animation(0, spriteFactory.createEnemySprite("pokerMad", size));
 	}
 }

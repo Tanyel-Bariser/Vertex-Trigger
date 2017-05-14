@@ -9,9 +9,23 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 
 	private GameObjectSize size;
 
-	public Body createPlatformBody(final World world, final Vector2 initialPosition, final GameObjectSize size) {
+	public enum Friction {
+		NORMAL(0.9f),
+		SNOW(0f),
+		STICKY(1.5f);
+
+		private final float value;
+
+		Friction(final float value) {
+			this.value = value;
+		}
+	}
+
+	public Body createPlatformBody(final World world, final Vector2 initialPosition, final GameObjectSize size, final Friction friction) {
 		this.size = size;
-		return createBody(world, initialPosition, BodyType.StaticBody, createFixtureDefinition());
+		final FixtureDef fixtureDefinition = createFixtureDefinition();
+		fixtureDefinition.friction = friction.value;
+		return createBody(world, initialPosition, BodyType.StaticBody, fixtureDefinition);
 	}
 
 	@Override

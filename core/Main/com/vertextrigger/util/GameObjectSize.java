@@ -12,8 +12,11 @@ public enum GameObjectSize {
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //
 	PORTAL_SIZE(1.5f, 4f, 0.5f, 1.5f, 2f, 2f), // Sprite is bigger oval & body is smaller rectangle that fits inside the sprite
 	SHIELD_SIZE(5, 5, PLAYER_SIZE.getPhysicalHeight() * 8.7f, PLAYER_SIZE.getPhysicalHeight() * 8.7f, 0.37f, 0.33f), //
+	SIGN_SIZE(3.2f, 3.5f, 0, 0, 0, 0), //
+	WINDOW_SIZE(4f, 4.14f, 0, 0, 0, 0), //
 
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f), //
+	MEDIUM_PLATFORM_SIZE(8, 1, 4, .5f, 2f, 2f), //
 	GROUND_SIZE(500, .2f, 500, .2f, 0, 0);
 
 	public final static float OBJECT_SIZE = 0.15F;

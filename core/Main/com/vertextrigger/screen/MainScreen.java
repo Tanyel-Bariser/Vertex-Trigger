@@ -142,7 +142,7 @@ public class MainScreen implements Screen {
 		levelOne.setPosition(WIDTH / 2 - levelOne.getWidth() / 2, buttonHeight(1) );
 		levelOne.addListener(new ClickListener() {
 			public void clicked(final InputEvent event, final float x, final float y) {
-				temporaryMessage(levelOne, COMING_SOON_TEXT);
+				vertexTrigger.setNextScreen(GameScreenFactory.createHughLevel(vertexTrigger));
 			}
 		});
 		levelOne.getLabel().setFontScale(1.2f);

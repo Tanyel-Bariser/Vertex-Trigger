@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.controller.Controller;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.bullet.Bullet;
@@ -180,7 +181,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		// physicsDebugger.render(world, camera.combined);
+		physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 
@@ -212,7 +213,7 @@ public abstract class AbstractGameScreen implements Screen {
 					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
 						world.dispose();
-						vertexTrigger.setScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));
+						vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
 					}
 				}
 			}
