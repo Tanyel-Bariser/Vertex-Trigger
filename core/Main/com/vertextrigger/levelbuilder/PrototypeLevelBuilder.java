@@ -20,6 +20,7 @@ import com.vertextrigger.inanimate.portal.*;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
+import static com.badlogic.gdx.math.MathUtils.radiansToDegrees;
 /**
  * A prototype level to allow manual testing of player controls & game objects
  */
@@ -76,11 +77,11 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 		final Vector2 p = new Vector2(-1.5f, -2.5f);
 		final StaticPlatform bouncePlatform = factory.createPlatform("slice17", size, p);
-		bouncePlatform.setRotation(200);
+		bouncePlatform.setRotation(200 * radiansToDegrees);
 		sprites.add(bouncePlatform.getSprite());
 		final Vector2 q = new Vector2(2.5f, -1.5f);
 		final StaticPlatform bouncePlatform2 = factory.createPlatform("slice17", size, q);
-		bouncePlatform2.setRotation((float) Math.PI / 2);
+		bouncePlatform2.setRotation(90);
 		sprites.add(bouncePlatform2.getSprite());
 
 		final Vector2 position = new Vector2(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
