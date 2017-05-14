@@ -18,7 +18,7 @@ public class BeeBullet extends EnemyBullet {
 
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		if (isMagnetAttractionOn) {
+		if (magnetBehaviour != null && isMagnetAttractionOn) {
 			magnetBehaviour.calculateSteering();
 			magnetBehaviour.applySteering(delta);
 		}
