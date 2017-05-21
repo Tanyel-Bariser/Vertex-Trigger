@@ -31,7 +31,7 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 		final FixtureDef fixtureDefinition = new FixtureDef();
 		fixtureDefinition.shape = createShape();
 		fixtureDefinition.density = 3f;
-		fixtureDefinition.friction = 0f;
+		fixtureDefinition.friction = 1f;
 		return fixtureDefinition;
 	}
 
