@@ -6,8 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.entities.AbstractEntity;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.SimpleMovingPlatform;
+import com.vertextrigger.entities.enemy.Bee;
 import com.vertextrigger.entities.enemy.Poker;
+import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
@@ -20,8 +24,10 @@ import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
 import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPOSITE_HORIZONTAL_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
+import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
@@ -30,21 +36,27 @@ import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
 public class HughLevelBuilder extends AbstractLevelBuilder {
 
     private static final int CONTAINER_WIDTH = 8;
-    private static final int CONTAINER_HEIGHT = 8;
+    private static final int CONTAINER_HEIGHT = 9;
 
     private final AbstractGameScreen screen;
     private final PlatformFactory platformFactory;
-    static private boolean foo = true;
+
+    private boolean madeBee;
 
     public HughLevelBuilder(final World world, final AbstractGameScreen screen) {
         super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
         this.screen = screen;
         this.platformFactory = new PlatformFactory(world);
         AudioManager.playLevelOneMusic();
-        if (foo) AudioManager.toggleMute();
-        foo = false;
-        //player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0), screen, magnetFlowField);
-        player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(2), fromBottom(5.3f)), screen, magnetFlowField);
+
+        // start
+        //player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+
+        // pre bossfight
+        player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
+
+        // end
+        //player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(9.5f), fromBottom(16.1f)), screen, magnetFlowField);
     }
 
     @Override
@@ -66,9 +78,27 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         entities.add(poker2);
         screen.addMortal(poker2);
 
-        //final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(0, 1), player.getSteerable(), screen, magnetFlowField);
-        //entities.add(bee);
-        //screen.addMortal(bee);
+        // TODO clean up as this is a hack but could be very useful
+        player.addPositionCallback(new Vector2(fromLeft(0.5f), fromBottom(14)), new Player.EntityCallback() {
+            @Override
+            public void run() {
+                if (!madeBee) {
+                    final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen, magnetFlowField);
+                    entities.add(bee);
+                    screen.addMortal(bee);
+                    bee.addDeathCallback(new AbstractEntity.EntityCallback() {
+                        @Override
+                        public void run() {
+                            AudioManager.playPickUpSound();
+                            AudioManager.playLevelOneMusic();
+                            createMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), fromLeft(5), fromLeft(10), true);
+                        }
+                    });
+                    madeBee = true;
+                    AudioManager.playLevelTwoMusic();
+                }
+            }
+        });
     }
 
     @Override
@@ -96,9 +126,12 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
     @Override
     protected void createStaticPlatforms() {
-        createSign(false, fromLeft(0), fromBottom(0));
-        createSign(true, fromLeft(15.03f), fromBottom(2.75f));
-        createSign(true, fromLeft(6.5f), fromBottom(6));
+        createSign("signRight", fromLeft(0), fromBottom(0));
+        createSign("signLeft", fromLeft(15.03f), fromBottom(2.75f));
+        createSign("signLeft", fromLeft(6.5f), fromBottom(6));
+        createSign("signRight", fromLeft(0.5f), fromBottom(14));
+        createSign("signExit", fromLeft(10.5f), fromBottom(16));
+        createSign("window", fromLeft(10), fromBottom(16));
         createSpikes(fromLeft(2));
 
         createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1)));
@@ -119,7 +152,16 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1), fromBottom(6.3f)));
         createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(7.3f)));
         createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(8.3f)));
-        createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)));
+
+        createMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)), fromLeft(2.5f), fromLeft(5.5f), true);
+        createMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(9.3f)), fromBottom(9.3f), fromBottom(11.5f), false);
+        createMovingPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(11.5f)), fromLeft(2.5f), fromLeft(5.5f), true);
+
+        createStaticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(14)), Friction.VERY_STICKY, 0);
+        createStaticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(2.25f), fromBottom(14)), Friction.VERY_STICKY, 0);
+        createStaticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(4), fromBottom(14)), Friction.VERY_STICKY, 0);
+
+        createStaticPlatform("snowCenter", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(10), fromBottom(16)));
     }
 
     private void createSpikes(float startX) {
@@ -131,14 +173,20 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         }
     }
 
-    private void createSign(boolean leftFacing, float x, float y) {
-        final Sprite signRight = spriteFactory.createLevelSprite(leftFacing ? "signLeft" : "signRight", SIGN_SIZE);
+    private void createSign(final String sprite, float x, float y) {
+        final Sprite signRight = spriteFactory.createLevelSprite(sprite, SIGN_SIZE);
         signRight.setPosition(x, y);
         sprites.add(signRight);
     }
 
+    private void createMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 platformPosition, float pathStart, float pathEnd, boolean horizontal) {
+        final SimpleMovingPlatform platform = platformFactory.createMovingPlatform(spriteName, size, platformPosition, pathStart, pathEnd, horizontal);
+        platform.startMoving();
+        entities.add(platform);
+    }
+
     private void createStaticPlatform(final String spriteName, final GameObjectSize size, final Vector2 platformPosition) {
-        createStaticPlatform(spriteName, size, platformPosition, Friction.NORMAL ,0);
+        createStaticPlatform(spriteName, size, platformPosition, Friction.NORMAL, 0);
     }
 
     private void createStaticPlatform(final String spriteName, final GameObjectSize size, final Vector2 platformPosition, final Friction friction, final float rotation) {
@@ -158,6 +206,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         portals.addAll(createPortalPair(fromLeft(8.4f), fromBottom(0.2f), fromLeft(10.4f), fromBottom(2.2f), MOVING_SAME_DIRECTION));
         portals.addAll(createPortalPair(fromLeft(13.1f), fromBottom(1.4f), fromLeft(15.3f), fromBottom(2.4f), MOVING_OPPOSITE_HORIZONTAL_DIRECTION));
         portals.addAll(createPortalPair(fromLeft(6.1f), fromBottom(5.5f), fromLeft(6.1f), fromBottom(6.6f), MOVING_SAME_DIRECTION));
+        portals.addAll(createPortalPair(fromLeft(1), fromBottom(12), fromLeft(0.1f), fromBottom(15), MOVING_DIFFERENT_XY_AXIS_DIRECTION));
+        portals.addAll(createPortalPair(fromLeft(5), fromBottom(14.5f), fromLeft(5), fromBottom(16.5f), MOVING_OPPOSITE_HORIZONTAL_DIRECTION));
         return portals;
     }
 

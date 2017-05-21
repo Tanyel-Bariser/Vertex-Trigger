@@ -16,7 +16,8 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 	public enum Friction {
 		NORMAL(1.5f),
 		SNOW(0f),
-		STICKY(50);
+		STICKY(50),
+		VERY_STICKY(100);
 
 		private final float value;
 

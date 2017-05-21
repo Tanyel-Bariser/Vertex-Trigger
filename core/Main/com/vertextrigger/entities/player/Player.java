@@ -3,11 +3,18 @@ package com.vertextrigger.entities.player;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.ai.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.vertextrigger.ai.MagnetBehaviour;
+import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.AbstractEntity;
+import com.vertextrigger.entities.Animator;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.util.GameObjectSize;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
@@ -24,6 +31,7 @@ public class Player extends AbstractEntity implements Mortal {
 	private Shield shield;
 	private boolean isShieldSet = false;
 	private final MagnetBehaviour magnetBehaviour;
+	private final Map<Vector2, EntityCallback> positionCallbacks = new HashMap<>();
 
 	public Player(final Vector2 initialPosition, final Body body, final Gun gun, final Animator animator, final SteerableBody steerable,
 			final MagnetBehaviour magnetBehaviour) {
@@ -32,6 +40,11 @@ public class Player extends AbstractEntity implements Mortal {
 		this.gun = gun;
 		this.steerable = steerable;
 		this.magnetBehaviour = magnetBehaviour;
+	}
+
+	// TODO clean up as this is a hack but could be very useful
+	public void addPositionCallback(final Vector2 position, final EntityCallback entityCallback) {
+		positionCallbacks.put(position, entityCallback);
 	}
 
 	/**
@@ -88,6 +101,15 @@ public class Player extends AbstractEntity implements Mortal {
 			magnetBehaviour.calculateSteering();
 			magnetBehaviour.applySteering(delta);
 		}
+
+		// TODO clean up as this is a hack but could be very useful
+		final Vector2 position = body.getPosition();
+		for (final Vector2 pos : positionCallbacks.keySet()) {
+			if (position.x > pos.x - 0.5f && position.x < pos.x + 0.5f && position.y > pos.y - 0.5f && position.y < pos.y + 0.5f) {
+				positionCallbacks.get(pos).run();
+			}
+		}
+
 		return super.update(delta, alpha);
 	}
 

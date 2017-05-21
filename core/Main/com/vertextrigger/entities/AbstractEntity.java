@@ -25,6 +25,11 @@ public abstract class AbstractEntity implements Entity {
 		entityState = new InterpolatedPosition(this.body);
 	}
 
+	// TODO clean up as this is a hack but could be very useful
+	public interface EntityCallback {
+		void run();
+	}
+
 	@Override
 	public Sprite update(final float delta, final float alpha) {
 		handleTeleportation();

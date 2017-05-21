@@ -18,6 +18,7 @@ public enum GameObjectSize {
 	TINY_PLATFORM_SIZE(2, 1, 1, .5f, 2f, 2f), //
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f), //
 	MEDIUM_PLATFORM_SIZE(8, 1, 4, .5f, 2f, 2f), //
+	LARGE_PLATFORM_SIZE(12, 1, 6, .5f, 2f, 2f), //
 	GROUND_SIZE(500, .2f, 500, .2f, 0, 0);
 
 	public final static float OBJECT_SIZE = 0.15F;
