@@ -15,6 +15,7 @@ public enum GameObjectSize {
 	SIGN_SIZE(3.2f, 3.5f, 0, 0, 0, 0), //
 	WINDOW_SIZE(4f, 4.14f, 0, 0, 0, 0), //
 
+	TINY_PLATFORM_SIZE(2, 1, 1, .5f, 2f, 2f), //
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f), //
 	MEDIUM_PLATFORM_SIZE(8, 1, 4, .5f, 2f, 2f), //
 	GROUND_SIZE(500, .2f, 500, .2f, 0, 0);

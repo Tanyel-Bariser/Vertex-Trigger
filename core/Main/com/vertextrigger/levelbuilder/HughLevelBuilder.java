@@ -2,7 +2,6 @@ package com.vertextrigger.levelbuilder;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -11,29 +10,27 @@ import com.vertextrigger.entities.MagnetFlowField;
 import com.vertextrigger.entities.enemy.Poker;
 import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
-import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.factory.entityfactory.PlayerFactory;
 import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.inanimate.portal.PortalFactory;
+import com.vertextrigger.inanimate.portal.PortalTeleportation;
 import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
 import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
-import static com.badlogic.gdx.math.MathUtils.radiansToDegrees;
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPOSITE_HORIZONTAL_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
 import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
-import static com.vertextrigger.util.GameObjectSize.WINDOW_SIZE;
+import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
 
 public class HughLevelBuilder extends AbstractLevelBuilder {
 
     private static final int CONTAINER_WIDTH = 8;
-    private static final int CONTAINER_HEIGHT = 4;
+    private static final int CONTAINER_HEIGHT = 8;
 
     private final AbstractGameScreen screen;
     private final PlatformFactory platformFactory;
@@ -46,8 +43,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         AudioManager.playLevelOneMusic();
         if (foo) AudioManager.toggleMute();
         foo = false;
-        //player = PlayerFactory.createPlayer(world, new Vector2(-7, -CONTAINER_HEIGHT), screen, magnetFlowField);
-        player = PlayerFactory.createPlayer(world, new Vector2(0, 0), screen, magnetFlowField);
+        //player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0), screen, magnetFlowField);
+        player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(2), fromBottom(5.3f)), screen, magnetFlowField);
     }
 
     @Override
@@ -57,13 +54,13 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
     @Override
     protected void createEnemies(Steerable<Vector2> target) {
-        final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(7.1f, -2));
+        final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(15.1f), fromBottom(2)));
         entities.add(poker1);
         screen.addMortal(poker1);
 
-        final Poker poker2 = EnemyFactory.createPokerEnemy(world, new Vector2(-1.5f, 2));
+        final Poker poker2 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(6.5f), fromBottom(6)));
         poker2.getBody().setFixedRotation(false);
-        poker2.getBody().setTransform(new Vector2(-1.5f, 1.6f), 180 * degreesToRadians);
+        poker2.getBody().setTransform(new Vector2(fromLeft(6.5f), fromBottom(5.6f)), 180 * degreesToRadians);
         poker2.getBody().setFixedRotation(true);
         poker2.getBody().setGravityScale(0);
         entities.add(poker2);
@@ -89,73 +86,55 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
     }
 
+    private static float fromBottom(final float distanceFromFloor) {
+        return -CONTAINER_HEIGHT + distanceFromFloor;
+    }
+
+    private static float fromLeft(final float distanceFromLeftWall) {
+        return -CONTAINER_WIDTH + distanceFromLeftWall;
+    }
+
     @Override
     protected void createStaticPlatforms() {
-        final Sprite signRight = spriteFactory.createLevelSprite("signRight", SIGN_SIZE);
-        signRight.setPosition(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
-        sprites.add(signRight);
+        createSign(false, fromLeft(0), fromBottom(0));
+        createSign(true, fromLeft(15.03f), fromBottom(2.75f));
+        createSign(true, fromLeft(6.5f), fromBottom(6));
+        createSpikes(fromLeft(2));
 
-        final Sprite signLeft = spriteFactory.createLevelSprite("signLeft", SIGN_SIZE);
-        signLeft.setPosition(7.03f, -1.25f);
-        sprites.add(signLeft);
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(3.5f), fromBottom(1)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(10.5f), fromBottom(1)));
+        createStaticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(12.5f), fromBottom(1)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(15), fromBottom(2)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(13), fromBottom(3)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(11), fromBottom(3.5f)));
+        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(8), fromBottom(4)));
 
-        final Sprite signLeft2 = spriteFactory.createLevelSprite("signLeft", SIGN_SIZE);
-        signLeft2.setPosition(-1.5f, 2);
-        sprites.add(signLeft2);
+        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(4.3f)), Friction.SNOW, -45);
+        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(6)), Friction.SNOW, 0);
+        createStaticPlatform("snowMid", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(5.3f)), Friction.SNOW, 0);
+        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(5.3f)), Friction.SNOW, 0);
 
-        float spikeXPosition = -6;
+        createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1), fromBottom(6.3f)));
+        createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(7.3f)));
+        createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(8.3f)));
+        createStaticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)));
+    }
+
+    private void createSpikes(float startX) {
         for(int i = 0; i < 60; i++) {
             final Sprite spike = spriteFactory.createLevelSprite("stoneCaveSpikeBottom", SIGN_SIZE);
-            spike.setPosition(spikeXPosition, -CONTAINER_HEIGHT);
+            spike.setPosition(startX, fromBottom(0));
             sprites.add(spike);
-            spikeXPosition += 0.2f;
+            startX += 0.2f;
         }
+    }
 
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(-6.5f, -3));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(-4.5f, -3));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(-1.5f, -3));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(2.5f, -3));
-        createStaticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(4.5f, -3));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(7, -2));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(5, -1));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(3, -0.5f));
-        createStaticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(0, -0));
-
-        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(-1.5f, 0.3f), Friction.SNOW, -45);
-        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(-1.5f, 2), Friction.SNOW, 0);
-        createStaticPlatform("snowMid", MEDIUM_PLATFORM_SIZE, new Vector2(-3, 1.3f), Friction.SNOW, 0);
-        createStaticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(-6, 1.3f), Friction.SNOW, 0);
-
-
-
-//        final PlatformFactory factory = new PlatformFactory(world);
-//        GameObjectSize size = SMALL_PLATFORM_SIZE;
-//        float positionX = -2;
-//        float positionY = -9;
-//        boolean leftToRight = false;
-//        Vector2 finalPlatformPosition = new Vector2();
-//
-//        for (int i = 0; i < 25; i++) {
-//            final Vector2 platformPosition = new Vector2(positionX, positionY);
-//            if (i == 24) {
-//                finalPlatformPosition.set(platformPosition);
-//                size = MEDIUM_PLATFORM_SIZE;
-//            }
-//
-//            final StaticPlatform platform = factory.createPlatform("snowCenter", size, platformPosition);
-//            platform.setRotation(0);
-//            sprites.add(platform.getSprite());
-//
-//            // change direction every 5 platforms
-//            if (i % 5 == 0) {
-//                leftToRight ^= true;
-//            }
-//            float changeInX = size.getPhysicalWidth() * 2.5f;
-//            positionX = leftToRight ? positionX + changeInX : positionX - changeInX;
-//            positionY += 5f * OBJECT_SIZE;
-//        }
-//
-//        createOtherStaticObjects(finalPlatformPosition);
+    private void createSign(boolean leftFacing, float x, float y) {
+        final Sprite signRight = spriteFactory.createLevelSprite(leftFacing ? "signLeft" : "signRight", SIGN_SIZE);
+        signRight.setPosition(x, y);
+        sprites.add(signRight);
     }
 
     private void createStaticPlatform(final String spriteName, final GameObjectSize size, final Vector2 platformPosition) {
@@ -168,22 +147,6 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
         sprites.add(platform.getSprite());
     }
 
-    private void createOtherStaticObjects(final Vector2 finalPlatformPosition) {
-        final SpriteFactory spriteFactory = new SpriteFactory();
-
-        final Sprite signRight = spriteFactory.createLevelSprite("signRight", SIGN_SIZE);
-        signRight.setPosition(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
-        sprites.add(signRight);
-
-        final Sprite signExit = spriteFactory.createLevelSprite("signExit", SIGN_SIZE);
-        signExit.setPosition(finalPlatformPosition.x + .3f, finalPlatformPosition.y + .08f);
-        sprites.add(signExit);
-
-        final Sprite window = spriteFactory.createLevelSprite("window", WINDOW_SIZE);
-        window.setPosition(finalPlatformPosition.x - .45f, finalPlatformPosition.y);
-        sprites.add(window);
-    }
-
     @Override
     protected void createGroundWalls() {
         super.createGroundWalls(CONTAINER_WIDTH, CONTAINER_HEIGHT);
@@ -191,29 +154,18 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
     @Override
     public Array<Portal> createPortals() {
-        final float portalHeight = GameObjectSize.PORTAL_SIZE.getPhysicalHeight();
-        final float portalWidth = GameObjectSize.PORTAL_SIZE.getPhysicalWidth();
-        final Vector2 portal1Position = new Vector2(0.5f + portalWidth, -CONTAINER_HEIGHT + portalHeight);
-        final Vector2 portal2Position = new Vector2(2.5f - portalWidth, -2f + portalHeight);
-        final Array<Portal> portalPair1 = PortalFactory.createPortalPair(world, portal1Position, portal2Position, MOVING_SAME_DIRECTION);
-
-        final Vector2 portal3Position = new Vector2(5 + portalWidth, -2.8f + portalHeight);
-        final Vector2 portal4Position = new Vector2(7.4f - portalWidth, -1.8f + portalHeight);
-        final Array<Portal> portalPair2 = PortalFactory.createPortalPair(world, portal3Position, portal4Position, MOVING_OPPOSITE_HORIZONTAL_DIRECTION);
-
-        final Vector2 portal5Position = new Vector2(-2 + portalWidth, 1.3f + portalHeight);
-        final Vector2 portal6Position = new Vector2(-2f + portalWidth, 2.4f + portalHeight);
-        final Array<Portal> portalPair3 = PortalFactory.createPortalPair(world, portal5Position, portal6Position, MOVING_SAME_DIRECTION);
-
         final Array<Portal> portals = new Array<>();
-        portals.addAll(portalPair1);
-        portals.addAll(portalPair2);
-        portals.addAll(portalPair3);
-
-        for (final Portal portal : portals) {
-            sprites.add(portal.getSprite());
-        }
+        portals.addAll(createPortalPair(fromLeft(8.4f), fromBottom(0.2f), fromLeft(10.4f), fromBottom(2.2f), MOVING_SAME_DIRECTION));
+        portals.addAll(createPortalPair(fromLeft(13.1f), fromBottom(1.4f), fromLeft(15.3f), fromBottom(2.4f), MOVING_OPPOSITE_HORIZONTAL_DIRECTION));
+        portals.addAll(createPortalPair(fromLeft(6.1f), fromBottom(5.5f), fromLeft(6.1f), fromBottom(6.6f), MOVING_SAME_DIRECTION));
         return portals;
+    }
+
+    private Array<Portal> createPortalPair(final float x1, final float y1, final float x2, final float y2, final PortalTeleportation type) {
+        final Array<Portal> portalPair = PortalFactory.createPortalPair(world, new Vector2(x1, y1), new Vector2(x2, y2), type);
+        sprites.add(portalPair.get(0).getSprite());
+        sprites.add(portalPair.get(1).getSprite());
+        return portalPair;
     }
 
     @Override
