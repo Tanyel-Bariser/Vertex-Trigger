@@ -115,6 +115,10 @@ public class CollisionDetection implements ContactListener {
 		if (playerFeet != null) {
 			playerFeet.setPlayerCanJump();
 		}
+		final Pit pit = (Pit) getType(Pit.class, contactBodies);
+		if (playerFeet != null && pit != null) {
+			playerFeet.setDead();
+		}
 		/*
 		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean isGroundContact = isGroundContact(contactBodies); boolean isBulletContact
 		 * = isBulletContact(contactBodies); boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);

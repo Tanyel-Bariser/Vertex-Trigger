@@ -21,4 +21,8 @@ public class PlayerFeet implements Collidable {
 	public void setPlayerCannotJump() {
 		player.setCannotJump();
 	}
+
+	public void setDead() {
+		player.setDead();
+	}
 }

@@ -21,7 +21,8 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 	private void createFeet(final Body body) {
 		final FixtureDef fixtureDef = createFixtureDefinition();
 		fixtureDef.shape = createFeet();
-		fixtureDef.density = 0;
+		fixtureDef.density = 3f;
+		fixtureDef.friction = 1f;
 		final Fixture fixture = body.createFixture(fixtureDef);
 		fixture.setUserData(new PlayerFeet());
 	}
@@ -37,7 +38,7 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 
 	private PolygonShape createFeet() {
 		final PolygonShape feet = new PolygonShape();
-		final Vector2 center = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * OBJECT_SIZE)) * 6);
+		final Vector2 center = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * (OBJECT_SIZE + 0.02f))) * 6);
 		final float width = size.getPhysicalWidth() * 0.9f;
 		final float height = size.getPhysicalHeight() / 10;
 

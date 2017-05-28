@@ -27,4 +27,25 @@ public class GameScreenFactory {
 			}
 		};
 	}
+
+	public static AbstractGameScreen createTanyelLevel(final VertexTrigger vertex) {
+		return new AbstractGameScreen(vertex) {
+			@Override
+			protected void initialiseAssets() {
+				VertexTrigger.ASSETS.loadPrototypeLevel();
+			}
+
+			@Override
+			protected void disposeOfAssets() {
+				VertexTrigger.ASSETS.unloadPrototypeLevel();
+			}
+
+			@Override
+			protected AbstractLevelBuilder createLevelBuilder() {
+				world = new World(GRAVITY, true);
+				world.setContactListener(new CollisionDetection());
+				return new TanyelLevelBuilder(world, this);
+			}
+		};
+	}
 }

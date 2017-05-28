@@ -24,7 +24,7 @@ public class ShieldBodyFactory extends AbstractBodyFactory {
 	@Override
 	protected Shape createShape() {
 		final CircleShape shape = new CircleShape();
-		shape.setPosition(new Vector2(0f, 0.4f * GameObjectSize.OBJECT_SIZE));
+		shape.setPosition(new Vector2(0f, 0.3f * GameObjectSize.OBJECT_SIZE));
 		shape.setRadius(GameObjectSize.SHIELD_SIZE.getPhysicalHeight());
 		return shape;
 	}

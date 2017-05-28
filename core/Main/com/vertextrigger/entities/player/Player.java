@@ -13,9 +13,9 @@ import com.vertextrigger.util.GameObjectSize;
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
 public class Player extends AbstractEntity implements Mortal {
-	static final float JUMP_POWER = 100 * (GameObjectSize.OBJECT_SIZE / 15f);
-	static final float MOVEMENT_SPEED = 20 * GameObjectSize.OBJECT_SIZE;
-	private static final float MOVEMENT_SPEED_WITH_SHIELD = MOVEMENT_SPEED / 2;
+	static final float JUMP_POWER = 95 * (GameObjectSize.OBJECT_SIZE / 15f);
+	static final float MOVEMENT_FORCE = 100 * GameObjectSize.OBJECT_SIZE;
+	private static final float MOVEMENT_FORCE_WITH_SHIELD = MOVEMENT_FORCE / 2;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -74,7 +74,14 @@ public class Player extends AbstractEntity implements Mortal {
 	 */
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		body.setLinearVelocity(movement, body.getLinearVelocity().y);
+		if (isMovingLeftAndAllowIncreaseMovementSpeed() || isMovingRightAndAllowIncreaseMovementSpeed()) {
+			if (canJump) {
+				body.applyForceToCenter(movement, 0, true);
+			} else {
+				// Movement slower when in air to compensate for lack of friction with floor
+				body.applyForceToCenter(movement / 3, 0, true);
+			}
+		}
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		if (isShieldSet == false && shield != null) {
 			body.createFixture(shield.getFixtureDef()).setUserData(shield);
@@ -88,14 +95,24 @@ public class Player extends AbstractEntity implements Mortal {
 			magnetBehaviour.calculateSteering();
 			magnetBehaviour.applySteering(delta);
 		}
+
 		return super.update(delta, alpha);
 	}
 
+	private boolean isMovingLeftAndAllowIncreaseMovementSpeed() {
+		// movement is negative when moving left
+		return movement < 0 && body.getLinearVelocity().x > movement / 5;
+	}
+
+	private boolean isMovingRightAndAllowIncreaseMovementSpeed() {
+		return movement > 0 && body.getLinearVelocity().x < movement / 5;
+	}
+
 	private void setMovementSpeedWithShield() {
-		if (Float.compare(movement, MOVEMENT_SPEED) == 0) {
-			movement = MOVEMENT_SPEED_WITH_SHIELD;
-		} else if (Float.compare(movement, -MOVEMENT_SPEED) == 0) {
-			movement = -MOVEMENT_SPEED_WITH_SHIELD;
+		if (Float.compare(movement, MOVEMENT_FORCE) == 0) {
+			movement = MOVEMENT_FORCE_WITH_SHIELD;
+		} else if (Float.compare(movement, -MOVEMENT_FORCE) == 0) {
+			movement = -MOVEMENT_FORCE_WITH_SHIELD;
 		}
 	}
 
@@ -104,11 +121,11 @@ public class Player extends AbstractEntity implements Mortal {
 	}
 
 	public void moveLeft() {
-		movement = isShieldSet ? -MOVEMENT_SPEED_WITH_SHIELD : -MOVEMENT_SPEED;
+		movement = isShieldSet ? -MOVEMENT_FORCE_WITH_SHIELD : -MOVEMENT_FORCE;
 	}
 
 	public void moveRight() {
-		movement = isShieldSet ? MOVEMENT_SPEED_WITH_SHIELD : MOVEMENT_SPEED;
+		movement = isShieldSet ? MOVEMENT_FORCE_WITH_SHIELD : MOVEMENT_FORCE;
 	}
 
 	public void stopMoving() {

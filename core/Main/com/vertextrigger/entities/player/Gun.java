@@ -9,7 +9,7 @@ import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class Gun {
-	private static final float SHOT_POWER = 0.0015f;
+	private static final float SHOT_POWER = 0.0033f;
 	private final AbstractGameScreen gameScreen;
 	private final BulletFactory bulletFactory;
 	private boolean canShoot = true;
