@@ -14,6 +14,9 @@ public enum GameObjectSize {
 	SHIELD_SIZE(5, 5, PLAYER_SIZE.getPhysicalHeight() * 8.7f, PLAYER_SIZE.getPhysicalHeight() * 8.7f, 0.37f, 0.33f), //
 
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f), //
+	TANYEL_LEVEL_MEDIUM_PLATFORM_SIZE(19.2f, 1.2f, 9.6f, .6f, 0, 0), //
+	TANYEL_LEVEL_LONG_PLATFORM_SIZE(30, 1.2f, 15, .6f, 0, 0), //
+	TANYEL_LEVEL_PIT_SIZE(30, 1.2f, 10, .1f, 0, 0), //
 	GROUND_SIZE(500, .2f, 500, .2f, 0, 0);
 
 	public final static float OBJECT_SIZE = 0.15F;

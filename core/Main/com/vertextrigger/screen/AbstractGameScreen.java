@@ -28,7 +28,7 @@ public abstract class AbstractGameScreen implements Screen {
 	public static final float WIDTH = Gdx.graphics.getWidth();
 	public static final float HEIGHT = Gdx.graphics.getHeight();
 	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
-	private static final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;
+	private static final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;// Should be level specific
 	private final VertexTrigger vertexTrigger;
 	private AbstractLevelBuilder levelBuilder;
 	private OrthographicCamera camera;
@@ -212,7 +212,7 @@ public abstract class AbstractGameScreen implements Screen {
 					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
 						world.dispose();
-						vertexTrigger.setScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));
+						vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
 					}
 				}
 			}
