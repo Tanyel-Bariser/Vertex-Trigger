@@ -17,14 +17,11 @@ public enum GameObjectSize {
 
 	TINY_PLATFORM_SIZE(2, 1, 1, .5f, 2f, 2f), //
 	SMALL_PLATFORM_SIZE(5, 1, 2.5f, .5f, 2f, 2f), //
-<<<<<<< HEAD
 	TANYEL_LEVEL_MEDIUM_PLATFORM_SIZE(19.2f, 1.2f, 9.6f, .6f, 0, 0), //
 	TANYEL_LEVEL_LONG_PLATFORM_SIZE(30, 1.2f, 15, .6f, 0, 0), //
 	TANYEL_LEVEL_PIT_SIZE(30, 1.2f, 10, .1f, 0, 0), //
-=======
 	MEDIUM_PLATFORM_SIZE(8, 1, 4, .5f, 2f, 2f), //
 	LARGE_PLATFORM_SIZE(12, 1, 6, .5f, 2f, 2f), //
->>>>>>> origin/hugh-level
 	GROUND_SIZE(500, .2f, 500, .2f, 0, 0);
 
 	public final static float OBJECT_SIZE = 0.15F;

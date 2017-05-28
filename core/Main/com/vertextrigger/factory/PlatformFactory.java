@@ -2,15 +2,10 @@ package com.vertextrigger.factory;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-<<<<<<< HEAD
 import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.enemy.Pit;
-=======
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.entities.SimpleMovingPlatform;
->>>>>>> origin/hugh-level
-import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
+import com.vertextrigger.entities.enemy.Pit;
+import com.vertextrigger.factory.bodyfactory.*;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.util.GameObjectSize;
@@ -26,7 +21,8 @@ public class PlatformFactory {
 		bodyFactory = new PlatformBodyFactory();
 	}
 
-	public SimpleMovingPlatform createMovingPlatform(final String name, final GameObjectSize size, final Vector2 position, final float pathStart, final float pathEnd, final boolean horizontal) {
+	public SimpleMovingPlatform createMovingPlatform(final String name, final GameObjectSize size, final Vector2 position, final float pathStart,
+			final float pathEnd, final boolean horizontal) {
 		final Body body = bodyFactory.createMovingPlatformBody(world, position, size, Friction.STICKY);
 		return new SimpleMovingPlatform(body, size, name, pathStart, pathEnd, horizontal);
 	}
@@ -45,14 +41,14 @@ public class PlatformFactory {
 		return getStaticPlatform(body, sprite);
 	}
 
-	private StaticPlatform getStaticPlatform(Body body, Sprite sprite) {
+	private StaticPlatform getStaticPlatform(final Body body, final Sprite sprite) {
 		final StaticPlatform platform = new StaticPlatform(sprite, body);
 		platform.setSpritePosition();
 		return platform;
 	}
 
 	public Pit createPit(final String name, final GameObjectSize size, final Vector2 position) {
-		final Body body = bodyFactory.createPlatformBody(world, position, size);
+		final Body body = bodyFactory.createPlatformBody(world, position, size, Friction.NORMAL);
 		final Sprite sprite = new SpriteFactory().createLevelSprite(name, size);
 
 		final Pit pit = new Pit(sprite, body);

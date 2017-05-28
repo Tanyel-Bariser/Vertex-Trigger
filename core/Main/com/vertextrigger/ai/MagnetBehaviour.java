@@ -21,8 +21,6 @@ public class MagnetBehaviour {
 	}
 
 	public void applySteering(final float time) {
-		// Update position and linear velocity. Velocity is trimmed to maximum speed
-		steerable.setPosition(steerable.getPosition().mulAdd(steerable.getLinearVelocity(), time));
 		steerable
 				.setLinearVelocity(steerable.getLinearVelocity().mulAdd(magnetFieldSteeringOutput.linear, time).limit(steerable.getMaxLinearSpeed()));
 

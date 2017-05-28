@@ -56,12 +56,15 @@ public abstract class Bullet extends AbstractEntity {
 	@Override
 	public Sprite update(final float delta, final float alpha) {
 		checkCollisions();
+		if (isTooSlow()) {
+			body.setLinearVelocity(body.getLinearVelocity().x * 1.5f, body.getLinearVelocity().y * 1.5f);
+		}
 		return super.update(delta, alpha);
 	}
 
 	public boolean isTooSlow() {
 		final Vector2 velocity = body.getLinearVelocity();
-		final float speedThreshold = 2f;
+		final float speedThreshold = 3f;
 		return (velocity.x < speedThreshold) && (velocity.x > -speedThreshold) && (velocity.y < speedThreshold) && (velocity.y > -speedThreshold);
 	}
 

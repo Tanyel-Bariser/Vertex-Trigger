@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.entityfactory.*;
@@ -34,7 +34,7 @@ public class TanyelLevelBuilder extends AbstractLevelBuilder {
 	public MagnetFlowField createMagnetFlowField() {
 		final MagnetFactory factory = new MagnetFactory(world, CONTAINER_WIDTH, CONTAINER_HEIGHT);
 		final int magnetStrength = 2;
-		final Vector2[] worldPositions = new Vector2[] { new Vector2(-2f, 2f) };
+		final Vector2[] worldPositions = new Vector2[] { new Vector2(-2f, 2.0f) };
 		final Magnet[] magnets = new Magnet[worldPositions.length];
 
 		for (int i = 0; i < worldPositions.length; i++) {
@@ -71,15 +71,23 @@ public class TanyelLevelBuilder extends AbstractLevelBuilder {
 	protected void createStaticPlatforms() {
 		final PlatformFactory factory = new PlatformFactory(world);
 		final String spriteName = "slice17";
-		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE,
-				new Vector2(-4 + SMALL_PLATFORM_SIZE.getPhysicalWidth(), -3 + SMALL_PLATFORM_SIZE.getPhysicalHeight()), 0);
-		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-.5f, -2.55f), 23.5f);
-		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-.7f, -.4f), 68f);
+		createMovingPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-4 + SMALL_PLATFORM_SIZE.getPhysicalWidth(), -3
+				+ SMALL_PLATFORM_SIZE.getPhysicalHeight()), 1.8f, true);
+		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-.5f, -2.55f), 20f);
+		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-.7f, -.4f), 73.5f);
 		createPlatform(factory, spriteName, TANYEL_LEVEL_LONG_PLATFORM_SIZE, new Vector2(CONTAINER_WIDTH * .44f, -CONTAINER_HEIGHT + .3f), 0);
 		createPlatform(factory, spriteName, TANYEL_LEVEL_LONG_PLATFORM_SIZE, new Vector2(CONTAINER_WIDTH * .44f, 0), 0);
 		createPlatform(factory, spriteName, TANYEL_LEVEL_MEDIUM_PLATFORM_SIZE, new Vector2(-.35f, 1.55f), 90f);
-		createPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-4 + SMALL_PLATFORM_SIZE.getPhysicalWidth(), 0), 0);
+		createMovingPlatform(factory, spriteName, SMALL_PLATFORM_SIZE, new Vector2(-4 + SMALL_PLATFORM_SIZE.getPhysicalWidth(), 0), 1.8f, true);
 		createPit(factory, spriteName, TANYEL_LEVEL_PIT_SIZE, new Vector2(-2f, -CONTAINER_HEIGHT - GameObjectSize.PLAYER_SIZE.getPhysicalHeight()));
+	}
+
+	private void createMovingPlatform(final PlatformFactory factory, final String spriteName, final GameObjectSize size,
+			final Vector2 platformPosition, final float distance, final boolean horizontal) {
+		final SimpleMovingPlatform platform = factory.createMovingPlatform(spriteName, size, platformPosition, platformPosition.x, platformPosition.x
+				+ distance, horizontal);
+		platform.startMoving();
+		entities.add(platform);
 	}
 
 	private StaticPlatform createPlatform(final PlatformFactory factory, final String sprite, final GameObjectSize size, final Vector2 position,

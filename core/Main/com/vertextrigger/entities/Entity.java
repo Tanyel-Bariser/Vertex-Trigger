@@ -31,4 +31,8 @@ public interface Entity extends Teleportable {
 	void cachePosition();
 
 	Vector2 getPosition();
+
+	boolean isVolitionallyMoving();
+
+	boolean isFeetOnGround();
 }

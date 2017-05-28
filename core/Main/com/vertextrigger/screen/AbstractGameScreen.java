@@ -171,7 +171,7 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 
 		for (final Bullet bullet : bullets) {
-			if (isInScreen(bullet.getSprite()) == false || bullet.isBulletDestroyed() || player.isDead() || bullet.isTooSlow()) {
+			if (isInScreen(bullet.getSprite()) == false || bullet.isBulletDestroyed() || player.isDead() /* || bullet.isTooSlow() */) {
 				bullets.removeValue(bullet, true);
 				entities.removeValue(bullet, true);
 				world.destroyBody(bullet.getBody());
@@ -180,7 +180,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		physicsDebugger.render(world, camera.combined);
+		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 

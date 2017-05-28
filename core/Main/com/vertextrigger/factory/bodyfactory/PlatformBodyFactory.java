@@ -1,12 +1,8 @@
 package com.vertextrigger.factory.bodyfactory;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PlatformBodyFactory extends AbstractBodyFactory {
@@ -14,10 +10,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 	private GameObjectSize size;
 
 	public enum Friction {
-		NORMAL(1.5f),
-		SNOW(0f),
-		STICKY(50),
-		VERY_STICKY(100);
+		NORMAL(1.5f), SNOW(0.5f), STICKY(5), VERY_STICKY(10);
 
 		private final float value;
 
@@ -34,7 +27,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 		return getBody(world, initialPosition, size, friction, BodyType.KinematicBody);
 	}
 
-	private Body getBody(World world, Vector2 initialPosition, GameObjectSize size, Friction friction, BodyType bodyType) {
+	private Body getBody(final World world, final Vector2 initialPosition, final GameObjectSize size, final Friction friction, final BodyType bodyType) {
 		this.size = size;
 		final FixtureDef fixtureDefinition = createFixtureDefinition();
 		fixtureDefinition.friction = friction.value;

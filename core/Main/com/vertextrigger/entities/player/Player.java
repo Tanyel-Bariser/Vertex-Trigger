@@ -15,9 +15,8 @@ import com.vertextrigger.util.GameObjectSize;
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
 public class Player extends AbstractEntity implements Mortal {
-	static final float JUMP_POWER = 95 * (GameObjectSize.OBJECT_SIZE / 15f);
+	static final float JUMP_POWER = 110 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_FORCE = 100 * GameObjectSize.OBJECT_SIZE;
-	private static final float MOVEMENT_FORCE_WITH_SHIELD = MOVEMENT_FORCE / 2;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -67,8 +66,9 @@ public class Player extends AbstractEntity implements Mortal {
 	public void jump() {
 		if (canJump) {
 			final boolean wakeForSimulation = true;
+			final float power = isShieldSet ? JUMP_POWER * 1.4f : JUMP_POWER;
 			AudioManager.playJumpSound();
-			body.applyLinearImpulse(0, JUMP_POWER, body.getWorldCenter().x, body.getWorldCenter().y, wakeForSimulation);
+			body.applyLinearImpulse(0, power, body.getWorldCenter().x, body.getWorldCenter().y, wakeForSimulation);
 		}
 	}
 
@@ -96,12 +96,11 @@ public class Player extends AbstractEntity implements Mortal {
 			shield.setPlayerBody(body);
 			isShieldSet = true;
 			gun.setShielded();
-			setMovementSpeedWithShield();
 		}
 
 		if (isShieldSet) {
-			magnetBehaviour.calculateSteering();
-			magnetBehaviour.applySteering(delta);
+			// magnetBehaviour.calculateSteering();
+			// magnetBehaviour.applySteering(delta);// Somewhere in here is the cause of the shield movement bug
 		}
 
 		// TODO clean up as this is a hack but could be very useful
@@ -124,28 +123,30 @@ public class Player extends AbstractEntity implements Mortal {
 		return movement > 0 && body.getLinearVelocity().x < movement / 5;
 	}
 
-	private void setMovementSpeedWithShield() {
-		if (Float.compare(movement, MOVEMENT_FORCE) == 0) {
-			movement = MOVEMENT_FORCE_WITH_SHIELD;
-		} else if (Float.compare(movement, -MOVEMENT_FORCE) == 0) {
-			movement = -MOVEMENT_FORCE_WITH_SHIELD;
-		}
-	}
-
 	public void setShield(final Shield shield) {
 		this.shield = shield;
 	}
 
 	public void moveLeft() {
-		movement = isShieldSet ? -MOVEMENT_FORCE_WITH_SHIELD : -MOVEMENT_FORCE;
+		movement = -MOVEMENT_FORCE;
 	}
 
 	public void moveRight() {
-		movement = isShieldSet ? MOVEMENT_FORCE_WITH_SHIELD : MOVEMENT_FORCE;
+		movement = MOVEMENT_FORCE;
 	}
 
 	public void stopMoving() {
 		movement = 0;
+	}
+
+	@Override
+	public boolean isVolitionallyMoving() {
+		return movement != 0;
+	}
+
+	@Override
+	public boolean isFeetOnGround() {
+		return canJump;
 	}
 
 	@Override

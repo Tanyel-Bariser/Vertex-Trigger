@@ -107,4 +107,12 @@ public abstract class AbstractEntity implements Entity {
 	public boolean isDeathAnimationFinished() {
 		return isDeathAnimationFinished;
 	}
+
+	public boolean isVolitionallyMoving() {
+		return false;
+	}
+
+	public boolean isFeetOnGround() {
+		return true;
+	}
 }

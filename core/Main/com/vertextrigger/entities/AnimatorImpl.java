@@ -31,9 +31,9 @@ public class AnimatorImpl implements Animator {
 	public void setHorizontalMovement(final float horizontalMovement) {
 		final float leftMovementThreshold = -0.3f;
 		final float rightMovementThreshold = 0.3f;
-		if (horizontalMovement < leftMovementThreshold) {
+		if (horizontalMovement < leftMovementThreshold && entity.isVolitionallyMoving()) {
 			movingLeft = true;
-		} else if (horizontalMovement > rightMovementThreshold) {
+		} else if (horizontalMovement > rightMovementThreshold && entity.isVolitionallyMoving()) {
 			movingLeft = false;
 		}
 	}
@@ -61,11 +61,12 @@ public class AnimatorImpl implements Animator {
 	public void setAnimationType() {
 		if (body.getUserData() instanceof Mortal && ((Mortal) body.getUserData()).isDead()) {
 			setAnimation(animationSet.getDeath());
-		} else if (body.getLinearVelocity().y > 0.01) {
+		} else if (body.getLinearVelocity().y > 0.01 && entity.isFeetOnGround() == false) {
 			setAnimation(animationSet.getRising());
-		} else if (body.getLinearVelocity().y < -0.01) {
+		} else if (body.getLinearVelocity().y < -0.01 && entity.isFeetOnGround() == false) {
 			setAnimation(animationSet.getFalling());
-		} else if ((body.getLinearVelocity().x > 0.05) || (body.getLinearVelocity().x < -0.05)) {
+		} else if ((body.getLinearVelocity().x > 0.05) && entity.isVolitionallyMoving() || (body.getLinearVelocity().x < -0.05)
+				&& entity.isVolitionallyMoving()) {
 			setAnimation(animationSet.getMoving());
 		} else {
 			setAnimation(animationSet.getStanding());
