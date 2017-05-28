@@ -180,7 +180,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		// physicsDebugger.render(world, camera.combined);
+		physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 
@@ -213,6 +213,7 @@ public abstract class AbstractGameScreen implements Screen {
 					if (mortal instanceof Player) {
 						world.dispose();
 						vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
+						// vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
 					}
 				}
 			}

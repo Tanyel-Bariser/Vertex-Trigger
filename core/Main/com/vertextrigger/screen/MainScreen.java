@@ -1,26 +1,15 @@
 package com.vertextrigger.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.*;
 import com.badlogic.gdx.utils.Timer;
-import com.vertextrigger.assets.Assets;
-import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.factory.BackgroundFactory;
-import com.vertextrigger.factory.ButtonFactory;
-import com.vertextrigger.factory.FontFactory;
-import com.vertextrigger.factory.GameScreenFactory;
+import com.vertextrigger.assets.*;
+import com.vertextrigger.factory.*;
 import com.vertextrigger.main.VertexTrigger;
 
 /**
@@ -49,7 +38,7 @@ public class MainScreen implements Screen {
 	private Stage stage;
 
 	public MainScreen(final VertexTrigger vertexTrigger) {
-		this.assets = VertexTrigger.ASSETS;
+		assets = VertexTrigger.ASSETS;
 		this.vertexTrigger = vertexTrigger;
 	}
 
@@ -129,6 +118,7 @@ public class MainScreen implements Screen {
 		prototype = new ImageTextButton(LEVEL_PROTO_BUTTON_TEXT, style);
 		prototype.setPosition(WIDTH / 2 - prototype.getWidth() / 2, buttonHeight(0));
 		prototype.addListener(new ClickListener() {
+			@Override
 			public void clicked(final InputEvent event, final float x, final float y) {
 				vertexTrigger.setNextScreen(GameScreenFactory.createPrototypeLevel(vertexTrigger));
 			}
@@ -139,10 +129,12 @@ public class MainScreen implements Screen {
 
 	private void initLevelOne() {
 		levelOne = new ImageTextButton(LEVEL_ONE_BUTTON_TEXT, style);
-		levelOne.setPosition(WIDTH / 2 - levelOne.getWidth() / 2, buttonHeight(1) );
+		levelOne.setPosition(WIDTH / 2 - levelOne.getWidth() / 2, buttonHeight(1));
 		levelOne.addListener(new ClickListener() {
+			@Override
 			public void clicked(final InputEvent event, final float x, final float y) {
-				temporaryMessage(levelOne, COMING_SOON_TEXT);
+				// vertexTrigger.setNextScreen(GameScreenFactory.createHughLevel(vertexTrigger));
+				vertexTrigger.setNextScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
 			}
 		});
 		levelOne.getLabel().setFontScale(1.2f);
@@ -153,6 +145,7 @@ public class MainScreen implements Screen {
 		levelTwo = new ImageTextButton(LEVEL_TWO_BUTTON_TEXT, style);
 		levelTwo.setPosition(WIDTH / 2 - levelTwo.getWidth() / 2, buttonHeight(2));
 		levelTwo.addListener(new ClickListener() {
+			@Override
 			public void clicked(final InputEvent event, final float x, final float y) {
 				temporaryMessage(levelTwo, COMING_SOON_TEXT);
 			}
@@ -191,7 +184,7 @@ public class MainScreen implements Screen {
 	 */
 	@Override
 	public void hide() {
-		this.dispose();
+		dispose();
 	}
 
 	/**

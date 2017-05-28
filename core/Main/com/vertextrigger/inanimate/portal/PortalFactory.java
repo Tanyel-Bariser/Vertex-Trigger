@@ -11,7 +11,6 @@ import com.vertextrigger.util.GameObjectSize;
 public class PortalFactory {
 
 	private static Sprite[][] portalPairs;
-	private static int lastPortalPair = 0;
 
 	private static void loadSprites() {
 		portalPairs = new Sprite[][] {
@@ -23,8 +22,18 @@ public class PortalFactory {
 						new SpriteFactory().createPortalSprite("portal_red", GameObjectSize.PORTAL_SIZE) } };
 	}
 
-	private static Sprite[] getPortalSprites() {
-		return portalPairs[lastPortalPair++ % portalPairs.length];
+	private static Sprite[] getPortalSprites(final PortalTeleportation teleportMethod) {
+		switch (teleportMethod) {
+			case MOVING_SAME_DIRECTION:
+				return portalPairs[0];
+			case MOVING_OPPOSITE_HORIZONTAL_DIRECTION:
+			case MOVING_OPPOSITE_VERTICAL_DIRECTION:
+				return portalPairs[1];
+			case MOVING_DIFFERENT_XY_AXIS_DIRECTION:
+				return portalPairs[2];
+			default:
+				throw new RuntimeException("This will never happen");
+		}
 	}
 
 	public static Array<Portal> createPortalPair(final World world, final Vector2 portalPosition, final Vector2 pairedPortalPosition,
@@ -34,7 +43,7 @@ public class PortalFactory {
 		final Body body1 = bodyFactory.createPortalBody(world, portalPosition);
 		final Body body2 = bodyFactory.createPortalBody(world, pairedPortalPosition);
 
-		final Sprite[] portalsSprites = getPortalSprites();
+		final Sprite[] portalsSprites = getPortalSprites(teleportMethod);
 
 		final Portal portal = new Portal(body1, portalsSprites[0], teleportMethod);
 		final Portal portal2 = new Portal(body2, portalsSprites[1], teleportMethod);

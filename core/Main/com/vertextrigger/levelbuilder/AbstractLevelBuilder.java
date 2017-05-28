@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.MagnetFlowField;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.SpriteFactory;
+import com.vertextrigger.inanimate.Ground;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -100,6 +102,15 @@ public abstract class AbstractLevelBuilder {
 	 *            for the ground, ceiling & walls to be built in
 	 */
 	protected abstract void createGroundWalls();
+
+	protected Ground createGroundWalls(int containerWidth, int containerHeight) {
+		final Vector2 bottomLeft = new Vector2(-containerWidth, -containerHeight);
+		final Vector2 bottomRight = new Vector2(-containerWidth, containerHeight);
+		final Vector2 topRight = new Vector2(containerWidth, containerHeight);
+		final Vector2 topLeft = new Vector2(containerWidth, -containerHeight);
+
+		return new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
+	}
 
 	public abstract Array<Portal> createPortals();
 

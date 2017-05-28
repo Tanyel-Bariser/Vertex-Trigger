@@ -5,10 +5,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 /**
  * Loads & stores assets, i.e. textures, bitmapfonts, sound effects, music, etc.
@@ -111,6 +109,14 @@ public class Assets {
 
 	private void unloadEnemies() {
 		assetManager.unload(AtlasPath.ENEMY.getPath());
+	}
+
+	public void loadHughLevel() {
+		loadLevelAssets(AtlasPath.LEVEL_HUGH, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+	}
+
+	public void unloadHughLevel() {
+		unloadLevelAssets(AtlasPath.LEVEL_HUGH, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}
 
 	public void loadLevelOne() {
