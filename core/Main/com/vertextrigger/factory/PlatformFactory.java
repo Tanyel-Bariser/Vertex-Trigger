@@ -2,10 +2,12 @@ package com.vertextrigger.factory;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.vertextrigger.entities.SimpleMovingPlatform;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.entities.enemy.Pit;
-import com.vertextrigger.factory.bodyfactory.*;
+import com.vertextrigger.entities.movingplatform.MovingPlatform;
+import com.vertextrigger.entities.movingplatform.SimplePath;
+import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.util.GameObjectSize;
@@ -21,10 +23,9 @@ public class PlatformFactory {
 		bodyFactory = new PlatformBodyFactory();
 	}
 
-	public SimpleMovingPlatform createMovingPlatform(final String name, final GameObjectSize size, final Vector2 position, final float pathStart,
-			final float pathEnd, final boolean horizontal) {
-		final Body body = bodyFactory.createMovingPlatformBody(world, position, size, Friction.STICKY);
-		return new SimpleMovingPlatform(body, size, name, pathStart, pathEnd, horizontal);
+	public MovingPlatform createSimpleMovingPlatform(final String name, final GameObjectSize size, final Vector2 pathStart, final Vector2 pathEnd) {
+		final Body body = bodyFactory.createMovingPlatformBody(world, pathStart, size, Friction.STICKY);
+		return new MovingPlatform(body, size, name, new SimplePath(pathStart, pathEnd));
 	}
 
 	public StaticPlatform createPlatform(final String name, final GameObjectSize size, final Vector2 position) {
