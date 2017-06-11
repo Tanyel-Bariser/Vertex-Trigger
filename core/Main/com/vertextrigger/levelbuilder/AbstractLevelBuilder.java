@@ -7,11 +7,19 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.inanimate.Ground;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
+import com.vertextrigger.inanimate.portal.PortalFactory;
+import com.vertextrigger.inanimate.portal.PortalTeleportation;
 import com.vertextrigger.screen.AbstractGameScreen;
+import com.vertextrigger.util.GameObjectSize;
+
+import static com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 
 public abstract class AbstractLevelBuilder {
 	protected final World world;
@@ -22,6 +30,7 @@ public abstract class AbstractLevelBuilder {
 	protected final Array<Portal> portals;
 	protected final SpriteFactory spriteFactory;
 	protected final MagnetFlowField magnetFlowField;
+	protected final PlatformFactory platformFactory;
 
 	private final float containerWidth;
 	private final float containerHeight;
@@ -33,100 +42,34 @@ public abstract class AbstractLevelBuilder {
 		sprites = new Array<>();
 		portals = new Array<>();
 		magnetFlowField = createMagnetFlowField();
+		platformFactory = new PlatformFactory(world);
 
 		this.containerWidth = containerWidth;
 		this.containerHeight = containerHeight;
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
-	public AbstractLevelBuilder setPlayer(final Player player) {
-		this.player = player;
-		return this;
-	}
-
-	public abstract MagnetFlowField createMagnetFlowField();
-
-	/**
-	 * Create all enemies needed for the particular game level at the specific initial positions & to follow their predefined path Then adds the
-	 * enemies to the entities container
-	 *
-	 * @param world
-	 *            for all enemies in this level to reside in
+	/*
+	 * METHODS OVERRIDDEN BY SUBCLASSES
 	 */
-	protected abstract void createEnemies(final Steerable<Vector2> target);
 
-	/**
-	 * Create all dangerous balls needed for the particular game level at the specific initial positions & to follow their predefined path Then adds
-	 * the dangerous balls to the entities container
-	 *
-	 * @param world
-	 *            for all dangerous balls to reside in
-	 */
 	protected abstract void createDangerousBalls();
-
-	/**
-	 * Create all moving platforms needed for the particular game level at the specific initial positions & to follow their predefined path Then adds
-	 * the moving platforms to the entities container
-	 *
-	 * @param world
-	 *            for all platforms to be built in
-	 */
-	protected abstract void createMovingPlatforms();
-
-	/**
-	 * Create all timed platforms needed for the particular game level at the specific initial positions & the predefined time for the platforms to
-	 * perform their actions Then adds the timed platforms to the entities container
-	 *
-	 * @param world
-	 *            for all platforms to be built in
-	 */
-	protected abstract void createTimedPlatforms();
-
-	/**
-	 * Create all static platforms needed for the particular game level at the specific initial positions Then adds the platform's corresponding
-	 * sprites to the sprites container
-	 *
-	 * @param world
-	 *            for all platforms to be built in
-	 */
-	protected abstract void createStaticPlatforms();
-
-	/**
-	 * Create the ground, ceiling & walls for the particular level's layout Then adds the ground, ceiling & wall's corresponding sprites to the
-	 * sprites container
-	 *
-	 * @param world
-	 *            for the ground, ceiling & walls to be built in
-	 */
+	protected abstract void createEnemies(final Steerable<Vector2> target);
 	protected abstract void createGroundWalls();
-
-	protected Ground createGroundWalls(int containerWidth, int containerHeight) {
-		final Vector2 bottomLeft = new Vector2(-containerWidth, -containerHeight);
-		final Vector2 bottomRight = new Vector2(-containerWidth, containerHeight);
-		final Vector2 topRight = new Vector2(containerWidth, containerHeight);
-		final Vector2 topLeft = new Vector2(containerWidth, -containerHeight);
-
-		return new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
-	}
-
+	public abstract MagnetFlowField createMagnetFlowField();
+	protected abstract void createMovingPlatforms();
 	public abstract Array<Portal> createPortals();
-
 	public abstract void createPowerUps();
-
-	/**
-	 * Resets the positions of all entities when player dies back to their initial positions of the level
-	 */
+	protected abstract void createStaticPlatforms();
+	protected abstract void createTimedPlatforms();
+	public abstract Sprite getBackground();
 	public abstract void resetLevelLayout();
+
+	/*
+	 * UTILITY METHODS FOR GAME SCREEN
+	 */
 
 	/**
 	 * Invokes all methods required to build all of this level's entities & stores them in the entities container, before returning the container.
-	 *
-	 * @param world
-	 *            for all game objects in this level to reside in
-	 * @return all entities required for this level
 	 */
 	public Array<Entity> buildEntities() {
 		// Create enemies then add them to the entities container
@@ -140,13 +83,10 @@ public abstract class AbstractLevelBuilder {
 	/**
 	 * Invokes all methods required to build all of this level's platforms, ground, ceiling and walls and stores them in their corresponding sprites
 	 * in the sprites container before returning the container.
-	 *
-	 * @param world
-	 *            for all game objects in this level to reside in
-	 * @return all entities required for this level
 	 */
 	public Array<Sprite> buildLevelLayout() {
 		createStaticPlatforms();
+		createMovingPlatforms();
 		createGroundWalls();
 		createPortals();
 		createPowerUps();
@@ -173,5 +113,74 @@ public abstract class AbstractLevelBuilder {
 		return containerWidth;
 	}
 
-	public abstract Sprite getBackground();
+	/*
+	 * UTILITY METHODS FOR SUBCLASSES
+	 */
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public AbstractLevelBuilder setPlayer(final Player player) {
+		this.player = player;
+		return this;
+	}
+
+	Ground createGroundWalls(int containerWidth, int containerHeight) {
+		return createGroundWalls(containerWidth, containerHeight, 0);
+	}
+
+	Ground createGroundWalls(int containerWidth, int containerHeight, float pitDepth) {
+		final Vector2 bottomLeft = new Vector2(-containerWidth, -containerHeight - pitDepth);
+		final Vector2 bottomRight = new Vector2(-containerWidth, containerHeight - pitDepth);
+		final Vector2 topRight = new Vector2(containerWidth, containerHeight);
+		final Vector2 topLeft = new Vector2(containerWidth, -containerHeight);
+
+		return new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
+	}
+
+	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
+		staticPlatform(sprite, size, position, 0);
+	}
+
+	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final float rotation) {
+		staticPlatform(sprite, size, position, Friction.NORMAL, rotation);
+	}
+
+	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final Friction friction, final float rotation) {
+		final StaticPlatform platform = platformFactory.createPlatform(sprite, size, position, friction);
+		platform.setRotation(rotation);
+		sprites.add(platform.getSprite());
+	}
+
+	void simpleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 start, final Vector2 end) {
+		final MovingPlatform platform = platformFactory.createSimpleMovingPlatform(spriteName, size, start, end);
+		platform.startMoving();
+		entities.add(platform);
+	}
+
+	void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
+		final MovingPlatform platform = platformFactory.createRectangleMovingPlatform(spriteName, size, topLeft, bottomRight, clockwise);
+		platform.startMoving();
+		entities.add(platform);
+	}
+
+	void pit(final String sprite, final GameObjectSize size, final Vector2 position) {
+		platformFactory.createPit(sprite, size, position);
+	}
+
+	Array<Portal> portalPair(final float x1, final float y1, final float x2, final float y2, final PortalTeleportation type) {
+		final Array<Portal> portalPair = PortalFactory.createPortalPair(world, new Vector2(x1, y1), new Vector2(x2, y2), type);
+		sprites.add(portalPair.get(0).getSprite());
+		sprites.add(portalPair.get(1).getSprite());
+		return portalPair;
+	}
+
+	float fromBottom(final float distanceFromFloor) {
+		return -containerHeight + distanceFromFloor;
+	}
+
+	float fromLeft(final float distanceFromLeftWall) {
+		return -containerWidth + distanceFromLeftWall;
+	}
 }
