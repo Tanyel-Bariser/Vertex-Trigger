@@ -1,7 +1,5 @@
 package com.vertextrigger.entities.movingplatform;
 
-import com.badlogic.gdx.math.Vector2;
-
 import java.lang.reflect.Field;
 
 public class PathTestUtils {

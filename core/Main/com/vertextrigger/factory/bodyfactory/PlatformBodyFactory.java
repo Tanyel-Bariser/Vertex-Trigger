@@ -10,7 +10,7 @@ public class PlatformBodyFactory extends AbstractBodyFactory {
 	private GameObjectSize size;
 
 	public enum Friction {
-		NORMAL(1.5f), SNOW(0.5f), STICKY(5), VERY_STICKY(10);
+		NONE(0), NORMAL(1.5f), SNOW(0.5f), STICKY(5), VERY_STICKY(10);
 
 		private final float value;
 

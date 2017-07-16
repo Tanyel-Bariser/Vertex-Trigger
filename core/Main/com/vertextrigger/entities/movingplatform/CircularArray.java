@@ -1,5 +1,17 @@
 package com.vertextrigger.entities.movingplatform;
 
+/**
+ * Circular array used in {@link RectanglePath} implementation
+ *
+ * Array start and end are joined in an imaginary circle so elements can be retrieved forever, looping around clockwise and anticlockwise as needed
+ * E.g. underlying array is [1, 2, 3, 4]. Five invocations of {@code next()} in a row return 1, 2, 3, 4, and then 1 again. Arrows represent {@code head}
+ *
+ *          ↓                                               ↓
+ *          1          1            1            1          1
+ *        4   2      4   2 ←      4   2      → 4   2      4   2
+ *          3          3            3            3          3
+ *                                  ↑
+ */
 class CircularArray<T> {
 
     final private T[] elements;
@@ -17,16 +29,14 @@ class CircularArray<T> {
     }
 
     T next() {
-        head++;
-        if (head == size) {
+        if (++head == size) {
             head = 0;
         }
         return elements[head];
     }
 
     T prev() {
-        head--;
-        if (head < 0) {
+        if (--head < 0) {
             head = size - 1;
         }
         return elements[head];
