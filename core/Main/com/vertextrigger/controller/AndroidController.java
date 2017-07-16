@@ -87,8 +87,9 @@ public class AndroidController extends Controller {
 	private ClickListener getPauseClickListener() {
 		return new ClickListener() {
 			@Override
-			public void clicked(final InputEvent event, final float x, final float y) {
+			public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
 				togglePause();
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		};
 	}
@@ -102,10 +103,11 @@ public class AndroidController extends Controller {
 	private ClickListener getShootClickListener() {
 		return new ClickListener() {
 			@Override
-			public void clicked(final InputEvent event, final float x, final float y) {
+			public boolean touchDown(final InputEvent event, final float x, final float y, final int pointer, final int button) {
 				if (isControllable()) {
 					player.shoot();
 				}
+				return super.touchDown(event, x, y, pointer, button);
 			}
 		};
 	}
