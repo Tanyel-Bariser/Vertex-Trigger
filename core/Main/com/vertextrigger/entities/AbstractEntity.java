@@ -3,6 +3,11 @@ package com.vertextrigger.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.vertextrigger.entities.callback.Callback;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 public abstract class AbstractEntity implements Entity {
 	protected Body body;
@@ -13,6 +18,7 @@ public abstract class AbstractEntity implements Entity {
 	protected boolean isDeathAnimationFinished;
 	protected final InterpolatedPosition entityState;
 	private boolean isTeleportable;
+	private Collection<Callback> callbacks;
 
 	public AbstractEntity(final Body body, final Animator animator) {
 		this.body = body;
@@ -23,17 +29,23 @@ public abstract class AbstractEntity implements Entity {
 		animator.setEntity(this);
 		setUserData();
 		entityState = new InterpolatedPosition(this.body);
-	}
-
-	// TODO clean up as this is a hack but could be very useful
-	public interface EntityCallback {
-		void run();
+		this.callbacks = new HashSet<>();
 	}
 
 	@Override
 	public Sprite update(final float delta, final float alpha) {
+		for (final Callback callback : callbacks) {
+			if (callback.isRunnable()) {
+				callback.run();
+			}
+		}
+
 		handleTeleportation();
 		return animator.getUpdatedSprite(delta, entityState.getNewPosition(alpha, body), entityState.getNewAngle(alpha, body));
+	}
+
+	public void addCallbacks(final Callback... callbacks) {
+		this.callbacks.addAll(Arrays.asList(callbacks));
 	}
 
 	private void handleTeleportation() {

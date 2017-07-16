@@ -8,6 +8,9 @@ import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.AbstractEntity;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.callback.DeathCallback;
+import com.vertextrigger.entities.callback.PositionCallback;
+import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
 import com.vertextrigger.entities.enemy.Poker;
 import com.vertextrigger.entities.player.Player;
@@ -49,10 +52,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		//player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
 
 		// before poker #2
-		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
+		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
 
 		// pre bossfight
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
+		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
 
 		// end
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(9.5f), fromBottom(16.1f)), screen, magnetFlowField);
@@ -77,28 +80,27 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		entities.add(poker2);
 		screen.addMortal(poker2);
 
-		// TODO clean up as this is a hack but could be very useful
-		player.addPositionCallback(new Vector2(fromLeft(0.5f), fromBottom(14)), new Player.EntityCallback() {
+		player.addCallbacks(new PositionCallback(new Runnable() {
 			@Override
 			public void run() {
 				if (!madeBee) {
-					final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen,
-							magnetFlowField);
+					final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen, magnetFlowField);
 					entities.add(bee);
 					screen.addMortal(bee);
-					bee.addDeathCallback(new AbstractEntity.EntityCallback() {
+					bee.addCallbacks(new DeathCallback(new Runnable() {
 						@Override
 						public void run() {
 							AudioManager.playPickUpSound();
 							AudioManager.playLevelOneMusic();
 							simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)),  new Vector2(fromLeft(10), fromBottom(15.5f)));
 						}
-					});
+
+					}, bee));
 					madeBee = true;
 					AudioManager.playLevelTwoMusic();
 				}
 			}
-		});
+		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition()));
 	}
 
 	@Override
