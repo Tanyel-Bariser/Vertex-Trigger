@@ -159,7 +159,7 @@ public abstract class AbstractLevelBuilder {
 		entities.add(platform);
 	}
 
-	void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
+  void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
 		final MovingPlatform platform = platformFactory.createRectangleMovingPlatform(spriteName, size, topLeft, bottomRight, clockwise);
 		platform.startMoving();
 		entities.add(platform);
