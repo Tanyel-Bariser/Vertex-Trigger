@@ -104,12 +104,12 @@ public abstract class AbstractGameScreen implements Screen {
 		setUpLevel();
 		batch = new SpriteBatch();
 		entities.add(player);
-		final Controller controller = new Controller(player, this, state);
-		stage = controller.getStage();
+		stage = new Stage();
 
 		if (Gdx.app.getType() == ApplicationType.Desktop) {
-			Gdx.input.setInputProcessor(controller);
+			Gdx.input.setInputProcessor(Controller.createDesktopController(player, this));
 		} else {
+			Controller.createAndroidController(player, this, stage);
 			Gdx.input.setInputProcessor(stage);
 		}
 		physicsDebugger = new Box2DDebugRenderer();
@@ -212,8 +212,8 @@ public abstract class AbstractGameScreen implements Screen {
 					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
 						world.dispose();
-						vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
-						// vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
+						// vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
+						vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
 					}
 				}
 			}

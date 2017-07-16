@@ -1,36 +1,24 @@
 package com.vertextrigger.levelbuilder;
 
+import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.*;
+import static com.vertextrigger.util.GameObjectSize.*;
+
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
-import com.vertextrigger.entities.AbstractEntity;
 import com.vertextrigger.entities.MagnetFlowField;
-import com.vertextrigger.entities.callback.DeathCallback;
-import com.vertextrigger.entities.callback.PositionCallback;
+import com.vertextrigger.entities.callback.*;
 import com.vertextrigger.entities.callback.Runnable;
-import com.vertextrigger.entities.enemy.Bee;
-import com.vertextrigger.entities.enemy.Poker;
-import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.factory.EnemyFactory;
-import com.vertextrigger.factory.PlatformFactory;
+import com.vertextrigger.entities.enemy.*;
+import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
-import com.vertextrigger.factory.entityfactory.PlayerFactory;
-import com.vertextrigger.factory.entityfactory.ShieldFactory;
+import com.vertextrigger.factory.entityfactory.*;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
-
-import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPOSITE_HORIZONTAL_DIRECTION;
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
-import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
-import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
-import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
-import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
-import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
 
 public class HughLevelBuilder extends AbstractLevelBuilder {
 
@@ -49,7 +37,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		AudioManager.playLevelOneMusic();
 
 		// start
-		//player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
 
 		// before poker #2
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
@@ -68,7 +56,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	protected void createEnemies(final Steerable<Vector2> target) {
-		final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(15.1f), fromBottom(2)));
+		final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(14.95f), fromBottom(2)));
 		entities.add(poker1);
 		screen.addMortal(poker1);
 
@@ -84,7 +72,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 			@Override
 			public void run() {
 				if (!madeBee) {
-					final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen, magnetFlowField);
+					final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen,
+							magnetFlowField);
 					entities.add(bee);
 					screen.addMortal(bee);
 					bee.addCallbacks(new DeathCallback(new Runnable() {
@@ -92,7 +81,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 						public void run() {
 							AudioManager.playPickUpSound();
 							AudioManager.playLevelOneMusic();
-							simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)),  new Vector2(fromLeft(10), fromBottom(15.5f)));
+							simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(
+									fromLeft(10), fromBottom(15.5f)));
 						}
 
 					}, bee));
@@ -110,9 +100,12 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	protected void createMovingPlatforms() {
-		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)), new Vector2(fromLeft(5.5f), fromBottom(9.3f)));
-		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(9.3f)), new Vector2(fromLeft(6.5f), fromBottom(11.5f)));
-		simpleMovingPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(11.5f)), new Vector2(fromLeft(5.5f), fromBottom(11.5f)));
+		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)), new Vector2(fromLeft(5.5f),
+				fromBottom(9.3f)));
+		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(9.3f)), new Vector2(fromLeft(6.5f),
+				fromBottom(11.5f)));
+		simpleMovingPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(11.5f)), new Vector2(fromLeft(5.5f),
+				fromBottom(11.5f)));
 	}
 
 	@Override

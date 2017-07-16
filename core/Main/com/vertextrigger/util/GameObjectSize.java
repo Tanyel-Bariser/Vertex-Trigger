@@ -10,7 +10,7 @@ public enum GameObjectSize {
 	BACKGROUND_SIZE(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 0, 0), //
 	PLAYER_SIZE(2.5f, 4.5f, 0.5f, 1.5f, 1.9f, 2.2f), //
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //
-	PORTAL_SIZE(1.5f, 4f, 0.5f, 1.5f, 2f, 2f), // Sprite is bigger oval & body is smaller rectangle that fits inside the sprite
+	PORTAL_SIZE(3.3f, 4f, 1.3f, 1.5f, 2f, 2f), // Sprite is bigger oval & body is smaller rectangle that fits inside the sprite
 	SHIELD_SIZE(5, 5, PLAYER_SIZE.getPhysicalHeight() * 8.7f, PLAYER_SIZE.getPhysicalHeight() * 8.7f, 0.37f, 0.33f), //
 	SIGN_SIZE(3.2f, 3.5f, 0, 0, 0, 0), //
 	WINDOW_SIZE(4f, 4.14f, 0, 0, 0, 0), //
