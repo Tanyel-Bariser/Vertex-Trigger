@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.entities.enemy.Pit;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
+import com.vertextrigger.entities.movingplatform.RectanglePath;
 import com.vertextrigger.entities.movingplatform.SimplePath;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
@@ -26,6 +27,11 @@ public class PlatformFactory {
 	public MovingPlatform createSimpleMovingPlatform(final String name, final GameObjectSize size, final Vector2 pathStart, final Vector2 pathEnd) {
 		final Body body = bodyFactory.createMovingPlatformBody(world, pathStart, size, Friction.STICKY);
 		return new MovingPlatform(body, size, name, new SimplePath(pathStart, pathEnd));
+	}
+
+	public MovingPlatform createRectangleMovingPlatform(final String name, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
+		final Body body = bodyFactory.createMovingPlatformBody(world, topLeft, size, Friction.STICKY);
+		return new MovingPlatform(body, size, name, new RectanglePath(topLeft, bottomRight, clockwise));
 	}
 
 	public StaticPlatform createPlatform(final String name, final GameObjectSize size, final Vector2 position) {

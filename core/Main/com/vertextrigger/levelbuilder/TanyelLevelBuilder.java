@@ -70,8 +70,9 @@ public class TanyelLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected void createMovingPlatforms() {
 		final String spriteName = "slice17";
-		simpleMovingPlatform(spriteName, SMALL_PLATFORM_SIZE, new Vector2(-3.8f, -2.5f), new Vector2(-2, -2.5f));
-		simpleMovingPlatform(spriteName, SMALL_PLATFORM_SIZE, new Vector2(-3.8f, 0), new Vector2(-2, 0));
+		//simpleMovingPlatform(spriteName, SMALL_PLATFORM_SIZE, new Vector2(-3.8f, -2.5f), new Vector2(-2, -2.5f));
+		//simpleMovingPlatform(spriteName, SMALL_PLATFORM_SIZE, new Vector2(-3.8f, 0), new Vector2(-2, 0));
+		rectangleMovingPlatform(spriteName, SMALL_PLATFORM_SIZE, new Vector2(-3.5f, 0), new Vector2(-2, -2.5f), false);
 	}
 
 	@Override

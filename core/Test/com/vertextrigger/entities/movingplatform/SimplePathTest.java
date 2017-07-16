@@ -3,8 +3,9 @@ package com.vertextrigger.entities.movingplatform;
 import com.badlogic.gdx.math.Vector2;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
-
+import static com.vertextrigger.entities.movingplatform.PathTestUtils.getEnd;
+import static com.vertextrigger.entities.movingplatform.PathTestUtils.getHorizontal;
+import static com.vertextrigger.entities.movingplatform.PathTestUtils.getStart;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -70,23 +71,5 @@ public class SimplePathTest {
     @Test(expected = IllegalArgumentException.class)
     public void notVerticalAndNotHorizontalPath() throws Exception {
         new SimplePath(new Vector2(0, 0), new Vector2(5, 5));
-    }
-
-    private boolean getHorizontal(final Path path) throws Exception {
-        final Field horizontal = SimplePath.class.getDeclaredField("horizontal");
-        horizontal.setAccessible(true);
-        return horizontal.getBoolean(path);
-    }
-
-    private float getStart(final Path path) throws Exception {
-        final Field start = SimplePath.class.getDeclaredField("start");
-        start.setAccessible(true);
-        return start.getFloat(path);
-    }
-
-    private float getEnd(final Path path) throws Exception {
-        final Field end = SimplePath.class.getDeclaredField("end");
-        end.setAccessible(true);
-        return end.getFloat(path);
     }
 }

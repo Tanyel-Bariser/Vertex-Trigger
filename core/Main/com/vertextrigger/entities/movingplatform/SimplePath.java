@@ -52,4 +52,24 @@ public class SimplePath extends Path {
         }
         return step;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SimplePath that = (SimplePath) o;
+
+        if (horizontal != that.horizontal) return false;
+        if (Float.compare(that.start, start) != 0) return false;
+        return Float.compare(that.end, end) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (horizontal ? 1 : 0);
+        result = 31 * result + (start != +0.0f ? Float.floatToIntBits(start) : 0);
+        result = 31 * result + (end != +0.0f ? Float.floatToIntBits(end) : 0);
+        return result;
+    }
 }
