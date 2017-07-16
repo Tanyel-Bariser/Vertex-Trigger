@@ -25,7 +25,6 @@ public class Bee extends AbstractFlyingEnemy {
 	private final BulletFactory bulletFactory;
 	private float timeElapsed;
 	private final SteerableBody steerable;
-	private Collection<EntityCallback> deathCallbacks = new HashSet<>();
 
 	public Bee(final Body body, final AnimationSet animationSet, final Steerable<Vector2> target, final BulletFactory bulletFactory,
 			final AbstractGameScreen screen, final SteerableBody steerable) {
@@ -36,17 +35,10 @@ public class Bee extends AbstractFlyingEnemy {
 		this.steerable = steerable;
 	}
 
-	public void addDeathCallback(final EntityCallback callback) {
-		deathCallbacks.add(callback);
-	}
-
 	@Override
 	public void die() {
 		AudioManager.playEnemyKilledSound();
 		animator.playDeathAnimation(this);
-		for (final EntityCallback deathCallback : deathCallbacks) {
-			deathCallback.run();
-		}
 	}
 
 	@Override
