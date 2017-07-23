@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.entities.enemy.Pit;
+import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.movingplatform.RectanglePath;
 import com.vertextrigger.entities.movingplatform.SimplePath;
@@ -48,12 +49,6 @@ public class PlatformFactory {
 		return getStaticPlatform(body, sprite);
 	}
 
-	private StaticPlatform getStaticPlatform(final Body body, final Sprite sprite) {
-		final StaticPlatform platform = new StaticPlatform(sprite, body);
-		platform.setSpritePosition();
-		return platform;
-	}
-
 	public Pit createPit(final String name, final GameObjectSize size, final Vector2 position) {
 		final Body body = bodyFactory.createPlatformBody(world, position, size, Friction.NORMAL);
 		final Sprite sprite = new SpriteFactory().createLevelSprite(name, size);
@@ -61,5 +56,19 @@ public class PlatformFactory {
 		final Pit pit = new Pit(sprite, body);
 		pit.setSpritePosition();
 		return pit;
+	}
+
+	public Spike createSpike(final String name, final GameObjectSize size, final Vector2 position) {
+		final Sprite sprite = new SpriteFactory().createLevelSprite(name, size);
+		final Body body = bodyFactory.createPlatformBody(world, position, size, Friction.NORMAL);
+		final Spike spike = new Spike(sprite, body);
+		spike.setSpritePosition();
+		return spike;
+	}
+
+	private StaticPlatform getStaticPlatform(final Body body, final Sprite sprite) {
+		final StaticPlatform platform = new StaticPlatform(sprite, body);
+		platform.setSpritePosition();
+		return platform;
 	}
 }

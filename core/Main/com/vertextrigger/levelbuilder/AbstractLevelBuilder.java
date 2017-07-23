@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.PlatformFactory;
@@ -159,7 +160,7 @@ public abstract class AbstractLevelBuilder {
 		entities.add(platform);
 	}
 
-  void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
+    void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
 		final MovingPlatform platform = platformFactory.createRectangleMovingPlatform(spriteName, size, topLeft, bottomRight, clockwise);
 		platform.startMoving();
 		entities.add(platform);
@@ -167,6 +168,10 @@ public abstract class AbstractLevelBuilder {
 
 	void pit(final String sprite, final GameObjectSize size, final Vector2 position) {
 		platformFactory.createPit(sprite, size, position);
+	}
+
+	Spike spike(final String sprite, final GameObjectSize size, final Vector2 position) {
+		return platformFactory.createSpike(sprite, size, position);
 	}
 
 	Array<Portal> portalPair(final float x1, final float y1, final float x2, final float y2, final PortalTeleportation type) {

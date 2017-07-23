@@ -12,6 +12,7 @@ import com.vertextrigger.entities.callback.PositionCallback;
 import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
 import com.vertextrigger.entities.enemy.Poker;
+import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
@@ -28,6 +29,7 @@ import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
+import static com.vertextrigger.util.GameObjectSize.SPIKE_SIZE;
 import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
 
 public class HughLevelBuilder extends AbstractLevelBuilder {
@@ -45,13 +47,13 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		AudioManager.playLevelOneMusic();
 
 		// start
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
 
 		// before poker #2
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
 
 		// pre bossfight
-		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
+		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
 
 		// end
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(9.5f), fromBottom(16.1f)), screen, magnetFlowField);
@@ -67,6 +69,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(14.95f), fromBottom(2)));
 		entities.add(poker1);
 		screen.addMortal(poker1);
+
+		createSpikes(fromLeft(2));
 
 		final Poker poker2 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(6.5f), fromBottom(6)));
 		poker2.getBody().setFixedRotation(false);
@@ -103,12 +107,9 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	protected void createMovingPlatforms() {
-		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)), new Vector2(fromLeft(5.5f),
-				fromBottom(9.3f)));
-		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(9.3f)), new Vector2(fromLeft(6.5f),
-				fromBottom(11.5f)));
-		simpleMovingPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(11.5f)), new Vector2(fromLeft(5.5f),
-				fromBottom(11.5f)));
+		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(9.3f)), new Vector2(fromLeft(5.5f), fromBottom(9.3f)));
+		simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(9.3f)), new Vector2(fromLeft(6.5f), fromBottom(11.5f)));
+		simpleMovingPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2.5f), fromBottom(11.5f)), new Vector2(fromLeft(5.5f), fromBottom(11.5f)));
 	}
 
 	@Override
@@ -124,8 +125,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		createSign("signRight", fromLeft(0.5f), fromBottom(14));
 		createSign("signExit", fromLeft(10.5f), fromBottom(16));
 		createSign("window", fromLeft(10), fromBottom(16));
-		createSpikes(fromLeft(2));
 
+		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(2)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(3.5f), fromBottom(1)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1)));
@@ -153,10 +154,9 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 	}
 
 	private void createSpikes(float startX) {
-		for (int i = 0; i < 60; i++) {
-			final Sprite spike = spriteFactory.createLevelSprite("stoneCaveSpikeBottom", SIGN_SIZE);
-			spike.setPosition(startX, fromBottom(0));
-			sprites.add(spike);
+		for (int i = 0; i < 71; i++) {
+			final Spike spike = spike("stoneCaveSpikeBottom", SPIKE_SIZE, new Vector2(startX, fromBottom(0)));
+			sprites.add(spike.getSprite());
 			startX += 0.2f;
 		}
 	}
@@ -175,7 +175,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	public Array<Portal> createPortals() {
 		final Array<Portal> portals = new Array<>();
-		portals.addAll(portalPair(fromLeft(8.4f), fromBottom(0.2f), fromLeft(10.4f), fromBottom(2.2f), MOVING_SAME_DIRECTION));
+		portals.addAll(portalPair(fromLeft(8.4f), fromBottom(0.42f), fromLeft(10.4f), fromBottom(2.2f), MOVING_SAME_DIRECTION));
 		portals.addAll(portalPair(fromLeft(13.1f), fromBottom(1.4f), fromLeft(15.3f), fromBottom(2.4f), MOVING_OPPOSITE_HORIZONTAL_DIRECTION));
 		portals.addAll(portalPair(fromLeft(6.1f), fromBottom(5.5f), fromLeft(6.1f), fromBottom(6.6f), MOVING_SAME_DIRECTION));
 		portals.addAll(portalPair(fromLeft(1), fromBottom(12), fromLeft(0.1f), fromBottom(15), MOVING_DIFFERENT_XY_AXIS_DIRECTION));
@@ -185,7 +185,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public void createPowerUps() {
-		ShieldFactory.createShield(world, new Vector2(fromLeft(2), fromBottom(0)), screen);
+		ShieldFactory.createShield(world, new Vector2(fromLeft(0.5f), fromBottom(2.4f)), screen);
 	}
 
 	@Override
