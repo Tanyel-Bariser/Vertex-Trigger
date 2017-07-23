@@ -35,9 +35,7 @@ public abstract class AbstractEntity implements Entity {
 	@Override
 	public Sprite update(final float delta, final float alpha) {
 		for (final Callback callback : callbacks) {
-			if (callback.isRunnable()) {
-				callback.run();
-			}
+			callback.run();
 		}
 
 		handleTeleportation();

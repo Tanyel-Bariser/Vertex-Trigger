@@ -16,6 +16,12 @@ public class PositionCallback extends Callback {
         this.bodyPosition = bodyPosition;
     }
 
+    public PositionCallback(final RunLimit runLimit, final Runnable runnable, final Vector2 runPosition, final Vector2 bodyPosition) {
+        super(runLimit, runnable);
+        this.runPosition = runPosition;
+        this.bodyPosition = bodyPosition;
+    }
+
     @Override
     public boolean isRunnable() {
         return bodyPosition.x > runPosition.x - 0.5f &&

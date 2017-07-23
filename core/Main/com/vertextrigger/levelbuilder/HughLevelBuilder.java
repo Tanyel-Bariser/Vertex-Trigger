@@ -1,9 +1,5 @@
 package com.vertextrigger.levelbuilder;
 
-import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
-import static com.vertextrigger.inanimate.portal.PortalTeleportation.*;
-import static com.vertextrigger.util.GameObjectSize.*;
-
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -11,14 +7,28 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.MagnetFlowField;
-import com.vertextrigger.entities.callback.*;
+import com.vertextrigger.entities.callback.DeathCallback;
+import com.vertextrigger.entities.callback.PositionCallback;
 import com.vertextrigger.entities.callback.Runnable;
-import com.vertextrigger.entities.enemy.*;
-import com.vertextrigger.factory.*;
+import com.vertextrigger.entities.enemy.Bee;
+import com.vertextrigger.entities.enemy.Poker;
+import com.vertextrigger.factory.EnemyFactory;
+import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
-import com.vertextrigger.factory.entityfactory.*;
+import com.vertextrigger.factory.entityfactory.PlayerFactory;
+import com.vertextrigger.factory.entityfactory.ShieldFactory;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
+
+import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPOSITE_HORIZONTAL_DIRECTION;
+import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
+import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
+import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
+import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
+import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
+import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
 
 public class HughLevelBuilder extends AbstractLevelBuilder {
 
@@ -27,8 +37,6 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	private final AbstractGameScreen screen;
 	private final PlatformFactory platformFactory;
-
-	private boolean madeBee;
 
 	public HughLevelBuilder(final World world, final AbstractGameScreen screen) {
 		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
@@ -71,24 +79,19 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		player.addCallbacks(new PositionCallback(new Runnable() {
 			@Override
 			public void run() {
-				if (!madeBee) {
-					final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen,
-							magnetFlowField);
-					entities.add(bee);
-					screen.addMortal(bee);
-					bee.addCallbacks(new DeathCallback(new Runnable() {
-						@Override
-						public void run() {
-							AudioManager.playPickUpSound();
-							AudioManager.playLevelOneMusic();
-							simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(
-									fromLeft(10), fromBottom(15.5f)));
-						}
+				final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen, magnetFlowField);
+				entities.add(bee);
+				screen.addMortal(bee);
+				bee.addCallbacks(new DeathCallback(new Runnable() {
+					@Override
+					public void run() {
+						AudioManager.playPickUpSound();
+						AudioManager.playLevelOneMusic();
+						simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(fromLeft(10), fromBottom(15.5f)));
+					}
 
-					}, bee));
-					madeBee = true;
-					AudioManager.playLevelTwoMusic();
-				}
+				}, bee));
+				AudioManager.playLevelTwoMusic();
 			}
 		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition()));
 	}
