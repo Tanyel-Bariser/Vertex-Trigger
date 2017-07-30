@@ -7,8 +7,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.callback.DeathCallback;
 import com.vertextrigger.entities.callback.PositionCallback;
+import com.vertextrigger.entities.callback.RepeatedDeathCallback;
 import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
 import com.vertextrigger.entities.enemy.Poker;
@@ -39,6 +41,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 	private final AbstractGameScreen screen;
 	private final PlatformFactory platformFactory;
+	private static boolean lowerDifficultyEnabled;
 
 	public HughLevelBuilder(final World world, final AbstractGameScreen screen) {
 		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
@@ -70,7 +73,9 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		entities.add(poker1);
 		screen.addMortal(poker1);
 
-		createSpikes(fromLeft(2));
+		if (!lowerDifficultyEnabled) {
+			createSpikes(fromLeft(2));
+		}
 
 		final Poker poker2 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(6.5f), fromBottom(6)));
 		poker2.getBody().setFixedRotation(false);
@@ -79,25 +84,42 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		poker2.getBody().setGravityScale(0);
 		entities.add(poker2);
 		screen.addMortal(poker2);
+		player.addCallbacks(spawnBoss(), lowerDifficulty());
+	}
 
-		player.addCallbacks(new PositionCallback(new Runnable() {
+	private RepeatedDeathCallback lowerDifficulty() {
+		return new RepeatedDeathCallback(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("CALLBACK");
+				lowerDifficultyEnabled = true;
+			}
+		}, 5);
+	}
+
+	private PositionCallback spawnBoss() {
+		return new PositionCallback(new Runnable() {
 			@Override
 			public void run() {
 				final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen, magnetFlowField);
 				entities.add(bee);
 				screen.addMortal(bee);
-				bee.addCallbacks(new DeathCallback(new Runnable() {
-					@Override
-					public void run() {
-						AudioManager.playPickUpSound();
-						AudioManager.playLevelOneMusic();
-						simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(fromLeft(10), fromBottom(15.5f)));
-					}
-
-				}, bee));
+				bee.addCallbacks(spawnVictoryPlatform(bee));
 				AudioManager.playLevelTwoMusic();
 			}
-		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition()));
+		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition());
+	}
+
+	private DeathCallback spawnVictoryPlatform(final Mortal enemy) {
+		return new DeathCallback(new Runnable() {
+            @Override
+            public void run() {
+                AudioManager.playPickUpSound();
+                AudioManager.playLevelOneMusic();
+                simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(fromLeft(10), fromBottom(15.5f)));
+            }
+
+        }, enemy);
 	}
 
 	@Override

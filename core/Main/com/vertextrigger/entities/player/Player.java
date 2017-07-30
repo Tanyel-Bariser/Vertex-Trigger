@@ -17,6 +17,7 @@ import com.vertextrigger.util.GameObjectSize;
  * Main character of the game This class manages the player's physical body & its movements & sprite animation
  */
 public class Player extends AbstractEntity implements Mortal {
+	private static int deaths = 0;
 	static final float JUMP_POWER = 110 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_FORCE = 100 * GameObjectSize.OBJECT_SIZE;
 	private final Gun gun;
@@ -35,6 +36,10 @@ public class Player extends AbstractEntity implements Mortal {
 		this.gun = gun;
 		this.steerable = steerable;
 		this.magnetBehaviour = magnetBehaviour;
+	}
+
+	public static int getDeaths() {
+		return deaths;
 	}
 
 	/**
@@ -157,6 +162,7 @@ public class Player extends AbstractEntity implements Mortal {
 	public void die() {
 		AudioManager.playPlayerKilledSound();
 		animator.playDeathAnimation(this);
+		deaths++;
 	}
 
 	@Override
