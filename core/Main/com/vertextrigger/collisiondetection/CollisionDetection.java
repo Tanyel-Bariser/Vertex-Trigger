@@ -5,6 +5,7 @@ import com.vertextrigger.ai.Magnet;
 import com.vertextrigger.entities.bullet.*;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.player.*;
+import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.inanimate.portal.*;
 
 public class CollisionDetection implements ContactListener {
@@ -123,6 +124,12 @@ public class CollisionDetection implements ContactListener {
 		final Spike spike = (Spike) getType(Spike.class, contactBodies);
 		if (playerFeet != null && spike != null) {
 			playerFeet.setDead();
+		}
+
+		// once player has stepped on a fading platform, it is dead a begins fading out
+		final FadingPlatform fadingPlatform = (FadingPlatform) getType(FadingPlatform.class, contactBodies);
+		if (playerFeet != null && fadingPlatform != null) {
+			fadingPlatform.setDead();
 		}
 		/*
 		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean isGroundContact = isGroundContact(contactBodies); boolean isBulletContact

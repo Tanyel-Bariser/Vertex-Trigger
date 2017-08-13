@@ -9,6 +9,7 @@ import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.movingplatform.RectanglePath;
 import com.vertextrigger.entities.movingplatform.SimplePath;
+import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.inanimate.StaticPlatform;
@@ -23,6 +24,11 @@ public class PlatformFactory {
 		this.world = world;
 		spriteFactory = new SpriteFactory();
 		bodyFactory = new PlatformBodyFactory();
+	}
+
+	public FadingPlatform createFadingPlatform(final String name, final GameObjectSize size, final Vector2 position) {
+		final Body body = bodyFactory.createPlatformBody(world, position, size, Friction.NORMAL);
+		return new FadingPlatform(body, size, name, world);
 	}
 
 	public MovingPlatform createSimpleMovingPlatform(final String name, final GameObjectSize size, final Vector2 pathStart, final Vector2 pathEnd) {

@@ -10,6 +10,7 @@ import com.vertextrigger.entities.MagnetFlowField;
 import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.inanimate.Ground;
@@ -152,6 +153,12 @@ public abstract class AbstractLevelBuilder {
 		final StaticPlatform platform = platformFactory.createPlatform(sprite, size, position, friction);
 		platform.setRotation(rotation);
 		sprites.add(platform.getSprite());
+	}
+
+	void fadingPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
+		final FadingPlatform fadingPlatform = platformFactory.createFadingPlatform(sprite, size, position);
+		entities.add(fadingPlatform);
+		gameScreen.addMortal(fadingPlatform);
 	}
 
 	void simpleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 start, final Vector2 end) {
