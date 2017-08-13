@@ -1,5 +1,6 @@
 package com.vertextrigger.entities.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +20,7 @@ import com.vertextrigger.util.GameObjectSize;
 public class Player extends AbstractEntity implements Mortal {
 	private static int deaths = 0;
 	static final float JUMP_POWER = 110 * (GameObjectSize.OBJECT_SIZE / 15f);
-	static final float MOVEMENT_FORCE = 100 * GameObjectSize.OBJECT_SIZE;
+	static final float MOVEMENT_FORCE = 80 * GameObjectSize.OBJECT_SIZE;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
@@ -83,14 +84,7 @@ public class Player extends AbstractEntity implements Mortal {
 	 */
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		if (isMovingLeftAndAllowIncreaseMovementSpeed() || isMovingRightAndAllowIncreaseMovementSpeed()) {
-			if (canJump) {
-				body.applyForceToCenter(movement, 0, true);
-			} else {
-				// Movement slower when in air to compensate for lack of friction with floor
-				body.applyForceToCenter(movement / 3, 0, true);
-			}
-		}
+		applyDirectionalMovement();
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		if (isShieldSet == false && shield != null) {
 			body.createFixture(shield.getFixtureDef()).setUserData(shield);
@@ -107,13 +101,45 @@ public class Player extends AbstractEntity implements Mortal {
 		return super.update(delta, alpha);
 	}
 
-	private boolean isMovingLeftAndAllowIncreaseMovementSpeed() {
-		// movement is negative when moving left
-		return movement < 0 && body.getLinearVelocity().x > movement / 5;
+	private void applyDirectionalMovement() {
+		if (isBelowSpeed(2.5f) == false) {
+			return;// fast enough
+		}
+
+		// Movement slower when in air to compensate for lack of friction with floor
+		float force = canJump ? movement : movement / 2.5f;
+
+		if (isBelowSpeed(0.8f)) {
+			force *= 0.3f;
+		} else if (isBelowSpeed(1.2f)) {
+			Gdx.app.log("Slow", "");
+			force *= 0.45f;
+		} else if (isBelowSpeed(2.2f)) {
+			Gdx.app.log("Medium", "");
+			force *= 0.6;
+		} else {
+			Gdx.app.log("Fast", "");
+		}
+
+		body.applyForceToCenter(force, 0, true);
 	}
 
-	private boolean isMovingRightAndAllowIncreaseMovementSpeed() {
-		return movement > 0 && body.getLinearVelocity().x < movement / 5;
+	private boolean isBelowSpeed(final float speed) {
+		if (isMovingLeft()) {
+			return body.getLinearVelocity().x > -speed;
+		} else if (isMovingRight()) {
+			return body.getLinearVelocity().x < speed;
+		} else {
+			return true;
+		}
+	}
+
+	private boolean isMovingLeft() {
+		return movement < 0;
+	}
+
+	private boolean isMovingRight() {
+		return 0 < movement;
 	}
 
 	public void setShield(final Shield shield) {

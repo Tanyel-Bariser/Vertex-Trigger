@@ -109,7 +109,7 @@ public abstract class AbstractGameScreen implements Screen {
 		if (Gdx.app.getType() == ApplicationType.Desktop) {
 			Gdx.input.setInputProcessor(Controller.createDesktopController(player, this));
 		} else {
-			Controller.createAndroidController(player, this, stage);
+			Controller.createAndroidSliderController(player, this, stage);
 			Gdx.input.setInputProcessor(stage);
 		}
 		physicsDebugger = new Box2DDebugRenderer();

@@ -15,8 +15,12 @@ public abstract class Controller implements InputProcessor {
 		return new DesktopController(player, screen);
 	}
 
-	public static Controller createAndroidController(final Player player, final Screen screen, final Stage stage) {
-		return new AndroidController(player, screen, stage);
+	public static Controller createAndroidSliderController(final Player player, final Screen screen, final Stage stage) {
+		return new AndroidSliderController(player, screen, stage);
+	}
+
+	public static Controller createAndroidButtonController(final Player player, final Screen screen, final Stage stage) {
+		return new AndroidButtonController(player, screen, stage);
 	}
 
 	protected Controller(final Player player, final Screen screen) {
