@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="src" path="/VertexTrigger-core"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
+	<classpathentry kind="src" path="/VertexTrigger-core"/>
+	<classpathentry kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.9.4/194b33382d6d58fad031521ba3331d926c476c9b/gdx-backend-android-1.9.4.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.9.4/c20bb066ad1fd8dba2a3fafdc3b5730d20f59768/gdx-backend-android-1.9.4-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/98a0d25c9f0637fecac6e4aacf7287aa635964f5/gdx-box2d-1.9.4.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/9af0359c12dcbdfb737d7cbf0715f303b848d13c/gdx-box2d-1.9.4-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.7.0/e74a876dbaabe28abe8160d677b0a67b61c7dfac/gdx-ai-1.7.0.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.7.0/fedc63e153ddbd33ea94c1ed379f811c6688269d/gdx-ai-1.7.0-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/4b4b7962d1bc75af0438f5c81ec1010557bc9ee5/gdx-1.9.4.jar" sourcepath="C:/Users/Tanyel/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/f0e4d245a67fc96707610a4260a325fa034c93d1/gdx-1.9.4-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
