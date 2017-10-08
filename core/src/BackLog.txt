@@ -1,3 +1,26 @@
+=== Refactor AbstractGameScreen ===
+Screen:
+- a 'dumb' class, only responsible for drawing sprites to screen
+- only draws the sprites it is given
+Level:
+- level state is initialized by levelbuilder, and updated and stored in this class as game progresses
+- hold and returns living and inanimate/background/etc entities to game loop
+GameLoop:
+- decides if entities are on screen and deserve to be rendered
+- performs render loop/alpha calculation/entity update calls etc
+
+- make sure level loaded after player death is same level as player is already on!
+
+
+
+Because the GameLoop shouldn't know about specific entities, i.e. whether or not an entity is a bullet, or mortal, etc.
+and the Screen should know what Sprite is or isn't in the Screen then...
+When the Screen render method calls the GameLoop, the GameLoop asks the Level, "what entities have you got for me?"
+The Level can decide what's still in the level by giving an Entity, i.e. bullet, to the GameLoop to find out from the
+Screen "Is this entity in the screen or not?" and when the GameLoop returns true/false to the Level, the Level can
+decide whether or not the Bullet is still in the level
+
+
 Design:
 - First design a mid-game level, to inform what we need to "teach" the user in the initial levels 
 - Paper design of level - with shield next to magnet
