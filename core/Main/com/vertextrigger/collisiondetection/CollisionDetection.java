@@ -83,10 +83,6 @@ public class CollisionDetection implements ContactListener {
 		final Portal portal = (Portal) getType(Portal.class, collidableObject);
 		final Teleportable teleportable = (Teleportable) getType(Teleportable.class, collidableObject);
 
-		if (teleportable instanceof PokerHead) {
-			return;
-		}
-
 		if ((portal != null) && (teleportable != null) && teleportable.isTeleportable()) {
 			portal.teleport(teleportable.getBody());
 		}

@@ -102,7 +102,7 @@ public class Player extends AbstractEntity implements Mortal {
 	}
 
 	private void applyDirectionalMovement() {
-		if (isBelowSpeed(2.5f) == false) {
+		if (isBelowSpeed(2.5f) == false) {// max speed
 			return;// fast enough
 		}
 

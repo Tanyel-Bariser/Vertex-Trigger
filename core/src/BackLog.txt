@@ -1,16 +1,24 @@
 === Refactor AbstractGameScreen ===
 Screen:
-- a 'dumb' class, only responsible for drawing sprites to screen
-- only draws the sprites it is given
+- knows what sprites are in the view of the camera
+- draws the sprites it is given from GameLoop
+
+LevelBuilder:
+- creates all sprites, objects and entities required at the start of the level and start music
+- creates callbacks and passes them into entities requiring them
+
 Level:
-- level state is initialized by levelbuilder, and updated and stored in this class as game progresses
-- hold and returns living and inanimate/background/etc entities to game loop
+- level object is created by levelbuilder and is given all objects and entities to store by the levelbuilder
+- updates, i.e. creates new and kills off entities as game progresses
+, e.g. by asking if entity is in screen, asking if entity is dead, call backs
+- has an update(delta, alpha) method called by GameLoop, which calls the update method on all entities
+- returns all sprites including non-entities like platforms
+- returns a list of DestroyOffScreen with method isInScreen(boolean), which Bullet implements
+- make sure level loaded after player death is same level as player is already on
+
 GameLoop:
-- decides if entities are on screen and deserve to be rendered
-- performs render loop/alpha calculation/entity update calls etc
-
-- make sure level loaded after player death is same level as player is already on!
-
+- takes an array of DestroyOffScreen and passes it to the Screen to be updated
+- performs render loop/alpha calculation to pass it to Level.update(delta, alpha)
 
 
 Because the GameLoop shouldn't know about specific entities, i.e. whether or not an entity is a bullet, or mortal, etc.

@@ -5,16 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.vertextrigger.entities.Entity;
-import com.vertextrigger.entities.MagnetFlowField;
-import com.vertextrigger.entities.enemy.Spike;
+import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.SpriteFactory;
-import com.vertextrigger.inanimate.Ground;
-import com.vertextrigger.inanimate.StaticPlatform;
+import com.vertextrigger.inanimate.*;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.inanimate.portal.PortalFactory;
 import com.vertextrigger.inanimate.portal.PortalTeleportation;
@@ -24,12 +22,9 @@ import com.vertextrigger.util.GameObjectSize;
 import static com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 
 public abstract class AbstractLevelBuilder {
+	protected static final Array EMPTY_ARRAY = new Array();
 	protected final World world;
-	protected final Array<Entity> entities;
-	protected final Array<Sprite> sprites;
-	protected AbstractGameScreen gameScreen;
 	protected Player player;
-	protected final Array<Portal> portals;
 	protected final SpriteFactory spriteFactory;
 	protected final MagnetFlowField magnetFlowField;
 	protected final PlatformFactory platformFactory;
@@ -40,9 +35,6 @@ public abstract class AbstractLevelBuilder {
 	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float containerWidth, final float containerHeight) {
 		this.world = world;
 		spriteFactory = new SpriteFactory();
-		entities = new Array<>();
-		sprites = new Array<>();
-		portals = new Array<>();
 		magnetFlowField = createMagnetFlowField();
 		platformFactory = new PlatformFactory(world);
 
@@ -54,16 +46,26 @@ public abstract class AbstractLevelBuilder {
 	 * METHODS OVERRIDDEN BY SUBCLASSES
 	 */
 
-	protected abstract void createDangerousBalls();
-	protected abstract void createEnemies(final Steerable<Vector2> target);
-	protected abstract void createGroundWalls();
+	protected abstract Array<Entity> createDangerousBalls();
+
+	protected abstract Array<Enemy> createEnemies(final Steerable<Vector2> target);
+
+	protected abstract Array<Inanimate> createGroundWalls();
+
 	public abstract MagnetFlowField createMagnetFlowField();
-	protected abstract void createMovingPlatforms();
-	public abstract Array<Portal> createPortals();
-	public abstract void createPowerUps();
-	protected abstract void createStaticPlatforms();
-	protected abstract void createTimedPlatforms();
+
+	protected abstract Array<MovingPlatform> createMovingPlatforms();
+
+	public abstract Array<Inanimate> createPortals();
+
+	public abstract Array<Inanimate> createPowerUps();
+
+	protected abstract Array<Inanimate> createStaticPlatforms();
+
+	protected abstract Array<FadingPlatform> createTimedPlatforms();
+
 	public abstract Sprite getBackground();
+
 	public abstract void resetLevelLayout();
 
 	/*
@@ -74,12 +76,21 @@ public abstract class AbstractLevelBuilder {
 	 * Invokes all methods required to build all of this level's entities & stores them in the entities container, before returning the container.
 	 */
 	public Array<Entity> buildEntities() {
-		// Create enemies then add them to the entities container
-		createEnemies(getPlayer().getSteerable());
-		// Create dangerous ball(s) then add them to the entities container
-		createDangerousBalls();
-		// Return container of all entities needed for this level
+		final Array<Entity> entities = new Array<>();
+		entities.addAll(createDangerousBalls());
+		entities.addAll(createEnemies(getPlayer().getSteerable()));
+		entities.addAll(createMovingPlatforms());
+		entities.addAll(createTimedPlatforms());
 		return entities;
+	}
+
+	public Array<Inanimate> buildInanimate() {
+		final Array<Inanimate> inanimates = new Array<>();
+		inanimates.addAll(createStaticPlatforms());
+		inanimates.addAll(createGroundWalls());
+		inanimates.addAll(createPortals());
+		inanimates.addAll(createPowerUps());
+		return inanimates;
 	}
 
 	/**
@@ -128,11 +139,11 @@ public abstract class AbstractLevelBuilder {
 		return this;
 	}
 
-	Ground createGroundWalls(int containerWidth, int containerHeight) {
+	Ground createGroundWalls(final int containerWidth, final int containerHeight) {
 		return createGroundWalls(containerWidth, containerHeight, 0);
 	}
 
-	Ground createGroundWalls(int containerWidth, int containerHeight, float pitDepth) {
+	Ground createGroundWalls(final int containerWidth, final int containerHeight, final float pitDepth) {
 		final Vector2 bottomLeft = new Vector2(-containerWidth, -containerHeight - pitDepth);
 		final Vector2 bottomRight = new Vector2(-containerWidth, containerHeight - pitDepth);
 		final Vector2 topRight = new Vector2(containerWidth, containerHeight);
@@ -141,40 +152,40 @@ public abstract class AbstractLevelBuilder {
 		return new Ground(world, new Vector2[] { topLeft, bottomLeft, bottomRight, topRight, topLeft });
 	}
 
-	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
-		staticPlatform(sprite, size, position, 0);
+	StaticPlatform staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
+		return staticPlatform(sprite, size, position, 0);
 	}
 
-	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final float rotation) {
-		staticPlatform(sprite, size, position, Friction.NORMAL, rotation);
+	StaticPlatform staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final float rotation) {
+		return staticPlatform(sprite, size, position, Friction.NORMAL, rotation);
 	}
 
-	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final Friction friction, final float rotation) {
+	StaticPlatform staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final Friction friction,
+			final float rotation) {
 		final StaticPlatform platform = platformFactory.createPlatform(sprite, size, position, friction);
 		platform.setRotation(rotation);
-		sprites.add(platform.getSprite());
+		return platform;
 	}
 
-	void fadingPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
-		final FadingPlatform fadingPlatform = platformFactory.createFadingPlatform(sprite, size, position);
-		entities.add(fadingPlatform);
-		gameScreen.addMortal(fadingPlatform);
+	FadingPlatform fadingPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
+		return platformFactory.createFadingPlatform(sprite, size, position);
 	}
 
-	void simpleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 start, final Vector2 end) {
+	MovingPlatform simpleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 start, final Vector2 end) {
 		final MovingPlatform platform = platformFactory.createSimpleMovingPlatform(spriteName, size, start, end);
 		platform.startMoving();
-		entities.add(platform);
+		return platform;
 	}
 
-    void rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight, final boolean clockwise) {
+	MovingPlatform rectangleMovingPlatform(final String spriteName, final GameObjectSize size, final Vector2 topLeft, final Vector2 bottomRight,
+			final boolean clockwise) {
 		final MovingPlatform platform = platformFactory.createRectangleMovingPlatform(spriteName, size, topLeft, bottomRight, clockwise);
 		platform.startMoving();
-		entities.add(platform);
+		return platform;
 	}
 
-	void pit(final String sprite, final GameObjectSize size, final Vector2 position) {
-		platformFactory.createPit(sprite, size, position);
+	Pit pit(final String sprite, final GameObjectSize size, final Vector2 position) {
+		return platformFactory.createPit(sprite, size, position);
 	}
 
 	Spike spike(final String sprite, final GameObjectSize size, final Vector2 position) {

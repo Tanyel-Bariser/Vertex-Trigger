@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.entities.*;
 
-public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enemy, Mortal {
+public abstract class AbstractFlyingEnemy extends AbstractEntity implements Enemy {
 	// STEERING FIELDS
 	private final SteeringAcceleration<Vector2> faceSteeringOutput;
 	private final SteeringAcceleration<Vector2> wanderSteeringOutput;

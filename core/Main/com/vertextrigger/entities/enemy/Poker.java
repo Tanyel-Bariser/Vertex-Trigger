@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
 
-public class Poker extends AbstractEntity implements Enemy, Mortal {
+public class Poker extends AbstractEntity implements Enemy {
 	public Poker(final Body body, final AnimationSet animationSet) {
 		super(body, new AnimatorImpl(animationSet));
 	}
@@ -25,11 +25,7 @@ public class Poker extends AbstractEntity implements Enemy, Mortal {
 	public void setUserData() {
 		body.setUserData(this);
 		for (final Fixture fix : body.getFixtureList()) {
-			if (fix.getUserData() instanceof PokerHead) {
-				((PokerHead) fix.getUserData()).setPoker(this);
-			} else {
-				fix.setUserData(this);
-			}
+			fix.setUserData(this);
 		}
 	}
 

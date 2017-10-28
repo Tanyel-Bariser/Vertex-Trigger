@@ -1,9 +1,9 @@
 package com.vertextrigger.entities.enemy;
 
-import com.vertextrigger.collisiondetection.Collidable;
+import com.vertextrigger.entities.Mortal;
 
-public interface Enemy extends Collidable {
+public interface Enemy extends Hostile, Mortal {
 
+	@Override
 	void setDead();
-
 }
