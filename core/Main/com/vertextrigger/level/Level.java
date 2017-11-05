@@ -1,18 +1,57 @@
 package com.vertextrigger.level;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.vertextrigger.collisiondetection.CollisionDetection;
 import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.inanimate.Inanimate;
+import com.vertextrigger.main.VertexTrigger;
+import com.vertextrigger.screen.AbstractGameScreen;
 
+import lombok.Getter;
+
+@Getter
 public abstract class Level {
 
-	protected final Array<Entity> entities = new Array<>();
+	protected World world;
+	protected Player player;
+	protected Array<Entity> entities;
+	protected Array<Inanimate> inanimate;
+	protected LevelSize levelSize;
 
-	protected abstract void onLoad();
+	public abstract void onLoad();
+	public abstract void onUnload();
+	public abstract void onStart();
+	public abstract AbstractGameScreen getScreen(final VertexTrigger vertexTrigger);
+	public abstract void reset();
+	public abstract World getWorld();
 
-	protected abstract void onUnload();
+	// to add entities mid-level e.g. bullets or generated enemies/powerups
+	public void addEntity(final Entity entity) {
+		entities.add(entity);
+	}
 
-	protected abstract Array<Sprite> getBackgroundSprites();
+	public float getGroundLevel() {
+		return -levelSize.getContainerHeight();
+	}
 
-	protected abstract Array<Entity> getEntities();
+	public float getCeilingLevel() {
+		return levelSize.getContainerHeight();
+	}
+
+	public float getLeftBorderOfLevel() {
+		return -levelSize.getContainerWidth();
+	}
+
+	public float getRightBorderOfLevel() {
+		return levelSize.getContainerWidth();
+	}
+
+	static World createWorld(final Vector2 GRAVITY) {
+		final World world = new World(GRAVITY, true);
+		world.setContactListener(new CollisionDetection());
+		return world;
+	}
 }

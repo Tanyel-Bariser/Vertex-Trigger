@@ -5,7 +5,7 @@ import static com.vertextrigger.util.GameObjectSize.POKER_BODY_SIZE;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.vertextrigger.entities.enemy.PokerHead;
+//import com.vertextrigger.entities.enemy.PokerHead;
 import com.vertextrigger.util.GameObjectSize;
 
 public class PokerBodyFactory extends AbstractBodyFactory {
@@ -21,10 +21,10 @@ public class PokerBodyFactory extends AbstractBodyFactory {
 		final CircleShape head = new CircleShape();
 		head.setPosition(new Vector2(0f, 1.5f * GameObjectSize.OBJECT_SIZE));
 		head.setRadius(0.6f * GameObjectSize.OBJECT_SIZE);
-		final FixtureDef fixtureDef = createFixtureDefinition();
-		fixtureDef.shape = head;
-		final Fixture fixture = body.createFixture(fixtureDef);
-		fixture.setUserData(new PokerHead());
+//		final FixtureDef fixtureDef = createFixtureDefinition();
+//		fixtureDef.shape = head;
+//		final Fixture fixture = body.createFixture(fixtureDef);
+//		fixture.setUserData(new PokerHead());
 	}
 
 	@Override

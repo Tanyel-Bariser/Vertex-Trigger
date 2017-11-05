@@ -4,9 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.collisiondetection.Collidable;
+import com.vertextrigger.inanimate.Inanimate;
 import com.vertextrigger.util.GameObjectSize;
 
-public class Portal implements Collidable {
+public class Portal implements Collidable, Inanimate {
 	private final Body body;
 	private final Sprite sprite;
 	private final PortalTeleportation teleportation;

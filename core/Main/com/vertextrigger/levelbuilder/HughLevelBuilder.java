@@ -4,8 +4,6 @@ import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.*;
 import static com.vertextrigger.util.GameObjectSize.*;
 
-import java.util.Collections;
-
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -13,45 +11,48 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.*;
-import com.vertextrigger.entities.callback.*;
-import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.*;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.factory.*;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.factory.entityfactory.*;
+import com.vertextrigger.inanimate.Ground;
+import com.vertextrigger.inanimate.Inanimate;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
+import com.vertextrigger.level.HughLevel;
+import com.vertextrigger.level.Level;
+import com.vertextrigger.level.LevelSize;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class HughLevelBuilder extends AbstractLevelBuilder {
 
-	private static final int CONTAINER_WIDTH = 8;
 	private static final int CONTAINER_HEIGHT = 9;
+	private static final int CONTAINER_WIDTH = 8;
 
-	private final AbstractGameScreen screen;
-	private final PlatformFactory platformFactory;
 	private static boolean lowerDifficultyEnabled;
 
-	public HughLevelBuilder(final World world, final AbstractGameScreen screen) {
-		super(world, screen, CONTAINER_WIDTH, CONTAINER_HEIGHT);
-		this.screen = screen;
-		platformFactory = new PlatformFactory(world);
+	public HughLevelBuilder(final Level level) {
+		super(level, CONTAINER_HEIGHT, CONTAINER_WIDTH);
 		AudioManager.playLevelOneMusic();
 
-		// start
-		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+		//player.addCallbacks(spawnBoss(), lowerDifficulty());
+	}
 
+	@Override
+	protected Vector2 playerStartPosition() {
 		// before poker #2
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
+		// return new Vector2(fromLeft(8), fromBottom(5.6f));
 
 		// pre bossfight
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
+		// return new Vector2(fromLeft(3f), fromBottom(13f));
 
 		// end
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(9.5f), fromBottom(16.1f)), screen, magnetFlowField);
+		// return new Vector2(fromLeft(9.5f), fromBottom(16.1f);
 
-		player.addCallbacks(spawnBoss(), lowerDifficulty());
+		// start
+		return new Vector2(fromLeft(1), fromBottom(0));
 	}
 
 	@Override
@@ -62,14 +63,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 	@Override
 	protected Array<Enemy> createEnemies(final Steerable<Vector2> target) {
 		final Array<Enemy> enemies = new Array<>();
-		final Poker poker1 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(14.95f), fromBottom(2)));
+		final Poker poker1 = EnemyFactory.createPokerEnemy(level.getWorld(), new Vector2(fromLeft(14.95f), fromBottom(2)));
 		enemies.add(poker1);
 
-		if (!lowerDifficultyEnabled) {
-			createSpikes(fromLeft(2));
-		}
-
-		final Poker poker2 = EnemyFactory.createPokerEnemy(world, new Vector2(fromLeft(6.5f), fromBottom(6)));
+		final Poker poker2 = EnemyFactory.createPokerEnemy(level.getWorld(), new Vector2(fromLeft(6.5f), fromBottom(6)));
 		poker2.getBody().setFixedRotation(false);
 		poker2.getBody().setTransform(new Vector2(fromLeft(6.5f), fromBottom(5.6f)), 180 * degreesToRadians);
 		poker2.getBody().setFixedRotation(true);
@@ -78,45 +75,45 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		return enemies;
 	}
 
-	private RepeatedDeathCallback lowerDifficulty() {
-		return new RepeatedDeathCallback(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("CALLBACK");
-				lowerDifficultyEnabled = true;
-			}
-		}, 5);
-	}
-
-	private PositionCallback spawnBoss() {
-		return new PositionCallback(new Runnable() {
-			@Override
-			public void run() {
-				final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen,
-						magnetFlowField);
-				mortals.add(bee);
-				bee.addCallbacks(spawnVictoryPlatform(bee));
-				AudioManager.playLevelTwoMusic();
-			}
-		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition());
-	}
-
-	private DeathCallback spawnVictoryPlatform(final Mortal enemy) {
-		return new DeathCallback(new Runnable() {
-			@Override
-			public void run() {
-				AudioManager.playPickUpSound();
-				AudioManager.playLevelOneMusic();
-				simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(fromLeft(10),
-						fromBottom(15.5f)));
-			}
-
-		}, enemy);
-	}
+//	private RepeatedDeathCallback lowerDifficulty() {
+//		return new RepeatedDeathCallback(new Runnable() {
+//			@Override
+//			public void run() {
+//				System.out.println("CALLBACK");
+//				lowerDifficultyEnabled = true;
+//			}
+//		}, 5);
+//	}
+//
+//	private PositionCallback spawnBoss() {
+//		return new PositionCallback(new Runnable() {
+//			@Override
+//			public void run() {
+//				final Bee bee = EnemyFactory.createBeeEnemy(world, new Vector2(fromLeft(2), fromBottom(15)), player.getSteerable(), screen,
+//						magnetFlowField);
+//				mortals.add(bee);
+//				bee.addCallbacks(spawnVictoryPlatform(bee));
+//				AudioManager.playLevelTwoMusic();
+//			}
+//		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition());
+//	}
+//
+//	private DeathCallback spawnVictoryPlatform(final Mortal enemy) {
+//		return new DeathCallback(new Runnable() {
+//			@Override
+//			public void run() {
+//				AudioManager.playPickUpSound();
+//				AudioManager.playLevelOneMusic();
+//				simpleMovingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(15.5f)), new Vector2(fromLeft(10),
+//						fromBottom(15.5f)));
+//			}
+//
+//		}, enemy);
+//	}
 
 	@Override
 	protected Array<Entity> createDangerousBalls() {
-		return EMPTY_ARRAY;
+		return new Array<>();
 	}
 
 	@Override
@@ -139,57 +136,67 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	protected void createStaticPlatforms() {
-		createSign("signRight", fromLeft(0), fromBottom(0));
-		createSign("signLeft", fromLeft(15.03f), fromBottom(2.75f));
-		createSign("signLeft", fromLeft(6.5f), fromBottom(6));
-		createSign("signRight", fromLeft(0.5f), fromBottom(14));
-		createSign("signExit", fromLeft(10.5f), fromBottom(16));
-		createSign("window", fromLeft(10), fromBottom(16));
+	protected Array<StaticPlatform> createStaticPlatforms() {
+		final Array<StaticPlatform> staticPlatforms = new Array<>();
+		staticPlatforms.add(createSign("signRight", fromLeft(0), fromBottom(0)));
+		staticPlatforms.add(createSign("signLeft", fromLeft(15.03f), fromBottom(2.75f)));
+		staticPlatforms.add(createSign("signLeft", fromLeft(6.5f), fromBottom(6)));
+		staticPlatforms.add(createSign("signRight", fromLeft(0.5f), fromBottom(14)));
+		staticPlatforms.add(createSign("signExit", fromLeft(10.5f), fromBottom(16)));
+		staticPlatforms.add(createSign("window", fromLeft(10), fromBottom(16)));
 
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(2)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(10.5f), fromBottom(1)));
-		staticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(12.5f), fromBottom(1)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(15), fromBottom(2)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(13), fromBottom(3)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(11), fromBottom(3.5f)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(8), fromBottom(4)));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(2))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(10.5f), fromBottom(1))));
+		staticPlatforms.add(staticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(12.5f), fromBottom(1))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(15), fromBottom(2))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(13), fromBottom(3))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(11), fromBottom(3.5f))));
+		staticPlatforms.add(staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(8), fromBottom(4))));
 
-		staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(4.3f)), Friction.NONE, -45);
-		staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(6)), Friction.SNOW, 0);
-		staticPlatform("snowMid", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(5.3f)), Friction.SNOW, 0);
-		staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(5.3f)), Friction.SNOW, 0);
+		staticPlatforms.add(staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(4.3f)), Friction.NONE, -45));
+		staticPlatforms.add(staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(6.5f), fromBottom(6)), Friction.SNOW, 0));
+		staticPlatforms.add(staticPlatform("snowMid", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(5), fromBottom(5.3f)), Friction.SNOW, 0));
+		staticPlatforms.add(staticPlatform("snowMid", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(5.3f)), Friction.SNOW, 0));
 
-		staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1), fromBottom(6.3f)));
-		staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(7.3f)));
-		staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(8.3f)));
+		staticPlatforms.add(staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1), fromBottom(6.3f))));
+		staticPlatforms.add(staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(7.3f))));
+		staticPlatforms.add(staticPlatform("snowCenter", TINY_PLATFORM_SIZE, new Vector2(fromLeft(2), fromBottom(8.3f))));
 
-		staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(14)), Friction.VERY_STICKY, 0);
-		staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(2.25f), fromBottom(14)), Friction.VERY_STICKY, 0);
-		staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(4), fromBottom(14)), Friction.VERY_STICKY, 0);
+		staticPlatforms.add(staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(14)), Friction.VERY_STICKY, 0));
+		staticPlatforms.add(staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(2.25f), fromBottom(14)), Friction.VERY_STICKY, 0));
+		staticPlatforms.add(staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(4), fromBottom(14)), Friction.VERY_STICKY, 0));
 
-		staticPlatform("snowCenter", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(10), fromBottom(16)));
+		staticPlatforms.add(staticPlatform("snowCenter", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(10), fromBottom(16))));
+
+		if (!lowerDifficultyEnabled) {
+			staticPlatforms.addAll(createSpikes(fromLeft(2)));
+		}
+
+		return staticPlatforms;
 	}
 
-	private void createSpikes(float startX) {
+	private Array<Spike> createSpikes(float startX) {
+		final Array<Spike> spikes = new Array<>();
 		for (int i = 0; i < 71; i++) {
 			final Spike spike = spike("stoneCaveSpikeBottom", SPIKE_SIZE, new Vector2(startX, fromBottom(0)));
-			sprites.add(spike.getSprite());
+			spikes.add(spike);
 			startX += 0.2f;
 		}
+		return spikes;
 	}
 
-	private void createSign(final String sprite, final float x, final float y) {
-		final Sprite signRight = spriteFactory.createLevelSprite(sprite, SIGN_SIZE);
-		signRight.setPosition(x, y);
-		sprites.add(signRight);
+	private StaticPlatform createSign(final String sprite, final float x, final float y) {
+		//final Sprite signRight = spriteFactory.createLevelSprite(sprite, SIGN_SIZE);
+		//signRight.setPosition(x, y);
+		return staticPlatform(sprite, SIGN_SIZE, new Vector2(x, y));
+		//return new StaticPlatform(signRight, null);
 	}
 
 	@Override
-	protected void createGroundWalls() {
-		super.createGroundWalls(CONTAINER_WIDTH, CONTAINER_HEIGHT);
+	protected Ground createGroundWalls() {
+		return super.createGroundWalls(CONTAINER_WIDTH, CONTAINER_HEIGHT);
 	}
 
 	@Override
@@ -204,8 +211,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 	}
 
 	@Override
-	public void createPowerUps() {
-		ShieldFactory.createShield(world, new Vector2(fromLeft(0.5f), fromBottom(2.4f)), screen);
+	public Array<Entity> createPowerUps() {
+		final Array<Entity> powerups = new Array<>();
+		powerups.add(ShieldFactory.createShield(level, new Vector2(fromLeft(0.5f), fromBottom(2.4f))));
+		return powerups;
 	}
 
 	@Override

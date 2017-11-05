@@ -6,17 +6,18 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
+import com.vertextrigger.level.Level;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class Gun {
 	private static final float SHOT_POWER = 0.002f;
-	private final AbstractGameScreen gameScreen;
+	private final Level level;
 	private final BulletFactory bulletFactory;
 	private boolean canShoot = true;
 	private boolean isPlayerShielded = false;
 
-	public Gun(final AbstractGameScreen gameScreen, final BulletFactory bulletFactory) {
-		this.gameScreen = gameScreen;
+	public Gun(final Level level, final BulletFactory bulletFactory) {
+		this.level = level;
 		this.bulletFactory = bulletFactory;
 	}
 
@@ -35,7 +36,7 @@ public class Gun {
 
 			shootBullet(bullet, gunPointingLeft);
 			AudioManager.playShootSound();
-			gameScreen.addEntity(bullet);
+			level.addEntity(bullet);
 			canShoot = false;
 
 			Timer.schedule(new Task() {

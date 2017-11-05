@@ -12,16 +12,16 @@ import com.vertextrigger.controller.Controller;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.entities.player.Player;
-import com.vertextrigger.factory.GameScreenFactory;
-import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
+//import com.vertextrigger.factory.GameScreenFactory;
+import com.vertextrigger.inanimate.Inanimate;
+import com.vertextrigger.level.Level;
 import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.util.*;
 
-public abstract class AbstractGameScreen implements Screen {
+public class AbstractGameScreen implements Screen {
 	private static final float baseGravity = -9.81f;
 	private Sprite background;
 	protected Player player;
-	protected World world;
 	protected final Vector2 GRAVITY = new Vector2(0, baseGravity);
 	private final static Array<Bullet> bullets = new Array<>();
 	private static float phoneWidth = 768;
@@ -30,7 +30,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private static float adjustedPhoneWidth = WIDTH / phoneWidth;
 	private static final float ZOOM = (18 / GameObjectSize.OBJECT_SIZE) * adjustedPhoneWidth;// Should be level specific
 	private final VertexTrigger vertexTrigger;
-	private AbstractLevelBuilder levelBuilder;
+	private Level level;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private final float approxFPS = 60.0f;
@@ -42,18 +42,12 @@ public abstract class AbstractGameScreen implements Screen {
 	private Array<Sprite> entitySprites;
 	private Box2DDebugRenderer physicsDebugger;
 	private Array<Entity> entities;
-	private Array<Sprite> backgroundSprites;
+	private Array<Sprite> backgroundSprites = new Array<>();
 	private State state = State.RUNNING;
 	private Stage stage;
 	private static final float roomForThumbs;
 	private static final float maxDelta = 0.05f;
 	private final Array<Sprite> visibleSprites = new Array<Sprite>();
-
-	protected abstract void initialiseAssets();
-
-	protected abstract void disposeOfAssets();
-
-	protected abstract AbstractLevelBuilder createLevelBuilder();
 
 	static {
 		if (Gdx.app.getType() == ApplicationType.Android) {
@@ -63,8 +57,9 @@ public abstract class AbstractGameScreen implements Screen {
 		}
 	}
 
-	public AbstractGameScreen(final VertexTrigger vertexTrigger) {
+	public AbstractGameScreen(final VertexTrigger vertexTrigger, final Level level) {
 		this.vertexTrigger = vertexTrigger;
+		this.level = level;
 	}
 
 	/**
@@ -76,8 +71,8 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-		initialiseAssets();
-		initializeLevel();
+		level.onLoad();
+		startLevel();
 	}
 
 	/**
@@ -94,9 +89,9 @@ public abstract class AbstractGameScreen implements Screen {
 
 	// TODO refactor this as it is too long and very dependent on statement order
 	// TODO e.g. setUpLevel cannot be moved, not can setting the input processor
-	private void initializeLevel() {
-		levelBuilder = createLevelBuilder();
-		player = levelBuilder.getPlayer();
+	private void startLevel() {
+		level.onStart();
+		player = level.getPlayer();
 		mortalBeings = new Array<>();
 		deadMortals = new Array<>();
 		entitySprites = new Array<>();
@@ -113,14 +108,22 @@ public abstract class AbstractGameScreen implements Screen {
 			Gdx.input.setInputProcessor(stage);
 		}
 		physicsDebugger = new Box2DDebugRenderer();
-		addMortal(player);
+
+		for (Entity entity : entities) {
+			if (entity instanceof Mortal) {
+				addMortal((Mortal) entity);
+			}
+		}
 	}
 
 	private void setUpLevel() {
-		levelBuilder.setGameScreen(this);
-		// background = levelBuilder.getBackground();
-		entities = levelBuilder.buildEntities();
-		backgroundSprites = levelBuilder.buildLevelLayout();
+		//level.setGameScreen(this);
+		// background = level.getBackground();
+		entities = level.getEntities();
+		final Array<Inanimate> inanimates = level.getInanimate();
+		for (Inanimate inanimate : inanimates) {
+			backgroundSprites.add(inanimate.getSprite());
+		}
 	}
 
 	public static void addBullet(final Bullet bullet) {
@@ -161,7 +164,7 @@ public abstract class AbstractGameScreen implements Screen {
 			}
 			while (acc >= TIMESTEP) {
 				cachePreviousEntityPositions();
-				world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+				level.getWorld().step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 				acc -= TIMESTEP;
 			}
 
@@ -174,7 +177,7 @@ public abstract class AbstractGameScreen implements Screen {
 			if (isInScreen(bullet.getSprite()) == false || bullet.isBulletDestroyed() || player.isDead() /* || bullet.isTooSlow() */) {
 				bullets.removeValue(bullet, true);
 				entities.removeValue(bullet, true);
-				world.destroyBody(bullet.getBody());
+				level.getWorld().destroyBody(bullet.getBody());
 			}
 		}
 
@@ -209,11 +212,13 @@ public abstract class AbstractGameScreen implements Screen {
 					mortalBeings.removeValue(mortal, true);
 					entities.removeValue(mortal, true);
 					deadMortals.removeValue(mortal, true);
-					world.destroyBody(mortal.getBody());
 					if (mortal instanceof Player) {
-						world.dispose();
-						// vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
-						vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
+						level.getWorld().dispose();
+						System.out.println("PLAYER IS DEAD");
+						vertexTrigger.resetLevel();
+					}
+					else {
+						level.getWorld().destroyBody(mortal.getBody());
 					}
 				}
 			}
@@ -270,10 +275,10 @@ public abstract class AbstractGameScreen implements Screen {
 
 	private void updateCameraPositionX() {
 		final float playerX = player.getBody().getPosition().x;
-		if (playerX < (levelBuilder.getLeftBorderOfLevel() + (camera.viewportWidth / 2))) {
-			camera.position.x = levelBuilder.getLeftBorderOfLevel() + (camera.viewportWidth / 2);
-		} else if (playerX > (levelBuilder.getRightBorderOfLevel() - (camera.viewportWidth / 2))) {
-			camera.position.x = levelBuilder.getRightBorderOfLevel() - (camera.viewportWidth / 2);
+		if (playerX < (level.getLeftBorderOfLevel() + (camera.viewportWidth / 2))) {
+			camera.position.x = level.getLeftBorderOfLevel() + (camera.viewportWidth / 2);
+		} else if (playerX > (level.getRightBorderOfLevel() - (camera.viewportWidth / 2))) {
+			camera.position.x = level.getRightBorderOfLevel() - (camera.viewportWidth / 2);
 		} else {
 			camera.position.x = playerX;
 		}
@@ -281,10 +286,10 @@ public abstract class AbstractGameScreen implements Screen {
 
 	private void updateCameraPositionY() {
 		final float playerY = player.getBody().getPosition().y;
-		if (playerY < ((levelBuilder.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs)) {
-			camera.position.y = (levelBuilder.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs;
-		} else if (playerY > (levelBuilder.getCeilingLevel() - (camera.viewportHeight / 2))) {
-			camera.position.y = levelBuilder.getCeilingLevel() - (camera.viewportHeight / 2);
+		if (playerY < ((level.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs)) {
+			camera.position.y = (level.getGroundLevel() + (camera.viewportHeight / 2)) - roomForThumbs;
+		} else if (playerY > (level.getCeilingLevel() - (camera.viewportHeight / 2))) {
+			camera.position.y = level.getCeilingLevel() - (camera.viewportHeight / 2);
 		} else {
 			camera.position.y = playerY;
 		}
@@ -327,7 +332,8 @@ public abstract class AbstractGameScreen implements Screen {
 	 * it only resets their initial positions
 	 */
 	public void resetLevel() {
-		levelBuilder.resetLevelLayout();
+		//level.reset();
+		level.getScreen(this.vertexTrigger);
 	}
 
 	/**
@@ -351,6 +357,6 @@ public abstract class AbstractGameScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		disposeOfAssets();
+		level.onUnload();
 	}
 }
