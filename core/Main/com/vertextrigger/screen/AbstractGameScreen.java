@@ -1,22 +1,30 @@
 package com.vertextrigger.screen;
 
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.controller.Controller;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.entities.player.Player;
-//import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.inanimate.Inanimate;
 import com.vertextrigger.level.Level;
+import com.vertextrigger.main.GameLoop;
 import com.vertextrigger.main.VertexTrigger;
-import com.vertextrigger.util.*;
+import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.util.State;
+
+//import com.vertextrigger.factory.GameScreenFactory;
 
 public class AbstractGameScreen implements Screen {
 	private static final float baseGravity = -9.81f;
@@ -57,9 +65,12 @@ public class AbstractGameScreen implements Screen {
 		}
 	}
 
+	private GameLoop gameLoop;
+
 	public AbstractGameScreen(final VertexTrigger vertexTrigger, final Level level) {
 		this.vertexTrigger = vertexTrigger;
 		this.level = level;
+		this.gameLoop = new GameLoop(this);
 	}
 
 	/**
@@ -153,23 +164,8 @@ public class AbstractGameScreen implements Screen {
 
 	@Override
 	public void render(final float delta) {
-		// fpsLogger.log();
 		clearScreen();
 		if (state == State.RUNNING) {
-			// limitToMax30FPS();
-			if (delta < maxDelta) {
-				acc += delta;
-			} else {
-				acc += maxDelta;
-			}
-			while (acc >= TIMESTEP) {
-				cachePreviousEntityPositions();
-				level.getWorld().step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
-				acc -= TIMESTEP;
-			}
-
-			final float alpha = acc / TIMESTEP;
-			updateEntities(delta, alpha);
 			updateCamera();
 		}
 
@@ -181,16 +177,18 @@ public class AbstractGameScreen implements Screen {
 			}
 		}
 
-		drawToScreen(delta, getVisibleSprites());
+		drawToScreen(delta, gameLoop.getSpritesToRender(delta, level));
 		stage.draw();
 		// physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 
-	private void cachePreviousEntityPositions() {
-		for (final Entity entity : entities) {
-			entity.cachePosition();
-		}
+	public boolean isUpdatable(final Entity entity) {
+		// the problem with this flow is that Level is asking for updatable entities BEFORE any updating has been done.
+		// so first time time round pretty much nothing will be updatable as nothing is in screen as it hasn't been updated yet
+
+		// also entity does not have a way to get sprite in order to call this#isOnScreen
+		return true;
 	}
 
 	private void clearScreen() {
@@ -295,7 +293,7 @@ public class AbstractGameScreen implements Screen {
 		}
 	}
 
-	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
+	private void  drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		// background.draw(batch);

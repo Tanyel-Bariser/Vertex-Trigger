@@ -2,8 +2,11 @@ package com.vertextrigger.level;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.entities.Entity;
 import com.vertextrigger.levelbuilder.HughLevelBuilder;
+import com.vertextrigger.main.GameLoop;
 import com.vertextrigger.main.VertexTrigger;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -34,6 +37,22 @@ public class HughLevel extends Level {
 
 		// todo remove this line
 		AudioManager.onPause();
+	}
+
+	@Override
+	public Array<Entity> getEntitiesForUpdate(final GameLoop gameLoop) {
+		final Array<Entity> updatable = new Array<>();
+		for (final Entity entity : this.entities) {
+			if (gameLoop.isUpdatable(entity)) {
+				updatable.add(entity);
+			}
+		}
+		return updatable;
+	}
+
+	@Override
+	public void addEntity(Entity entity) {
+		this.entities.add(entity);
 	}
 
 	@Override

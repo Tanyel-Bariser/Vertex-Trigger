@@ -1,3 +1,40 @@
+REFACTOR STATUS
+=======================================================
+Level interface
+HughLevel implementation
+
+GameLoop class
+AbstractGameScreen still exists
+
+LevelBuilder class
+
+At the last commit it works but game seems a bit choppy
+Big downside with this commit is that when the Level asks for entities still in the level (asks GameLoop which asks Screen),
+we return true for every one. This is because the Screen#isInScreen method takes a Sprite and there is no good way (after investigation)
+to get the Sprite from an Entity without updating it (and therefore making the question 'should we update this entity?' a moot one)
+
+Also for some reason needed to manualkly set sprite position in Gun#shoot otherwise it would not get drawn as it'd be offscreen from its
+creation time and therefore removed from entities in Screen
+
+This needs a rethink cos even if we did get Sprite from Entity the order is wrong (this has been tested by adding a getSprite
+method to Entity which uses the cached Sprite from the last update). It doesn't work cos the first time round the entity has not been
+updated yet and so there is no cached sprite. Only other way to get Sprite is from the Animator but some entities use the NullAnimator.
+
+I am of the opinion this refactor should be scrapped and split into smaller chunks.
+
+These chunks would actually be refactors when in fact the scope of the task below is more like a rewrite.
+Here is Joel Spolsky on why a rewrite can be a terrible thing https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/
+
+Essentially
+"Old code has been used. It has been tested. Lots of bugs have been found, and they’ve been fixed."
+and
+Examples of various big companies like Netscape doing a rewrite which delayed the app getting to market and had a negative impact on business
+
+I think we should prioritize getting to release stage and actually getting a game out there. I have spent 3 consecutive Sundays on this and
+ti has not become any easier. Would appreciate your thoughts Tanyel.
+=======================================================
+
+
 === Refactor AbstractGameScreen ===
 Screen:
 - knows what sprites are in the view of the camera

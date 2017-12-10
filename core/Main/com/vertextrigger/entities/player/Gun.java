@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.vertextrigger.assets.AudioManager;
+import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.level.Level;
@@ -33,6 +34,7 @@ public class Gun {
 			} else {
 				bullet.setPosition(new Vector2(position.x + getShootOffsetDistanceX(), position.y + getShootOffsetDistanceY()));
 			}
+			bullet.getSprite().setPosition(position.x, position.y);
 
 			shootBullet(bullet, gunPointingLeft);
 			AudioManager.playShootSound();
