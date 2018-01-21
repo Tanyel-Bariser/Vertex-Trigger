@@ -11,6 +11,7 @@ import com.vertextrigger.assets.AudioManager;
 import com.vertextrigger.entities.AbstractEntity;
 import com.vertextrigger.entities.Animator;
 import com.vertextrigger.entities.Mortal;
+import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
 /**
@@ -103,9 +104,12 @@ public class Player extends AbstractEntity implements Mortal {
 
 	private static final float SPEED_LIMIT = 2.5f;
 
-	private void move(final float delta) {
+	private void move(float delta) {
 		if (isBelowSpeed(SPEED_LIMIT) == false) {
 			return;
+		}
+		if (delta >= AbstractGameScreen.maxDelta) {
+			delta = AbstractGameScreen.maxDelta;
 		}
 
 		if (canJump) {
@@ -125,6 +129,9 @@ public class Player extends AbstractEntity implements Mortal {
 		}
 
 		force *= 20 * delta;
+		if (isShieldSet) {
+			force *= 1.2f;
+		}
 
 		if (isMovingRight() || isMovingLeft()) {
 			body.applyForceToCenter(force, 0, true);
@@ -138,8 +145,10 @@ public class Player extends AbstractEntity implements Mortal {
 		} else if (isMovingLeft()) {
 			inAirMovement = -MOVEMENT_FORCE * 7 * delta;
 		}
+		if (isShieldSet) {
+			force *= 1.2f;
+		}
 		body.applyForceToCenter(inAirMovement, 0, true);
-		return;
 	}
 
 	private boolean isBelowSpeed(final float speed) {

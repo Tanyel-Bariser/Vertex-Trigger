@@ -46,7 +46,7 @@ public abstract class AbstractGameScreen implements Screen {
 	private State state = State.RUNNING;
 	private Stage stage;
 	private static final float roomForThumbs;
-	private static final float maxDelta = 0.05f;
+	public static final float maxDelta = 0.05f;
 	private final Array<Sprite> visibleSprites = new Array<Sprite>();
 
 	protected abstract void initialiseAssets();
