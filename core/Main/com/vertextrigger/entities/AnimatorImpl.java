@@ -29,8 +29,8 @@ public class AnimatorImpl implements Animator {
 
 	@Override
 	public void setHorizontalMovement(final float horizontalMovement) {
-		final float leftMovementThreshold = -0.3f;
-		final float rightMovementThreshold = 0.3f;
+		final float leftMovementThreshold = -0.1f;
+		final float rightMovementThreshold = 0.1f;
 		if (horizontalMovement < leftMovementThreshold && entity.isVolitionallyMoving()) {
 			movingLeft = true;
 		} else if (horizontalMovement > rightMovementThreshold && entity.isVolitionallyMoving()) {

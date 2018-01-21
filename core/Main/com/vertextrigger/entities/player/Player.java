@@ -1,6 +1,5 @@
 package com.vertextrigger.entities.player;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -21,10 +20,11 @@ public class Player extends AbstractEntity implements Mortal {
 	private static int deaths = 0;
 	static final float JUMP_POWER = 110 * (GameObjectSize.OBJECT_SIZE / 15f);
 	static final float MOVEMENT_FORCE = 80 * GameObjectSize.OBJECT_SIZE;
+	private float force;
 	private final Gun gun;
 	private final Vector2 initialPosition;
 	private boolean canJump = false;
-	private float movement = 0;
+	private volatile float movement = 0;
 	private final SteerableBody steerable;
 	private Shield shield;
 	private boolean isShieldSet = false;
@@ -84,7 +84,7 @@ public class Player extends AbstractEntity implements Mortal {
 	 */
 	@Override
 	public Sprite update(final float delta, final float alpha) {
-		applyDirectionalMovement();
+		move(delta);
 		animator.setHorizontalMovement(body.getLinearVelocity().x);
 		if (isShieldSet == false && shield != null) {
 			body.createFixture(shield.getFixtureDef()).setUserData(shield);
@@ -101,27 +101,45 @@ public class Player extends AbstractEntity implements Mortal {
 		return super.update(delta, alpha);
 	}
 
-	private void applyDirectionalMovement() {
-		if (isBelowSpeed(2.5f) == false) {
-			return;// fast enough
+	private static final float SPEED_LIMIT = 2.5f;
+
+	private void move(final float delta) {
+		if (isBelowSpeed(SPEED_LIMIT) == false) {
+			return;
 		}
 
-		// Movement slower when in air to compensate for lack of friction with floor
-		float force = canJump ? movement : movement / 2.5f;
-
-		if (isBelowSpeed(0.8f)) {
-			force *= 0.3f;
-		} else if (isBelowSpeed(1.2f)) {
-			Gdx.app.log("Slow", "");
-			force *= 0.45f;
-		} else if (isBelowSpeed(2.2f)) {
-			Gdx.app.log("Medium", "");
-			force *= 0.6;
+		if (canJump) {
+			moveOnGround(delta);
 		} else {
-			Gdx.app.log("Fast", "");
+			moveInAir(delta);
+		}
+	}
+
+	private void moveOnGround(final float delta) {
+		if (isMovingRight()) {
+			force += MOVEMENT_FORCE;
+		} else if (isMovingLeft()) {
+			force += -MOVEMENT_FORCE;
+		} else {
+			force = 0;
 		}
 
-		body.applyForceToCenter(force, 0, true);
+		force *= 20 * delta;
+
+		if (isMovingRight() || isMovingLeft()) {
+			body.applyForceToCenter(force, 0, true);
+		}
+	}
+
+	private void moveInAir(final float delta) {
+		float inAirMovement = 0;
+		if (isMovingRight()) {
+			inAirMovement = MOVEMENT_FORCE * 7 * delta;
+		} else if (isMovingLeft()) {
+			inAirMovement = -MOVEMENT_FORCE * 7 * delta;
+		}
+		body.applyForceToCenter(inAirMovement, 0, true);
+		return;
 	}
 
 	private boolean isBelowSpeed(final float speed) {
