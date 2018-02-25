@@ -214,6 +214,11 @@ public class Player extends AbstractEntity implements Mortal {
 	@Override
 	public void die() {
 		AudioManager.playPlayerKilledSound();
+
+		// stop player moving so much after death
+		body.setLinearVelocity(0, 0);
+		body.setGravityScale(1);
+
 		animator.playDeathAnimation(this);
 		deaths++;
 	}

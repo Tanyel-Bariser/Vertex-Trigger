@@ -6,12 +6,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.entities.*;
 import com.vertextrigger.entities.enemy.*;
+import com.vertextrigger.entities.movingplatform.SimplePath;
 import com.vertextrigger.factory.animationfactory.*;
 import com.vertextrigger.factory.bodyfactory.*;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
 public class EnemyFactory {
+
 	public static Poker createPokerEnemy(final World world, final Vector2 initialPosition) {
 		final PokerBodyFactory factory = new PokerBodyFactory();
 		final Body body = factory.createPokerBody(world, initialPosition);
@@ -33,5 +35,12 @@ public class EnemyFactory {
 
 		return new Bee(body, anims, target, new BulletFactory(world, magnetFlowField), screen, new SteerableBody(body, maxLinearAcceleration,
 				maxLinearSpeed, maxAngularAcceleration, maxAngularSpeed, zeroLinearSpeedThreshold, 10, false));
+	}
+
+	public static Mouse createMouseEnemy(final World world, final Vector2 pathStart, final Vector2 pathEnd) {
+		final MouseBodyFactory factory = new MouseBodyFactory();
+		final Body mouseBody = factory.createMouseBody(world, pathStart);
+		final AnimationSet mouseAnims = new MouseAnimationFactory().createAnimationSet();
+		return new Mouse(mouseBody, mouseAnims, new SimplePath(pathStart, pathEnd));
 	}
 }
