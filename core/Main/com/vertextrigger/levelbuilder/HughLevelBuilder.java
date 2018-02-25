@@ -13,6 +13,7 @@ import com.vertextrigger.entities.callback.PositionCallback;
 import com.vertextrigger.entities.callback.RepeatedDeathCallback;
 import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
+import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Poker;
 import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.factory.EnemyFactory;
@@ -85,6 +86,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		entities.add(poker2);
 		screen.addMortal(poker2);
 		player.addCallbacks(spawnBoss(), lowerDifficulty());
+
+		//final Mouse mouse = EnemyFactory.createMouseEnemy(world, new Vector2(fromLeft(2.8f), fromBottom(1.17f)));
+		//entities.add(mouse);
+		//screen.addMortal(mouse);
 	}
 
 	private RepeatedDeathCallback lowerDifficulty() {
@@ -150,8 +155,8 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(0.5f), fromBottom(2)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(1.5f), fromBottom(1)));
-		fadingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(3.5f), fromBottom(1)));
-		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1)));
+		staticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(3.5f), fromBottom(1)), true);
+		fadingPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(5.5f), fromBottom(1)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(10.5f), fromBottom(1)));
 		staticPlatform("snowCenter", MEDIUM_PLATFORM_SIZE, new Vector2(fromLeft(12.5f), fromBottom(1)));
 		staticPlatform("snowCenter", SMALL_PLATFORM_SIZE, new Vector2(fromLeft(15), fromBottom(2)));

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.vertextrigger.entities.enemy.Mouse;
 
 public class AnimatorImpl implements Animator {
 	private Entity entity;
@@ -94,7 +95,8 @@ public class AnimatorImpl implements Animator {
 	}
 
 	private void faceSpriteCorrectDirection(final Sprite sprite) {
-		final boolean spriteFacingLeft = sprite.isFlipX();
+		// the instanceof hack is mental i know but without it mouse faces wrong direction
+		final boolean spriteFacingLeft = entity instanceof Mouse ? !sprite.isFlipX() : sprite.isFlipX();
 		final boolean correctlyFacingLeft = movingLeft && spriteFacingLeft;
 		final boolean correctlyFacingRight = !movingLeft && !spriteFacingLeft;
 		final boolean alreadyFacingCorrectDirection = correctlyFacingLeft || correctlyFacingRight;

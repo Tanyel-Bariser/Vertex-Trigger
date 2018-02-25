@@ -1,12 +1,27 @@
 package com.vertextrigger.collisiondetection;
 
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.vertextrigger.ai.Magnet;
-import com.vertextrigger.entities.bullet.*;
-import com.vertextrigger.entities.enemy.*;
-import com.vertextrigger.entities.player.*;
+import com.vertextrigger.entities.AbstractEntity;
+import com.vertextrigger.entities.bullet.BeeBullet;
+import com.vertextrigger.entities.bullet.Bullet;
+import com.vertextrigger.entities.bullet.EnemyBullet;
+import com.vertextrigger.entities.bullet.PlayerBullet;
+import com.vertextrigger.entities.enemy.Enemy;
+import com.vertextrigger.entities.enemy.Mouse;
+import com.vertextrigger.entities.enemy.Pit;
+import com.vertextrigger.entities.enemy.PokerHead;
+import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
-import com.vertextrigger.inanimate.portal.*;
+import com.vertextrigger.entities.player.Player;
+import com.vertextrigger.entities.player.PlayerFeet;
+import com.vertextrigger.entities.player.Shield;
+import com.vertextrigger.inanimate.portal.Portal;
+import com.vertextrigger.inanimate.portal.Teleportable;
 
 public class CollisionDetection implements ContactListener {
 	/**
@@ -131,6 +146,12 @@ public class CollisionDetection implements ContactListener {
 		if (playerFeet != null && fadingPlatform != null) {
 			fadingPlatform.setDead();
 		}
+
+		final Mouse mouse = (Mouse) getType(Mouse.class, contactBodies);
+		if (playerFeet != null && mouse != null) {
+			mouse.setDead();
+		}
+
 		/*
 		 * boolean isPlayerContact = isPlayerContact(contactBodies); boolean isGroundContact = isGroundContact(contactBodies); boolean isBulletContact
 		 * = isBulletContact(contactBodies); boolean isPlayerFeetContact = isPlayerFeetContact(contact, isPlayerContact);
@@ -158,7 +179,8 @@ public class CollisionDetection implements ContactListener {
 		final Player player = (Player) getType(Player.class, contactBodies);
 		final Enemy enemy = (Enemy) getType(Enemy.class, contactBodies);
 
-		if (player != null && enemy != null && player.isShielded() == false) {
+		// check if the enemy is dead - if it is we don't kill the player. thisd avoids annoyance of killing an enemy then bumping into its corpse during its death animation and dying unfairly
+		if (player != null && enemy != null && !((AbstractEntity) enemy).isDead() && player.isShielded() == false) {
 			player.setDead();
 		}
 

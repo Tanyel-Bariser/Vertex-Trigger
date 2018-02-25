@@ -7,10 +7,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.vertextrigger.entities.Entity;
 import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.movingplatform.MovingPlatform;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
+import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.SpriteFactory;
 import com.vertextrigger.inanimate.Ground;
@@ -25,6 +27,7 @@ import static com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction
 
 public abstract class AbstractLevelBuilder {
 	protected final World world;
+	private final AbstractGameScreen screen;
 	protected final Array<Entity> entities;
 	protected final Array<Sprite> sprites;
 	protected AbstractGameScreen gameScreen;
@@ -39,6 +42,7 @@ public abstract class AbstractLevelBuilder {
 
 	protected AbstractLevelBuilder(final World world, final AbstractGameScreen screen, final float containerWidth, final float containerHeight) {
 		this.world = world;
+		this.screen = screen;
 		spriteFactory = new SpriteFactory();
 		entities = new Array<>();
 		sprites = new Array<>();
@@ -145,14 +149,31 @@ public abstract class AbstractLevelBuilder {
 		staticPlatform(sprite, size, position, 0);
 	}
 
+	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final boolean withMouse) {
+		staticPlatform(sprite, size, position, Friction.NORMAL, 0, withMouse);
+	}
+
 	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final float rotation) {
 		staticPlatform(sprite, size, position, Friction.NORMAL, rotation);
 	}
 
 	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final Friction friction, final float rotation) {
+		staticPlatform(sprite, size, position, Friction.NORMAL, rotation, false);
+	}
+
+	void staticPlatform(final String sprite, final GameObjectSize size, final Vector2 position, final Friction friction, final float rotation, final boolean withMouse) {
 		final StaticPlatform platform = platformFactory.createPlatform(sprite, size, position, friction);
 		platform.setRotation(rotation);
 		sprites.add(platform.getSprite());
+
+		// add a mouse to run back and forth for the length of a platform
+		if (withMouse) {
+			float startPoint = (position.x + size.getPhysicalWidth()) - 0.1f;
+			float endPoint = (position.x - size.getPhysicalWidth()) + 0.1f;
+			final Mouse mouse = EnemyFactory.createMouseEnemy(world, new Vector2(startPoint, position.y + 0.17f), new Vector2(endPoint, position.y + 0.17f));
+			entities.add(mouse);
+			screen.addMortal(mouse);
+		}
 	}
 
 	void fadingPlatform(final String sprite, final GameObjectSize size, final Vector2 position) {
