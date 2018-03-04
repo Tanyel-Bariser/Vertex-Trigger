@@ -2,13 +2,25 @@ package com.vertextrigger.factory;
 
 import com.badlogic.gdx.ai.steer.Steerable;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.vertextrigger.ai.SteerableBody;
-import com.vertextrigger.entities.*;
-import com.vertextrigger.entities.enemy.*;
+import com.vertextrigger.entities.AnimationSet;
+import com.vertextrigger.entities.MagnetFlowField;
+import com.vertextrigger.entities.enemy.Bee;
+import com.vertextrigger.entities.enemy.Mouse;
+import com.vertextrigger.entities.enemy.Poker;
+import com.vertextrigger.entities.enemy.spider.Spider;
+import com.vertextrigger.entities.enemy.spider.SpiderWeb;
 import com.vertextrigger.entities.movingplatform.SimplePath;
-import com.vertextrigger.factory.animationfactory.*;
-import com.vertextrigger.factory.bodyfactory.*;
+import com.vertextrigger.factory.animationfactory.BeeAnimationFactory;
+import com.vertextrigger.factory.animationfactory.MouseAnimationFactory;
+import com.vertextrigger.factory.animationfactory.PokerAnimationFactory;
+import com.vertextrigger.factory.animationfactory.SpiderAnimationFactory;
+import com.vertextrigger.factory.bodyfactory.BeeBodyFactory;
+import com.vertextrigger.factory.bodyfactory.MouseBodyFactory;
+import com.vertextrigger.factory.bodyfactory.PokerBodyFactory;
+import com.vertextrigger.factory.bodyfactory.SpiderBodyFactory;
 import com.vertextrigger.factory.entityfactory.BulletFactory;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -43,4 +55,17 @@ public class EnemyFactory {
 		final AnimationSet mouseAnims = new MouseAnimationFactory().createAnimationSet();
 		return new Mouse(mouseBody, mouseAnims, new SimplePath(pathStart, pathEnd));
 	}
+
+	public static Spider createSpiderEnemy(final World world, final Vector2 initialPosition, final boolean faceRight) {
+		final SpiderBodyFactory factory = new SpiderBodyFactory();
+		final Body spiderBody = factory.createSpiderBody(world, initialPosition);
+		final AnimationSet spiderAnims = new SpiderAnimationFactory().createAnimationSet();
+		return new Spider(spiderBody, spiderAnims, faceRight);
+	}
+
+//	public static SpiderWeb createSpiderWeb(final World world, final Spider spider) {
+//		final SpiderBodyFactory factory = new SpiderBodyFactory();
+//		final Body webBody = factory.createSpiderWeb(world, spider);
+//		return new SpiderWeb(webBody, sprite);
+//	}
 }

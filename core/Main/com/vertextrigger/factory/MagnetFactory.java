@@ -31,7 +31,7 @@ public class MagnetFactory {
 		active.setPosition(worldPosition.x - size.getSpriteWidth() / 2, worldPosition.y - size.getSpriteHeight() / 2);
 		inactive.setPosition(worldPosition.x - size.getSpriteWidth() / 2, worldPosition.y - size.getSpriteHeight() / 2);
 
-		final Vector2 flowField2dArrayPosition = PositionConverter.convertPosition(containerWidth, containerHeight, worldPosition);
+		final Vector2 flowField2dArrayPosition = PositionUtil.convertPosition(containerWidth, containerHeight, worldPosition);
 		return new Magnet(body, active, inactive, strength, flowField2dArrayPosition);
 	}
 }

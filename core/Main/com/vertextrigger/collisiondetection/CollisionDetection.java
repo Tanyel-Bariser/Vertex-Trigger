@@ -15,6 +15,7 @@ import com.vertextrigger.entities.enemy.Enemy;
 import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Pit;
 import com.vertextrigger.entities.enemy.PokerHead;
+import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.enemy.Spike;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.entities.player.Player;
@@ -147,9 +148,16 @@ public class CollisionDetection implements ContactListener {
 			fadingPlatform.setDead();
 		}
 
+		// allow jumping on mouse to kill it
 		final Mouse mouse = (Mouse) getType(Mouse.class, contactBodies);
 		if (playerFeet != null && mouse != null) {
 			mouse.setDead();
+		}
+
+		// allow jumping on spider to kill it
+		final Spider spider = (Spider) getType(Spider.class, contactBodies);
+		if (playerFeet != null && spider != null) {
+			spider.setDead();
 		}
 
 		/*
@@ -179,8 +187,10 @@ public class CollisionDetection implements ContactListener {
 		final Player player = (Player) getType(Player.class, contactBodies);
 		final Enemy enemy = (Enemy) getType(Enemy.class, contactBodies);
 
-		// check if the enemy is dead - if it is we don't kill the player. thisd avoids annoyance of killing an enemy then bumping into its corpse during its death animation and dying unfairly
-		if (player != null && enemy != null && !((AbstractEntity) enemy).isDead() && player.isShielded() == false) {
+		// check if the enemy is dead - if it is we don't kill the player. this avoids annoyance of killing an enemy then bumping into its corpse during its death animation and dying unfairly
+		boolean deadEnemy = enemy instanceof AbstractEntity && ((AbstractEntity) enemy).isDead();
+
+		if (player != null && enemy != null && !deadEnemy && player.isShielded() == false) {
 			player.setDead();
 		}
 

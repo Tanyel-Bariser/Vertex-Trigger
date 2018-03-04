@@ -3,7 +3,7 @@ package com.vertextrigger.entities;
 import com.badlogic.gdx.ai.steer.behaviors.FollowFlowField.FlowField;
 import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.ai.Magnet;
-import com.vertextrigger.util.PositionConverter;
+import com.vertextrigger.util.PositionUtil;
 
 public class MagnetFlowField implements FlowField<Vector2> {
 	private final Vector2[][] field;
@@ -75,7 +75,7 @@ public class MagnetFlowField implements FlowField<Vector2> {
 
 	@Override
 	public Vector2 lookup(final Vector2 position) {
-		final Vector2 flowFieldPosition = PositionConverter.convertPosition(containerWidth, containerHeight, position);
+		final Vector2 flowFieldPosition = PositionUtil.convertPosition(containerWidth, containerHeight, position);
 		return field[(int) flowFieldPosition.x][(int) flowFieldPosition.y];
 	}
 }
