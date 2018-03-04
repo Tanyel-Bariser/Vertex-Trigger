@@ -40,7 +40,7 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 		final PolygonShape feet = new PolygonShape();
 		final Vector2 center = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * (OBJECT_SIZE + 0.02f))) * 6);
 		final float width = size.getPhysicalWidth() * 0.9f;
-		final float height = size.getPhysicalHeight() / 10;
+		final float height = size.getPhysicalHeight() / 5;
 
 		feet.setAsBox(width, height, center, 0);
 		return feet;

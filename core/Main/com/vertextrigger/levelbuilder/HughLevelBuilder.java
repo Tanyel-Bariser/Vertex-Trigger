@@ -13,9 +13,10 @@ import com.vertextrigger.entities.callback.PositionCallback;
 import com.vertextrigger.entities.callback.RepeatedDeathCallback;
 import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
-import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Poker;
+import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.enemy.Spike;
+import com.vertextrigger.entities.enemy.spider.SpiderWeb;
 import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
@@ -51,7 +52,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		AudioManager.playLevelOneMusic();
 
 		// start
-		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
+
+		// before spider
+		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(11.4f), fromBottom(4)), screen, magnetFlowField);
 
 		// before poker #2
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
@@ -85,7 +89,7 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		poker2.getBody().setGravityScale(0);
 		entities.add(poker2);
 		screen.addMortal(poker2);
-		player.addCallbacks(spawnBoss(), lowerDifficulty());
+		player.addCallbacks(spawnBoss(), lowerDifficulty(), spawnSpider());
 
 		//final Mouse mouse = EnemyFactory.createMouseEnemy(world, new Vector2(fromLeft(2.8f), fromBottom(1.17f)));
 		//entities.add(mouse);
@@ -113,6 +117,21 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 				AudioManager.playLevelTwoMusic();
 			}
 		}, new Vector2(fromLeft(0.5f), fromBottom(14)), player.getPosition());
+	}
+
+	private PositionCallback spawnSpider() {
+		return new PositionCallback(new Runnable() {
+			@Override
+			public void run() {
+				final Spider spider = EnemyFactory.createSpiderEnemy(world, new Vector2(fromLeft(9.6f), fromBottom(4)), true);
+				entities.add(spider);
+				screen.addMortal(spider);
+
+				final SpiderWeb spiderWeb = new SpiderWeb(spider);
+				sprites.add(spiderWeb.getSprite());
+
+			}
+		}, new Vector2(fromLeft(10.5f), fromBottom(4)), player.getPosition());
 	}
 
 	private DeathCallback spawnVictoryPlatform(final Mortal enemy) {
