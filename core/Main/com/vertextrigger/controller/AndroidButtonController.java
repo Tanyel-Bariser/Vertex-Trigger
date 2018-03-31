@@ -21,7 +21,7 @@ public class AndroidButtonController extends AndroidController {
 
 	private void createLeftButton(final ImageButton left) {
 		left.addListener(getLeftClickListener());
-		buttonLayer.add(left).width(200).height(200);
+		buttonLayer.add(left).width(width * 1.5f).height(200);
 	}
 
 	private ClickListener getLeftClickListener() {
@@ -43,7 +43,7 @@ public class AndroidButtonController extends AndroidController {
 
 	private void createRightButton(final ImageButton right) {
 		right.addListener(getRightClickListener());
-		buttonLayer.add(right).width(200).height(200);
+		buttonLayer.add(right).width(width * 1.5f).height(200).padRight(width / 2);
 	}
 
 	private ClickListener getRightClickListener() {

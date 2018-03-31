@@ -1,5 +1,6 @@
 package com.vertextrigger.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -26,8 +27,8 @@ public class AndroidSliderController extends AndroidController {
 		final Drawable knobImage = skin.getDrawable("bullet");
 		final SliderStyle sliderStyle = new SliderStyle(sliderImage, knobImage);
 		final Slider slider = new Slider(min, max, stepSize, vertical, sliderStyle);
-		final int width = 600;
-		final int directionChangePoint = width / 6;
+		final float sliderWidth = width * 3f;
+		final float directionChangePoint = sliderWidth / 2;
 		slider.addListener(new DragListener() {
 			@Override
 			public void touchDragged(final InputEvent event, final float x, final float y, final int pointer) {
@@ -50,6 +51,6 @@ public class AndroidSliderController extends AndroidController {
 				player.stopMoving();
 			}
 		});
-		buttonLayer.add(slider).width(width).height(200);
+		buttonLayer.add(slider).width(sliderWidth).height(200).padRight(width / 2);
 	}
 }

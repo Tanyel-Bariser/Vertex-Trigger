@@ -10,6 +10,7 @@ import com.vertextrigger.factory.ButtonFactory;
 
 public abstract class AndroidController extends Controller {
 	protected final Table buttonLayer = new Table().debug();
+	protected final float width = Gdx.graphics.getWidth() / 9;
 
 	public AndroidController(final Player player, final Screen screen, final Stage stage) {
 		super(player, screen);
@@ -29,7 +30,7 @@ public abstract class AndroidController extends Controller {
 
 	private void createPauseButton(final ImageButton pause) {
 		pause.addListener(getPauseClickListener());
-		buttonLayer.add(pause).width(200).height(200);
+		buttonLayer.add(pause).width(width).height(200).padRight(width/2);
 	}
 
 	private ClickListener getPauseClickListener() {
@@ -44,7 +45,7 @@ public abstract class AndroidController extends Controller {
 
 	private void createShootButton(final ImageButton shoot) {
 		shoot.addListener(getShootClickListener());
-		buttonLayer.add(shoot).width(200).height(200);
+		buttonLayer.add(shoot).width(width*2).height(200);
 	}
 
 	private ClickListener getShootClickListener() {
@@ -61,7 +62,7 @@ public abstract class AndroidController extends Controller {
 
 	private void createJumpButton(final ImageButton jump) {
 		jump.addListener(getJumpClickListener());
-		buttonLayer.add(jump).width(200).height(200);
+		buttonLayer.add(jump).width(width*2).height(200);
 	}
 
 	private ClickListener getJumpClickListener() {
