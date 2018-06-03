@@ -19,8 +19,8 @@ import com.vertextrigger.util.GameObjectSize;
  */
 public class Player extends AbstractEntity implements Mortal {
 	private static int deaths = 0;
-	static final float JUMP_POWER = 110 * (GameObjectSize.OBJECT_SIZE / 15f);
-	static final float MOVEMENT_FORCE = 80 * GameObjectSize.OBJECT_SIZE;
+	static final float JUMP_POWER = 0.25f;
+	static final float MOVEMENT_FORCE = 2.5f;
 	private float force;
 	private final Gun gun;
 	private final Vector2 initialPosition;

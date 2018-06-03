@@ -8,7 +8,7 @@ public enum GameObjectSize {
 	BEE_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
 	MAGNET_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
 	BACKGROUND_SIZE(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 0, 0), //
-	PLAYER_SIZE(2.5f, 4.5f, 0.5f, 1.5f, 1.9f, 2.2f), //
+	PLAYER_SIZE(2.5f, 4.5f, 0.25f, 0.75f, 1.9f, 2.2f), //
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //
 	MOUSE_BODY_SIZE(2, 1, 1, 0.5f, 2, 2), //
 	SPIDER_BODY_SIZE(4, 3, 2, 1.5f, 2, 2), //

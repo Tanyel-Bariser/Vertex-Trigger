@@ -36,13 +36,11 @@ public class PlayerBodyFactory extends AbstractBodyFactory {
 		return fixtureDefinition;
 	}
 
-	private PolygonShape createFeet() {
-		final PolygonShape feet = new PolygonShape();
-		final Vector2 center = new Vector2(0f, -((PLAYER_SIZE.getPhysicalHeight() * (OBJECT_SIZE + 0.02f))) * 6);
-		final float width = size.getPhysicalWidth() * 0.9f;
-		final float height = size.getPhysicalHeight() / 5;
+	private ChainShape createFeet() {
+		final ChainShape feet = new ChainShape();
+		final Vector2[] chain = {new Vector2(-size.getPhysicalWidth(), -size.getPhysicalHeight() * 2f), new Vector2(size.getPhysicalWidth(), -size.getPhysicalHeight() * 2f)};
 
-		feet.setAsBox(width, height, center, 0);
+		feet.createChain(chain);
 		return feet;
 	}
 

@@ -22,6 +22,7 @@ import com.vertextrigger.factory.PlatformFactory;
 import com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
 import com.vertextrigger.factory.entityfactory.PlayerFactory;
 import com.vertextrigger.factory.entityfactory.ShieldFactory;
+import com.vertextrigger.inanimate.StaticPlatform;
 import com.vertextrigger.inanimate.portal.Portal;
 import com.vertextrigger.screen.AbstractGameScreen;
 
@@ -29,6 +30,7 @@ import static com.badlogic.gdx.math.MathUtils.degreesToRadians;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_DIFFERENT_XY_AXIS_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPOSITE_HORIZONTAL_DIRECTION;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
+import static com.vertextrigger.util.GameObjectSize.GROUND_SIZE;
 import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
@@ -197,6 +199,10 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		staticPlatform("purpleMid", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(4), fromBottom(14)), Friction.VERY_STICKY, 0);
 
 		staticPlatform("snowCenter", LARGE_PLATFORM_SIZE, new Vector2(fromLeft(10), fromBottom(16)));
+
+
+		final Vector2 position = new Vector2(-CONTAINER_WIDTH, -CONTAINER_HEIGHT);
+		staticPlatform("snowCenter", GROUND_SIZE, position);
 	}
 
 	private void createSpikes(float startX) {
