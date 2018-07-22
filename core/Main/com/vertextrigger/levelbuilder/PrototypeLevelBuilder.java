@@ -27,6 +27,7 @@ import static com.badlogic.gdx.math.MathUtils.radiansToDegrees;
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
 import static com.vertextrigger.util.GameObjectSize.GROUND_SIZE;
 import static com.vertextrigger.util.GameObjectSize.MAGNET_SIZE;
+import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 
 /**
@@ -124,7 +125,7 @@ public class PrototypeLevelBuilder extends AbstractLevelBuilder {
 
 	@Override
 	public Sprite getBackground() {
-		final Sprite background = BackgroundFactory.getPrototypeLevelBackground();
+		final Sprite background = BackgroundFactory.getLevelThreeBackground();
 		background.setPosition(-Gdx.graphics.getWidth() / 1.25f, -Gdx.graphics.getHeight() / 1.875f);
 		background.setScale(0.012f);
 		return background;

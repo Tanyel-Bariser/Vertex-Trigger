@@ -8,16 +8,18 @@ import com.vertextrigger.ai.SteerableBody;
 import com.vertextrigger.entities.AnimationSet;
 import com.vertextrigger.entities.MagnetFlowField;
 import com.vertextrigger.entities.enemy.Bee;
+import com.vertextrigger.entities.enemy.minigunboss.MinigunBoss;
 import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Poker;
 import com.vertextrigger.entities.enemy.spider.Spider;
-import com.vertextrigger.entities.enemy.spider.SpiderWeb;
 import com.vertextrigger.entities.movingplatform.SimplePath;
 import com.vertextrigger.factory.animationfactory.BeeAnimationFactory;
+import com.vertextrigger.factory.animationfactory.MinigunBossAnimationFactory;
 import com.vertextrigger.factory.animationfactory.MouseAnimationFactory;
 import com.vertextrigger.factory.animationfactory.PokerAnimationFactory;
 import com.vertextrigger.factory.animationfactory.SpiderAnimationFactory;
 import com.vertextrigger.factory.bodyfactory.BeeBodyFactory;
+import com.vertextrigger.factory.bodyfactory.MinigunBossBodyFactory;
 import com.vertextrigger.factory.bodyfactory.MouseBodyFactory;
 import com.vertextrigger.factory.bodyfactory.PokerBodyFactory;
 import com.vertextrigger.factory.bodyfactory.SpiderBodyFactory;
@@ -63,9 +65,9 @@ public class EnemyFactory {
 		return new Spider(spiderBody, spiderAnims, faceRight);
 	}
 
-//	public static SpiderWeb createSpiderWeb(final World world, final Spider spider) {
-//		final SpiderBodyFactory factory = new SpiderBodyFactory();
-//		final Body webBody = factory.createSpiderWeb(world, spider);
-//		return new SpiderWeb(webBody, sprite);
-//	}
+	public static MinigunBoss createMinigunBossEnemy(final World world, final Vector2 initialPosition, final Vector2 playerPosition, final AbstractGameScreen screen) {
+		final MinigunBossBodyFactory factory = new MinigunBossBodyFactory();
+		final Body minigunBossBody = factory.createMinigunBossBody(world, initialPosition);
+		return new MinigunBoss(minigunBossBody, new MinigunBossAnimationFactory().createAnimationSet(), screen, new BulletFactory(world, null), playerPosition);
+	}
 }

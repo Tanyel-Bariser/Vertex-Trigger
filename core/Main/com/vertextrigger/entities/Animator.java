@@ -1,5 +1,6 @@
 package com.vertextrigger.entities;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,4 +16,7 @@ public interface Animator {
 
 	void setEntity(final Entity entity);
 
+	void lockAnimation(final Animation animation);
+
+	void unlockAnimation();
 }

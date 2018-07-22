@@ -1,21 +1,29 @@
 package com.vertextrigger.screen;
 
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Predicate;
 import com.vertextrigger.controller.Controller;
-import com.vertextrigger.entities.*;
+import com.vertextrigger.entities.Entity;
+import com.vertextrigger.entities.Mortal;
 import com.vertextrigger.entities.bullet.Bullet;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.factory.GameScreenFactory;
 import com.vertextrigger.levelbuilder.AbstractLevelBuilder;
 import com.vertextrigger.main.VertexTrigger;
-import com.vertextrigger.util.*;
+import com.vertextrigger.util.GameObjectSize;
+import com.vertextrigger.util.State;
 
 public abstract class AbstractGameScreen implements Screen {
 	private static final float baseGravity = -9.81f;
@@ -24,6 +32,7 @@ public abstract class AbstractGameScreen implements Screen {
 	protected World world;
 	protected final Vector2 GRAVITY = new Vector2(0, baseGravity);
 	private final static Array<Bullet> bullets = new Array<>();
+	private final static Array<TemporarySprite> temporarySprites = new Array<>();
 	private static float phoneWidth = 768;
 	public static final float WIDTH = Gdx.graphics.getWidth();
 	public static final float HEIGHT = Gdx.graphics.getHeight();
@@ -48,6 +57,16 @@ public abstract class AbstractGameScreen implements Screen {
 	private static final float roomForThumbs;
 	public static final float maxDelta = 0.05f;
 	private final Array<Sprite> visibleSprites = new Array<Sprite>();
+
+	static class TemporarySprite {
+		int frames;
+		final Sprite sprite;
+
+		public TemporarySprite(final int frames, final Sprite sprite) {
+			this.frames = frames;
+			this.sprite = sprite;
+		}
+	}
 
 	protected abstract void initialiseAssets();
 
@@ -118,7 +137,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 	private void setUpLevel() {
 		levelBuilder.setGameScreen(this);
-		// background = levelBuilder.getBackground();
+		background = levelBuilder.getBackground();
 		entities = levelBuilder.buildEntities();
 		backgroundSprites = levelBuilder.buildLevelLayout();
 	}
@@ -127,6 +146,25 @@ public abstract class AbstractGameScreen implements Screen {
 		if (!bullets.contains(bullet, true)) {
 			bullets.add(bullet);
 		}
+	}
+
+	public static void addTemporarySprite(final Sprite sprite) {
+		addTemporarySprite(sprite, 1);
+	}
+
+	public static void addTemporarySprite(final Sprite sprite, final int frames) {
+		if (!temporarySpritesContains(sprite)) {
+			temporarySprites.add(new TemporarySprite(frames, sprite));
+		}
+	}
+
+	private static boolean temporarySpritesContains(final Sprite sprite) {
+		for (final TemporarySprite temporarySprite : temporarySprites) {
+			if (temporarySprite.sprite == sprite) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private final FPSLogger fpsLogger = new FPSLogger();
@@ -180,7 +218,7 @@ public abstract class AbstractGameScreen implements Screen {
 
 		drawToScreen(delta, getVisibleSprites());
 		stage.draw();
-		// physicsDebugger.render(world, camera.combined);
+		//physicsDebugger.render(world, camera.combined);
 		removeDeadEntities();
 	}
 
@@ -213,7 +251,8 @@ public abstract class AbstractGameScreen implements Screen {
 					if (mortal instanceof Player) {
 						world.dispose();
 						// vertexTrigger.setScreen(GameScreenFactory.createTanyelLevel(vertexTrigger));
-						vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
+						// vertexTrigger.setScreen(GameScreenFactory.createHughLevel(vertexTrigger));
+						vertexTrigger.setScreen(GameScreenFactory.createBossLevel(vertexTrigger));
 					}
 				}
 			}
@@ -293,12 +332,20 @@ public abstract class AbstractGameScreen implements Screen {
 	private void drawToScreen(final float delta, final Array<Sprite> visibleEntitySprite) {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		// background.draw(batch);
+		if (background != null) {
+			background.draw(batch);
+		}
 		for (final Sprite sprite : backgroundSprites) {
 			sprite.draw(batch);
 		}
 		for (final Sprite sprite : visibleEntitySprite) {
 			sprite.draw(batch);
+		}
+		for (final TemporarySprite temporarySprite : temporarySprites) {
+			temporarySprite.sprite.draw(batch);
+			if (--temporarySprite.frames == 0) {
+				temporarySprites.removeValue(temporarySprite, true);
+			}
 		}
 		batch.end();
 	}

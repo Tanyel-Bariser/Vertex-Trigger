@@ -14,8 +14,8 @@ import com.vertextrigger.entities.callback.RepeatedDeathCallback;
 import com.vertextrigger.entities.callback.Runnable;
 import com.vertextrigger.entities.enemy.Bee;
 import com.vertextrigger.entities.enemy.Poker;
-import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.enemy.Spike;
+import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.enemy.spider.SpiderWeb;
 import com.vertextrigger.factory.EnemyFactory;
 import com.vertextrigger.factory.PlatformFactory;
@@ -31,7 +31,6 @@ import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_OPPO
 import static com.vertextrigger.inanimate.portal.PortalTeleportation.MOVING_SAME_DIRECTION;
 import static com.vertextrigger.util.GameObjectSize.LARGE_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.MEDIUM_PLATFORM_SIZE;
-import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SMALL_PLATFORM_SIZE;
 import static com.vertextrigger.util.GameObjectSize.SPIKE_SIZE;
 import static com.vertextrigger.util.GameObjectSize.TINY_PLATFORM_SIZE;
@@ -55,13 +54,13 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(1), fromBottom(0)), screen, magnetFlowField);
 
 		// before spider
-		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(11.4f), fromBottom(4)), screen, magnetFlowField);
+		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(11.4f), fromBottom(4)), screen, magnetFlowField);
 
 		// before poker #2
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(8), fromBottom(5.6f)), screen, magnetFlowField);
 
 		// pre bossfight
-		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
+		player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(3f), fromBottom(13f)), screen, magnetFlowField);
 
 		// end
 		// player = PlayerFactory.createPlayer(world, new Vector2(fromLeft(9.5f), fromBottom(16.1f)), screen, magnetFlowField);
@@ -205,12 +204,6 @@ public class HughLevelBuilder extends AbstractLevelBuilder {
 			sprites.add(spike.getSprite());
 			startX += 0.2f;
 		}
-	}
-
-	private void createSign(final String sprite, final float x, final float y) {
-		final Sprite signRight = spriteFactory.createLevelSprite(sprite, SIGN_SIZE);
-		signRight.setPosition(x, y);
-		sprites.add(signRight);
 	}
 
 	@Override

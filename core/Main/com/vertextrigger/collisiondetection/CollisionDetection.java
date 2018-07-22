@@ -15,8 +15,10 @@ import com.vertextrigger.entities.enemy.Enemy;
 import com.vertextrigger.entities.enemy.Mouse;
 import com.vertextrigger.entities.enemy.Pit;
 import com.vertextrigger.entities.enemy.PokerHead;
-import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.enemy.Spike;
+import com.vertextrigger.entities.enemy.minigunboss.MinigunBoss;
+import com.vertextrigger.entities.enemy.minigunboss.MinigunBossHead;
+import com.vertextrigger.entities.enemy.spider.Spider;
 import com.vertextrigger.entities.mortalplatform.FadingPlatform;
 import com.vertextrigger.entities.player.Player;
 import com.vertextrigger.entities.player.PlayerFeet;
@@ -227,7 +229,12 @@ public class CollisionDetection implements ContactListener {
 		}
 
 		if (enemy != null && bullet != null) {
-			enemy.setDead();
+			if (enemy instanceof MinigunBossHead) {
+				((MinigunBossHead) enemy).onHit(bullet.getPosition());
+			}
+			else if (!(enemy instanceof MinigunBoss)) {
+				enemy.setDead();
+			}
 		}
 	}
 

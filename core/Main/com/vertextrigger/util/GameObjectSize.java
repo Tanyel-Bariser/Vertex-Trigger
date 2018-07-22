@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 public enum GameObjectSize {
 	PLAYER_BULLET_SIZE(0.5f, 0.5f, 0.25f, 0.25f, 0.04f, 0.03f), //
+	MINIGUN_BULLET_SIZE(1, 1, 0.5f, 0.5f, 0.04f, 0.03f), //
 	BEE_BULLET_SIZE(1f, 1f, 0.25f, 0.25f, 0.07f, 0.04f), //
 	BEE_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
 	MAGNET_SIZE(3f, 2f, 1.5f, 1f, 2.05f, 2.2f), //
@@ -12,6 +13,7 @@ public enum GameObjectSize {
 	POKER_BODY_SIZE(1.3f, 4f, 0.6f, 1.7f, 2.05f, 2.2f), //
 	MOUSE_BODY_SIZE(2, 1, 1, 0.5f, 2, 2), //
 	SPIDER_BODY_SIZE(4, 3, 2, 1.5f, 2, 2), //
+	MINIGUN_BOSS_BODY_SIZE(6, 9, 3, 4.5f, 2, 2), //
 	PORTAL_SIZE(2.5f, 4f, 1f, 1.5f, 2f, 2f), // Sprite is bigger oval & body is smaller rectangle that fits inside the sprite
 	SHIELD_SIZE(5, 5, PLAYER_SIZE.getPhysicalHeight() * 8.7f, PLAYER_SIZE.getPhysicalHeight() * 8.7f, 0.37f, 0.33f), //
 	SIGN_SIZE(3.2f, 3.5f, 2, 2, 0, 0), //

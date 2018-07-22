@@ -68,6 +68,26 @@ public class GameScreenFactory {
 		};
 	}
 
+	public static AbstractGameScreen createBossLevel(final VertexTrigger vertex) {
+		return new AbstractGameScreen(vertex) {
+			@Override
+			protected void initialiseAssets() {
+				VertexTrigger.ASSETS.loadBossLevel();
+			}
+
+			@Override
+			protected void disposeOfAssets() {
+				VertexTrigger.ASSETS.unloadBossLevel();
+			}
+
+			@Override
+			protected AbstractLevelBuilder createLevelBuilder() {
+				world = createWorld(GRAVITY);
+				return new MultiStageBossLevelBuilder(world, this);
+			}
+		};
+	}
+
 	private static World createWorld(final Vector2 GRAVITY) {
 		final World world = new World(GRAVITY, true);
 		world.setContactListener(new CollisionDetection());

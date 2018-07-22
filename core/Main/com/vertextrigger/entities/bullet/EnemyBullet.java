@@ -9,8 +9,12 @@ public class EnemyBullet extends Bullet {
 	protected boolean isMagnetAttractionOn = true;
 
 	public EnemyBullet(final Body body, final Sprite sprite) {
+		this(body, sprite, 10);
+	}
+
+	public EnemyBullet(final Body body, final Sprite sprite, final int numberOfCollisions) {
 		super(body, sprite);
-		numberOfCollisions = 10;
+		this.numberOfCollisions = numberOfCollisions;
 	}
 
 	@Override

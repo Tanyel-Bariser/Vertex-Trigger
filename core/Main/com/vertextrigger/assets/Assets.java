@@ -119,6 +119,14 @@ public class Assets {
 		unloadLevelAssets(AtlasPath.LEVEL_HUGH, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}
 
+	public void loadBossLevel() {
+		loadLevelAssets(AtlasPath.LEVEL_BOSS, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+	}
+
+	public void unloadBossLevel() {
+		unloadLevelAssets(AtlasPath.LEVEL_BOSS, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
+	}
+
 	public void loadLevelOne() {
 		loadLevelAssets(AtlasPath.LEVEL_ONE, BackgroundPath.LEVEL_ONE, MusicPath.LEVEL_ONE);
 	}

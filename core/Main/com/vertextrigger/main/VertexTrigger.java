@@ -14,7 +14,8 @@ public class VertexTrigger extends Game {
 	@Override
 	public void create() {
 		// Open main menu screen
-		setScreen(GameScreenFactory.createHughLevel(this));
+		setScreen(GameScreenFactory.createBossLevel(this));
+		// setScreen(GameScreenFactory.createHughLevel(this));
 		// setScreen(GameScreenFactory.createTanyelLevel(this));
 	}
 

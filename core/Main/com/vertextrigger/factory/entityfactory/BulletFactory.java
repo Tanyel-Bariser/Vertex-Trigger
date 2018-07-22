@@ -2,6 +2,7 @@ package com.vertextrigger.factory.entityfactory;
 
 import static com.vertextrigger.util.GameObjectSize.*;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import com.vertextrigger.ai.*;
 import com.vertextrigger.entities.MagnetFlowField;
@@ -40,6 +41,26 @@ public class BulletFactory {
 		final Bullet bullet = new PlayerBullet(bulletBody, new SpriteFactory().createCoreSprite("bullet", PLAYER_BULLET_SIZE));
 		AbstractGameScreen.addBullet(bullet);
 		return bullet;
+	}
+
+	public Bullet createMinigunBullet() {
+		final Body bulletBody = createBulletBody(false, false);
+		final Bullet bullet = new EnemyBullet(bulletBody, new SpriteFactory().createLevelSprite("SkeletonBossBullet", MINIGUN_BULLET_SIZE), 1);
+		((EnemyBullet) bullet).stopMagnetAttraction();
+		AbstractGameScreen.addBullet(bullet);
+		return bullet;
+	}
+
+	public Sprite createMinigunMuzzleFlash() {
+		return new SpriteFactory().createLevelSprite("SkeletonBossMuzzleFlash", MINIGUN_BULLET_SIZE);
+	}
+
+	public Sprite createOverheatSmoke() {
+		return new SpriteFactory().createLevelSprite("whitePuff05", MINIGUN_BULLET_SIZE);
+	}
+
+	public Sprite createDamageCircle() {
+		return new SpriteFactory().createLevelSprite("SkeletonBossDamage", MINIGUN_BULLET_SIZE);
 	}
 
 	private Body createBulletBody(final boolean isAffectedByGravity, final boolean isBouncy) {

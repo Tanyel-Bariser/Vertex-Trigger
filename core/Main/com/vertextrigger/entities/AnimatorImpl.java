@@ -89,6 +89,17 @@ public class AnimatorImpl implements Animator {
 		setAnimation(animationSet.getShooting());
 	}
 
+	@Override
+	public void lockAnimation(final Animation animation) {
+		setAnimation(animation);
+		isAnimationTypeUpdateable = false;
+	}
+
+	@Override
+	public void unlockAnimation() {
+		isAnimationTypeUpdateable = true;
+	}
+
 	private float getNewRotation(float bodyAngle) {
 		bodyAngle = bodyAngle * MathUtils.radiansToDegrees;
 		return bodyAngle - currentAngle;

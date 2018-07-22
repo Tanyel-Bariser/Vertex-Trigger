@@ -24,6 +24,7 @@ import com.vertextrigger.screen.AbstractGameScreen;
 import com.vertextrigger.util.GameObjectSize;
 
 import static com.vertextrigger.factory.bodyfactory.PlatformBodyFactory.Friction;
+import static com.vertextrigger.util.GameObjectSize.SIGN_SIZE;
 
 public abstract class AbstractLevelBuilder {
 	protected final World world;
@@ -215,5 +216,11 @@ public abstract class AbstractLevelBuilder {
 
 	float fromLeft(final float distanceFromLeftWall) {
 		return -containerWidth + distanceFromLeftWall;
+	}
+
+	void createSign(final String sprite, final float x, final float y) {
+		final Sprite signRight = spriteFactory.createLevelSprite(sprite, SIGN_SIZE);
+		signRight.setPosition(x, y);
+		sprites.add(signRight);
 	}
 }

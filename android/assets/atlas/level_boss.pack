@@ -1,0 +1,187 @@
+
+level_boss.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+whitePuff05
+  rotate: false
+  xy: 0, 119
+  size: 337, 378
+  orig: 337, 378
+  offset: 0, 0
+  index: -1
+SkeletonBossPhaseTwo
+  rotate: false
+  xy: 339, 283
+  size: 150, 214
+  orig: 150, 214
+  offset: 0, 0
+  index: -1
+SkeletonBoss
+  rotate: false
+  xy: 491, 283
+  size: 150, 214
+  orig: 150, 214
+  offset: 0, 0
+  index: -1
+SkeletonBossOverheat
+  rotate: false
+  xy: 643, 283
+  size: 150, 214
+  orig: 150, 214
+  offset: 0, 0
+  index: -1
+SkeletonBossMove2
+  rotate: false
+  xy: 795, 283
+  size: 150, 214
+  orig: 150, 214
+  offset: 0, 0
+  index: -1
+SkeletonBossMove1
+  rotate: false
+  xy: 339, 67
+  size: 150, 214
+  orig: 150, 214
+  offset: 0, 0
+  index: -1
+purpleRight
+  rotate: false
+  xy: 947, 427
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signRight
+  rotate: false
+  xy: 0, 47
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+window
+  rotate: false
+  xy: 491, 211
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowHillRight
+  rotate: false
+  xy: 947, 355
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowCenter
+  rotate: false
+  xy: 72, 47
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signLeft
+  rotate: false
+  xy: 491, 139
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleHillLeft
+  rotate: false
+  xy: 563, 211
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleMid
+  rotate: false
+  xy: 947, 283
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowCenter_rounded
+  rotate: false
+  xy: 144, 47
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+signExit
+  rotate: false
+  xy: 491, 67
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+stoneCaveSpikeBottom
+  rotate: false
+  xy: 563, 139
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowHillLeft
+  rotate: false
+  xy: 635, 211
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleHillRight
+  rotate: false
+  xy: 216, 47
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowLeft
+  rotate: false
+  xy: 563, 67
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+purpleLeft
+  rotate: false
+  xy: 635, 139
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowRight
+  rotate: false
+  xy: 707, 211
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+snowMid
+  rotate: false
+  xy: 635, 67
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+SkeletonBossMuzzleFlash
+  rotate: false
+  xy: 0, 0
+  size: 52, 45
+  orig: 52, 45
+  offset: 0, 0
+  index: -1
+SkeletonBossDamage
+  rotate: false
+  xy: 288, 88
+  size: 29, 29
+  orig: 29, 29
+  offset: 0, 0
+  index: -1
+SkeletonBossBullet
+  rotate: false
+  xy: 707, 191
+  size: 39, 18
+  orig: 39, 18
+  offset: 0, 0
+  index: -1

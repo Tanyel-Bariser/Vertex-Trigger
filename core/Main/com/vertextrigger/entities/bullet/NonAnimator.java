@@ -1,5 +1,6 @@
 package com.vertextrigger.entities.bullet;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.vertextrigger.entities.*;
@@ -33,5 +34,15 @@ public class NonAnimator implements Animator {
 
 	@Override
 	public void playDeathAnimation(final Mortal mortal) {
+	}
+
+	@Override
+	public void lockAnimation(Animation animation) {
+
+	}
+
+	@Override
+	public void unlockAnimation() {
+
 	}
 }
